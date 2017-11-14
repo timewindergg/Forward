@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './home.css';
 
 class Home extends Component {
-	state = {
-		quotes : ["Some things do get better with time.",
+  state = {
+    quotes : ["Some things do get better with time.",
               "Time flies like an arrow; fruit flies like banana.",
               "Here's the thing about time; if you can't make the most out of any given moment, then you don't deserve a single extra second.",
               "Things aren't gonna' improve themselves.",
@@ -12,42 +12,42 @@ class Home extends Component {
               "It's not how much time you have, it's how you use it.",
               "One step closer to greater understanding!",
               "Indeed, a wise choice."]
-	}
+  }
 
   render() {
     return (
       <div className="Home">
-        <div class="content">
+        <div className="content">
           <h1>Timewinder</h1>
-  	      <h3>League match timeline statistics</h3>
+          <h3>League match timeline statistics</h3>
 
-  	      <div id="quote"></div>
+          <div id="quote"></div>
 
-  	      <div id="lookup">
-  	        <select id="searchServer" class="form-control">
-  	          <option value="na">NA</option>
-  	          <option value="euw">EUW</option>
-  	          <option value="eune">EUNE</option>
-  	          <option value="kr">KR</option>
-  	          <option value="br">BR</option>
-  	          <option value="lan">LAN</option>
-  	          <option value="las">LAS</option>
-  	          <option value="oce">OCE</option>
-  	          <option value="ru">RU</option>
-  	          <option value="tr">TR</option>
-  	        </select>
-  	        <input id="searchField" class="textfield form-control" type="text" placeholder="Enter Summoner Name" />
-  	        <input id="searchButton" class="button" type="submit" name="commit" value="Search" />
-  	      </div>
+          <div id="lookup">
+            <select id="searchServer" className="form-control">
+              <option value="na">NA</option>
+              <option value="euw">EUW</option>
+              <option value="eune">EUNE</option>
+              <option value="kr">KR</option>
+              <option value="br">BR</option>
+              <option value="lan">LAN</option>
+              <option value="las">LAS</option>
+              <option value="oce">OCE</option>
+              <option value="ru">RU</option>
+              <option value="tr">TR</option>
+            </select>
+            <input id="searchField" className="textfield form-control" type="text" placeholder="Enter Summoner Name" />
+            <input id="searchButton" className="button" type="submit" name="commit" value="Search" />
+          </div>
 
-  	      <div id="searchLoader" class="loader"></div>
+          <div id="searchLoader" className="loader"></div>
 
-  	      <div class="clear"></div>
+          <div className="clear"></div>
 
-  	      <div id="error">
-  	      </div>
+          <div id="error">
+          </div>
 
-  	      <div id="history"></div>
+          <div id="history"></div>
           </div>
       </div>
     );
