@@ -1,7 +1,7 @@
 const constants = {
     api: {
       url: 'https://na1.api.riotgames.com',
-      key: 'PLACE_HOLDER'
+      key: 'INSERT_KEY_HERE'
     }
 }
 
