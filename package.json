@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -15,16 +16,12 @@
   "scripts": {
     "start": "npm run build-css && run-p -ncr watch-css start-js",
     "start-js": "react-scripts start",
-
     "build": "run-s -n build-css build-js",
     "build-js": "react-scripts build",
-
     "test": "run-s -n build-css test-js",
     "test-js": "react-scripts test --env=jsdom",
-
     "build-css": "node-less-chokidar src",
     "watch-css": "node-less-chokidar src --watch",
-    
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:8000",
