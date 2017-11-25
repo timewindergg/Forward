@@ -23,3 +23,6 @@ yarn-error.log*
 # css preprocessing
 src/**/*.css
 src/**/*.map
+
+# random workspace
+/snippets
