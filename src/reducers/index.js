@@ -4,8 +4,10 @@
 
 import { combineReducers } from 'redux'
 import match from './match'
+import context from './context'
 
 const forward = combineReducers({
+  context,
   match  
 });
 

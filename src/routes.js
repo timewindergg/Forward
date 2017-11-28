@@ -2,8 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Home from './components/home/home';
-import Dashboard from './components/dashboard/dash';
+import HomeContainer from './containers/home/home';
+import DashboardContainer from './containers/dashboard/dash';
 import Postgame from './components/postgame/post';
 import Pregame from './components/pregame/pre';
 
@@ -14,10 +14,10 @@ const Routes = () => (
   <Provider store={store}>
     <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/p/:summonerName" component={Dashboard} />
-          <Route exact path="/m/:matchId" component={Postgame} />
-          <Route exact path="/l/:summonerName" component={Pregame} />
+          <Route exact path="/" component={HomeContainer} />
+          <Route path="/p/:summonerName" component={DashboardContainer} />
+          <Route path="/m/:matchId" component={Postgame} />
+          <Route path="/l/:summonerName" component={Pregame} />
         </Switch>
     </BrowserRouter>
   </Provider>
