@@ -11,14 +11,15 @@ class DashboardContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router
     summoner: PropTypes.object.isRequired,
-    getSummonerInfo: PropTypes.func.isRequired
+    getSummonerInfo: PropTypes.func.isRequired,
+    matches: PropTypes.array.isRequired
   }
 
   componentWillMount() {
     const {match, summoner, getSummonerInfo} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
-    
+
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
@@ -28,11 +29,12 @@ class DashboardContainer extends Component {
 
 
   render() {
-    const {summoner} = this.props;
+    const {summoner, matches} = this.props;
 
     return (
       <Dashboard
         summoner={summoner}
+        matches={matches}
       />
     );
   }
@@ -40,7 +42,8 @@ class DashboardContainer extends Component {
 
 // maps states from the reducers to the component
 const mapStateToProps = (state) => ({
-  summoner: state.context.summoner
+  summoner: state.context.summoner,
+  matches: state.matchHistory.matches
 });
 
 // we will probably need this later
