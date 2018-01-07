@@ -30,7 +30,7 @@ class DashboardContainer extends Component {
 
   render() {
     const {summoner, matches} = this.props;
-
+    console.log(matches);
     return (
       <Dashboard
         summoner={summoner}

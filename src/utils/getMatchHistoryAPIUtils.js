@@ -26,7 +26,6 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
         match.championName = ChampionMappings[match.champion_id].name;
       });
 
-      console.log(dispatch);
-      dispatch(fetchMatchHistorySuccess(response));
+      dispatch(fetchMatchHistorySuccess(result));
     });
 };

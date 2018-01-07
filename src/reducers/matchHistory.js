@@ -15,7 +15,8 @@ const startMatchHistory = (state) => {
 const receiveMatchHistoryResults = (state, action) => {
   return Object.assign({}, state, {
     action,
-    loadingState: LoadingState.FINISHED
+    loadingState: LoadingState.FINISHED,
+    matches: action.result
   });
 };
 

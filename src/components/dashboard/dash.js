@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import d3 from 'd3';
 
 import './dash.css';
 
@@ -23,7 +22,6 @@ class Dashboard extends Component {
   render() {
     const {summoner, matches} = this.props;
     console.log('components/dashboard/dash.js summoner shown:', summoner);
-
     return (
       <div className='Dashboard'>
         <h1>Timewinder</h1>
@@ -36,7 +34,6 @@ class Dashboard extends Component {
   }
 
   renderMatchList(matches) {
-    console.log(matches);
     const matchItems = matches.map((m) => {
       return (
         <div className="content">
@@ -143,4 +140,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapDispatchToProps)(Dashboard);
+export default connect(null, mapDispatchToProps)(Dashboard);
