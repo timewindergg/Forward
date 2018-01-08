@@ -8,6 +8,8 @@ import './dash.css';
 // Import api utils.
 import { getSummonerMatchHistory } from '../../utils/getMatchHistoryAPIUtils';
 
+import { RadarChart } from '../../d3/radarChart';
+
 class Dashboard extends Component {
   static propTypes = {
     summoner: PropTypes.object.isRequired,
