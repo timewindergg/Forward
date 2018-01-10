@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import {Radar, Line} from 'react-chartjs-2';
+import { Radar, Line } from 'react-chartjs-2';
 
 import './dash.css';
-
-// Import api utils.
-import { getSummonerMatchHistory } from '../../utils/getMatchHistoryAPIUtils';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -106,59 +101,58 @@ class Dashboard extends Component {
   }
 
   renderMatchList(matches) {
-    console.log(matches);
     const matchItems = matches.map((m) => {
       return (
-        <div className="content">
+        <div className="content" key={m.match_id}>
           <div className="game-stats">
-            <div class="game-type">
+            <div className="game-type">
               {m.game_type}
             </div>
-            <div class="time-stamp">
+            <div className="time-stamp">
               <span>{m.timestamp}</span>
             </div>
-            <div class="Bar"></div>
-            <div class="game-result">
+            <div className="Bar"></div>
+            <div className="game-result">
               Victory
             </div>
-            <div class="game-length">{m.duration}</div>
+            <div className="game-length">{m.duration}</div>
           </div>
           <div className="game-setting-info">
-            <div class="champion-image">
-              <a href="" target="_blank"><img src={m.championUrl}/></a>
+            <div className="champion-image">
+              <a href="" target="_blank"><img src={m.championUrl} alt=""/></a>
             </div>
-            <div class="summoner-spell">
-              <div class="Spell">
-                <img src={m.spell1Url}/>
+            <div className="summoner-spell">
+              <div className="Spell">
+                <img src={m.spell1Url} alt=""/>
               </div>
-              <div class="Spell">
-                <img src={m.spell2Url}/>
-              </div>
-            </div>
-            <div class="runes">
-              <div class="rune">
-                <img src={m.rune1}/>
-              </div>
-              <div class="rune">
-                <img src= {m.rune2}/>
+              <div className="Spell">
+                <img src={m.spell2Url} alt=""/>
               </div>
             </div>
-            <div class="champion-name">
+            <div className="runes">
+              <div className="rune">
+                <img src={m.rune1} alt=""/>
+              </div>
+              <div className="rune">
+                <img src= {m.rune2} alt=""/>
+              </div>
+            </div>
+            <div className="champion-name">
               <a href= "" target="_blank">{m.championName}</a>
             </div>
           </div>
           <div className="kda">
-            <div class="kda">
-              <span class="kill">{m.kills}</span> /
-              <span class="death">{m.deaths}</span> /
-              <span class="assist">{m.assists}}</span>
+            <div className="kda">
+              <span className="kill">{m.kills}</span> /
+              <span className="death">{m.deaths}</span> /
+              <span className="assist">{m.assists}}</span>
             </div>
-            <div class="kda-ratio">
-              <span class="kda-ratio ">{}</span>
+            <div className="kda-ratio">
+              <span className="kda-ratio ">{}</span>
                 KDA
             </div>
-            <div class="multi-kill">
-              <span class="kill">{}</span>
+            <div className="multi-kill">
+              <span className="kill">{}</span>
             </div>
           </div>
           <div className="stats">
@@ -171,46 +165,39 @@ class Dashboard extends Component {
                 P/Kill 85%
               </div>
           </div>
-          <div class="items">
-            <div class="item">
-              <img src={m.item0Url}/>
+          <div className="items">
+            <div className="item">
+              <img src={m.item0Url} alt=""/>
             </div>
-            <div class="item">
-              <img src={m.item1Url}/>
+            <div className="item">
+              <img src={m.item1Url} alt=""/>
             </div>
-            <div class="item">
-              <img src={m.item2Url}/>
+            <div className="item">
+              <img src={m.item2Url} alt=""/>
             </div>
-            <div class="item">
-              <img src={m.item3Url}/>
+            <div className="item">
+              <img src={m.item3Url} alt=""/>
             </div>
-            <div class="item">
-              <img src={m.item4Url}/>
+            <div className="item">
+              <img src={m.item4Url} alt=""/>
             </div>
-            <div class="item">
-              <img src={m.item5Url}/>
+            <div className="item">
+              <img src={m.item5Url} alt=""/>
             </div>
           </div>
           <div className="trinkets">
             <div className="trinket">
-              <img src={m.item6Url}/>
+              <img src={m.item6Url} alt=""/>
             </div>
           </div>
           <div className="fellow-players">
-
           </div>
         </div>
       )
     });
+
+    return matchItems;
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getSummonerMatchHistory: (summonerId, region, offset, size) => {
-      getSummonerMatchHistory(dispatch, summonerId, region, offset, size);
-    }
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Dashboard);
+export default Dashboard;

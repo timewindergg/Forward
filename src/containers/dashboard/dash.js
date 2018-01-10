@@ -7,12 +7,16 @@ import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
 
 import Dashboard from '../../components/dashboard/dash';
 
+// Import api utilities.
+import { getSummonerMatchHistory } from '../../utils/getMatchHistoryAPIUtils';
+
 class DashboardContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router
     summoner: PropTypes.object.isRequired,
     getSummonerInfo: PropTypes.func.isRequired,
     matches: PropTypes.array.isRequired
+    getSummonerMatchHistory: PropTypes.func.isRequired
   }
 
   componentWillMount() {
@@ -29,11 +33,12 @@ class DashboardContainer extends Component {
 
 
   render() {
-    const {summoner, matches} = this.props;
+    const {summoner, matches, getSummonerMatchHistory} = this.props;
     return (
       <Dashboard
         summoner={summoner}
         matches={matches}
+        getSummonerMatchHistory={getSummonerMatchHistory}
       />
     );
   }
@@ -45,9 +50,13 @@ const mapStateToProps = (state) => ({
   matches: state.matchHistory.matches
 });
 
-// we will probably need this later
-const mapDispatchToProps = (dispatch) => ({
-  getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
+    getSummonerMatchHistory: (summonerId, region, offset, size) => {
+      getSummonerMatchHistory(dispatch, summonerId, region, offset, size);
+    }
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
