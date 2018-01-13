@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Home from '../../components/home/home';
-import {searchSummoner} from '../../actions/navigation';
 
 class HomeContainer extends Component {
-  static propTypes = {
-    onSearchSummoner: PropTypes.func.isRequired,
-  }
+  static propTypes = {}
 
   render() {
     return (
-      <Home onSearchSummoner={this.props.onSearchSummoner}/>
+      <Home />
     );
   }
 }
@@ -23,10 +20,6 @@ const mapStateToProps = (state) => ({});
 // provides the callback for the component to dispatch an action
 // the callback is passed into the component as a property of type func.
 
-const mapDispatchToProps = (dispatch) => ({
-  onSearchSummoner: (summoner, region) => dispatch(searchSummoner({
-    region, summoner
-  })),
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

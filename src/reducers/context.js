@@ -1,5 +1,5 @@
-import {NavigationActions} from '../actions/navigation';
-
+// summoner info
+// loaded when a page is loaded
 const initialState = {  
   region: '',
   summoner: '',
@@ -18,9 +18,6 @@ const searchSummoner = (state, payload) => {
 // to the right handler
 const context = (state = initialState, action) => {
   switch (action.type) {
-    case NavigationActions.SEARCH_SUMMONER:
-      return searchSummoner(state, action.payload);
-      break;
     default:
       return state;
   };

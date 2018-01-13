@@ -17,16 +17,16 @@ const quotes = [
 ];
 
 const REGION = {
-  NA: 'na',
-  EUW: 'euw',
-  EUNE: 'eune',
-  KR: 'kr',
-  BR: 'br',
-  LAN: 'lan',
-  LAS: 'las',
-  OCE: 'oce',
-  RU: 'ru',
-  TR: 'tr',
+  NA: 'NA',
+  EUW: 'EUW',
+  EUNE: 'EUNE',
+  KR: 'KR',
+  BR: 'BR',
+  LAN: 'LAN',
+  LAS: 'LAS',
+  OCE: 'OCE',
+  RU: 'RU',
+  TR: 'TR',
 };
 
 class Home extends Component {
@@ -35,15 +35,7 @@ class Home extends Component {
     server: REGION.NA,
   }
 
-  static propTypes = {
-    onSearchSummoner: PropTypes.func.isRequired,
-  }
-
-  searchSummoner = () => {
-    const {summoner, server} = this.state;
-    this.props.onSearchSummoner(summoner, server);
-    console.log(`searching summoner: ${this.state.summoner}`);
-  }
+  static propTypes = {}
 
   render() {
     const {summoner, server} = this.state;
@@ -79,11 +71,8 @@ class Home extends Component {
               onChange={(event) => this.setState({summoner: event.target.value})}
             />
 
-            <Link to={`/p/${summoner}`}>
-              <input
-                id="searchButton" className="button" type="submit" name="commit" value="Search"
-                onClick={this.searchSummoner}
-              />
+            <Link to={`/p/${summoner}/${server}`}>
+              <input id="searchButton" className="button" type="submit" name="commit" value="Search"/>
             </Link>
           </div>
 
