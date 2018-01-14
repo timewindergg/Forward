@@ -5,16 +5,17 @@ import './dash.css';
 
 class Dashboard extends Component {
   static propTypes = {
-    summoner: PropTypes.string.isRequired,
+    summoner: PropTypes.object.isRequired,
   }
 
   render() {
     const {summoner} = this.props;
+    console.log('components/dashboard/dash.js summoner shown:', summoner);
 
     return (
       <div className='Dashboard'>
         <h1>Timewinder</h1>
-        <p> Welcome, {summoner}</p>
+        <p> Welcome, {summoner.summonerName}</p>
       </div>
     );
   }
