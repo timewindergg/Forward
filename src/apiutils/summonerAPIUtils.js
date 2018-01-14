@@ -1,6 +1,8 @@
 import axios from 'axios';
 import FormData from 'form-data';
 
+import {loadSummonerSuccess, loadSummonerFailed} from '../actions/summonerActions';
+
 // // this is the structure we should follow
 // export const getSummonerInfo = (summonerName, region) => {
 //   const uri = `/get_summoner/`;
@@ -65,13 +67,16 @@ export const getSummonerInfo = (summonerName, region) => {
         console.log('loaded summoner', response.data);
         const summoner = mapAPIDataToSummoner(response.data);
 
+        dispatch(loadSummonerSuccess(summoner));
         // TODO: dispatch action here
       }).catch((error) => {
-        console.log('whoops');
+        console.log('whoops', error);
+        dispatch(loadSummonerFailed(error));
       });
 
     }).catch((error) => {
       console.log('could not update summoner', error);
+      dispatch(loadSummonerFailed(error));
     });
   }
 }
