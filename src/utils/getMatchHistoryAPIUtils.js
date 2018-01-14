@@ -53,7 +53,9 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
 
         // Calculate kill participation.
         match.killParticipation = getKillParticipation(match.kills, match.assists, getTotalTeamKills(match.team === 100 ? match.blue_team: match.red_team));
-        console.log(match.killParticipation);
+
+        // Get the list of participants and their champions.
+        match.participants = getParticipants(match.blue_team, match.red_team);
       });
 
       dispatch(fetchMatchHistorySuccess(result));
@@ -91,10 +93,6 @@ function getTotalTeamKills(team) {
   return kills;
 }
 
-function getLargestKillingSpree(team, summonerName) {
-
-}
-
 function getKDA(kills, deaths, assists) {
   if (deaths === 0) {
     return 'Perfect';
@@ -111,4 +109,90 @@ function getKillParticipation(userKills, userAssists, totalTeamKills) {
   return ((userKills + userAssists)*100/totalTeamKills).toFixed(2) + '%';
 }
 
+// Takes in team data and return a list of the following structure where the first element is the blue team.
+// Note that the players are sorted top -> jungle -> mid -> adc -> support.
+/*
+  [
+    [{
+      summonerName: 'doublelift',
+      championUrl: 'path_to_image'
+    }]
+  ]
+*/
+
+function getParticipants(blueTeam, redTeam) {
+  const teams = [];
+  const _blueTeam = new Array(5);
+  const _redTeam = new Array(5);
+
+  teams.push(_blueTeam);
+  teams.push(_redTeam);
+
+  // Create arrays that will store players that have roles that are duplicated.
+  const blueDups = [];
+  const redDupes = [];
+
+  for (let i = 0; i < blueTeam.length; i++) {
+    const bluePlayerEntry = {};
+    const redPlayerEntry = {};
+    // Fill in the summoner name first.
+    bluePlayerEntry['summonerName'] = blueTeam[i].summonerName;
+    redPlayerEntry['summonerName'] = redTeam[i].summonerName;
+
+    // Fill in the championIcons.
+    bluePlayerEntry['championUrl'] = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[blueTeam[i].championId].image}`;
+    redPlayerEntry['championUrl'] = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[redTeam[i].championId].image}`;
+
+    // Set the appropriate element in the _blueTeam and _redTeam to the player entry if there's no entry already.
+    const bluePlayerPosition = getPlayerPosition(blueTeam[i].timeline.role, blueTeam[i].timeline.lane);
+    const redPlayerPosition = getPlayerPosition(redTeam[i].timeline.role, redTeam[i].timeline.lane);
+
+    if (_blueTeam[bluePlayerPosition] === undefined) {
+      _blueTeam[bluePlayerPosition] = bluePlayerEntry;
+    } else {
+      blueDups.push(bluePlayerEntry);
+    }
+
+    if (_redTeam[redPlayerPosition] === undefined) {
+      _redTeam[redPlayerPosition] = redPlayerEntry;
+    } else {
+      redDupes.push(redPlayerEntry);
+    }
+  }
+
+  for (let i = 0; i < blueDups.length; i++) {
+    for (let j = 0; j < 5; j++) {
+      if (_blueTeam[j] === undefined) {
+        _blueTeam[j] = blueDups[i];
+      }
+    }
+  }
+
+  for (let i = 0; i < redDupes.length; i++) {
+    for (let j = 0; j < 5; j++) {
+      if (_redTeam[j] === undefined) {
+        _redTeam[j] = redDupes[i];
+      }
+    }
+  }
+
+  return teams;
+}
+
+// Helper function for getParticipants which takes in a role and a lane and return the position of the player as [0, 4]
+function getPlayerPosition(role, lane) {
+  switch (lane) {
+    case 'MIDDLE':
+      return 2;
+    case 'BOTTOM':
+      return role === 'DUO_SUPPORT' ? 4 : 3;
+    case 'TOP':
+      return 0;
+    case 'JUNGLE':
+      return 1;
+
+    default:
+      return 2;
+  }
+}
 
