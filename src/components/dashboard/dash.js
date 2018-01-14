@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Radar, Line } from 'react-chartjs-2';
+import Moment from 'react-moment';
 
 import './dash.css';
 
@@ -102,6 +103,7 @@ class Dashboard extends Component {
 
   renderMatchList(matches) {
     const matchItems = matches.map((m) => {
+      console.log(m);
       return (
         <div className="content" key={m.match_id}>
           <div className="game-stats">
@@ -109,13 +111,15 @@ class Dashboard extends Component {
               {m.game_type}
             </div>
             <div className="time-stamp">
-              <span>{m.timestamp}</span>
+              <Moment fromNow>{m.timestamp}</Moment>
             </div>
             <div className="Bar"></div>
             <div className="game-result">
-              Victory
+              {m.won ? 'Victory' : 'Defeat'}
             </div>
-            <div className="game-length">{m.duration}</div>
+            <div className="game-length">
+              <span>{m.duration}</span>
+            </div>
           </div>
           <div className="game-setting-info">
             <div className="champion-image">
@@ -145,11 +149,10 @@ class Dashboard extends Component {
             <div className="kda">
               <span className="kill">{m.kills}</span> /
               <span className="death">{m.deaths}</span> /
-              <span className="assist">{m.assists}}</span>
+              <span className="assist">{m.assists}</span>
             </div>
             <div className="kda-ratio">
-              <span className="kda-ratio ">{}</span>
-                KDA
+              <span className="kda-ratio ">{m.kda}</span>
             </div>
             <div className="multi-kill">
               <span className="kill">{}</span>
@@ -162,7 +165,7 @@ class Dashboard extends Component {
             <div className="cs">
               <span title="">{m.cs}</span>CS</div>
               <div className="" title="">
-                P/Kill 85%
+                {m.killParticipation}
               </div>
           </div>
           <div className="items">
