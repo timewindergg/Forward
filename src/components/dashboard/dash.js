@@ -18,7 +18,6 @@ class Dashboard extends Component {
 
   render() {
     const {summoner, matches} = this.props;
-    console.log('components/dashboard/dash.js summoner shown:', summoner);
     return (
       <div className='Dashboard'>
         <h1>Timewinder</h1>

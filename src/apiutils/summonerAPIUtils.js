@@ -31,18 +31,19 @@ const mapSummonerToAPIData = (summoner) => {
 // so we only update here when API changes
 const mapAPIDataToSummoner = (apiData) => {
   return {
-    userID:           apiData.user_id,
-    region:           apiData.region,
-    summonerName:     apiData.name,
-    lastUpdated:      apiData.last_updated,
-    lastMatchUpdated: apiData.last_match_updated,
-    rankS8:           apiData.rank_s8,
-    rankS7:           apiData.rank_s7,
-    wins:             apiData.wins,
-    losses:           apiData.losses,
-    level:            apiData.level,
-    icon:             apiData.icon,
-    timePlayed:       apiData.time_played
+    userID:             apiData.user_id,
+    region:             apiData.region,
+    summonerName:       apiData.name,
+    lastUpdated:        apiData.last_updated,
+    lastMatchUpdated:   apiData.last_match_updated,
+    rankS8:             apiData.rank_s8,
+    rankS7:             apiData.rank_s7,
+    wins:               apiData.wins,
+    losses:             apiData.losses,
+    level:              apiData.level,
+    icon:               apiData.icon,
+    timePlayed:         apiData.time_played,
+    championMasteries:  apiData.championMasteries
   };
 }
 

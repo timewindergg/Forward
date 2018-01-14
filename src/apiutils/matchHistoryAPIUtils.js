@@ -62,7 +62,6 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
     });
 };
 
-
 function strPadLeft(string, pad, length) {
   return (new Array(length+1).join(pad)+string).slice(-length);
 }

@@ -8,14 +8,14 @@ import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
 import Dashboard from '../../components/dashboard/dash';
 
 // Import api utilities.
-import { getSummonerMatchHistory } from '../../utils/getMatchHistoryAPIUtils';
+import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
 class DashboardContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router
     summoner: PropTypes.object.isRequired,
     getSummonerInfo: PropTypes.func.isRequired,
-    matches: PropTypes.array.isRequired
+    matches: PropTypes.array.isRequired,
     getSummonerMatchHistory: PropTypes.func.isRequired
   }
 
