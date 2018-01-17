@@ -5,6 +5,8 @@ import Moment from 'react-moment';
 
 import './dash.css';
 
+import ChampionMappings from '../../shared/championMappings.js';
+
 class Dashboard extends Component {
   static propTypes = {
     summoner: PropTypes.object.isRequired,
@@ -18,10 +20,20 @@ class Dashboard extends Component {
 
   render() {
     const {summoner, matches} = this.props;
+    const profileIconUrl = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/profileicon/${summoner.icon}.png`;
     return (
       <div className='Dashboard'>
         <h1>Timewinder</h1>
         <p> Welcome, {summoner.summonerName}</p>
+        <div>
+          <img src={profileIconUrl} alt=""/>
+        </div>
+        <div>
+          {this.renderRankedTiers(summoner.leagues)}
+        </div>
+        <div>
+          {this.renderTopUserChampionMasteries(summoner.championMasteries)}
+        </div>
         <div>
           {this.renderRadarChart()}
         </div>
@@ -33,6 +45,40 @@ class Dashboard extends Component {
         </div>
       </div>
     );
+  }
+
+  renderTopUserChampionMasteries(championMasteries) {
+    if (championMasteries !== undefined) {
+      const champions = championMasteries.map((c) => {
+        return (
+          <div key={c.champ_id}>
+            <img src={`http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[c.champ_id].image}`} alt=""/>
+            <span>{c.level}</span>
+          </div>
+        );
+      });
+
+      return champions;
+    }
+  }
+
+  renderRankedTiers(leagues) {
+    if (leagues !== undefined) {
+      // Only show the solo q info.
+      // Sort the objects by their id.
+      let rankedInfo = {};
+      leagues.forEach((league) => {
+        if (league.queue === 'RANKED_SOLO_5x5') {
+          Object.assign(rankedInfo, league);
+        }
+      });
+
+      return (
+        <div>
+          <span>{Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier + rankedInfo.division}</span>
+        </div>
+      );
+    }
   }
 
   renderRadarChart() {
@@ -98,6 +144,19 @@ class Dashboard extends Component {
     return (
       <Line data={data} />
     )
+  }
+
+  renderParticipants(participants) {
+    const participantList = participants.map((p) => {
+      return (
+        <div key={p.summonerId}>
+          <img src={p.championUrl} alt=""/>
+          <span>{p.summonerName}</span>
+        </div>
+      );
+    });
+
+    return participantList;
   }
 
   renderMatchList(matches) {
@@ -193,6 +252,12 @@ class Dashboard extends Component {
             </div>
           </div>
           <div className="fellow-players">
+            <div>
+              {this.renderParticipants(m.participants[0])}
+            </div>
+            <div>
+              {this.renderParticipants(m.participants[1])}
+            </div>
           </div>
         </div>
       )

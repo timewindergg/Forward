@@ -56,17 +56,21 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
 
         // Get the list of participants and their champions.
         match.participants = getParticipants(match.blue_team, match.red_team);
+
+        // // Set user primary and secondary runes.
+        // match.rune1 = `http://opgg-static.akamaized.net/images/lol/perk/{}.png`;
+        // match.rune2 = ``;
       });
 
       dispatch(fetchMatchHistorySuccess(result));
     });
 };
 
-function strPadLeft(string, pad, length) {
+const strPadLeft = (string, pad, length) => {
   return (new Array(length+1).join(pad)+string).slice(-length);
 }
 
-function fetchRoleIconName(lane, role) {
+const fetchRoleIconName = (lane, role) => {
   switch (lane) {
     case 'MID_LANE':
       return 'Mid';
@@ -83,16 +87,16 @@ function fetchRoleIconName(lane, role) {
 }
 
 
-function getTotalTeamKills(team) {
+const getTotalTeamKills = (team) => {
   let kills = 0;
-  team.forEach(function(player) {
+  team.forEach((player) => {
     kills += player.stats.kills;
   });
 
   return kills;
 }
 
-function getKDA(kills, deaths, assists) {
+const getKDA = (kills, deaths, assists) => {
   if (deaths === 0) {
     return 'Perfect';
   }
@@ -100,7 +104,7 @@ function getKDA(kills, deaths, assists) {
   return ((kills + assists)/deaths).toFixed(2);
 }
 
-function getKillParticipation(userKills, userAssists, totalTeamKills) {
+const getKillParticipation = (userKills, userAssists, totalTeamKills) => {
   if (totalTeamKills === 0) {
     return '0%';
   }
@@ -114,12 +118,13 @@ function getKillParticipation(userKills, userAssists, totalTeamKills) {
   [
     [{
       summonerName: 'doublelift',
-      championUrl: 'path_to_image'
+      championUrl: 'path_to_image',
+      summonerId: 12333
     }]
   ]
 */
 
-function getParticipants(blueTeam, redTeam) {
+const getParticipants = (blueTeam, redTeam) => {
   const teams = [];
   const _blueTeam = new Array(5);
   const _redTeam = new Array(5);
@@ -137,6 +142,8 @@ function getParticipants(blueTeam, redTeam) {
     // Fill in the summoner name first.
     bluePlayerEntry['summonerName'] = blueTeam[i].summonerName;
     redPlayerEntry['summonerName'] = redTeam[i].summonerName;
+    bluePlayerEntry['summonerId'] = blueTeam[i].summonerId;
+    redPlayerEntry['summonerId'] = redTeam[i].summonerId;
 
     // Fill in the championIcons.
     bluePlayerEntry['championUrl'] = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[blueTeam[i].championId].image}`;
@@ -163,6 +170,7 @@ function getParticipants(blueTeam, redTeam) {
     for (let j = 0; j < 5; j++) {
       if (_blueTeam[j] === undefined) {
         _blueTeam[j] = blueDups[i];
+        break;
       }
     }
   }
@@ -171,6 +179,7 @@ function getParticipants(blueTeam, redTeam) {
     for (let j = 0; j < 5; j++) {
       if (_redTeam[j] === undefined) {
         _redTeam[j] = redDupes[i];
+        break;
       }
     }
   }
@@ -179,7 +188,7 @@ function getParticipants(blueTeam, redTeam) {
 }
 
 // Helper function for getParticipants which takes in a role and a lane and return the position of the player as [0, 4]
-function getPlayerPosition(role, lane) {
+const getPlayerPosition = (role, lane) => {
   switch (lane) {
     case 'MIDDLE':
       return 2;
@@ -193,5 +202,18 @@ function getPlayerPosition(role, lane) {
     default:
       return 2;
   }
+}
+
+// Return an array of two elements where the first one is the user's primary runes and the second is the secondary one.
+const getPlayerRunes = (team, summonerName) => {
+  const runes = [];
+  team.forEach((player) => {
+    if (player.summonerName === summonerName) {
+      runes.push(summonerName.stats.perkPrimaryStyle);
+      runes.push(summonerName.stats.perkSubStyle);
+    }
+  });
+
+  return runes;
 }
 

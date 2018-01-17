@@ -43,7 +43,8 @@ const mapAPIDataToSummoner = (apiData) => {
     level:              apiData.level,
     icon:               apiData.icon,
     timePlayed:         apiData.time_played,
-    championMasteries:  apiData.championMasteries
+    championMasteries:  apiData.championMasteries,
+    leagues:            apiData.leagues
   };
 }
 
