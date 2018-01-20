@@ -6,6 +6,7 @@ import { fetchMatchHistorySuccess } from '../actions/matchHistoryActions';
 import ChampionMappings from '../shared/championMappings.js';
 import summonerSpellMappings from '../shared/summonerSpellMappings.js';
 import QueueIdMappings from '../shared/queueIdMappings.js';
+import RuneMappings from '../shared/runeMappings.js';
 
 export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, size) => {
   const uri = `/get_match_history/?summoner_id=${summonerId}&region=${region}&offset=${offset}&size=${size}`;
@@ -57,9 +58,12 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
         // Get the list of participants and their champions.
         match.participants = getParticipants(match.blue_team, match.red_team);
 
-        // // Set user primary and secondary runes.
-        // match.rune1 = `http://opgg-static.akamaized.net/images/lol/perk/{}.png`;
-        // match.rune2 = ``;
+        // Set user primary and secondary runes.
+        const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, summonerId);
+        if (runes.length === 2) {
+          match.rune1 = `http://opgg-static.akamaized.net/images/lol/perk/${runes[0]}.png`;
+          match.rune2 = `http://opgg-static.akamaized.net/images/lol/perkStyle/${runes[1]}.png`;
+        }
       });
 
       dispatch(fetchMatchHistorySuccess(result));
@@ -205,12 +209,19 @@ const getPlayerPosition = (role, lane) => {
 }
 
 // Return an array of two elements where the first one is the user's primary runes and the second is the secondary one.
-const getPlayerRunes = (team, summonerName) => {
+const getPlayerRunes = (team, summonerId) => {
   const runes = [];
   team.forEach((player) => {
-    if (player.summonerName === summonerName) {
-      runes.push(summonerName.stats.perkPrimaryStyle);
-      runes.push(summonerName.stats.perkSubStyle);
+    if (player.summonerId === summonerId) {
+      // Loop through user runes and find the keystone.
+      for (let key in player.runes) {
+        console.log(key);
+        if (RuneMappings[key].keyStone === true) {
+          runes.push(parseInt(key));
+        }
+      }
+
+      runes.push(player.stats.perkSubStyle);
     }
   });
 
