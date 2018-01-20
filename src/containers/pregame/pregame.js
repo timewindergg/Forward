@@ -6,21 +6,17 @@ import {SUMMONER_PARAM, REGION_PARAM} from '../../constants/RouteConstants';
 import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
 import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
 
-import Dashboard from '../../components/dashboard/dash';
+import Pregame from '../../components/pregame/pre';
 
-class DashboardContainer extends Component {
+class PregameContainer extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired, // for react router ONLY
-    
+    match: PropTypes.object.isRequired, // for react router
     summoner: PropTypes.object.isRequired,
-    currentMatch: PropTypes.object.isRequired,
-
-    getSummonerInfo: PropTypes.func.isRequired,
-    getCurrentMatch: PropTypes.func.isRequired,
+    getSummonerInfo: PropTypes.func.isRequired
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo, getCurrentMatch} = this.props;
+    const {match, summoner, getSummonerInfo} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     
@@ -34,12 +30,11 @@ class DashboardContainer extends Component {
 
 
   render() {
-    const {summoner, currentMatch} = this.props;
+    const {summoner} = this.props;
 
     return (
-      <Dashboard
+      <Pregame
         summoner={summoner}
-        currentMatch={currentMatch}
       />
     );
   }
@@ -47,14 +42,12 @@ class DashboardContainer extends Component {
 
 // maps states from the reducers to the component
 const mapStateToProps = (state) => ({
-  summoner: state.context.summoner,
-  currentMatch: state.match.currentMatch
+  summoner: state.context.summoner
 });
 
 // we will probably need this later
 const mapDispatchToProps = (dispatch) => ({
-  getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
-  getCurrentMatch: (summonerName, region) => dispatch(getCurrentMatch(summonerName, region)),
+  getSummonerInfo: (summonerName, region, onSuccess) => dispatch(getSummonerInfo(summonerName, region)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PregameContainer);
