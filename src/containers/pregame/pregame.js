@@ -4,19 +4,33 @@ import { connect } from 'react-redux';
 
 import {SUMMONER_PARAM, REGION_PARAM} from '../../constants/RouteConstants';
 import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
-import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
+import {getCurrentMatch, getCurrentMatchDetails} from '../../apiutils/matchAPIUtils';
 
 import Pregame from '../../components/pregame/pre';
 
 class PregameContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router
+
     summoner: PropTypes.object.isRequired,
-    getSummonerInfo: PropTypes.func.isRequired
+    currentMatch: PropTypes.object.isRequired,
+    currentMatchDetails: PropTypes.object.isRequired,
+
+    getSummonerInfo: PropTypes.func.isRequired,
+    getCurrentMatch: PropTypes.func.isRequired,
+    getCurrentMatchDetails: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo} = this.props;
+    const {
+      match,
+      summoner,
+      currentMatch,
+      getSummonerInfo,
+      getCurrentMatch,
+      getCurrentMatchDetails
+    } = this.props;
+
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     
@@ -26,28 +40,61 @@ class PregameContainer extends Component {
       getSummonerInfo(summonerName, region);
       getCurrentMatch(summonerName, region);
     }
+
+    if (Object.keys(currentMatch).length > 0) {
+      this.getDetails(currentMatch, region, getCurrentMatchDetails);
+    }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const region = nextProps.match.params[REGION_PARAM];
+    // HACK! used to fetch match details right after we LOAD the match (if still needed)
+    const wasMatchDetailsEmpty = Object.keys(this.props.currentMatch).length === 0;
+
+    if (wasMatchDetailsEmpty && Object.keys(nextProps.currentMatch).length > 0) {
+      this.getDetails(nextProps.currentMatch, region, nextProps.getCurrentMatchDetails);
+    }
+  }
+
+  // fetch match details
+  getDetails = (currentMatch, region, getCurrentMatchDetails) => {
+    const {red_team, blue_team} = currentMatch;
+
+    [...red_team, ...blue_team].forEach((summoner) => {
+      getCurrentMatchDetails(
+        summoner.id,
+        summoner.name,
+        region,
+        summoner.champion_id
+      );
+    });
+  }
 
   render() {
-    const {summoner} = this.props;
+    const {summoner, currentMatch, currentMatchDetails} = this.props;
 
     return (
       <Pregame
         summoner={summoner}
+        currentMatch={currentMatch}
+        currentMatchDetails={currentMatchDetails}
       />
     );
   }
 }
 
-// maps states from the reducers to the component
 const mapStateToProps = (state) => ({
-  summoner: state.context.summoner
+  summoner: state.context.summoner,
+  currentMatch: state.match.currentMatch,
+  currentMatchDetails: state.match.currentMatchDetails
 });
 
-// we will probably need this later
 const mapDispatchToProps = (dispatch) => ({
-  getSummonerInfo: (summonerName, region, onSuccess) => dispatch(getSummonerInfo(summonerName, region)),
+  getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
+  getCurrentMatch: (summonerName, region) => dispatch(getCurrentMatch(summonerName, region)),
+  getCurrentMatchDetails: (summonerID, summonerName, region, championId) => {
+    dispatch(getCurrentMatchDetails(summonerID, summonerName, region, championId));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PregameContainer);

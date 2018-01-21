@@ -11,7 +11,7 @@ import Dashboard from '../../components/dashboard/dash';
 class DashboardContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router ONLY
-    
+
     summoner: PropTypes.object.isRequired,
     currentMatch: PropTypes.object.isRequired,
 

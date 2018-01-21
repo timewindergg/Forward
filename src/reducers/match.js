@@ -1,7 +1,14 @@
-import {LOAD_CURRENT_MATCH_SUCCESS, LOAD_CURRENT_MATCH_FAILED} from '../actions/matchActions';
+import {
+  LOAD_CURRENT_MATCH_SUCCESS,
+  LOAD_CURRENT_MATCH_FAILED,
+  LOAD_CURRENT_MATCH_DETAILS_SUCCESS,
+  LOAD_CURRENT_MATCH_DETAILS_FAILED
+} from '../actions/matchActions';
+import _ from 'lodash';
 
 const initialState = {  
-  currentMatch: {}
+  currentMatch: {},
+  currentMatchDetails: {}
 };
 
 // action handler to change/set the name of the user
@@ -17,6 +24,29 @@ const clearCurrentMatch = (state, payload) => {
   });
 };
 
+
+// action handler to change/set the name of the user
+const loadCurrentMatchDetails = (state, payload) => {
+  const {id, stats, build} = payload;
+  const matchDetailsForSummoner = {
+    stats, build
+  };
+
+  const newState = _.set(
+    _.cloneDeep(state), ['currentMatchDetails', id], matchDetailsForSummoner
+  );
+  return newState;
+};
+
+const clearCurrentMatchDetails = (state, payload) => {
+  const {id} = payload;
+
+  const newState = _.set(
+    _.cloneDeep(state), ['currentMatchDetails', id], {}
+  );
+  return newState;
+};
+
 // setting up the reducer
 // here we have a switch statement to direct the right type of action
 // to the right handler
@@ -26,6 +56,8 @@ const match = (state = initialState, action) => {
       return loadCurrentMatch(state, action.payload);
     case LOAD_CURRENT_MATCH_FAILED:
       return clearCurrentMatch(state, action.payload);
+    case LOAD_CURRENT_MATCH_DETAILS_SUCCESS:
+      return loadCurrentMatchDetails(state, action.payload);
     default:
       return state;
   };

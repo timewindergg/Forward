@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import './dash.css';
 
@@ -23,11 +24,13 @@ class Dashboard extends Component {
     return (
       <div className='Dashboard'>
         <h1>Timewinder</h1>
-        <p> Welcome, {summoner.summonerName}</p>
+        <p> Welcome, {summoner.name}</p>
 
-        <button onClick={gotoPregame} disabled={!isSummonerInMatch}>
-          Go to pregame
-        </button>
+        <Link to={`/l/${summoner.name}/${summoner.region}`}>
+          <button disabled={!isSummonerInMatch}>
+            Go to pregame
+          </button>
+        </Link>
       </div>
     );
   }
