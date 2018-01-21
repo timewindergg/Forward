@@ -7,6 +7,9 @@ import './dash.css';
 
 import ChampionMappings from '../../shared/championMappings.js';
 
+import { getMasteryIconUrl, getTierIconUrl} from '../../shared/helpers/staticImageHelper.js';
+import { numberFormatter } from '../../shared/helpers/numberHelper.js';
+
 class Dashboard extends Component {
   static propTypes = {
     summoner: PropTypes.object.isRequired,
@@ -23,16 +26,19 @@ class Dashboard extends Component {
     const profileIconUrl = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/profileicon/${summoner.icon}.png`;
     return (
       <div className='Dashboard'>
-        <h1>Timewinder</h1>
-        <p> Welcome, {summoner.summonerName}</p>
-        <div>
-          <img src={profileIconUrl} alt=""/>
-        </div>
-        <div>
-          {this.renderRankedTiers(summoner.leagues)}
-        </div>
-        <div>
+        <div className="header">
+          <div className="profile-icon col-sm-3">
+            <img src={profileIconUrl} alt=""/>
+          </div>
+          <div className="profile col-sm-2">
+            <span className="Name">{summoner.summonerName}</span>
+          </div>
+          <div className="ranked-info col-sm-2">
+            {this.renderRankedTiers(summoner.leagues)}
+          </div>
+        <div className="top-champion-masteries col-sm-5">
           {this.renderTopUserChampionMasteries(summoner.championMasteries)}
+        </div>
         </div>
         <div>
           {this.renderRadarChart()}
@@ -40,7 +46,7 @@ class Dashboard extends Component {
         <div>
           {this.renderLineChart()}
         </div>
-        <div>
+        <div className='game-item-list'>
           {this.renderMatchList(matches)}
         </div>
       </div>
@@ -49,11 +55,18 @@ class Dashboard extends Component {
 
   renderTopUserChampionMasteries(championMasteries) {
     if (championMasteries !== undefined) {
+      // The champions should be sorted by their points.
+      championMasteries.sort((mastery1, mastery2) => {
+        return mastery1.total_points - mastery2.total_points;
+      });
+
       const champions = championMasteries.map((c) => {
+        const masteryIcon = getMasteryIconUrl(c.level);
         return (
           <div key={c.champ_id}>
             <img src={`http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[c.champ_id].image}`} alt=""/>
-            <span>{c.level}</span>
+            <img src={masteryIcon} alt=""/>
+            <span>{numberFormatter(c.total_points)}</span>
           </div>
         );
       });
@@ -75,7 +88,7 @@ class Dashboard extends Component {
 
       return (
         <div>
-          <span>{Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier + rankedInfo.division}</span>
+          <img src={getTierIconUrl(Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier)}/>
         </div>
       );
     }
@@ -149,9 +162,13 @@ class Dashboard extends Component {
   renderParticipants(participants) {
     const participantList = participants.map((p) => {
       return (
-        <div key={p.summonerId}>
-          <img src={p.championUrl} alt=""/>
-          <span>{p.summonerName}</span>
+        <div key={p.summonerId} className="participant">
+          <div className="participant-champion-image">
+            <img src={p.championUrl} alt="" className="Image"/>
+          </div>
+          <div className="participant-name">
+            <span>{p.summonerName}</span>
+          </div>
         </div>
       );
     });
@@ -163,100 +180,104 @@ class Dashboard extends Component {
     const matchItems = matches.map((m) => {
       console.log(m);
       return (
-        <div className="content" key={m.match_id}>
-          <div className="game-stats">
-            <div className="game-type">
-              {m.game_type}
-            </div>
-            <div className="time-stamp">
-              <Moment fromNow>{m.timestamp}</Moment>
-            </div>
-            <div className="Bar"></div>
-            <div className="game-result">
-              {m.won ? 'Victory' : 'Defeat'}
-            </div>
-            <div className="game-length">
-              <span>{m.duration}</span>
-            </div>
-          </div>
-          <div className="game-setting-info">
-            <div className="champion-image">
-              <a href="" target="_blank"><img src={m.championUrl} alt=""/></a>
-            </div>
-            <div className="summoner-spell">
-              <div className="Spell">
-                <img src={m.spell1Url} alt=""/>
+        <div className="game-item-wrapper" key={m.match_id}>
+          <div className="game-item">
+            <div className="game-content" >
+              <div className="game-stats">
+                <div className="game-type">
+                  {m.game_type}
+                </div>
+                <div className="time-stamp">
+                  <Moment fromNow>{m.timestamp}</Moment>
+                </div>
+                <div className="bar"></div>
+                <div className="game-result">
+                  {m.won ? 'Victory' : 'Defeat'}
+                </div>
+                <div className="game-length">
+                  <span>{m.duration}</span>
+                </div>
               </div>
-              <div className="Spell">
-                <img src={m.spell2Url} alt=""/>
+              <div className="game-setting-info">
+                <div className="champion-image">
+                  <a href="" target="_blank"><img src={m.championUrl} alt="" className="Image"/></a>
+                </div>
+                <div className="summoner-spell">
+                  <div className="spell">
+                    <img src={m.spell1Url} alt="" className="Image"/>
+                  </div>
+                  <div className="spell">
+                    <img src={m.spell2Url} alt="" className="Image"/>
+                  </div>
+                </div>
+                <div className="runes">
+                  <div className="rune">
+                    <img src={m.rune1} alt="" className="Image"/>
+                  </div>
+                  <div className="rune">
+                    <img src= {m.rune2} alt="" className="Image"/>
+                  </div>
+                </div>
+                <div className="champion-name">
+                  <a href= "" target="_blank">{m.championName}</a>
+                </div>
               </div>
-            </div>
-            <div className="runes">
-              <div className="rune">
-                <img src={m.rune1} alt=""/>
+              <div className="kda">
+                <div className="kda-info">
+                  <span className="kill">{m.kills}</span> /
+                  <span className="death">{m.deaths}</span> /
+                  <span className="assist">{m.assists}</span>
+                </div>
+                <div className="kda-ratio">
+                  <span className="kda-ratio ">{m.kda}</span>
+                </div>
+                <div className="multi-kill">
+                  <span className="kill">Triple Kill</span>
+                </div>
               </div>
-              <div className="rune">
-                <img src= {m.rune2} alt=""/>
+              <div className="stats">
+                <div className="level">
+                  {m.level}
+                </div>
+                <div className="cs">
+                  <span title="">{m.cs}</span>CS</div>
+                  <div className="" title="">
+                    {m.killParticipation}
+                  </div>
               </div>
-            </div>
-            <div className="champion-name">
-              <a href= "" target="_blank">{m.championName}</a>
-            </div>
-          </div>
-          <div className="kda">
-            <div className="kda">
-              <span className="kill">{m.kills}</span> /
-              <span className="death">{m.deaths}</span> /
-              <span className="assist">{m.assists}</span>
-            </div>
-            <div className="kda-ratio">
-              <span className="kda-ratio ">{m.kda}</span>
-            </div>
-            <div className="multi-kill">
-              <span className="kill">{}</span>
-            </div>
-          </div>
-          <div className="stats">
-            <div className="level">
-              {m.level}
-            </div>
-            <div className="cs">
-              <span title="">{m.cs}</span>CS</div>
-              <div className="" title="">
-                {m.killParticipation}
+              <div className="items">
+                <div className="item">
+                  <img src={m.item0Url} alt="" className="Image"/>
+                </div>
+                <div className="item">
+                  <img src={m.item1Url} alt="" className="Image"/>
+                </div>
+                <div className="item">
+                  <img src={m.item2Url} alt="" className="Image"/>
+                </div>
+                <div className="item">
+                  <img src={m.item3Url} alt="" className="Image"/>
+                </div>
+                <div className="item">
+                  <img src={m.item4Url} alt="" className="Image"/>
+                </div>
+                <div className="item">
+                  <img src={m.item5Url} alt="" className="Image"/>
+                </div>
               </div>
-          </div>
-          <div className="items">
-            <div className="item">
-              <img src={m.item0Url} alt=""/>
-            </div>
-            <div className="item">
-              <img src={m.item1Url} alt=""/>
-            </div>
-            <div className="item">
-              <img src={m.item2Url} alt=""/>
-            </div>
-            <div className="item">
-              <img src={m.item3Url} alt=""/>
-            </div>
-            <div className="item">
-              <img src={m.item4Url} alt=""/>
-            </div>
-            <div className="item">
-              <img src={m.item5Url} alt=""/>
-            </div>
-          </div>
-          <div className="trinkets">
-            <div className="trinket">
-              <img src={m.item6Url} alt=""/>
-            </div>
-          </div>
-          <div className="fellow-players">
-            <div>
-              {this.renderParticipants(m.participants[0])}
-            </div>
-            <div>
-              {this.renderParticipants(m.participants[1])}
+              <div className="trinkets">
+                <div className="item">
+                  <img src={m.item6Url} alt="" className="Image"/>
+                </div>
+              </div>
+              <div className="fellow-players">
+                <div className="team">
+                  {this.renderParticipants(m.participants[0])}
+                </div>
+                <div className="team">
+                  {this.renderParticipants(m.participants[1])}
+                </div>
+              </div>
             </div>
           </div>
         </div>
