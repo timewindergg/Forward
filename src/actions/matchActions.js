@@ -14,3 +14,21 @@ export const loadCurrentMatchFailed = (error) => ({
     error
   }
 });
+
+
+export const LOAD_MATCH_TIMELINE_SUCCESS = 'LOAD_MATCH_TIMELINE_SUCCESS';
+export const LOAD_MATCH_TIMELINE_FAILED = 'LOAD_MATCH_TIMELINE_FAILED';
+
+export const loadMatchTimelineSuccess = (matchTimeline) => ({
+  type: LOAD_MATCH_TIMELINE_SUCCESS,
+  payload: {
+    matchTimeline
+  }
+});
+
+export const loadMatchTimelineFailed = (error) => ({
+  type: LOAD_MATCH_TIMELINE_FAILED,
+  payload: {
+    error
+  }
+});

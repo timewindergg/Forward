@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import {loadCurrentMatchSuccess, loadCurrentMatchFailed} from '../actions/matchActions';
+import {loadCurrentMatchSuccess, loadCurrentMatchFailed, 
+        loadMatchTimelineSuccess, loadMatchTimelineFailed} from '../actions/matchActions';
 // import { fetchMoodDataSuccess } from '../actions/analyzeActions';
 
 // get_current_match
@@ -25,6 +26,25 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
     }).catch((error) => {
       console.log('user is not currently in a match', error);
       dispatch(loadCurrentMatchFailed(error));
+    });
+  }
+}
+
+export const getMatchTimeline = (matchId, region, onSuccess) => {
+  const uri = '/get_match_timeline/';
+  console.log('attempting to get match timeline');
+  const params = {
+    match_id: matchId,
+    region: region
+  };
+
+  return (dispatch) => {
+    return axios.get(uri, {params}).then((response) => {
+      console.log('loaded match timeline', response.data);
+      dispatch(loadMatchTimelineSuccess(response.data));
+    }).catch((error) => {
+      console.log('match timeline err', error);
+      dispatch(loadMatchTimelineFailed(error));
     });
   }
 }

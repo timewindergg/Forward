@@ -1,7 +1,9 @@
-import {LOAD_CURRENT_MATCH_SUCCESS, LOAD_CURRENT_MATCH_FAILED} from '../actions/matchActions';
+import {LOAD_CURRENT_MATCH_SUCCESS, LOAD_CURRENT_MATCH_FAILED,
+        LOAD_MATCH_TIMELINE_SUCCESS, LOAD_MATCH_TIMELINE_FAILED} from '../actions/matchActions';
 
 const initialState = {  
-  currentMatch: {}
+  currentMatch: {},
+  timeline: {}
 };
 
 // action handler to change/set the name of the user
@@ -17,6 +19,18 @@ const clearCurrentMatch = (state, payload) => {
   });
 };
 
+const loadMatchTimeline = (state, payload) => {
+  return Object.assign({}, state, {
+    timeline: payload
+  });
+};
+
+const clearMatchTimeline = (state, payload) => {
+  return Object.assign({}, state, {
+    timeline: {}
+  });
+};
+
 // setting up the reducer
 // here we have a switch statement to direct the right type of action
 // to the right handler
@@ -26,6 +40,10 @@ const match = (state = initialState, action) => {
       return loadCurrentMatch(state, action.payload);
     case LOAD_CURRENT_MATCH_FAILED:
       return clearCurrentMatch(state, action.payload);
+    case LOAD_MATCH_TIMELINE_SUCCESS:
+      return loadMatchTimeline(state, action.payload);
+    case LOAD_MATCH_TIMELINE_FAILED:
+      return clearMatchTimeline(state, action.payload);
     default:
       return state;
   };
