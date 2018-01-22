@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './post.css';
 
+import { getMasteryIconUrl, getTierIconUrl} from '../../shared/helpers/staticImageHelper.js';
+
 class Postgame extends Component {
   render() {
     return (
@@ -230,5 +232,19 @@ class Scoreboard extends Component {
     );
   }
 }
+
+class ControlHeader extends Component {
+
+}
+
+class Minimap extends Component {
+
+}
+
+class EventLog extends Component {
+
+}
+
+
 
 export default Postgame;

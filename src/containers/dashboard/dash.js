@@ -30,7 +30,7 @@ class DashboardContainer extends Component {
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
       getSummonerInfo(summonerName, region);
-      getCurrentMatch(summonerName, region);
+      //getCurrentMatch(summonerName, region);
     }
   }
 
