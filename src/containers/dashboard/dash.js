@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import {SUMMONER_PARAM, REGION_PARAM} from '../../constants/RouteConstants';
 import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
+import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
 
 import Dashboard from '../../components/dashboard/dash';
 
@@ -12,7 +13,8 @@ import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
 class DashboardContainer extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired, // for react router
+    match: PropTypes.object.isRequired, // for react router ONLY
+    
     summoner: PropTypes.object.isRequired,
     getSummonerInfo: PropTypes.func.isRequired,
     matches: PropTypes.array.isRequired,
@@ -20,7 +22,7 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo} = this.props;
+    const {match, summoner, getSummonerInfo, getCurrentMatch} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
 
@@ -28,6 +30,7 @@ class DashboardContainer extends Component {
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
       getSummonerInfo(summonerName, region);
+      getCurrentMatch(summonerName, region);
     }
   }
 

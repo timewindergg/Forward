@@ -50,7 +50,6 @@ const mapAPIDataToSummoner = (apiData) => {
 
 export const getSummonerInfo = (summonerName, region) => {
   const getURI = `/get_summoner/`;
-  const updateURI = `/update_summoner/`;
   const params = {
     summoner_name: summonerName,
     region: region
@@ -62,22 +61,13 @@ export const getSummonerInfo = (summonerName, region) => {
 
   // workaround until Peter abstracts this logic away
   return (dispatch) => {
-    console.log('getting summoner info');
-
-    return axios.post(updateURI, formData).then((response) => {
-      return axios.get(getURI, {params}).then((response) => {
-        console.log('loaded summoner', response.data);
-        const summoner = mapAPIDataToSummoner(response.data);
-
-        dispatch(loadSummonerSuccess(summoner));
-        // TODO: dispatch action here
-      }).catch((error) => {
-        console.log('whoops', error);
-        dispatch(loadSummonerFailed(error));
-      });
-
+    // console.log('getting summoner info');
+    return axios.get(getURI, {params}).then((response) => {
+      console.log('loaded summoner', response.data);
+      dispatch(loadSummonerSuccess(response.data));
+      // TODO: dispatch action here
     }).catch((error) => {
-      console.log('could not update summoner', error);
+      console.log('whoops', error);
       dispatch(loadSummonerFailed(error));
     });
   }

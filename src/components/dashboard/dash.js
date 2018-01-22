@@ -11,6 +11,10 @@ import { getMasteryIconUrl, getTierIconUrl} from '../../shared/helpers/staticIma
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 
 class Dashboard extends Component {
+  static defaultProps = {
+    gotoPregame: () => {console.log('TODO')}
+  }
+
   static propTypes = {
     summoner: PropTypes.object.isRequired,
     matches: PropTypes.array.isRequired,
