@@ -5,9 +5,7 @@ import Moment from 'react-moment';
 
 import './dash.css';
 
-import ChampionMappings from '../../shared/championMappings.js';
-
-import { getMasteryIconUrl, getTierIconUrl} from '../../shared/helpers/staticImageHelper.js';
+import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 
 class Dashboard extends Component {
@@ -27,7 +25,7 @@ class Dashboard extends Component {
 
   render() {
     const {summoner, matches} = this.props;
-    const profileIconUrl = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/profileicon/${summoner.icon}.png`;
+    const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
     return (
       <div className='Dashboard'>
         <div className="header">
@@ -68,7 +66,7 @@ class Dashboard extends Component {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
           <div key={c.champ_id}>
-            <img src={`http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[c.champ_id].image}`} alt=""/>
+            <img src={getChampionIconUrl(c.champ_id, '7.24.2')} alt=""/>
             <img src={masteryIcon} alt=""/>
             <span>{numberFormatter(c.total_points)}</span>
           </div>

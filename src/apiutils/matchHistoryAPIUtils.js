@@ -4,9 +4,12 @@ import { fetchMatchHistorySuccess } from '../actions/matchHistoryActions';
 
 // Import required mappings.
 import ChampionMappings from '../shared/championMappings.js';
-import summonerSpellMappings from '../shared/summonerSpellMappings.js';
 import QueueIdMappings from '../shared/queueIdMappings.js';
 import RuneMappings from '../shared/runeMappings.js';
+
+import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../shared/helpers/staticImageHelper.js';
+
+const patchVersion = '7.24.2';
 
 export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, size) => {
   const uri = `/get_match_history/?summoner_id=${summonerId}&region=${region}&offset=${offset}&size=${size}`;
@@ -15,16 +18,16 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
     .then((response) => {
       const result = response.data;
       result.forEach(function(match) {
-        match.championUrl = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[match.champion_id].image}`;
-        match.spell1Url = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/spell/${summonerSpellMappings[match.spell0].image}`;
-        match.spell2Url = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/spell/${summonerSpellMappings[match.spell1].image}`;
-        match.item0Url = match.item0 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item0}.png`;
-        match.item1Url = match.item1 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item1}.png`;
-        match.item2Url = match.item2 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item2}.png`;
-        match.item3Url = match.item3 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item3}.png`;
-        match.item4Url = match.item4 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item4}.png`;
-        match.item5Url = match.item5 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item5}.png`;
-        match.item6Url = match.item6 === 0 ? "" : `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/item/${match.item6}.png`;
+        match.championUrl = getChampionIconUrl(match.champion_id, patchVersion);
+        match.spell1Url = getSpellIconUrl(match.spell0, patchVersion);
+        match.spell2Url = getSpellIconUrl(match.spell1, patchVersion);
+        match.item0Url = match.item0 === 0 ? "" : getItemIconUrl(match.item0, patchVersion);
+        match.item1Url = match.item1 === 0 ? "" : getItemIconUrl(match.item1, patchVersion);
+        match.item2Url = match.item2 === 0 ? "" : getItemIconUrl(match.item2, patchVersion);
+        match.item3Url = match.item3 === 0 ? "" : getItemIconUrl(match.item3, patchVersion);
+        match.item4Url = match.item4 === 0 ? "" : getItemIconUrl(match.item4, patchVersion);
+        match.item5Url = match.item5 === 0 ? "" : getItemIconUrl(match.item5, patchVersion);
+        match.item6Url = match.item6 === 0 ? "" : getItemIconUrl(match.item6, patchVersion);
         match.championName = ChampionMappings[match.champion_id].name;
         match.game_type = QueueIdMappings[match.queue_id].name;
         match.roleIcon = fetchRoleIconName(match.lane, match.role);
@@ -61,8 +64,8 @@ export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, si
         // Set user primary and secondary runes.
         const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, summonerId);
         if (runes.length === 2) {
-          match.rune1 = `http://opgg-static.akamaized.net/images/lol/perk/${runes[0]}.png`;
-          match.rune2 = `http://opgg-static.akamaized.net/images/lol/perkStyle/${runes[1]}.png`;
+          match.rune1 = getPerkIconUrl(runes[0], patchVersion);
+          match.rune2 = getPerkStyleIconUrl(runes[1], patchVersion);
         }
       });
 
@@ -150,8 +153,8 @@ const getParticipants = (blueTeam, redTeam) => {
     redPlayerEntry['summonerId'] = redTeam[i].summonerId;
 
     // Fill in the championIcons.
-    bluePlayerEntry['championUrl'] = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[blueTeam[i].championId].image}`;
-    redPlayerEntry['championUrl'] = `http://ddragon.leagueoflegends.com/cdn/7.24.2/img/champion/${ChampionMappings[redTeam[i].championId].image}`;
+    bluePlayerEntry['championUrl'] = getChampionIconUrl(blueTeam[i].championId, patchVersion);
+    redPlayerEntry['championUrl'] = getChampionIconUrl(redTeam[i].championId, patchVersion);
 
     // Set the appropriate element in the _blueTeam and _redTeam to the player entry if there's no entry already.
     const bluePlayerPosition = getPlayerPosition(blueTeam[i].timeline.role, blueTeam[i].timeline.lane);

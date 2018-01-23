@@ -1,3 +1,6 @@
+import ChampionMappings from '../championMappings.js';
+import SummonerSpellMappings from '../summonerSpellMappings.js';
+
 const baseUrl = 'http://127.0.0.1:8000/static';
 
 export const getMasteryIconUrl = (masteryLevel) => {
@@ -38,15 +41,15 @@ export const getProfileIconUrl = (id, version) => {
 }
 
 export const getChampionIconUrl = (id, version) => {
-  return getDDAsset(version, AssetType.PROFILE_ICON, id);
+  return getDDAsset(version, AssetType.CHAMPION, ChampionMappings[id].image);
 }
 
 export const getSpellIconUrl = (id, version) => {
-  return getDDAsset(version, AssetType.PROFILE_ICON, id);
+  return getDDAsset(version, AssetType.SPELL, SummonerSpellMappings[id].image);
 }
 
 export const getItemIconUrl = (id, version) => {
-  return getDDAsset(version, AssetType.PROFILE_ICON, id);
+  return getDDAsset(version, AssetType.ITEM, id);
 }
 
 export const getOpggAsset = (assetType, assetId) => {

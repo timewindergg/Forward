@@ -2,559 +2,559 @@
 const ChampionMappings = {
     1: {
         name: "Annie",
-        image: "Annie.png"
+        image: "Annie"
     },
     2: {
         name: "Olaf",
-        image: "Olaf.png"
+        image: "Olaf"
     },
     3: {
         name: "Galio",
-        image: "Galio.png"
+        image: "Galio"
     },
     4: {
         name: "Twisted Fate",
-        image: "TwistedFate.png"
+        image: "TwistedFate"
     },
     5: {
         name: "Xin Zhao",
-        image: "XinZhao.png"
+        image: "XinZhao"
     },
     6: {
         name: "Urgot",
-        image: "Urgot.png"
+        image: "Urgot"
     },
     7: {
         name: "Leblanc",
-        image: "Leblanc.png"
+        image: "Leblanc"
     },
     8: {
         name: "Vladimir",
-        image: "Vladimir.png"
+        image: "Vladimir"
     },
     9: {
         name: "Fiddlesticks",
-        image: "Fiddlesticks.png"
+        image: "Fiddlesticks"
     },
     10: {
         name: "Kayle",
-        image: "Kayle.png"
+        image: "Kayle"
     },
     11: {
         name: "Master Yi",
-        image: "MasterYi.png"
+        image: "MasterYi"
     },
     12: {
         name: "Alistar",
-        image: "Alistar.png"
+        image: "Alistar"
     },
     13: {
         name: "Ryze",
-        image: "Ryze.png"
+        image: "Ryze"
     },
     14: {
         name: "Sion",
-        image: "Sion.png"
+        image: "Sion"
     },
     15: {
         name: "Sivir",
-        image: "Sivir.png"
+        image: "Sivir"
     },
     16: {
         name: "Soraka",
-        image: "Soraka.png"
+        image: "Soraka"
     },
     17: {
         name: "Teemo",
-        image: "Teemo.png"
+        image: "Teemo"
     },
     18: {
         name: "Tristana",
-        image: "Tristana.png"
+        image: "Tristana"
     },
     19: {
         name: "Warwick",
-        image: "Warwick.png"
+        image: "Warwick"
     },
     20: {
         name: "Nunu",
-        image: "Nunu.png"
+        image: "Nunu"
     },
     21: {
         name: "Miss Fortune",
-        image: "MissFortune.png"
+        image: "MissFortune"
     },
     22: {
         name: "Ashe",
-        image: "Ashe.png"
+        image: "Ashe"
     },
     23: {
         name: "Tryndamere",
-        image: "Tryndamere.png"
+        image: "Tryndamere"
     },
     24: {
         name: "Jax",
-        image: "Jax.png"
+        image: "Jax"
     },
     25: {
         name: "Morgana",
-        image: "Morgana.png"
+        image: "Morgana"
     },
     26: {
         name: "Zilean",
-        image: "Zilean.png"
+        image: "Zilean"
     },
     27: {
         name: "Singed",
-        image: "Singed.png"
+        image: "Singed"
     },
     28: {
         name: "Evelynn",
-        image: "Evelynn.png"
+        image: "Evelynn"
     },
     29: {
         name: "Twitch",
-        image: "Twitch.png"
+        image: "Twitch"
     },
     30: {
         name: "Karthus",
-        image: "Karthus.png"
+        image: "Karthus"
     },
     31: {
         name: "Chogath",
-        image: "Chogath.png"
+        image: "Chogath"
     },
     32: {
         name: "Amumu",
-        image: "Amumu.png"
+        image: "Amumu"
     },
     33: {
         name: "Rammus",
-        image: "Rammus.png"
+        image: "Rammus"
     },
     34: {
         name: "Anivia",
-        image: "Anivia.png"
+        image: "Anivia"
     },
     35: {
         name: "Shaco",
-        image: "Shaco.png"
+        image: "Shaco"
     },
     36: {
         name: "Dr. Mundo",
-        image: "DrMundo.png"
+        image: "DrMundo"
     },
     37: {
         name: "Sona",
-        image: "Sona.png"
+        image: "Sona"
     },
     38: {
         name: "Kassadin",
-        image: "Kassadin.png"
+        image: "Kassadin"
     },
     39: {
         name: "Irelia",
-        image: "Irelia.png"
+        image: "Irelia"
     },
     40: {
         name: "Janna",
-        image: "Janna.png"
+        image: "Janna"
     },
     41: {
         name: "Gangplank",
-        image: "Gangplank.png"
+        image: "Gangplank"
     },
     42: {
         name: "Corki",
-        image: "Corki.png"
+        image: "Corki"
     },
     43: {
         name: "Karma",
-        image: "Karma.png"
+        image: "Karma"
     },
     44: {
         name: "Taric",
-        image: "Taric.png"
+        image: "Taric"
     },
     45: {
         name: "Veigar",
-        image: "Veigar.png"
+        image: "Veigar"
     },
     48: {
         name: "Trundle",
-        image: "Trundle.png"
+        image: "Trundle"
     },
     50: {
         name: "Swain",
-        image: "Swain.png"
+        image: "Swain"
     },
     51: {
         name: "Caitlyn",
-        image: "Caitlyn.png"
+        image: "Caitlyn"
     },
     53: {
         name: "Blitzcrank",
-        image: "Blitzcrank.png"
+        image: "Blitzcrank"
     },
     54: {
         name: "Malphite",
-        image: "Malphite.png"
+        image: "Malphite"
     },
     55: {
         name: "Katarina",
-        image: "Katarina.png"
+        image: "Katarina"
     },
     56: {
         name: "Nocturne",
-        image: "Nocturne.png"
+        image: "Nocturne"
     },
     57: {
         name: "Maokai",
-        image: "Maokai.png"
+        image: "Maokai"
     },
     58: {
         name: "Renekton",
-        image: "Renekton.png"
+        image: "Renekton"
     },
     59: {
         name: "Jarvan IV",
-        image: "JarvanIV.png"
+        image: "JarvanIV"
     },
     60: {
         name: "Elise",
-        image: "Elise.png"
+        image: "Elise"
     },
     61: {
         name: "Orianna",
-        image: "Orianna.png"
+        image: "Orianna"
     },
     62: {
         name: "Wukong",
-        image: "MonkeyKing.png"
+        image: "MonkeyKing"
     },
     63: {
         name: "Brand",
-        image: "Brand.png"
+        image: "Brand"
     },
     64: {
         name: "Lee Sin",
-        image: "LeeSin.png"
+        image: "LeeSin"
     },
     67: {
         name: "Vayne",
-        image: "Vayne.png"
+        image: "Vayne"
     },
     68: {
         name: "Rumble",
-        image: "Rumble.png"
+        image: "Rumble"
     },
     69: {
         name: "Cassiopeia",
-        image: "Cassiopeia.png"
+        image: "Cassiopeia"
     },
     72: {
         name: "Skarner",
-        image: "Skarner.png"
+        image: "Skarner"
     },
     74: {
         name: "Heimerdinger",
-        image: "Heimerdinger.png"
+        image: "Heimerdinger"
     },
     75: {
         name: "Nasus",
-        image: "Nasus.png"
+        image: "Nasus"
     },
     76: {
         name: "Nidalee",
-        image: "Nidalee.png"
+        image: "Nidalee"
     },
     77: {
         name: "Udyr",
-        image: "Udyr.png"
+        image: "Udyr"
     },
     78: {
         name: "Poppy",
-        image: "Poppy.png"
+        image: "Poppy"
     },
     79: {
         name: "Gragas",
-        image: "Gragas.png"
+        image: "Gragas"
     },
     80: {
         name: "Pantheon",
-        image: "Pantheon.png"
+        image: "Pantheon"
     },
     81: {
         name: "Ezreal",
-        image: "Ezreal.png"
+        image: "Ezreal"
     },
     82: {
         name: "Mordekaiser",
-        image: "Mordekaiser.png"
+        image: "Mordekaiser"
     },
     83: {
         name: "Yorick",
-        image: "Yorick.png"
+        image: "Yorick"
     },
     84: {
         name: "Akali",
-        image: "Akali.png"
+        image: "Akali"
     },
     85: {
         name: "Kennen",
-        image: "Kennen.png"
+        image: "Kennen"
     },
     86: {
         name: "Garen",
-        image: "Garen.png"
+        image: "Garen"
     },
     89: {
         name: "Leona",
-        image: "Leona.png"
+        image: "Leona"
     },
     90: {
         name: "Malzahar",
-        image: "Malzahar.png"
+        image: "Malzahar"
     },
     91: {
         name: "Talon",
-        image: "Talon.png"
+        image: "Talon"
     },
     92: {
         name: "Riven",
-        image: "Riven.png"
+        image: "Riven"
     },
     96: {
         name: "KogMaw",
-        image: "KogMaw.png"
+        image: "KogMaw"
     },
     98: {
         name: "Shen",
-        image: "Shen.png"
+        image: "Shen"
     },
     99: {
         name: "Lux",
-        image: "Lux.png"
+        image: "Lux"
     },
     101: {
         name: "Xerath",
-        image: "Xerath.png"
+        image: "Xerath"
     },
     102: {
         name: "Shyvana",
-        image: "Shyvana.png"
+        image: "Shyvana"
     },
     103: {
         name: "Ahri",
-        image: "Ahri.png"
+        image: "Ahri"
     },
     104: {
         name: "Graves",
-        image: "Graves.png"
+        image: "Graves"
     },
     105: {
         name: "Fizz",
-        image: "Fizz.png"
+        image: "Fizz"
     },
     106: {
         name: "Volibear",
-        image: "Volibear.png"
+        image: "Volibear"
     },
     107: {
         name: "Rengar",
-        image: "Rengar.png"
+        image: "Rengar"
     },
     110: {
         name: "Varus",
-        image: "Varus.png"
+        image: "Varus"
     },
     111: {
         name: "Nautilus",
-        image: "Nautilus.png"
+        image: "Nautilus"
     },
     112: {
         name: "Viktor",
-        image: "Viktor.png"
+        image: "Viktor"
     },
     113: {
         name: "Sejuani",
-        image: "Sejuani.png"
+        image: "Sejuani"
     },
     114: {
         name: "Fiora",
-        image: "Fiora.png"
+        image: "Fiora"
     },
     115: {
         name: "Ziggs",
-        image: "Ziggs.png"
+        image: "Ziggs"
     },
     117: {
         name: "Lulu",
-        image: "Lulu.png"
+        image: "Lulu"
     },
     119: {
         name: "Draven",
-        image: "Draven.png"
+        image: "Draven"
     },
     120: {
         name: "Hecarim",
-        image: "Hecarim.png"
+        image: "Hecarim"
     },
     121: {
         name: "Khazix",
-        image: "Khazix.png"
+        image: "Khazix"
     },
     122: {
         name: "Darius",
-        image: "Darius.png"
+        image: "Darius"
     },
     126: {
         name: "Jayce",
-        image: "Jayce.png"
+        image: "Jayce"
     },
     127: {
         name: "Lissandra",
-        image: "Lissandra.png"
+        image: "Lissandra"
     },
     131: {
         name: "Diana",
-        image: "Diana.png"
+        image: "Diana"
     },
     133: {
         name: "Quinn",
-        image: "Quinn.png"
+        image: "Quinn"
     },
     134: {
         name: "Syndra",
-        image: "Syndra.png"
+        image: "Syndra"
     },
     136: {
         name: "Aurelion Sol",
-        image: "AurelionSol.png"
+        image: "AurelionSol"
     },
     141: {
         name: "Kayn",
-        image: "Kayn.png"
+        image: "Kayn"
     },
     142: {
         name: "Zoe",
-        image: "Zoe.png"
+        image: "Zoe"
     },
     143: {
         name: "Zyra",
-        image: "Zyra.png"
+        image: "Zyra"
     },
     150: {
         name: "Gnar",
-        image: "Gnar.png"
+        image: "Gnar"
     },
     154: {
         name: "Zac",
-        image: "Zac.png"
+        image: "Zac"
     },
     157: {
         name: "Yasuo",
-        image: "Yasuo.png"
+        image: "Yasuo"
     },
     161: {
         name: "Velkoz",
-        image: "Velkoz.png"
+        image: "Velkoz"
     },
     163: {
         name: "Taliyah",
-        image: "Taliyah.png"
+        image: "Taliyah"
     },
     164: {
         name: "Camille",
-        image: "Camille.png"
+        image: "Camille"
     },
     201: {
         name: "Braum",
-        image: "Braum.png"
+        image: "Braum"
     },
     202: {
         name: "Jhin",
-        image: "Jhin.png"
+        image: "Jhin"
     },
     203: {
         name: "Kindred",
-        image: "Kindred.png"
+        image: "Kindred"
     },
     222: {
         name: "Jinx",
-        image: "Jinx.png"
+        image: "Jinx"
     },
     223: {
         name: "Tahm Kench",
-        image: "TahmKench.png"
+        image: "TahmKench"
     },
     236: {
         name: "Lucian",
-        image: "Lucian.png"
+        image: "Lucian"
     },
     238: {
         name: "Zed",
-        image: "Zed.png"
+        image: "Zed"
     },
     240: {
         name: "Kled",
-        image: "Kled.png"
+        image: "Kled"
     },
     245: {
         name: "Ekko",
-        image: "Ekko.png"
+        image: "Ekko"
     },
     254: {
         name: "Vi",
-        image: "Vi.png"
+        image: "Vi"
     },
     266: {
         name: "Aatrox",
-        image: "Aatrox.png"
+        image: "Aatrox"
     },
     267: {
         name: "Nami",
-        image: "Nami.png"
+        image: "Nami"
     },
     268: {
         name: "Azir",
-        image: "Azir.png"
+        image: "Azir"
     },
     412: {
         name: "Thresh",
-        image: "Thresh.png"
+        image: "Thresh"
     },
     420: {
         name: "Illaoi",
-        image: "Illaoi.png"
+        image: "Illaoi"
     },
     421: {
         name: "RekSai",
-        image: "Reksai.png"
+        image: "Reksai"
     },
     427: {
         name: "Ivern",
-        image: "Ivern.png"
+        image: "Ivern"
     },
     429: {
         name: "Kalista",
-        image: "Kalista.png"
+        image: "Kalista"
     },
     432: {
         name: "Bard",
-        image: "Bard.png"
+        image: "Bard"
     },
     497: {
         name: "Rakan",
-        image: "Rakan.png"
+        image: "Rakan"
     },
     498: {
         name: "Xayah",
-        image: "Xayah.png"
+        image: "Xayah"
     },
     516: {
         name: "Ornn",
-        image: "Ornn.png"
+        image: "Ornn"
     }
 };
 
