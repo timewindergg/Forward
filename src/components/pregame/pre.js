@@ -22,7 +22,10 @@ class Pregame extends Component {
   }
 
   render() {
-    console.log(this.props);
+    /*
+    container has max-width of ~1200px and is centered
+    and content flows downwards and user can scroll, obviously
+    */
     const {summoner, currentMatch, currentMatchDetails} = this.props;
 
     return (

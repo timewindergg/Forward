@@ -9,7 +9,7 @@ import {
 
 // provides an overview of the current match
 // i.e. the summoners in the match on each team and limited info on their champions/stats
-export const getCurrentMatch = (summonerName, region) => {
+export const getCurrentMatch = (summonerName, region, onSuccess, chainDetails = false) => {
   const uri = '/get_current_match/';
   console.log('attempting to get current match');
   const params = {
@@ -21,6 +21,25 @@ export const getCurrentMatch = (summonerName, region) => {
     return axios.get(uri, {params}).then((response) => {
       console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
+      if (!!onSuccess) {
+        dispatch(onSuccess);
+      }
+
+      // hack for chainDetails
+      // I (Kelvin) can't use the onSuccess here because I need to make TEN API calls
+      // to get match details for each champion.
+      if (chainDetails) {
+        const {red_team, blue_team} = response.data;
+        [...red_team, ...blue_team].forEach((summoner) => {
+          getCurrentMatchDetails(
+            summoner.id,
+            summoner.name,
+            region,
+            summoner.champion_id
+          );
+        });
+      }
+
     }).catch((error) => {
       console.log('user is not currently in a match', error);
       dispatch(loadCurrentMatchFailed(error));
@@ -53,3 +72,5 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
     });
   }
 }
+
+

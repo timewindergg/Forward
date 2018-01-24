@@ -38,22 +38,23 @@ class PregameContainer extends Component {
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
       getSummonerInfo(summonerName, region);
-      getCurrentMatch(summonerName, region);
+      getCurrentMatch(summonerName, region, 
+        getCurrentMatch(summonerName, region), true);
     }
 
-    if (Object.keys(currentMatch).length > 0) {
-      this.getDetails(currentMatch, region, getCurrentMatchDetails);
-    }
+    // if (Object.keys(currentMatch).length > 0) {
+    //   this.getDetails(currentMatch, region, getCurrentMatchDetails);
+    // }
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const region = nextProps.match.params[REGION_PARAM];
-    // HACK! used to fetch match details right after we LOAD the match (if still needed)
-    const wasMatchDetailsEmpty = Object.keys(this.props.currentMatch).length === 0;
+    // const region = nextProps.match.params[REGION_PARAM];
+    // // HACK! used to fetch match details right after we LOAD the match (if still needed)
+    // const wasMatchDetailsEmpty = Object.keys(this.props.currentMatch).length === 0;
 
-    if (wasMatchDetailsEmpty && Object.keys(nextProps.currentMatch).length > 0) {
-      this.getDetails(nextProps.currentMatch, region, nextProps.getCurrentMatchDetails);
-    }
+    // if (wasMatchDetailsEmpty && Object.keys(nextProps.currentMatch).length > 0) {
+    //   this.getDetails(nextProps.currentMatch, region, nextProps.getCurrentMatchDetails);
+    // }
   }
 
   // fetch match details
