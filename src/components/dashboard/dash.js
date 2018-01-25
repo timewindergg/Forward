@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Radar, Line } from 'react-chartjs-2';
 import Moment from 'react-moment';
+import CalendarHeatmap from 'react-calendar-heatmap';
 
 import './dash.css';
 
@@ -21,6 +22,10 @@ class Dashboard extends Component {
 
   componentWillMount() {
     this.props.getSummonerMatchHistory(20297715, 'NA', 0, 10);
+  }
+
+  onHeatMapClicked(value) {
+    console.log(value);
   }
 
   render() {
@@ -47,6 +52,9 @@ class Dashboard extends Component {
         </div>
         <div>
           {this.renderLineChart()}
+        </div>
+        <div>
+          {this.renderHeatMap()}
         </div>
         <div className='game-item-list'>
           {this.renderMatchList(matches)}
@@ -287,6 +295,45 @@ class Dashboard extends Component {
     });
 
     return matchItems;
+  }
+
+  renderHeatMap() {
+    const values = [
+      { date: '2016-01-01', count: 4 },
+      { date: '2016-01-22', count: 1 },
+      { date: '2016-01-30', count: 3 },
+      { date: new Date(2016, 0, 4)}
+    ]
+    return (
+      <CalendarHeatmap
+        endDate={new Date('2017-01-01')}
+        numDays={365}
+        values={this.getDummyDates(new Date(2016, 0, 1), new Date(2017, 2, 1), 500)}
+        onClick={this.onHeatMapClicked}
+        classForValue={(value) => {
+          if (!value) {
+            return 'color-empty';
+          }
+          return `color-scale-${value.count}`;
+        }}
+      />
+    );
+  }
+
+  getDummyDates(from, to, numberDates) {
+    numberDates = numberDates || 50;
+    let result = [];
+
+    for(let i = 0; i < numberDates;i++){
+        result.push(
+            {
+                date: new Date(from.getTime() + Math.random() * (to.getTime() - from.getTime())),
+                count: Math.floor(Math.random() * 6)
+            }
+        );
+    }
+
+    return result;
   }
 }
 
