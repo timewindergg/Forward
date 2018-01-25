@@ -1,8 +1,15 @@
-const constants = {
-    api: {
-      url: 'https://na1.api.riotgames.com',
-      key: 'INSERT_KEY_HERE'
-    }
-}
+const REGION = {
+  NA: 'NA',
+  EUW: 'EUW',
+  EUNE: 'EUNE',
+  KR: 'KR',
+  BR: 'BR',
+  LAN: 'LAN',
+  LAS: 'LAS',
+  OCE: 'OCE',
+  RU: 'RU',
+  TR: 'TR',
+  JP: 'JP',
+};
 
-export default constants
+export default REGION;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import REGION from '../../shared/constants'
 
 import './home.css';
 
@@ -15,19 +16,6 @@ const quotes = [
   "One step closer to greater understanding!",
   "Indeed, a wise choice."
 ];
-
-const REGION = {
-  NA: 'NA',
-  EUW: 'EUW',
-  EUNE: 'EUNE',
-  KR: 'KR',
-  BR: 'BR',
-  LAN: 'LAN',
-  LAS: 'LAS',
-  OCE: 'OCE',
-  RU: 'RU',
-  TR: 'TR',
-};
 
 class Home extends Component {
   state = {

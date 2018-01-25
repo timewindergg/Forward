@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import HomeContainer from './containers/home/home';
 import DashboardContainer from './containers/dashboard/dash';
-import Postgame from './components/postgame/post';
+import PostgameContainer from './containers/postgame/post';
 import PregameContainer from './containers/pregame/pregame';
 
 import {
@@ -28,7 +28,7 @@ const Routes = () => (
           />
           <Route
             path={`/m/:${MATCH_PARAM}/:${REGION_PARAM}`}
-            component={Postgame}
+            component={PostgameContainer}
           />
           <Route
             path={`/l/:${SUMMONER_PARAM}/:${REGION_PARAM}`}

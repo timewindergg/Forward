@@ -2,9 +2,11 @@ import axios from 'axios';
 
 import {
   loadCurrentMatchSuccess,
-  loadCurrentMatchFailed,
+  loadCurrentMatchFailed, 
   loadCurrentMatchDetailsSuccess,
-  loadCurrentMatchDetailsFailed
+  loadCurrentMatchDetailsFailed,
+  loadMatchTimelineSuccess,
+  loadMatchTimelineFailed
 } from '../actions/matchActions';
 
 // provides an overview of the current match
@@ -73,4 +75,21 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
   }
 }
 
+export const getMatchTimeline = (matchId, region, onSuccess) => {
+  const uri = '/get_match_timeline/';
+  console.log('attempting to get match timeline');
+  const params = {
+    match_id: matchId,
+    region: region
+  };
 
+  return (dispatch) => {
+    return axios.get(uri, {params}).then((response) => {
+      console.log('loaded match timeline', response.data);
+      dispatch(loadMatchTimelineSuccess(response.data));
+    }).catch((error) => {
+      console.log('match timeline err', error);
+      dispatch(loadMatchTimelineFailed(error));
+    });
+  }
+}
