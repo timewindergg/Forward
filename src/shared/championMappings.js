@@ -530,7 +530,7 @@ const ChampionMappings = {
     },
     421: {
         name: "RekSai",
-        image: "Reksai"
+        image: "RekSai"
     },
     427: {
         name: "Ivern",

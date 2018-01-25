@@ -22,6 +22,7 @@ const ddProfileIcon = "/img/profileicon/"
 const ddChampionIcon = "/img/champion/"
 const ddSpellIcon = "/img/spell/"
 const ddItemIcon = "/img/item/"
+const ddMap = "/img/map/"
 
 const AssetType = {
   PERK: opggPerkIcon,
@@ -30,6 +31,7 @@ const AssetType = {
   CHAMPION: ddChampionIcon,
   SPELL: ddSpellIcon,
   ITEM: ddItemIcon,
+  MAP: ddMap,
 };
 
 export const getDDAsset = (version, assetType, assetId) => {
@@ -52,6 +54,10 @@ export const getItemIconUrl = (id, version) => {
   return getDDAsset(version, AssetType.ITEM, id);
 }
 
+export const getMapUrl = (id, version) => {
+  return getDDAsset(version, AssetType.MAP, "map"+id);
+}
+
 export const getOpggAsset = (assetType, assetId) => {
   return opggBaseUrl + assetType + assetId + ".png";
 }
@@ -63,4 +69,3 @@ export const getPerkIconUrl = (id, version) => {
 export const getPerkStyleIconUrl = (id, version) => {
   return getOpggAsset(AssetType.PERK_STYLE, id);
 }
-

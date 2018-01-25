@@ -51,7 +51,7 @@ const clearCurrentMatchDetails = (state, payload) => {
 
 const loadMatchTimeline = (state, payload) => {
   return Object.assign({}, state, {
-    timeline: payload
+    timeline: payload.matchTimeline
   });
 };
 
