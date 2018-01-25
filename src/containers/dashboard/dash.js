@@ -11,6 +11,9 @@ import Dashboard from '../../components/dashboard/dash';
 // Import api utilities.
 import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
+const MH_OFFSET = 0;
+const MH_SIZE = 10;
+
 class DashboardContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router ONLY
@@ -24,7 +27,7 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo, getCurrentMatch} = this.props;
+    const {match, summoner, getSummonerInfo, getSummonerMatchHistory, getCurrentMatch} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
 
@@ -32,6 +35,7 @@ class DashboardContainer extends Component {
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
       getSummonerInfo(summonerName, region);
+      getSummonerMatchHistory(summonerName, region, MH_OFFSET, MH_SIZE);
       getCurrentMatch(summonerName, region);
     }
   }
@@ -44,7 +48,6 @@ class DashboardContainer extends Component {
         summoner={summoner}
         currentMatch={currentMatch}
         matches={matches}
-        getSummonerMatchHistory={getSummonerMatchHistory}
       />
     );
   }
@@ -61,8 +64,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
     getCurrentMatch: (summonerName, region) => dispatch(getCurrentMatch(summonerName, region)),
-    getSummonerMatchHistory: (summonerId, region, offset, size) => {
-      getSummonerMatchHistory(dispatch, summonerId, region, offset, size);
+    getSummonerMatchHistory: (summonerName, region, offset, size) => {
+      dispatch(getSummonerMatchHistory(summonerName, region, offset, size));
     }
   };
 };

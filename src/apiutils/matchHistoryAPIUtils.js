@@ -11,66 +11,74 @@ import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, ge
 
 const patchVersion = '7.24.2';
 
-export const getSummonerMatchHistory = (dispatch, summonerId, region, offset, size) => {
-  const uri = `/get_match_history/?summoner_id=${summonerId}&region=${region}&offset=${offset}&size=${size}`;
+export const getSummonerMatchHistory = (summoner_name, region, offset, size) => {
+  const uri = `/get_match_history/`;
+  const params = {
+    summoner_name,
+    region,
+    offset,
+    size
+  };
 
-  axios.get(uri)
-    .then((response) => {
-      const result = response.data;
-      result.forEach(function(match) {
-        match.championUrl = getChampionIconUrl(match.champion_id, patchVersion);
-        match.spell1Url = getSpellIconUrl(match.spell0, patchVersion);
-        match.spell2Url = getSpellIconUrl(match.spell1, patchVersion);
-        match.item0Url = match.item0 === 0 ? "" : getItemIconUrl(match.item0, patchVersion);
-        match.item1Url = match.item1 === 0 ? "" : getItemIconUrl(match.item1, patchVersion);
-        match.item2Url = match.item2 === 0 ? "" : getItemIconUrl(match.item2, patchVersion);
-        match.item3Url = match.item3 === 0 ? "" : getItemIconUrl(match.item3, patchVersion);
-        match.item4Url = match.item4 === 0 ? "" : getItemIconUrl(match.item4, patchVersion);
-        match.item5Url = match.item5 === 0 ? "" : getItemIconUrl(match.item5, patchVersion);
-        match.item6Url = match.item6 === 0 ? "" : getItemIconUrl(match.item6, patchVersion);
-        match.championName = ChampionMappings[match.champion_id].name;
-        match.game_type = QueueIdMappings[match.queue_id].name;
-        match.roleIcon = fetchRoleIconName(match.lane, match.role);
+  return (dispatch) => {
+    axios.get(uri, {params})
+      .then((response) => {
+        const result = response.data;
+        result.forEach(function(match) {
+          match.championUrl = getChampionIconUrl(match.champion_id, patchVersion);
+          match.spell1Url = getSpellIconUrl(match.spell0, patchVersion);
+          match.spell2Url = getSpellIconUrl(match.spell1, patchVersion);
+          match.item0Url = match.item0 === 0 ? "" : getItemIconUrl(match.item0, patchVersion);
+          match.item1Url = match.item1 === 0 ? "" : getItemIconUrl(match.item1, patchVersion);
+          match.item2Url = match.item2 === 0 ? "" : getItemIconUrl(match.item2, patchVersion);
+          match.item3Url = match.item3 === 0 ? "" : getItemIconUrl(match.item3, patchVersion);
+          match.item4Url = match.item4 === 0 ? "" : getItemIconUrl(match.item4, patchVersion);
+          match.item5Url = match.item5 === 0 ? "" : getItemIconUrl(match.item5, patchVersion);
+          match.item6Url = match.item6 === 0 ? "" : getItemIconUrl(match.item6, patchVersion);
+          match.championName = ChampionMappings[match.champion_id].name;
+          match.game_type = QueueIdMappings[match.queue_id].name;
+          match.roleIcon = fetchRoleIconName(match.lane, match.role);
 
-        // Calculate KDA.
-        match.kda = getKDA(match.kills, match.deaths, match.assists);
+          // Calculate KDA.
+          match.kda = getKDA(match.kills, match.deaths, match.assists);
 
-        // Set up to get relative time.
-        const gameDate = new Date(0);
-        gameDate.setUTCSeconds(match.timestamp);
-        match.timestamp = gameDate;
+          // Set up to get relative time.
+          const gameDate = new Date(0);
+          gameDate.setUTCSeconds(match.timestamp);
+          match.timestamp = gameDate;
 
-        const duration = match.duration;
-        // Format the game duration.
-        const minutes = Math.floor(duration / 60);
-        const seconds = duration % 60;
+          const duration = match.duration;
+          // Format the game duration.
+          const minutes = Math.floor(duration / 60);
+          const seconds = duration % 60;
 
-        match.duration = strPadLeft(minutes, '0', 2) +  ':' + strPadLeft(seconds, '0', 2);
+          match.duration = strPadLeft(minutes, '0', 2) +  ':' + strPadLeft(seconds, '0', 2);
 
-        // parse the blue and red team data.
-        match.red_team = JSON.parse(match.red_team);
-        match.blue_team = JSON.parse(match.blue_team);
-        for (let i = 0; i < match.red_team.length; i++) {
-          match.red_team[i] = JSON.parse(match.red_team[i]);
-          match.blue_team[i] = JSON.parse(match.blue_team[i]);
-        }
+          // parse the blue and red team data.
+          match.red_team = JSON.parse(match.red_team);
+          match.blue_team = JSON.parse(match.blue_team);
+          for (let i = 0; i < match.red_team.length; i++) {
+            match.red_team[i] = JSON.parse(match.red_team[i]);
+            match.blue_team[i] = JSON.parse(match.blue_team[i]);
+          }
 
-        // Calculate kill participation.
-        match.killParticipation = getKillParticipation(match.kills, match.assists, getTotalTeamKills(match.team === 100 ? match.blue_team: match.red_team));
+          // Calculate kill participation.
+          match.killParticipation = getKillParticipation(match.kills, match.assists, getTotalTeamKills(match.team === 100 ? match.blue_team: match.red_team));
 
-        // Get the list of participants and their champions.
-        match.participants = getParticipants(match.blue_team, match.red_team);
+          // Get the list of participants and their champions.
+          match.participants = getParticipants(match.blue_team, match.red_team);
 
-        // Set user primary and secondary runes.
-        const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, summonerId);
-        if (runes.length === 2) {
-          match.rune1 = getPerkIconUrl(runes[0], patchVersion);
-          match.rune2 = getPerkStyleIconUrl(runes[1], patchVersion);
-        }
+          // Set user primary and secondary runes.
+          const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, summoner_name);
+          if (runes.length === 2) {
+            match.rune1 = getPerkIconUrl(runes[0], patchVersion);
+            match.rune2 = getPerkStyleIconUrl(runes[1], patchVersion);
+          }
+        });
+
+        dispatch(fetchMatchHistorySuccess(result));
       });
-
-      dispatch(fetchMatchHistorySuccess(result));
-    });
+  }
 };
 
 const strPadLeft = (string, pad, length) => {
@@ -212,10 +220,10 @@ const getPlayerPosition = (role, lane) => {
 }
 
 // Return an array of two elements where the first one is the user's primary runes and the second is the secondary one.
-const getPlayerRunes = (team, summonerId) => {
+const getPlayerRunes = (team, summoner_name) => {
   const runes = [];
   team.forEach((player) => {
-    if (player.summonerId === summonerId) {
+    if (player.summonerName === summoner_name) {
       // Loop through user runes and find the keystone.
       for (let key in player.runes) {
         console.log(key);

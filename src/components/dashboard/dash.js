@@ -17,12 +17,7 @@ class Dashboard extends Component {
   static propTypes = {
     summoner: PropTypes.object.isRequired,
     matches: PropTypes.array.isRequired,
-    currentMatch: PropTypes.object.isRequired,
-    getSummonerMatchHistory: PropTypes.func.isRequired
-  }
-
-  componentWillMount() {
-    this.props.getSummonerMatchHistory(20297715, 'NA', 0, 10);
+    currentMatch: PropTypes.object.isRequired
   }
 
   render() {
