@@ -1,15 +1,15 @@
 import {LOAD_SUMMONER_SUCCESS, LOAD_SUMMONER_FAILED} from '../actions/summonerActions';
-import {LOAD_VERSION_SUCCESS} from '../actions/contextActions';
+import {LOAD_STATIC_SUCCESS} from '../actions/contextActions';
 
 // TODO: maybe move this to a different reducer
 const initialState = {  
   summoner: {},
-  version: '7.24.2'
+  staticData: {},
 };
 
-const loadVersion = (state, payload) => {
+const loadStatic = (state, payload) => {
   return Object.assign({}, state, {
-    version: payload.version
+    staticData: payload.staticData
   });
 };
 
@@ -25,8 +25,8 @@ const searchSummoner = (state, payload) => {
 // to the right handler
 const context = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_VERSION_SUCCESS:
-      return loadVersion(state, action.payload);
+    case LOAD_STATIC_SUCCESS:
+      return loadStatic(state, action.payload);
     case LOAD_SUMMONER_SUCCESS:
       return searchSummoner(state, action.payload);
     default:

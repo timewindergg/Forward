@@ -1,15 +1,15 @@
-export const LOAD_VERSION_SUCCESS = 'LOAD_VERSION_SUCCESS';
-export const LOAD_VERSION_FAILED = 'LOAD_VERSION_FAILED';
+export const LOAD_STATIC_SUCCESS = 'LOAD_STATIC_SUCCESS';
+export const LOAD_STATIC_FAILED = 'LOAD_STATIC_FAILED';
 
-export const loadVersionSuccess = (version) => ({
-  type: LOAD_VERSION_SUCCESS,
+export const loadStaticDataSuccess = (staticData) => ({
+  type: LOAD_STATIC_SUCCESS,
   payload: {
-    version
+    staticData
   }
 });
 
-export const loadVersionFailed = (error) => ({
-  type: LOAD_VERSION_FAILED,
+export const loadStaticDataFailed = (error) => ({
+  type: LOAD_STATIC_FAILED,
   payload: {
     error
   }
