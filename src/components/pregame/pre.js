@@ -30,12 +30,11 @@ class Pregame extends Component {
 
     return (
       <div className='rc-pregame'>
-        <h1>Timewinder</h1>
-        <p> Welcome PREGAME, {this.props.summoner.name}</p>
         <div className='pregame-container'>
           <CurrentMatchOverview
             redTeam={currentMatch.red_team}
             blueTeam={currentMatch.blue_team}
+            matchDetails={currentMatchDetails}
           />
           <CurrentMatchCompare
             currentMatchDetails={currentMatchDetails}
