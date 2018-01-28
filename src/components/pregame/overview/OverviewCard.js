@@ -135,4 +135,3 @@ class OverviewCard extends Component {
 }
 
 export default OverviewCard;
-// <Avatar src="images/uxceo-128.jpg" />

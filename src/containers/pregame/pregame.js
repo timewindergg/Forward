@@ -18,6 +18,8 @@ class PregameContainer extends Component {
     summoner: PropTypes.object.isRequired,
     currentMatch: PropTypes.object.isRequired,
     currentMatchDetails: PropTypes.object.isRequired,
+    selectedRed: PropTypes.number.isRequired,
+    selectedBlue: PropTypes.number.isRequired,
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
@@ -44,13 +46,15 @@ class PregameContainer extends Component {
   }
 
   render() {
-    const {summoner, currentMatch, currentMatchDetails} = this.props;
+    const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue} = this.props;
 
     return (
       <Pregame
         summoner={summoner}
         currentMatch={currentMatch}
         currentMatchDetails={currentMatchDetails}
+        selectedRed={selectedRed}
+        selectedBlue={selectedBlue}
       />
     );
   }
@@ -59,7 +63,9 @@ class PregameContainer extends Component {
 const mapStateToProps = (state) => ({
   summoner: state.context.summoner,
   currentMatch: state.match.currentMatch,
-  currentMatchDetails: state.match.currentMatchDetails
+  currentMatchDetails: state.match.currentMatchDetails,
+  selectedRed: state.pregame.selectedRed,
+  selectedBlue: state.pregame.selectedBlue
 });
 
 const mapDispatchToProps = (dispatch) => ({

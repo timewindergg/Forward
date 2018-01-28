@@ -19,6 +19,9 @@ class Pregame extends Component {
     summoner: PropTypes.object.isRequired,
     currentMatch: PropTypes.object.isRequired,
     currentMatchDetails: PropTypes.object.isRequired,
+
+    selectedRed: PropTypes.number.isRequired,
+    selectedBlue: PropTypes.number.isRequired
   }
 
   render() {
@@ -26,7 +29,7 @@ class Pregame extends Component {
     container has max-width of ~1200px and is centered
     and content flows downwards and user can scroll, obviously
     */
-    const {summoner, currentMatch, currentMatchDetails} = this.props;
+    const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue} = this.props;
 
     return (
       <div className='rc-pregame'>
@@ -36,8 +39,12 @@ class Pregame extends Component {
             blueTeam={currentMatch.blue_team}
             matchDetails={currentMatchDetails}
           />
+          <div className='pregame-divider'></div>
           <CurrentMatchCompare
+            currentMatch={currentMatch}
             currentMatchDetails={currentMatchDetails}
+            selectedRed={selectedRed}
+            selectedBlue={selectedBlue}
           />
         </div>
 
