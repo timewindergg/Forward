@@ -6,10 +6,6 @@ import './CurrentMatchCompare.css';
 class CurrentMatchCompare extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-
-    };
   }
 
   static propTypes = {

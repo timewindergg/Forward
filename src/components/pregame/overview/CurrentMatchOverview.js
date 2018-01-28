@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import OverviewCard from './OverviewCard';
+import OverviewCardContainer from '../../../containers/pregame/OverviewCardContainer';
 
 import './CurrentMatchOverview.css';
 
@@ -28,7 +28,7 @@ class CurrentMatchOverview extends Component {
 
       return (
         <div className='pregame-team-list-item' key={summoner.id}>
-          <OverviewCard
+          <OverviewCardContainer
             summoner={summoner}
             details={details}
             isRed={isRed}

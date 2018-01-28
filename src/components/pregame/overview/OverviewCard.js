@@ -25,7 +25,13 @@ class OverviewCard extends Component {
   static propTypes = {
     summoner: PropTypes.object.isRequired,
     details: PropTypes.object.isRequired,
-    isRed: PropTypes.bool.isRequired
+    isRed: PropTypes.bool.isRequired,
+    isSelected: PropTypes.bool.isRequired,
+    onSelect: PropTypes.func.isRequired
+  }
+
+  selectSummoner = () => {
+    this.props.onSelect(this.props.summoner.id, this.props.isRed);
   }
 
   renderSummonerSpells = (isSummonerLoaded) => {
@@ -72,7 +78,7 @@ class OverviewCard extends Component {
   }
 
   render() {
-    const {summoner, details, isRed} = this.props;
+    const {summoner, details, isRed, isSelected} = this.props;
     
     const isSummonerLoaded = Object.keys(summoner).length > 0;
     const isDetailsLoaded = Object.keys(details).length > 0;
@@ -100,9 +106,18 @@ class OverviewCard extends Component {
     const runes = this.renderRunes(isSummonerLoaded);
 
     const colorClass = isRed ? 'overview-card-red' : 'overview-card-blue';
+    
+    const cardClass = classNames(
+      'rc-overview-card',
+      colorClass, {
+        overviewsred: isRed && isSelected,
+        overviewsblue: !isRed && isSelected
+      }
+    );    
 
+    // TODO: think of a different product flow for selecting champions to compare head to head
     return (
-      <div className={classNames('rc-overview-card', colorClass)}>
+      <div className={cardClass} onClick={this.selectSummoner}>
         <div className='overview-row'>
           <Avatar src={imageUrl} className='champion-img' />
           <div className='overview-col'>

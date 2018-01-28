@@ -10,7 +10,8 @@ import matchHistory from './matchHistory'
 const forward = combineReducers({
   context,
   match,
-  matchHistory
+  matchHistory,
+  pregame
 });
 
 export default forward;
