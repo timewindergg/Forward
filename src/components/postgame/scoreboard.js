@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 
-var patchVersion = '7.24.2';
+var patchVersion = '8.2.1';
 
 class ScoreboardPlayer extends Component {
   constructor(props){
     super(props);
     this.state = {
       currentGold: 0,
+      totalGold: 0,
       item0: 0,
       item1: 0,
       item2: 0,
@@ -16,40 +17,29 @@ class ScoreboardPlayer extends Component {
       item5: 0,
       item6: 0,
       cs: 0,
+      junglecs: 0,
       level: 1,
       kills: 0,
       deaths: 0,
       assists: 0,
+      wardsKilled: 0,
+      wardsPlaced: 0,
     };
   }
 
-  componentWillMount(){
-    if (this.props.participant !== undefined){
-      let p = this.props.participant;
-      this.setState({
-        currentGold: p.stats.goldEarned,
-        item0: p.stats.item0,
-        item1: p.stats.item1,
-        item2: p.stats.item2,
-        item3: p.stats.item3, 
-        item4: p.stats.item4,
-        item5: p.stats.item5,
-        item6: p.stats.item6,
-        cs: p.stats.totalMinionsKilled + p.stats.neutralMinionsKilled,
-        level: p.stats.champLevel,
-        kills: p.stats.kills,
-        deaths: p.stats.deaths,
-        assists: p.stats.assists,
-      });
-    }
-  }
-  
-
   render() {
-    if (this.props.participant == undefined){
+    if (this.props.participant === undefined){
       return (<div/>);
     }
     let p = this.props.participant;
+    console.log(p)
+    let items = Object.entries(p.items);
+
+    for (var i = items.length; i < 7; i++){
+      items.push([0, 0]);
+    }
+
+    console.log(items)
 
     return (
       <tr className="player" pid="">
@@ -65,15 +55,15 @@ class ScoreboardPlayer extends Component {
 
             <div className="itemSet">
               <div className="core">
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item0, patchVersion)}/>
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item1, patchVersion)}/>
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item2, patchVersion)}/>
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item3, patchVersion)}/>
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item4, patchVersion)}/>
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item5, patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[0][0], patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[1][0], patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[2][0], patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[3][0], patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[4][0], patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[5][0], patchVersion)}/>
               </div>
               <div className="trinket">
-                <img className="itemIcon small" src={getItemIconUrl(this.state.item6, patchVersion)}/>
+                <img className="itemIcon small" src={getItemIconUrl(items[6][0], patchVersion)}/>
               </div>
             </div>
           </div>
@@ -104,21 +94,17 @@ class Teamboard extends Component {
     };
   }
 
-  componentWillMount(){
-    this.setState({
-      gold: this.state.gold
-    });
-  }
-  
   renderParticipants() {
     if (this.props.participants !== undefined){
       return this.props.participants.map((participant) => (
-        <ScoreboardPlayer key={participant.id} participant={participant} team="100" />
+        <ScoreboardPlayer key={participant[0]} participant={participant[1]} team="100" />
       ));
     }
   }
 
   render() {
+
+
     return (
       <div className="team100 col-md-6">
         <table className="table">
@@ -164,29 +150,32 @@ class Scoreboard extends Component {
   }
 
   render() {
-    if (this.props.match !== undefined){
+    let blueTeam = [];
+    let redTeam = [];
+    let currentFrameData = this.props.frameData[this.props.currentFrame];
 
-      let blueTeam = [];
-      let redTeam = [];
+    Object.entries(currentFrameData.players).map((participant) => {
+      let matchParticipant = this.props.matchParticipants[participant[0] - 1];
 
-      this.props.match.participants.map((participant) => {
-      if (participant.side == "blue"){
+      participant[1].championId = matchParticipant.championId;
+      participant[1].summonerName = matchParticipant.summonerName;
+      participant[1].summonerSpellDId = matchParticipant.summonerSpellDId;
+      participant[1].summonerSpellFId = matchParticipant.summonerSpellFId;
+
+      if (participant[1].side === 100){
         blueTeam.push(participant);
       }
-      else if (participant.side == "red"){
+      else if (participant[1].side === 200){
         redTeam.push(participant);
       }
     });
 
-      return (
-        <div className="scoreboard recentGames row">
-          <Teamboard team="100" participants={blueTeam}/>
-          <Teamboard team="200" participants={redTeam}/>
-        </div>
-      );
-    }
-
-    return(<div/>);
+    return (
+      <div className="scoreboard recentGames row">
+        <Teamboard team="100" teamData={currentFrameData.teams['100']} participants={blueTeam}/>
+        <Teamboard team="200" teamData={currentFrameData.teams['200']} participants={redTeam}/>
+      </div>
+    );
   }
 }
 

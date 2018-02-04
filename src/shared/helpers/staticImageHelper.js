@@ -51,6 +51,7 @@ export const getSpellIconUrl = (id, version) => {
 }
 
 export const getItemIconUrl = (id, version) => {
+  if (id === 0 || id === undefined) return "";
   return getDDAsset(version, AssetType.ITEM, id);
 }
 
