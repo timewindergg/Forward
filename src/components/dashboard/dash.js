@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Radar, Line } from 'react-chartjs-2';
 import Moment from 'react-moment';
+// Import the calendarheatmap
+import CalendarHeatmap from 'react-calendar-heatmap';
+
+import Avatar from 'material-ui/Avatar';
+
+import Table from 'material-ui/Table';
+import TableHeader from 'material-ui/Table';
+import TableHeaderColumn from 'material-ui/Table';
+import TableRow from 'material-ui/Table';
+import TableBody from 'material-ui/Table';
+import TableRowColumn from 'material-ui/Table';
+
 
 import './dash.css';
 
@@ -23,7 +35,6 @@ class Dashboard extends Component {
   render() {
     const {summoner, matches, currentMatch} = this.props;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
-    const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
     return (
       <div className='Dashboard'>
         <Link to={`/l/${summoner.name}/${summoner.region}`}>
@@ -31,25 +42,15 @@ class Dashboard extends Component {
             Go to pregame
           </button>
         </Link>
-        <div className="header">
-          <div className="profile-icon col-sm-3">
-            <img src={profileIconUrl} alt=""/>
-          </div>
-          <div className="profile col-sm-2">
-            <span className="Name">{summoner.summonerName}</span>
-          </div>
-          <div className="ranked-info col-sm-2">
-            {this.renderRankedTiers(summoner.leagues)}
-          </div>
-        <div className="top-champion-masteries col-sm-5">
-          {this.renderTopUserChampionMasteries(summoner.championMasteries)}
+        {this.renderChampionLists(summoner)}
+        {this.renderHeader(summoner)}
+        <div className="match-lawn">
+          {this.renderMatchHeatMap(summoner.lawn)}
         </div>
-        </div>
-        <div>
+        <div className="info-radar">
           {this.renderRadarChart()}
         </div>
         <div>
-          {this.renderLineChart()}
         </div>
         <div className='game-item-list'>
           {this.renderMatchList(matches)}
@@ -58,9 +59,68 @@ class Dashboard extends Component {
     );
   }
 
+  renderHeader(summonerInfo) {
+    const profileIconUrl = getProfileIconUrl(summonerInfo.icon, '7.24.2');
+    return (
+        <div className="header">
+          <div className="profile-icon" style={{backgroundImage: `url(${profileIconUrl})`}}>
+          </div>
+          <div className="profile">
+            <span className="name">{summonerInfo.name}</span>
+            <span className="summoner-name">{summonerInfo.level}</span>
+          </div>
+          <div className="ranked-info">
+            {this.renderRankedTiers(summonerInfo)}
+          </div>
+          <div className="top-champion-masteries">
+            {this.renderTopUserChampionMasteries(summonerInfo.championMasteries)}
+          </div>
+        </div>
+    );
+  }
+
+  renderMatchHeatMap(data) {
+    // Calculate the beginning of 3 months ago.
+    const d = new Date();
+    d.setDate(1); // sets it to the beginning of the month.
+    d.setMonth(d.getMonth() - 3);
+
+    const beginningDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDay() + 1;
+    if (!!data) {
+      return (
+        <CalendarHeatmap
+          endDate={new Date()}
+          startDate={beginningDate}
+          values={data}
+          classForValue={(value) => {
+            if (!value) {
+              return 'color-empty';
+            }
+
+            let scale = (value.losses > value.wins ? (Math.floor(value.losses / 3) + 1) : Math.floor(value.wins / 3) + 1);
+
+            if (scale > 3) {
+              scale = 3;
+            }
+
+            let matchOutcome = 'win';
+
+            if (value.losses === value.wins) {
+              matchOutcome = 'tie';
+            } else if (value.losses > value.wins) {
+              matchOutcome = 'loss';
+            }
+
+            return `color-scale-${matchOutcome}-${scale}`;
+          }}
+        />
+      )
+    }
+  }
+
   renderTopUserChampionMasteries(championMasteries) {
     if (championMasteries !== undefined) {
-      // The champions should be sorted by their points.
+      // Sort the champion by points.
       championMasteries.sort((mastery1, mastery2) => {
         return mastery1.total_points - mastery2.total_points;
       });
@@ -68,10 +128,14 @@ class Dashboard extends Component {
       const champions = championMasteries.map((c) => {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
-          <div key={c.champ_id}>
-            <img src={getChampionIconUrl(c.champ_id, '7.24.2')} alt=""/>
-            <img src={masteryIcon} alt=""/>
-            <span>{numberFormatter(c.total_points)}</span>
+          <div className="champion-mastery-wrapper" key={c.champ_id}>
+            <Avatar src={getChampionIconUrl(c.champ_id, '7.24.2')} alt=""/>
+            <div className="mastery-wrapper">
+              <span className="mastery-points">{numberFormatter(c.total_points)}</span>
+            </div>
+            <div className="mastery-icon-wrapper">
+              <img src={masteryIcon} alt="" className="mastery-icon"/>
+            </div>
           </div>
         );
       });
@@ -80,8 +144,30 @@ class Dashboard extends Component {
     }
   }
 
-  renderRankedTiers(leagues) {
-    if (leagues !== undefined) {
+  renderChampionLists(summoner) {
+    if (summoner !== undefined && summoner.championStats !== undefined) {
+      return (
+        <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>ID</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableRowColumn>1</TableRowColumn>
+            </TableRow>
+          </TableBody>
+        </Table>
+        </div>
+      )
+    }
+  }
+
+  renderRankedTiers(summoner) {
+    if (summoner !== undefined && summoner.leagues !== undefined) {
+      const leagues = summoner.leagues;
       // Only show the solo q info.
       // Sort the objects by their id.
       let rankedInfo = {};
@@ -92,8 +178,10 @@ class Dashboard extends Component {
       });
 
       return (
-        <div>
+        <div className="summoner-ranked">
           <img src={getTierIconUrl(Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier)}/>
+          <span className="ranked-wins">{summoner.wins}</span>
+          <span className="ranked-losses">{summoner.losses}</span>
         </div>
       );
     }
@@ -127,40 +215,17 @@ class Dashboard extends Component {
     };
 
     return (
-      <Radar data={data} />
-    )
-  }
-
-  renderLineChart() {
-    const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: 'rgba(75,192,192,0.4)',
-          borderColor: 'rgba(75,192,192,1)',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 2,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }
-      ]
-    };
-
-    return (
-      <Line data={data} />
+      <Radar
+        data={data}
+        width={150}
+        height={100}
+        options={{
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          }
+        }}
+      />
     )
   }
 
@@ -183,7 +248,6 @@ class Dashboard extends Component {
 
   renderMatchList(matches) {
     const matchItems = matches.map((m) => {
-      console.log(m);
       return (
         <div className="game-item-wrapper" key={m.match_id}>
           <div className="game-item">
@@ -205,7 +269,7 @@ class Dashboard extends Component {
               </div>
               <div className="game-setting-info">
                 <div className="champion-image">
-                  <a href="" target="_blank"><img src={m.championUrl} alt="" className="Image"/></a>
+                  <Avatar src={m.championUrl} alt=""/>
                 </div>
                 <div className="summoner-spell">
                   <div className="spell">
@@ -282,6 +346,12 @@ class Dashboard extends Component {
                 <div className="team">
                   {this.renderParticipants(m.participants[1])}
                 </div>
+              </div>
+              <div className="post-game">
+                <Link to={`/m/${m.match_id}/${m.region}`}>
+                  <button>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
