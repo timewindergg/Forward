@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 
 import {SUMMONER_PARAM, REGION_PARAM} from '../../constants/RouteConstants';
 import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
-import {getCurrentMatch, getCurrentMatchDetails} from '../../apiutils/matchAPIUtils';
+import {
+  getCurrentMatch,
+  getCurrentMatchDetails
+} from '../../apiutils/matchAPIUtils';
 
 import Pregame from '../../components/pregame/pre';
 
@@ -15,10 +18,11 @@ class PregameContainer extends Component {
     summoner: PropTypes.object.isRequired,
     currentMatch: PropTypes.object.isRequired,
     currentMatchDetails: PropTypes.object.isRequired,
+    selectedRed: PropTypes.number.isRequired,
+    selectedBlue: PropTypes.number.isRequired,
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
-    getCurrentMatchDetails: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
@@ -27,8 +31,7 @@ class PregameContainer extends Component {
       summoner,
       currentMatch,
       getSummonerInfo,
-      getCurrentMatch,
-      getCurrentMatchDetails
+      getCurrentMatch
     } = this.props;
 
     const summonerName = match.params[SUMMONER_PARAM];
@@ -38,47 +41,20 @@ class PregameContainer extends Component {
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
       getSummonerInfo(summonerName, region);
-      getCurrentMatch(summonerName, region, 
-        getCurrentMatch(summonerName, region), true);
+      getCurrentMatch(summonerName, region);
     }
-
-    // if (Object.keys(currentMatch).length > 0) {
-    //   this.getDetails(currentMatch, region, getCurrentMatchDetails);
-    // }
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    // const region = nextProps.match.params[REGION_PARAM];
-    // // HACK! used to fetch match details right after we LOAD the match (if still needed)
-    // const wasMatchDetailsEmpty = Object.keys(this.props.currentMatch).length === 0;
-
-    // if (wasMatchDetailsEmpty && Object.keys(nextProps.currentMatch).length > 0) {
-    //   this.getDetails(nextProps.currentMatch, region, nextProps.getCurrentMatchDetails);
-    // }
-  }
-
-  // fetch match details
-  getDetails = (currentMatch, region, getCurrentMatchDetails) => {
-    const {red_team, blue_team} = currentMatch;
-
-    [...red_team, ...blue_team].forEach((summoner) => {
-      getCurrentMatchDetails(
-        summoner.id,
-        summoner.name,
-        region,
-        summoner.champion_id
-      );
-    });
   }
 
   render() {
-    const {summoner, currentMatch, currentMatchDetails} = this.props;
+    const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue} = this.props;
 
     return (
       <Pregame
         summoner={summoner}
         currentMatch={currentMatch}
         currentMatchDetails={currentMatchDetails}
+        selectedRed={selectedRed}
+        selectedBlue={selectedBlue}
       />
     );
   }
@@ -87,14 +63,20 @@ class PregameContainer extends Component {
 const mapStateToProps = (state) => ({
   summoner: state.context.summoner,
   currentMatch: state.match.currentMatch,
-  currentMatchDetails: state.match.currentMatchDetails
+  currentMatchDetails: state.match.currentMatchDetails,
+  selectedRed: state.pregame.selectedRed,
+  selectedBlue: state.pregame.selectedBlue
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
-  getCurrentMatch: (summonerName, region) => dispatch(getCurrentMatch(summonerName, region)),
-  getCurrentMatchDetails: (summonerID, summonerName, region, championId) => {
-    dispatch(getCurrentMatchDetails(summonerID, summonerName, region, championId));
+  getCurrentMatch: (summonerName, region) => {
+    dispatch(getCurrentMatch(summonerName, region, (data) => {
+      const summoners = [...data.red_team, ...data.blue_team];
+      summoners.forEach((s) => {
+        dispatch(getCurrentMatchDetails(s.id, s.name, region, s.champion_id));
+      });
+    }))
   }
 });
 

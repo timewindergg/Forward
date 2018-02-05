@@ -14,7 +14,6 @@ const initialState = {
   timeline: {}
 };
 
-// action handler to change/set the name of the user
 const loadCurrentMatch = (state, payload) => {
   return Object.assign({}, state, {
     currentMatch: payload.currentMatch
@@ -27,7 +26,6 @@ const clearCurrentMatch = (state, payload) => {
   });
 };
 
-// action handler to change/set the name of the user
 const loadCurrentMatchDetails = (state, payload) => {
   const {id, stats, build} = payload;
   const matchDetailsForSummoner = {
@@ -39,6 +37,19 @@ const loadCurrentMatchDetails = (state, payload) => {
   );
   return newState;
 };
+
+// const loadCurrentMatchDetailsBatch = (state, payload) => {
+//   const {matchDetails} = payload;
+//   const newState = _.cloneDeep(state);
+
+//   // clear the currentMatchDetails and clobber with new details
+//   _.set(newState, ['currentMatchDetails'], {});
+//   Object.keys(matchDetails).forEach((championID) => {
+//     _.set(newState, ['currentMatchDetails', championID], matchDetails[championID]);
+//   });
+
+//   return newState;
+// };
 
 const clearCurrentMatchDetails = (state, payload) => {
   const {id} = payload;
