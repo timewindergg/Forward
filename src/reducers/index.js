@@ -5,13 +5,15 @@ import { combineReducers } from 'redux';
 import match from './match';
 import context from './context';
 import pregame from './pregame';
-import matchHistory from './matchHistory'
+import matchHistory from './matchHistory';
+import championStats from './championStats';
 
 const forward = combineReducers({
   context,
   match,
   matchHistory,
-  pregame
+  pregame,
+  championStats
 });
 
 export default forward;

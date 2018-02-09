@@ -1,0 +1,144 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Avatar from 'material-ui/Avatar';
+import { Radar } from 'react-chartjs-2';
+
+import './championstats.css';
+
+import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
+
+import ChampionMappings from '../../shared/championMappings';
+
+class ChampionStats extends Component {
+  static propTypes = {
+    summoner: PropTypes.object.isRequired,
+    userChampionStats: PropTypes.object.isRequired
+  }
+
+  render() {
+    const {summoner, userChampionStats} = this.props;
+    const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
+    return (
+      <div className='ChampionStats'>
+        <div className="header">
+          {this.renderProfile(summoner)}
+          {this.renderRankedTiers(summoner)}
+          {this.renderUserChampionStats(userChampionStats)}
+        </div>
+      </div>
+    );
+  }
+
+  renderProfile(summoner) {
+    const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
+    return (
+      <div className="summoner-profile">
+        <div className="summoner-icon">
+          <img src={profileIconUrl} alt=""/>
+        </div>
+        <div className="summoner-name">
+          <span>{summoner.name}</span>
+        </div>
+        <div className="summoner-level">
+          <span>{summoner.level}</span>
+        </div>
+      </div>
+    );
+  }
+
+  renderRankedTiers(summoner) {
+    if (summoner !== undefined && summoner.leagues !== undefined) {
+      const leagues = summoner.leagues;
+      // Only show the solo q info.
+      // Sort the objects by their id.
+      let rankedInfo = {};
+      leagues.forEach((league) => {
+        if (league.queue === 'RANKED_SOLO_5x5') {
+          Object.assign(rankedInfo, league);
+        }
+      });
+
+      return (
+        <div className="summoner-ranked">
+          <img src={getTierIconUrl(Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier)}/>
+        </div>
+      );
+    }
+  }
+
+  renderUserChampionStats(championStats) {
+    if (championStats !== undefined && Object.keys(championStats).length !== 0) {
+      const championId = championStats.championStats[0].champ_id;
+      return (
+        <div className="champion-stats-container">
+          <div className="left-container">
+            <div className="champion-profile">
+              <Avatar src={getChampionIconUrl(championId, '7.24.2')}/>
+              <div className="champion-name">
+                <span>{ChampionMappings[championId].name}</span>
+              </div>
+            </div>
+            <div className="champion-perks">
+            </div>
+            <div className="champion-items">
+            </div>
+          </div>
+          <div className="right-container">
+            <div className="champion-stats-radar">
+              {this.renderChampionStatsRadar()}
+            </div>
+            <div className="champion-win-rate">
+            </div>
+            <div className="champion-win-rate-game-length">
+            </div>
+            <div className="champion-against-list">
+              {this.renderAgainstChampionList(championStats)}
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  renderAgainstChampionList(championStats) {
+    return championStats.championMatchups.map((c) => {
+      return (
+        <div className="champion-against-item" key={c.enemy_champ_id}>
+          <Avatar src={getChampionIconUrl(c.enemy_champ_id, '7.24.2')}/>
+          <div className="champion-against-item-win-percentage">
+            <span>{c.losses === 0 ? '100%' : (c.wins/c.losses)*100 + '%'}</span>
+          </div>
+        </div>
+      )
+    });
+  }
+
+  renderChampionStatsRadar() {
+    const data = {
+      labels: ['Gold', 'Kill', 'Death', 'Assists', 'CS'],
+      datasets: [
+        {
+          label: 'My First dataset',
+          backgroundColor: 'rgba(179,181,198,0.2)',
+          borderColor: 'rgba(179,181,198,1)',
+          pointBackgroundColor: 'rgba(179,181,198,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(179,181,198,1)',
+          data: [38, 25, 28, 21, 28]
+        }
+      ]
+    };
+
+    return (
+      <Radar data={data}
+        width={200}
+        height={200}
+        options={{
+          maintainAspectRatio: false
+      }}/>
+    )
+  }
+}
+
+export default ChampionStats;
