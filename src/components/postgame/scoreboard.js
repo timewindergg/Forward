@@ -32,14 +32,11 @@ class ScoreboardPlayer extends Component {
       return (<div/>);
     }
     let p = this.props.participant;
-    console.log(p)
     let items = Object.entries(p.items);
 
     for (var i = items.length; i < 7; i++){
       items.push([0, 0]);
     }
-
-    console.log(items)
 
     return (
       <tr className="player" pid="">

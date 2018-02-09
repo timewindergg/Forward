@@ -146,7 +146,6 @@ class Postgame extends Component {
       var pFrames = tl.frames[i].participantFrames;
 
       Object.keys(pFrames).map((key) => {
-        console.log(pFrames[key])
         aggregateData.players[key].totalgold = pFrames[key].goldEarned;
         aggregateData.players[key].currentgold = pFrames[key].currentGold;
         aggregateData.players[key].cs = pFrames[key].creepScore;
@@ -209,7 +208,8 @@ class Postgame extends Component {
                         matchParticipants={this.props.matchDetails.match.participants}/>
             <Minimap mapId={this.props.matchDetails.match.mapId} 
                      staticData={this.props.staticData}
-                     currentFrame={this.state.currentFrame} />
+                     currentFrame={this.state.currentFrame} 
+                     frameData={this.state.frameData}/>
           </div>
         </div>
       );
