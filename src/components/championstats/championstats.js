@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
-import { Radar } from 'react-chartjs-2';
+import { HorizontalBar, Radar } from 'react-chartjs-2';
 
 import './championstats.css';
 
-import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
+import { getMasteryIconUrl,
+  getTierIconUrl,
+  getChampionIconUrl,
+  getProfileIconUrl,
+  getItemIconUrl,
+  getPerkIconUrl,
+  getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 
 import ChampionMappings from '../../shared/championMappings';
 
 class ChampionStats extends Component {
+
+  state = {
+    role: ''
+  }
+
   static propTypes = {
     summoner: PropTypes.object.isRequired,
     userChampionStats: PropTypes.object.isRequired
@@ -78,18 +89,38 @@ class ChampionStats extends Component {
                 <span>{ChampionMappings[championId].name}</span>
               </div>
             </div>
-            <div className="champion-perks">
+            <div className="champion-roles">
+              <div className="role-button">
+                <button id="top-role-button" value="top" onClick={event => this.setState({role: event.target.value})}>
+                </button>
+              </div>
+              <div className="role-button">
+                <button id="jungle-role-button" value="jungle" onClick={event => this.setState({role: event.target.value})}>
+                </button>
+              </div>
+              <div className="role-button">
+                <button id="mid-role-button" value="mid" onClick={event => this.setState({role: event.target.value})}>
+                </button>
+              </div>
+              <div className="role-button">
+                <button id="bot-role-button" value="bot" onClick={event => this.setState({role: event.target.value})}>
+                </button>
+              </div>
             </div>
-            <div className="champion-items">
+            <div className="champion-summoners">
+              {this.renderChampionSpells(championStats)}
+            </div>
+              {this.renderChampionItems(championStats)}
+            <div className="champion-perks">
+              {this.renderChampionRunes(championStats)}
             </div>
           </div>
           <div className="right-container">
             <div className="champion-stats-radar">
               {this.renderChampionStatsRadar()}
             </div>
-            <div className="champion-win-rate">
-            </div>
-            <div className="champion-win-rate-game-length">
+            <div className="champion-stats-bar">
+              {this.renderChampionStatsBar()}
             </div>
             <div className="champion-against-list">
               {this.renderAgainstChampionList(championStats)}
@@ -100,13 +131,90 @@ class ChampionStats extends Component {
     }
   }
 
+  renderChampionSpells(championStats) {
+    const { role } = this.state;
+    const lane = mapRoleToLane(role);
+
+    return (
+      <div>
+        {championStats.championSummoners.map((l) => {
+          if (l.lane === lane) {
+            return JSON.parse(l.summoner_set).map((s) => {
+              return (
+                <div>
+                  <img src={getSpellIconUrl(s, "7.24.2")}/>
+                </div>
+              )
+            })
+          }
+        })}
+      </div>
+    )
+  }
+
+  renderChampionItems(championStats) {
+    const { role } = this.state;
+
+    if (championStats.championItems[role] !== undefined) {
+      return (
+        <div className="champion-items">
+          <div>
+          <span>Boots:</span>
+          {championStats.championItems[role].boots.map((b) => {
+            return (
+              <div className="champion-item">
+                <img src={getItemIconUrl(b, '7.24.2')}/>
+              </div>
+            )
+          })}
+          </div>
+          <div>
+            <span>Items:</span>
+            {
+              championStats.championItems[role].items.map((i) => {
+                return (
+                  <div className="champion-item">
+                    <img src={getItemIconUrl(i, '7.24.2')}/>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      );
+    }
+  }
+
+  renderChampionRunes(championStats) {
+    const { role } = this.state;
+    const lane = mapRoleToLane(role);
+
+    return (
+      <div>
+        {
+          championStats.championRunes.map((l) => {
+            if (l.lane === lane) {
+              return JSON.parse(l.rune_set).map((r) => {
+                return (
+                  <div>
+                    <img src={getPerkIconUrl(r, '7.24.2')}/>
+                  </div>
+                )
+              });
+            }
+          })
+        }
+      </div>
+    );
+  }
+
   renderAgainstChampionList(championStats) {
     return championStats.championMatchups.map((c) => {
       return (
         <div className="champion-against-item" key={c.enemy_champ_id}>
           <Avatar src={getChampionIconUrl(c.enemy_champ_id, '7.24.2')}/>
           <div className="champion-against-item-win-percentage">
-            <span>{c.losses === 0 ? '100%' : (c.wins/c.losses)*100 + '%'}</span>
+            <span>{(c.wins/c.total_games)*100 + '%'}</span>
           </div>
         </div>
       )
@@ -139,6 +247,33 @@ class ChampionStats extends Component {
       }}/>
     )
   }
+
+  renderChampionStatsBar() {
+    const data = {
+      labels: ['XP Diff at 10', 'XP Diff at 20', 'XP Diff at 30'],
+      datasets: [{
+        data: [-10.15, 38.75, -169.7]
+      }]
+    };
+    return (
+      <HorizontalBar data={data}
+        height={200}
+        width={1000}
+        options={{
+          maintainAspectRatio: false
+      }}/>
+    );
+  }
 }
+
+const mapRoleToLane = (role) => {
+  let lane = role.toUpperCase();
+
+  if (lane !== 'JUNGLE') {
+    lane = lane + '_LANE';
+  }
+
+  return lane;
+};
 
 export default ChampionStats;
