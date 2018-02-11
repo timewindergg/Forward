@@ -8,7 +8,7 @@ import {
 export const getStaticData = (region, onSuccess) => {
   console.log('attempting to get static data');
 
-  const uri = '/get_static_data/';
+  const uri = `/get_static_data/${region}/`;
   
   const params = {
     region: region
