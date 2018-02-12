@@ -16,28 +16,44 @@
 		font-weight: 600;
 	}
 
+	.overview-icon-div {
+		display: inline-flex;
+		align-items: center;
+		// margin-left: -5px;
+	}
+
 	.overview-icon-list {
 		display: inline-block;
 	}
 
+	.overview-icon-list:not(:first-child) {
+		margin-left: 8px;
+	}
+
 	.overview-spell {
 		display: inline-block;
-		width: 50px;
+		width: 24px;
 		height: auto;
 		box-sizing: border-box;
 	}
 
 	.overview-spell:not(:first-child) {
-		margin-left: 10px;
+		margin-left: 2px;
 	}
 
 	.overview-rune {
 		display: inline-block;
-		width: 25%;
+		width: 24px;
 		height: auto;
 		box-sizing: border-box;
-		margin-right: 5px;
-		margin-bottom: 5px;
+	}
+
+	.overview-rune:not(:first-child) {
+		margin-left: 2px;
+	}
+
+	.overview-keystone-rune {
+		width: 30px ~'!important';
 	}
 }
 

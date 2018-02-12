@@ -36,7 +36,6 @@ class OverviewCardHeader extends Component {
     isSelected: PropTypes.bool.isRequired
   }
 
-  //     // "{"tier":"GOLD","division":"I","points":61}"
   static defaultProps = {
     name: '--',
     championID: 0,

@@ -17,6 +17,7 @@ import {
   getPerkStyleIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
+import runeMappings from '../../../shared/runeMappings.js';
 import {IMG_VER} from '../../../constants/Settings';
 
 class OverviewCard extends Component {
@@ -50,12 +51,9 @@ class OverviewCard extends Component {
     ) : <img className='overview-spell' src='' />;
 
     return (
-      <div>
-        <span className='overview-heading'>Summoner Spells</span>
-        <div className={classNames('overview-row', 'overview-icon-list')}>
-          {spell0}
-          {spell1}
-        </div>
+      <div className={classNames('overview-icon-list')}>
+        {spell0}
+        {spell1}
       </div>
     );
   }
@@ -63,26 +61,24 @@ class OverviewCard extends Component {
   renderRunes = (isSummonerLoaded) => {
     const {summoner} = this.props;
 
-    // TODO: have a placeholder gif
+
     const runes = isSummonerLoaded ? summoner.runes.map((rune) => {
+      const isKeystone = runeMappings[rune].keyStone;
+      const runeClass = classNames({'overview-rune': true, 'overview-keystone-rune': isKeystone});
+
       return (
-        <img className='overview-rune' src={getPerkIconUrl(rune, IMG_VER)} key={rune} />
+        <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} />
       );
     }) : <img className='overview-rune' src='' />;
 
     return (
-      <div>
-        <span className='overview-heading'>Runes</span>
-        <div className={classNames('overview-row', 'overview-icon-list')}>
-          {runes}
-        </div>
+      <div className={classNames('overview-icon-list')}>
+        {runes}
       </div>
     );
   }
 
   getRankedDetails = (isDetailsLoaded, details, queueName) => {
-
-    console.log(details);
     if (!isDetailsLoaded || !details.leagues || !details.leagues[queueName]) {
       return {
         tier: '\n',
@@ -122,6 +118,29 @@ class OverviewCard extends Component {
       </div>
     );
 
+    const cs = (
+      <div className='overview-row'>
+        <span className='overview-heading'>CS 10/20/30/Total:</span>
+        <br />
+        {!isDetailsLoaded && <br />}
+        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.cs10}/`}</span>}
+        {isDetailsLoaded && <span className='overview-text'>{details.stats.cs20}/</span>}
+        {isDetailsLoaded && <span className='overview-text'>{details.stats.cs30}</span>}
+        {isDetailsLoaded && <span className='overview-heading'>{`\t${details.stats.totalCs}`} </span>}
+      </div>
+    );
+
+    const gold = (
+      <div className='overview-row'>
+        <span className='overview-heading'>Gold 10/20/30:</span>
+        <br />
+        {!isDetailsLoaded && <br />}
+        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.gold10}/`}</span>}
+        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.gold20}/`}</span>}
+        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.gold30}`}</span>}
+      </div>
+    );
+
     const summonerSpells = this.renderSummonerSpells(isSummonerLoaded);
     const runes = this.renderRunes(isSummonerLoaded);
 
@@ -152,10 +171,14 @@ class OverviewCard extends Component {
         />
 
         <div className='overview-body'>
+          <div className='overview-icon-div'>
+            {summonerSpells}
+            {runes}
+          </div>
           {winsLoss}
           {kda}
-          {summonerSpells}
-          {runes}
+          {cs}
+          {gold}
         </div>
       </div>
     );
