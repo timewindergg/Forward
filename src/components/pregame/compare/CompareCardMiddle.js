@@ -139,23 +139,33 @@ class CompareCardMiddle extends Component {
       <div className='rc-compare-card-middle'>
         <div className='compare-graph'>
           <h2>Cs Differentials</h2>
-          <HorizontalBar
-            data={csDataParams}
-            legend={{display: false}}
-            ref={'CsGraph'}
-            height={300}
-            width={700}
-          />
+          <div className='graph-wrapper'>
+            <HorizontalBar
+              data={csDataParams}
+              legend={{display: false}}
+              ref={'CsGraph'}
+
+              options={{
+                responsive: true,
+                maintainAspectRatio: false
+              }}
+            />
+          </div>
         </div>
         <div className='compare-graph'>
           <h2>Gold Differentials</h2>
-          <HorizontalBar
-            data={goldDataParams}
-            legend={{display: false}}
-            ref={'GoldGraph'}
-            height={300}
-            width={700}
-          />
+          <div className='graph-wrapper'>
+            <HorizontalBar
+              data={goldDataParams}
+              legend={{display: false}}
+              ref={'GoldGraph'}
+
+              options={{
+                responsive: true,
+                maintainAspectRatio: false
+              }}
+            />
+          </div>
         </div>
       </div>
     );
