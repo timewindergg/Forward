@@ -6,6 +6,8 @@ import { Team, Player } from './objects.js';
 import Scoreboard from './scoreboard.js';
 import ControlHeader from './control.js';
 import Minimap from './map.js';
+import SkillTable from './skilltable.js';
+import ItemProgression from './itemprogression.js';
 
 import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 
@@ -110,6 +112,7 @@ class Postgame extends Component {
               }
               break;
             case "ITEM_PURCHASED":
+              aggregateData.players[evnt.participantId].purchaseOrder.push({'id':evnt.itemId, 'ts':evnt.timestamp});
               if(evnt.itemId in aggregateData.players[evnt.participantId].items){
                 aggregateData.players[evnt.participantId].items[evnt.itemId]++;
               } else {
@@ -117,16 +120,18 @@ class Postgame extends Component {
               }
               break;
             case "ITEM_SOLD":
+              aggregateData.players[evnt.participantId].purchaseOrder.push({'id':-evnt.itemId, 'ts':evnt.timestamp});
               aggregateData.players[evnt.participantId].items[evnt.itemId]--;
               break;
             case "ITEM_UNDO":
+              aggregateData.players[evnt.participantId].purchaseOrder.pop();
               aggregateData.players[evnt.participantId].items[evnt.itemId]--;
               break;
             case "PORO_KING_SUMMON":
               console.log("Poro King!?!?");
               break;
             case "SKILL_LEVEL_UP":
-              aggregateData.players[evnt.participantId].skills[evnt.skillSlot-1]++;
+              aggregateData.players[evnt.participantId].skillOrder.push(evnt.skill);
               break;
             case "WARD_KILL":
               if (evnt.participantId > 0){
@@ -195,7 +200,7 @@ class Postgame extends Component {
   }
 
   render() {
-    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0){
+    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && this.props.staticData !== undefined){
       return (
         <div className="Postgame">
           <div className="content">
@@ -210,6 +215,13 @@ class Postgame extends Component {
                      staticData={this.props.staticData}
                      currentFrame={this.state.currentFrame} 
                      frameData={this.state.frameData}/>
+            <SkillTable skillOrder={this.state.frameData[this.state.currentFrame].players[1].skillOrder}
+                        skillData={this.props.staticData.championSkills[this.props.matchDetails.match.participants[0].championId]}
+                        version={this.props.staticData.version}/>
+            <div class='clear'></div>
+            <ItemProgression itemOrder={this.state.frameData[this.state.currentFrame].players[1].purchaseOrder}
+                             itemData={this.props.staticData.items}
+                             version={this.props.staticData.version}/>
           </div>
         </div>
       );

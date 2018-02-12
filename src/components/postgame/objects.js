@@ -1,7 +1,8 @@
 export class Player {
   constructor(){
     this.items = {};
-    this.skills = [0, 0, 0, 0];
+    this.purchaseOrder = [];
+    this.skillOrder = [];
     this.kills = 0;
     this.deaths = 0;
     this.assists = 0;

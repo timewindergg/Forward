@@ -5,35 +5,24 @@ import MapBounds from '../../shared/mapConstants.js';
 class Minimap extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      participants: [],
-    };
   }
 
   renderParticipants() {
     let p = this.props.participants;
-
     let currentFrame = this.props.currentFrame;
-
     let currentFrameData = this.props.frameData[currentFrame];
-
     let currentMapBounds = MapBounds[this.props.mapId];
 
-    console.log(currentFrameData)
-
     const pt = Object.values(currentFrameData.players).map((player) => {
-      let imgX = player.x / (currentMapBounds.max.x - currentMapBounds.min.x);
-      let imgY = player.y / (currentMapBounds.max.y - currentMapBounds.min.y);
+      let imgX = player.x / (currentMapBounds.max.x - currentMapBounds.min.x) * 100;
+      let imgY = player.y / (currentMapBounds.max.y - currentMapBounds.min.y) * 100;
       let style = {
-        left: imgX,
-        right: imgY
+        left: imgX+'%',
+        bottom: imgY+'%'
       };
       return (
-        <div style={style}>
-          <img className="minimapPortrait" src={getChampionIconUrl(player.championId, this.props.staticData.version)}>
-          </img>
-        </div>
+        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrl(player.championId, this.props.staticData.version)}>
+        </img>
       );
     });
 
@@ -42,8 +31,8 @@ class Minimap extends Component {
 
   render() {
     return(
-      <div className="minimap">
-        <img src={getMapUrl(this.props.mapId, this.props.staticData.version)}></img>
+      <div className="mapContainer">
+        <img className="minimap" src={getMapUrl(this.props.mapId, this.props.staticData.version)}></img>
         {this.renderParticipants()}
       </div>
     );
