@@ -50,6 +50,11 @@ export const getSpellIconUrl = (id, version) => {
   return getDDAsset(version, AssetType.SPELL, SummonerSpellMappings[id].image);
 }
 
+export const getChampionSpellIconUrl = (name, version) => {
+  name = name.substr(0, name.length - 4);
+  return getDDAsset(version, AssetType.SPELL, name);
+}
+
 export const getItemIconUrl = (id, version) => {
   if (id === 0 || id === undefined) return "";
   return getDDAsset(version, AssetType.ITEM, id);
