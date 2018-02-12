@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 import CompareCard from './CompareCard';
 import CompareCardHeader from './CompareCardHeader';
+import CompareCardMiddle from './CompareCardMiddle';
+import CompareCardBottom from './CompareCardBottom';
 
 import './CurrentMatchCompare.css';
 
@@ -153,20 +155,24 @@ class CurrentMatchCompare extends Component {
             teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, false)}
           />
         </div>
+        <div className='compare-row'>
+          <CompareCardMiddle
+            dataRed={compareDataRed}
+            dataBlue={compareDataBlue}
+          />
+        </div>
+        <div className='compare-row'>
+          <CompareCardBottom
+            isRed={true}
+            compareData={compareDataRed}
+          />
+          <CompareCardBottom
+            isRed={false}
+            compareData={compareDataBlue}
+          />
+        </div>
       </div>
     );
-    // return (
-    //   <div className='rc-current-match-compare'>
-    //     <CompareCard
-    //       isRed={true}
-    //       compareData={compareDataRed}
-    //     />
-    //     <CompareCard
-    //       isRed={false}
-    //       compareData={compareDataBlue}
-    //     />
-    //   </div>
-    // );
   }
 }
 
