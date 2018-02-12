@@ -27,9 +27,9 @@ const clearCurrentMatch = (state, payload) => {
 };
 
 const loadCurrentMatchDetails = (state, payload) => {
-  const {id, stats, build} = payload;
+  const {id, stats, build, leagues} = payload;
   const matchDetailsForSummoner = {
-    stats, build
+    stats, build, leagues
   };
 
   const newState = _.set(

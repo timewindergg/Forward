@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import Avatar from 'material-ui/Avatar';
 
+import OverviewCardHeader from './OverviewCardHeader';
+
 import './OverviewCard.css';
 
 import {
@@ -26,6 +28,7 @@ class OverviewCard extends Component {
     summoner: PropTypes.object.isRequired,
     details: PropTypes.object.isRequired,
     isRed: PropTypes.bool.isRequired,
+    queueName: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
     onSelect: PropTypes.func.isRequired
   }
@@ -77,13 +80,30 @@ class OverviewCard extends Component {
     );
   }
 
+  getRankedDetails = (isDetailsLoaded, details, queueName) => {
+
+    console.log(details);
+    if (!isDetailsLoaded || !details.leagues || !details.leagues[queueName]) {
+      return {
+        tier: '\n',
+        division: '',
+        points: 0
+      };
+    }
+
+    const rankedDetails = details.leagues[queueName];
+    return {
+      tier: rankedDetails.tier,
+      division: rankedDetails.division,
+      points: rankedDetails.points
+    };
+  }
+
   render() {
-    const {summoner, details, isRed, isSelected} = this.props;
+    const {summoner, details, isRed, isSelected, queueName} = this.props;
     
     const isSummonerLoaded = Object.keys(summoner).length > 0;
     const isDetailsLoaded = Object.keys(details).length > 0;
-
-    const imageUrl = getChampionIconUrl(summoner.champion_id, IMG_VER);
 
     const winsLoss = (
       <div className='overview-row'>
@@ -116,19 +136,27 @@ class OverviewCard extends Component {
     );    
 
     // TODO: think of a different product flow for selecting champions to compare head to head
+    const {tier, division, points} = this.getRankedDetails(isDetailsLoaded, details, queueName);
+
     return (
       <div className={cardClass} onClick={this.selectSummoner}>
-        <div className='overview-row'>
-          <Avatar src={imageUrl} className='champion-img' />
-          <div className='overview-col'>
-            <span>{summoner.name}</span>
-          </div>
-        </div>
+        <OverviewCardHeader
+          name={summoner.name}
+          championID={summoner.champion_id}
 
-        {winsLoss}
-        {kda}
-        {summonerSpells}
-        {runes}
+          tier={tier}
+          division={division}
+          LP={points}
+          isRed={isRed}
+          isSelected={isSelected}          
+        />
+
+        <div className='overview-body'>
+          {winsLoss}
+          {kda}
+          {summonerSpells}
+          {runes}
+        </div>
       </div>
     );
   }

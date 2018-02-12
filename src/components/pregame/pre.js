@@ -39,6 +39,7 @@ class Pregame extends Component {
     } = this.props;
 
     const queueID = !!currentMatch && !!currentMatch.queue ? currentMatch.queue.id : 0;
+    const queueName = !!currentMatch && !!currentMatch.queue ? currentMatch.queue.value : '';
 
     return (
       <div className='rc-pregame'>
@@ -53,6 +54,7 @@ class Pregame extends Component {
             redTeam={currentMatch.red_team}
             blueTeam={currentMatch.blue_team}
             matchDetails={currentMatchDetails}
+            queueName={queueName}
           />
           <div className='pregame-divider'></div>
           <CurrentMatchCompare

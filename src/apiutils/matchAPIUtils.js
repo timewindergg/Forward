@@ -45,12 +45,13 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
   return (dispatch) => {
     return axios.get(uri, {params}).then((response) => {
       console.log('loaded current match details', response.data);
-      const {stats, build} = response.data;
+      const {stats, build, leagues} = response.data;
 
       dispatch(loadCurrentMatchDetailsSuccess(
         summonerID,
         stats,
-        build
+        build,
+        leagues
       ));
     }).catch((error) => {
       console.log('/getCurrentMatchDetails/ user is not currently in a match', error);

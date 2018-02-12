@@ -21,12 +21,13 @@ export const loadCurrentMatchFailed = (error) => ({
   }
 });
 
-export const loadCurrentMatchDetailsSuccess = (summonerID, stats, build) => ({
+export const loadCurrentMatchDetailsSuccess = (summonerID, stats, build, leagues) => ({
   type: LOAD_CURRENT_MATCH_DETAILS_SUCCESS,
   payload: {
     id: summonerID,
     stats,
-    build
+    build,
+    leagues
   }
 });
 

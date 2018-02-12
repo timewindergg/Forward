@@ -19,6 +19,7 @@ class CurrentMatchOverview extends Component {
     redTeam: PropTypes.array.isRequired,
     blueTeam: PropTypes.array.isRequired,
     matchDetails: PropTypes.object.isRequired,
+    queueName: PropTypes.string.isRequired
   }
 
   renderTeamList = (team, isRed) => {
@@ -32,6 +33,7 @@ class CurrentMatchOverview extends Component {
             summoner={summoner}
             details={details}
             isRed={isRed}
+            queueName={this.props.queueName}
           />
         </div>
       );
