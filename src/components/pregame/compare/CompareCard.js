@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Avatar from 'material-ui/Avatar';
 
-import './CompareCard.css';
+// import './CompareCard.css';
 
 import {
   getMasteryIconUrl,

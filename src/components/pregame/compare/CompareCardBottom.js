@@ -30,12 +30,14 @@ class CompareCardBottom extends Component {
       return (
         <img className='compare-item' src={getItemIconUrl(item, IMG_VER)} key={item} />
       );
-    }) : <img className='overview-spell' src='' />;
+    }) : <img className='compare-item' src='' />;
 
     return (
-      <div>
-        <span className='compare-heading'>{`${itemType} items:`}</span>
-        <div className={classNames('compare-row', 'compare-icon-list')}>
+      <div className={classNames('compare-items', {
+        'compare-items-right': !isRed
+      })}>
+        <span className='compare-heading'>{`${itemType} items`}</span>
+        <div className={classNames('ccb-row', 'ccb-icon-list')}>
           {items}
         </div>
       </div>
