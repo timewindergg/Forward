@@ -35,7 +35,7 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
 
 // provides detailed info on ONE summoner/champion within a current match
 export const getCurrentMatchDetails = (summonerID, summonerName, region, championId) => {
-  const uri = '/get_current_match_details/';
+  const uri = '/get_current_match_details_by_id/';
   const params = {
     summoner_name: summonerName,
     region: region,

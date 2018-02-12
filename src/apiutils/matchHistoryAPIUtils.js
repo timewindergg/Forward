@@ -25,7 +25,7 @@ export const getSummonerMatchHistory = (summoner_name, region, offset, size) => 
       .then((response) => {
         const result = response.data;
         result.forEach(function(match) {
-          match.championUrl = getChampionIconUrl(match.champion_id, patchVersion);
+          match.championUrl = getChampionIconUrl(match.champ_id, patchVersion);
           match.spell1Url = getSpellIconUrl(match.spell0, patchVersion);
           match.spell2Url = getSpellIconUrl(match.spell1, patchVersion);
           match.item0Url = match.item0 === 0 ? "" : getItemIconUrl(match.item0, patchVersion);
@@ -35,7 +35,7 @@ export const getSummonerMatchHistory = (summoner_name, region, offset, size) => 
           match.item4Url = match.item4 === 0 ? "" : getItemIconUrl(match.item4, patchVersion);
           match.item5Url = match.item5 === 0 ? "" : getItemIconUrl(match.item5, patchVersion);
           match.item6Url = match.item6 === 0 ? "" : getItemIconUrl(match.item6, patchVersion);
-          match.championName = ChampionMappings[match.champion_id].name;
+          match.championName = ChampionMappings[match.champ_id].name;
           match.game_type = QueueIdMappings[match.queue_id].name;
           match.roleIcon = fetchRoleIconName(match.lane, match.role);
 
@@ -226,7 +226,7 @@ const getPlayerRunes = (team, summoner_name) => {
     if (player.summonerName === summoner_name) {
       // Loop through user runes and find the keystone.
       for (let key in player.runes) {
-        console.log(key);
+        // console.log(key);
         if (RuneMappings[key].keyStone === true) {
           runes.push(parseInt(key));
         }

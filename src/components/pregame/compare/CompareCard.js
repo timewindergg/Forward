@@ -16,7 +16,7 @@ import {
   getItemIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
-const IMG_VER = '7.24.2';
+import {IMG_VER} from '../../../constants/Settings';
 
 class CompareCard extends Component {
   constructor(props) {

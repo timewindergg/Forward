@@ -15,7 +15,7 @@ import {
   getPerkStyleIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
-const IMG_VER = '7.24.2';
+import {IMG_VER} from '../../../constants/Settings';
 
 class OverviewCard extends Component {
   constructor(props) {
