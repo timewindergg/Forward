@@ -9,6 +9,10 @@ import {
   loadMatchTimelineFailed
 } from '../actions/matchActions';
 
+import {
+  selectSummoner
+} from '../actions/pregameActions';
+
 // provides an overview of the current match
 // i.e. the summoners in the match on each team and limited info on their champions/stats
 export const getCurrentMatch = (summonerName, region, onSuccess) => {
@@ -23,6 +27,13 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
     return axios.get(uri, {params}).then((response) => {
       // console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
+
+      const isRed = response.data.red_team.some(red => red.name === summonerName);
+      const ownID = isRed ?
+        response.data.red_team.find(red => red.name === summonerName).id :
+        response.data.blue_team.find(blue => blue.name === summonerName).id;
+
+      dispatch(selectSummoner(ownID, isRed));
       if (!!onSuccess) {
         onSuccess(response.data);
       }

@@ -1,0 +1,75 @@
+.rc-compare-card-header {
+	display: inline-flex;
+	background-color: #fafafa;
+	width: 50%;
+	height: 200px;
+
+	border-bottom: 1px solid #999;
+	
+	.champion-img {
+		flex-grow: 0;
+		width: 200px;
+		height: 200px;
+		border-radius: 0;
+	}
+
+	.c-header-col {
+		flex-grow: 0;
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-top: 5px;
+
+		.h-primary-text {
+			font-weight: 600;
+		}
+
+		.h-text {
+			font-size: 20px;
+		}
+	}
+	.c-header-col-blue {
+		text-align: right ~'!important';
+	}
+
+	.cch-wr-wrapper {
+		flex-grow: 1;
+		display: flex;
+		justify-content: flex-end;
+	}
+	.cch-wr-wrapper-blue {
+		justify-content: flex-start ~'!important';
+	}
+
+	.cch-wr {
+		display: inline-flex;
+		flex-direction: column;
+
+		box-sizing: border-box;
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-top: 5px;
+
+		text-align: center;
+
+		.cch-wr-head {
+			font-size: 20px;
+			margin-bottom: 30px;
+		}
+
+		.cch-wr-subhead {
+			
+		}
+
+		.cch-wr-rate {
+			font-size: 60px;
+			font-weight: 600;
+		}
+	}
+}
+
+.rc-compare-card-header-right {
+	flex-direction: row-reverse ~'!important';
+}

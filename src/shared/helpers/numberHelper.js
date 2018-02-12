@@ -10,3 +10,9 @@ export const numberFormatter = (num) => {
   }
   return num;
 }
+
+// shameless copied from Mozilla docs
+export const roundWithPrecision = (number, precision) => {
+  const factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}

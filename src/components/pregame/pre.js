@@ -62,6 +62,7 @@ class Pregame extends Component {
             currentMatchDetails={currentMatchDetails}
             selectedRed={selectedRed}
             selectedBlue={selectedBlue}
+            queueName={queueName}
           />
         </div>
 

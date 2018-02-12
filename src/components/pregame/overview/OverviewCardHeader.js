@@ -39,7 +39,7 @@ class OverviewCardHeader extends Component {
   static defaultProps = {
     name: '--',
     championID: 0,
-    tier: '\n',
+    tier: '',
     division: '',
     LP: 0,
     promos: '', 

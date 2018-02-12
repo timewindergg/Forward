@@ -81,7 +81,7 @@ class OverviewCard extends Component {
   getRankedDetails = (isDetailsLoaded, details, queueName) => {
     if (!isDetailsLoaded || !details.leagues || !details.leagues[queueName]) {
       return {
-        tier: '\n',
+        tier: '',
         division: '',
         points: 0
       };
