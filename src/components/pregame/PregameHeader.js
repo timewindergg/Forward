@@ -8,6 +8,7 @@ import Avatar from 'material-ui/Avatar';
 import {GameTypes} from '../../constants/GameTypes';
 import {IMG_VER} from '../../constants/Settings';
 
+import championMappings from '../../shared/championMappings.js';
 import {getChampionIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
 import './PregameHeader.css';
@@ -29,6 +30,16 @@ class PregameHeader extends Component {
 
   renderBans = (bans, isRed) => {
     const banIcons = bans.map((ban) => {
+      if (!championMappings[ban]) {
+        return (
+          <Avatar
+            key={ban}
+            src=''
+            className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
+          />
+        );
+      }
+
       const imageUrl = getChampionIconUrl(ban, IMG_VER);
 
       return (

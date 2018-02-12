@@ -28,10 +28,10 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
       // console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
 
-      const isRed = response.data.red_team.some(red => red.name === summonerName);
+      const isRed = response.data.red_team.some(red => red.name.toLowerCase() === summonerName.toLowerCase());
       const ownID = isRed ?
-        response.data.red_team.find(red => red.name === summonerName).id :
-        response.data.blue_team.find(blue => blue.name === summonerName).id;
+        response.data.red_team.find(red => red.name.toLowerCase() === summonerName.toLowerCase()).id :
+        response.data.blue_team.find(blue => blue.name.toLowerCase() === summonerName.toLowerCase()).id;
 
       dispatch(selectSummoner(ownID, isRed));
       if (!!onSuccess) {
