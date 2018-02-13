@@ -8,18 +8,12 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 
 import Avatar from 'material-ui/Avatar';
 
-import Table from 'material-ui/Table';
-import TableHeader from 'material-ui/Table';
-import TableHeaderColumn from 'material-ui/Table';
-import TableRow from 'material-ui/Table';
-import TableBody from 'material-ui/Table';
-import TableRowColumn from 'material-ui/Table';
-
-
 import './dash.css';
 
 import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
+
+import EnhancedTable from './table';
 
 class Dashboard extends Component {
   static defaultProps = {
@@ -42,7 +36,7 @@ class Dashboard extends Component {
             Go to pregame
           </button>
         </Link>
-        {this.renderChampionLists(summoner)}
+        <EnhancedTable championStats={summoner.championStats}/>
         {this.renderHeader(summoner)}
         <div className="match-lawn">
           {this.renderMatchHeatMap(summoner.lawn)}
@@ -141,27 +135,6 @@ class Dashboard extends Component {
       });
 
       return champions;
-    }
-  }
-
-  renderChampionLists(summoner) {
-    if (summoner !== undefined && summoner.championStats !== undefined) {
-      return (
-        <div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>ID</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableRowColumn>1</TableRowColumn>
-            </TableRow>
-          </TableBody>
-        </Table>
-        </div>
-      )
     }
   }
 
