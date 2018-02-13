@@ -6,11 +6,13 @@ import HomeContainer from './containers/home/home';
 import DashboardContainer from './containers/dashboard/dash';
 import PostgameContainer from './containers/postgame/post';
 import PregameContainer from './containers/pregame/pregame';
+import ChampionStatsContainer from './containers/championstats/championstats';
 
 import {
   SUMMONER_PARAM,
   REGION_PARAM,
-  MATCH_PARAM
+  MATCH_PARAM,
+  CHAMPION_PARAM
 } from './constants/RouteConstants';
 
 import configureStore from './stores/configureStore';
@@ -33,6 +35,10 @@ const Routes = () => (
           <Route
             path={`/l/:${SUMMONER_PARAM}/:${REGION_PARAM}`}
             component={PregameContainer}
+          />
+          <Route
+            path={`/c/:${REGION_PARAM}/:${SUMMONER_PARAM}/:${CHAMPION_PARAM}`}
+            component={ChampionStatsContainer}
           />
         </Switch>
     </BrowserRouter>
