@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
-import { HorizontalBar, Radar } from 'react-chartjs-2';
 
 import './championstats.css';
 
@@ -15,8 +14,12 @@ import { getMasteryIconUrl,
 
 import ChampionMappings from '../../shared/championMappings';
 
-import { ChampionStatsBarGraph, ChampionStatsRadarGraph } from './graph';
+import ChampionStatsBarGraph from './bargraph';
+import ChampionStatsRadarGraph from './radargraph';
 import RecentMatches from './recentmatches';
+import Perks from './perks';
+import Items from './items';
+import ChampionMatchups from './championmatchups';
 
 class ChampionStats extends Component {
 
@@ -34,11 +37,11 @@ class ChampionStats extends Component {
     const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
     return (
       <div className='ChampionStats'>
-        <div className="header">
+        <div className="champion-stats-header">
           {this.renderProfile(summoner)}
           {this.renderRankedTiers(summoner)}
-          {this.renderUserChampionStats(userChampionStats)}
         </div>
+        {this.renderUserChampionStats(userChampionStats)}
       </div>
     );
   }
@@ -46,7 +49,7 @@ class ChampionStats extends Component {
   renderProfile(summoner) {
     const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
     return (
-      <div className="summoner-profile">
+      <div className="champion-stats-summoner-profile">
         <div className="summoner-icon">
           <img src={profileIconUrl} alt=""/>
         </div>
@@ -73,7 +76,7 @@ class ChampionStats extends Component {
       });
 
       return (
-        <div className="summoner-ranked">
+        <div className="champion-stats-summoner-ranked">
           <img src={getTierIconUrl(Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier)}/>
         </div>
       );
@@ -83,47 +86,71 @@ class ChampionStats extends Component {
   renderUserChampionStats(championStats) {
     if (championStats !== undefined && Object.keys(championStats).length !== 0) {
       const championId = championStats.championStats[0].champ_id;
+      const { role } = this.state;
+      const lane = mapRoleToLane(role);
+      const runes = getRuneSetByLane(championStats, lane);
+      let items = {
+            "items": [],
+            "boots": []
+      };
+
+      if (championStats.championItems[role] !== undefined) {
+        items = championStats.championItems[role];
+
+        // prune the items for duplicates.
+        items.items = Array.from(new Set(items.items));
+      }
+
+      const championStatsByLane = getChampionStatsByLane(championStats, lane);
+
       return (
         <div className="champion-stats-container">
-          <div className="left-container">
-            <div className="champion-profile">
-              <Avatar src={getChampionIconUrl(championId, '7.24.2')}/>
-              <div className="champion-name">
-                <span>{ChampionMappings[championId].name}</span>
+          <div className="champion-stats-left-container">
+            <div className="champion-stats-left-container-top">
+              <div className="champion-stats-champion-profile">
+                <div className="champion-stats-champion-icon">
+                  <img src={getChampionIconUrl(championId, '7.24.2')}/>
+                </div>
+                <div className="champion-stats-champion-name">
+                  <span>{ChampionMappings[championId].name}</span>
+                </div>
+                <div className="champion-stats-champion-summoners">
+                  {this.renderChampionSpells(championStats)}
+                </div>
+              </div>
+              <div className="champion-stats-role-container">
+                <div className="champion-roles">
+                    <div className="role-button">
+                      <button id="top-role-button" value="top" onClick={event => this.setState({role: event.target.value})}>
+                      </button>
+                    </div>
+                    <div className="role-button">
+                      <button id="jungle-role-button" value="jungle" onClick={event => this.setState({role: event.target.value})}>
+                      </button>
+                    </div>
+                    <div className="role-button">
+                      <button id="mid-role-button" value="mid" onClick={event => this.setState({role: event.target.value})}>
+                      </button>
+                    </div>
+                    <div className="role-button">
+                      <button id="bot-role-button" value="bot" onClick={event => this.setState({role: event.target.value})}>
+                      </button>
+                    </div>
+                </div>
               </div>
             </div>
-            <div className="champion-roles">
-              <div className="role-button">
-                <button id="top-role-button" value="top" onClick={event => this.setState({role: event.target.value})}>
-                </button>
-              </div>
-              <div className="role-button">
-                <button id="jungle-role-button" value="jungle" onClick={event => this.setState({role: event.target.value})}>
-                </button>
-              </div>
-              <div className="role-button">
-                <button id="mid-role-button" value="mid" onClick={event => this.setState({role: event.target.value})}>
-                </button>
-              </div>
-              <div className="role-button">
-                <button id="bot-role-button" value="bot" onClick={event => this.setState({role: event.target.value})}>
-                </button>
-              </div>
-            </div>
-            <div className="champion-summoners">
-              {this.renderChampionSpells(championStats)}
-            </div>
-              {this.renderChampionItems(championStats)}
-            <div className="champion-perks">
-              {this.renderChampionRunes(championStats)}
-            </div>
+            <Perks perks={runes}/>
+            <Items items={items}/>
             <RecentMatches
               championStats={championStats}/>
           </div>
-          <div className="right-container">
-            <div className="champion-against-list">
-              {this.renderAgainstChampionList(championStats)}
-            </div>
+          <div className="champion-stats-right-container">
+            <ChampionStatsRadarGraph
+              championStats={championStatsByLane}/>
+            <ChampionStatsBarGraph
+              championStats={championStatsByLane}/>
+            <ChampionMatchups
+              championMatchups={championStats.championMatchups}/>
           </div>
         </div>
       );
@@ -134,89 +161,16 @@ class ChampionStats extends Component {
     const { role } = this.state;
     const lane = mapRoleToLane(role);
 
-    return (
-      <div>
-        {championStats.championSummoners.map((l) => {
-          if (l.lane === lane) {
-            return JSON.parse(l.summoner_set).map((s) => {
-              return (
-                <div>
-                  <img src={getSpellIconUrl(s, "7.24.2")}/>
-                </div>
-              )
-            })
-          }
-        })}
-      </div>
-    )
-  }
-
-  renderChampionItems(championStats) {
-    const { role } = this.state;
-
-    if (championStats.championItems[role] !== undefined) {
-      return (
-        <div className="champion-items">
-          <div>
-          <span>Boots:</span>
-          {championStats.championItems[role].boots.map((b) => {
+    return championStats.championSummoners.map((l) => {
+        if (l.lane === lane) {
+          return JSON.parse(l.summoner_set).map((s) => {
             return (
-              <div className="champion-item">
-                <img src={getItemIconUrl(b, '7.24.2')}/>
+              <div className="champion-stats-champion-summoners-spell">
+                <img src={getSpellIconUrl(s, "7.24.2")}/>
               </div>
             )
-          })}
-          </div>
-          <div>
-            <span>Items:</span>
-            {
-              championStats.championItems[role].items.map((i) => {
-                return (
-                  <div className="champion-item">
-                    <img src={getItemIconUrl(i, '7.24.2')}/>
-                  </div>
-                )
-              })
-            }
-          </div>
-        </div>
-      );
-    }
-  }
-
-  renderChampionRunes(championStats) {
-    const { role } = this.state;
-    const lane = mapRoleToLane(role);
-
-    return (
-      <div>
-        {
-          championStats.championRunes.map((l) => {
-            if (l.lane === lane) {
-              return JSON.parse(l.rune_set).map((r) => {
-                return (
-                  <div>
-                    <img src={getPerkIconUrl(r, '7.24.2')}/>
-                  </div>
-                )
-              });
-            }
           })
         }
-      </div>
-    );
-  }
-
-  renderAgainstChampionList(championStats) {
-    return championStats.championMatchups.map((c) => {
-      return (
-        <div className="champion-against-item" key={c.enemy_champ_id}>
-          <Avatar src={getChampionIconUrl(c.enemy_champ_id, '7.24.2')}/>
-          <div className="champion-against-item-win-percentage">
-            <span>{(c.wins/c.total_games)*100 + '%'}</span>
-          </div>
-        </div>
-      )
     });
   }
 }
@@ -230,5 +184,26 @@ const mapRoleToLane = (role) => {
 
   return lane;
 };
+
+const getRuneSetByLane = (championStats, lane) => {
+  // Loop through the championRunes and return rune set matches the lane.
+  for (let i = 0; i < championStats.championRunes.length; i++) {
+    if (championStats.championRunes[i].lane === lane) {
+      return JSON.parse(championStats.championRunes[i].rune_set);
+    }
+  }
+
+  return [];
+}
+
+const getChampionStatsByLane = (championStats, lane) => {
+  for (let i = 0; i < championStats.championStats.length; i++) {
+    if (championStats.championStats[i].lane === lane) {
+      return championStats.championStats[i];
+    }
+  }
+
+  return {};
+}
 
 export default ChampionStats;
