@@ -200,7 +200,7 @@ class Postgame extends Component {
   }
 
   render() {
-    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && this.props.staticData !== undefined){
+    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && Object.keys(this.props.staticData).length > 0){
       return (
         <div className="Postgame">
           <div className="content">
