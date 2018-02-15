@@ -31,8 +31,6 @@ export class Team {
     this.barons = 0;
     this.heralds = 0;
     this.inhibitors = 0;
-    this.greenWards = 0;
-    this.pinkWards = 0;
-    this.blueWards = 0;
+    this.wards = 0;
   }
 }

@@ -29,7 +29,7 @@ const Routes = () => (
             component={DashboardContainer}
           />
           <Route
-            path={`/m/:${MATCH_PARAM}/:${REGION_PARAM}`}
+            path={`/m/:${REGION_PARAM}/:${MATCH_PARAM}`}
             component={PostgameContainer}
           />
           <Route

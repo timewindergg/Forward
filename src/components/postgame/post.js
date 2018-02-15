@@ -31,6 +31,7 @@ class Postgame extends Component {
     let maxFrames = matchDetails.timeline.frames.length;
 
     var frameData = [];
+    var eventLineFrameData = [];
 
     let players = {};
     for (var i = 1; i <= matchDetails.match.participants.length; i++){
@@ -45,19 +46,41 @@ class Postgame extends Component {
       players: players,
     };
 
+
+    // must keep stack of player inventories. upon undo pop stack.
+    // poachers dirk, manamune, seraphs get destroyed on upgrade
+    // Poacher's dirk (3252) -> Serrated Dirk (3134)
+    // manamune (3004) -> muramana (3042)
+    // manamune quick (3008) -> muramana (3042)
+
     for (var i = 0; i < maxFrames; i++){
       aggregateData.teams['100'].gold = 0;
       aggregateData.teams['200'].gold = 0;
+
+      let eventLineData = {
+        '100': {
+          'objs':[],
+          'kills':[] 
+        },
+        '200': {
+          'objs':[],
+          'kills':[]
+        }
+      };
+
+      let invStack = [];
 
       if (i > 0){
         for (var j = 0; j < tl.frames[i].events.length; j++){
           var evnt = tl.frames[i].events[j];
           switch(evnt.type){
-            case "ASCENDED_EVENT":
-              break;
-            case "CAPTURE_POINT":
-              break;
             case "BUILDING_KILL":
+              if (evnt.side === 100){
+                eventLineData['200']['objs'].push(evnt);
+              }
+              else if (evnt.side === 200){
+                eventLineData['100']['objs'].push(evnt);
+              }
               if (evnt.buildingType === "INHIBITOR_BUILDING"){
                 aggregateData.teams[evnt.side].inhibitors++;
               }
@@ -66,6 +89,13 @@ class Postgame extends Component {
               }
               break;
             case "CHAMPION_KILL":
+              if (evnt.killerId > 0 && evnt.killerId <= matchDetails.match.participants.length / 2){
+                eventLineData['100']['kills'].push(evnt);
+              }
+              else if (evnt.killerId > matchDetails.match.participants.length / 2){
+                eventLineData['200']['kills'].push(evnt);
+              }
+
               if (evnt.killerId > 0){
                 aggregateData.players[evnt.killerId].kills++;
               }
@@ -75,26 +105,16 @@ class Postgame extends Component {
                   aggregateData.players[id].assists++;
                 });
               }
-              /*
-              aggregateData.eventLocations.push({
-                'x': evnt.position.x,
-                'y': evnt.position.y,
-                'killerId': evnt.killerId,
-                'victimId': evnt.victimId,
-                'assistingParticipants': evnt.assistingParticipantIds,
-                'type': evnt.type,
-                'frames' : i + 1,
-                'timestamp' : evnt.timestamp
-              });
-              */
               break;
             case "ELITE_MONSTER_KILL":
               var teamId;
               if (evnt.killerId > 0 && evnt.killerId <= matchDetails.match.participants.length / 2){
                 teamId = 100;
+                eventLineData['100']['objs'].push(evnt);
               }
               else if (evnt.killerId > matchDetails.match.participants.length / 2){
                 teamId = 200;
+                eventLineData['200']['objs'].push(evnt);
               }
               if (evnt.monsterType === "BARON_NASHOR" || evnt.monsterType === "VILEMAW"){
                 aggregateData.teams[teamId].barons++;
@@ -126,9 +146,6 @@ class Postgame extends Component {
             case "ITEM_UNDO":
               aggregateData.players[evnt.participantId].purchaseOrder.pop();
               aggregateData.players[evnt.participantId].items[evnt.itemId]--;
-              break;
-            case "PORO_KING_SUMMON":
-              console.log("Poro King!?!?");
               break;
             case "SKILL_LEVEL_UP":
               aggregateData.players[evnt.participantId].skillOrder.push(evnt.skill);
@@ -171,19 +188,14 @@ class Postgame extends Component {
         }
       });
 
-      //team100Data.push(aggregateData.teams['100'].gold);
-      //team200Data.push(aggregateData.teams['200'].gold);
-      //teamDiffData.push(aggregateData.teams['100'].gold - aggregateData.teams['200'].gold);
-      //glabels.push(i.toString());
-
-      //AggregatedData[frameIndex] = aggregateData;
-
       frameData.push(JSON.parse(JSON.stringify(aggregateData)));
+      eventLineFrameData.push(eventLineData);
     }
 
     this.setState({
-      frameData: frameData
-    }, () => {console.log(this.state.frameData)});
+      frameData: frameData,
+      eventLineFrameData: eventLineFrameData,
+    }, () => {console.log(this.state.frameData); console.log(this.state.eventLineFrameData)});
   }
 
   onSliderChange = (value) => {
@@ -200,14 +212,15 @@ class Postgame extends Component {
   }
 
   render() {
-    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && Object.keys(this.props.staticData).length > 0){
+    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && this.state.eventLineFrameData.length > 0 && Object.keys(this.props.staticData).length > 0){
       return (
         <div className="Postgame">
           <div className="content">
             <h1>Timewinder</h1>
             <ControlHeader onSliderChange={this.onSliderChange} 
                            match={this.props.matchDetails.match} 
-                           timeline={this.props.matchDetails.timeline} />
+                           timeline={this.props.matchDetails.timeline}
+                           events={this.state.eventLineFrameData} />
             <Scoreboard currentFrame={this.state.currentFrame} 
                         frameData={this.state.frameData}
                         matchParticipants={this.props.matchDetails.match.participants}/>
@@ -218,7 +231,7 @@ class Postgame extends Component {
             <SkillTable skillOrder={this.state.frameData[this.state.currentFrame].players[1].skillOrder}
                         skillData={this.props.staticData.championSkills[this.props.matchDetails.match.participants[0].championId]}
                         version={this.props.staticData.version}/>
-            <div class='clear'></div>
+            <div className='clear'></div>
             <ItemProgression itemOrder={this.state.frameData[this.state.currentFrame].players[1].purchaseOrder}
                              itemData={this.props.staticData.items}
                              version={this.props.staticData.version}/>
