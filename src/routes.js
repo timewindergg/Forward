@@ -25,7 +25,7 @@ const Routes = () => (
         <Switch>
           <Route exact path="/" component={HomeContainer} />
           <Route
-            path={`/p/:${SUMMONER_PARAM}/:${REGION_PARAM}`}
+            path={`/p/:${REGION_PARAM}/:${SUMMONER_PARAM}`}
             component={DashboardContainer}
           />
           <Route
@@ -33,7 +33,7 @@ const Routes = () => (
             component={PostgameContainer}
           />
           <Route
-            path={`/l/:${SUMMONER_PARAM}/:${REGION_PARAM}`}
+            path={`/l/:${REGION_PARAM}/:${SUMMONER_PARAM}`}
             component={PregameContainer}
           />
           <Route

@@ -31,12 +31,11 @@ class Dashboard extends Component {
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
     return (
       <div className='Dashboard'>
-        <Link to={`/l/${summoner.name}/${summoner.region}`}>
+        <Link to={`/l/${summoner.region}/${summoner.name}`}>
           <button disabled={!isSummonerInMatch}>
             Go to pregame
           </button>
         </Link>
-        <EnhancedTable championStats={summoner.championStats}/>
         {this.renderHeader(summoner)}
         <div className="match-lawn">
           {this.renderMatchHeatMap(summoner.lawn)}
@@ -49,6 +48,9 @@ class Dashboard extends Component {
         <div className='game-item-list'>
           {this.renderMatchList(matches)}
         </div>
+        <EnhancedTable championStats={summoner.championStats}
+        summonerName={summoner.name}
+        summonerRegion={summoner.region}/>
       </div>
     );
   }
@@ -160,7 +162,7 @@ class Dashboard extends Component {
     }
   }
 
-  renderRadarChart() {
+  renderRadarChart(matches) {
     const data = {
       labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
       datasets: [
@@ -190,8 +192,6 @@ class Dashboard extends Component {
     return (
       <Radar
         data={data}
-        width={150}
-        height={100}
         options={{
           maintainAspectRatio: false,
           legend: {
@@ -220,6 +220,7 @@ class Dashboard extends Component {
   }
 
   renderMatchList(matches) {
+    console.log(matches);
     const matchItems = matches.map((m) => {
       return (
         <div className="game-item-wrapper" key={m.match_id}>
@@ -321,7 +322,7 @@ class Dashboard extends Component {
                 </div>
               </div>
               <div className="post-game">
-                <Link to={`/m/${m.match_id}/${m.region}`}>
+                <Link to={`/m/${m.region}/${m.match_id}`}>
                   <button>
                   </button>
                 </Link>
@@ -335,5 +336,17 @@ class Dashboard extends Component {
     return matchItems;
   }
 }
+
+const getRadarStats = (matches) => {
+  if (matches.length === 0) {
+    return [];
+  }
+
+  const data = [0, 0, 0, 0, 0]
+
+  for (let i = 0; i < matches.length; i++) {
+
+  }
+};
 
 export default Dashboard;
