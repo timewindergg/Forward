@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
 import Table, {
@@ -22,12 +23,6 @@ import { lighten } from 'material-ui/styles/colorManipulator';
 
 import ChampionMappings from '../../shared/championMappings';
 import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
-
-let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
-  counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
-}
 
 const createChampionListData = (championLists) => {
   return championLists.map((c) => {
@@ -168,6 +163,8 @@ class EnhancedTable extends React.Component {
       data: [],
       page: 0,
       rowsPerPage: 5,
+      summonerName: '',
+      summonerRegion: ''
     };
   }
 
@@ -196,6 +193,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
+    console.log(event);
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -227,7 +225,7 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, championStats} = this.props;
+    const { classes, championStats, summonerName, summonerRegion} = this.props;
 
     if (championStats === undefined) {
       return (<div/>);
@@ -235,6 +233,14 @@ class EnhancedTable extends React.Component {
 
     if (this.state.data.length === 0) {
       this.state.data = createChampionListData(championStats);
+    }
+
+    if (this.state.summonerName === '') {
+      this.state.summonerName = summonerName;
+    }
+
+    if (this.state.summonerRegion === '') {
+      this.state.summonerRegion = summonerRegion;
     }
 
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
@@ -266,8 +272,10 @@ class EnhancedTable extends React.Component {
                       selected={isSelected}
                     >
                       <TableCell >
-                        <Avatar src={getChampionIconUrl(n.id, '7.24.2')}/>
-                        {n.name}
+                        <Link to={`/c/${summonerRegion}/${summonerName}/${n.name}`}>
+                            <Avatar src={getChampionIconUrl(n.id, '7.24.2')}/>
+                            {n.name}
+                        </Link>
                       </TableCell>
                       <TableCell numeric>{n.kills}</TableCell>
                       <TableCell numeric>{n.deaths}</TableCell>

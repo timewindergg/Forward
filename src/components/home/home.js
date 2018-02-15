@@ -59,7 +59,7 @@ class Home extends Component {
               onChange={(event) => this.setState({summoner: event.target.value})}
             />
 
-            <Link to={`/p/${summoner}/${server}`}>
+            <Link to={`/p/${server}/${summoner}`}>
               <input id="searchButton" className="button" type="submit" name="commit" value="Search"/>
             </Link>
           </div>
