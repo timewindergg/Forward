@@ -9,40 +9,42 @@ class Event extends Component{
   }
 
   render(){
-    const circleSize = [0, 10, 20, 30, 40, 50, 60];
+    const circleSize = [0, 10, 14, 18, 22, 26, 30];
 
     let len = this.props.events.length;
     if (len === 0){
       return (<div className='event'></div>);
     }
 
-    let colorClass;
-    if (this.props.team === 100){
-      colorClass = "color100";
-    }
-    else if (this.props.team === 200){
-      colorClass = "color200";
-    }
+    console.log(this.props.team);
+
+
+    let blueTeam = this.props.team === '100';
+    let redTeam = this.props.team === '200';
+
+
+    console.log(blueTeam);
+    console.log(redTeam);
 
     if (this.props.type === "objs"){
       let event = this.props.events[0];
       if (event.type === "BUILDING_KILL"){
         if (event.buildingType === "INHIBITOR_BUILDING"){
-          return (<div className={classNames('event': true, 'icon-inhibitor': true, colorClass: true)}></div>);
+          return (<div className={classNames('event': true, 'icon-inhibitor': true, 'color100': blueTeam, 'color200': redTeam)}></div>);
         }
         else if (event.buildingType === "TOWER_BUILDING"){
-          return (<div className={classNames('event': true, 'icon-tower': true, colorClass: true)}></div>);
+          return (<div className={classNames('event': true, 'icon-tower': true, 'color100': blueTeam, 'color200': redTeam)}></div>);
         }
       }
       else if (event.type === "ELITE_MONSTER_KILL"){
         if (event.monsterType === "BARON_NASHOR" || event.monsterType === "VILEMAW"){
-          return (<div className={classNames('event': true, 'icon-baron': true, colorClass: true)}></div>);
+          return (<div className={classNames('event': true, 'icon-baron': true, 'color100': blueTeam, 'color200': redTeam)}></div>);
         }
         else if (event.monsterType === "DRAGON") {
-          return (<div className={classNames('event': true, 'icon-dragon': true, colorClass: true)}></div>);
+          return (<div className={classNames('event': true, 'icon-dragon': true, 'color100': blueTeam, 'color200': redTeam)}></div>);
         }
         else if (event.monsterType === "RIFTHERALD"){
-          return (<div className={classNames('event': true, 'icon-rift-herald': true, colorClass: true)}></div>);
+          return (<div className={classNames('event': true, 'icon-rift-herald': true, 'color100': blueTeam, 'color200': redTeam)}></div>);
         }
       }
     }
@@ -53,13 +55,10 @@ class Event extends Component{
         '-webkit-border-radius': circleSize[len] / 2,
         '-moz-border-radius': circleSize[len] / 2,
         'border-radius': circleSize[len] / 2,
-        'background': '#000'
       };
 
-      return (<div className={classNames('event': true, colorClass: true)} style={style}></div>);
+      return (<div className={classNames('event': true, 'color100': blueTeam, 'color200': redTeam)} style={style}></div>);
     }
-
-    return (<div className='event'>f</div>);
   }
 }
 
@@ -117,19 +116,17 @@ class ControlHeader extends Component {
     }
   }
 
-  renderTime(){
-    return this.state.currentFrame;
-  }
-
-
   render() {
+    let marks = {};
+
+    for (var i = 0; i < this.state.maxFrames; i+=5){
+      marks[i] = i;
+    }
+
     return(
       <div>
-        <div className="sliderTime">
-          {this.renderTime()}
-        </div>
         <div className="gameSlider" >
-          <Slider max={this.state.maxFrames - 1} onChange={this.props.onSliderChange}/>
+          <Slider marks={marks} dots="true" max={this.state.maxFrames - 1} onChange={this.props.onSliderChange}/>
         </div>
         <div className="eventTimeline">
           <EventLine events={this.props.events}/>

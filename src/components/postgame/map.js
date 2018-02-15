@@ -7,6 +7,10 @@ class Minimap extends Component {
     super(props);
   }
 
+  renderDeaths(){
+
+  }
+
   renderParticipants() {
     let p = this.props.participants;
     let currentFrame = this.props.currentFrame;
@@ -34,6 +38,7 @@ class Minimap extends Component {
       <div className="mapContainer">
         <img className="minimap" src={getMapUrl(this.props.mapId, this.props.staticData.version)}></img>
         {this.renderParticipants()}
+        {this.renderDeaths()}
       </div>
     );
   }
