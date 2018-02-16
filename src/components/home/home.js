@@ -34,14 +34,6 @@ class Home extends Component {
     console.log("retrieved recent searches: ", this.state.recentSearches);
   }
 
-  searchSummoner = () => {
-    console.log("getting the cookie: ", document.cookie);
-    // console.log('searching summoner');
-    // TODO: save recent search to cookie
-    // document.cookie = ;
-  }
-
-
   static propTypes = {}
 
   render() {
@@ -79,9 +71,7 @@ class Home extends Component {
             />
 
             <Link to={`/p/${server}/${summoner}`}>
-              <input id="searchButton" className="button" type="submit" name="commit" value="Search"
-                onClick={() => this.searchSummoner()}
-              />
+              <input id="searchButton" className="button" type="submit" name="commit" value="Search" />
             </Link>
           </div>
 

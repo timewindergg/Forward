@@ -5,6 +5,8 @@ import CurrentMatchOverview from './overview/CurrentMatchOverview';
 import CurrentMatchCompare from './compare/CurrentMatchCompare';
 import PregameHeader from './PregameHeader';
 
+import Header from '../common/header';
+
 import './pre.css';
 
 class Pregame extends Component {
@@ -43,6 +45,7 @@ class Pregame extends Component {
 
     return (
       <div className='rc-pregame'>
+        <Header />
         <div className='pregame-container'>
           <PregameHeader
             redBans={currentMatch.red_bans}
