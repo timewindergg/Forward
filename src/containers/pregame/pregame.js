@@ -45,6 +45,18 @@ class PregameContainer extends Component {
     }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const curSummoner = this.props.match.params[SUMMONER_PARAM];
+    const newSummoner = nextProps.match.params[SUMMONER_PARAM];
+    const newRegion = nextProps.match.params[REGION_PARAM];
+
+    console.log(curSummoner, newSummoner);
+    if (curSummoner !== newSummoner) {
+      this.props.getSummonerInfo(newSummoner, newRegion);
+      this.props.getCurrentMatch(newSummoner, newRegion);
+    }
+  }
+
   render() {
     const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue} = this.props;
 
