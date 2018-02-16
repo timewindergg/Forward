@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import './post.css';
+import './styles/post.css';
+import './styles/map.css';
+import './styles/scoreboard.css';
+import './styles/skillprogression.css';
+import './styles/itemprogression.css';
+import './styles/control.css';
 
 import { Team, Player } from './objects.js';
 import Scoreboard from './scoreboard.js';
@@ -8,6 +13,8 @@ import ControlHeader from './control.js';
 import Minimap from './map.js';
 import SkillTable from './skilltable.js';
 import ItemProgression from './itemprogression.js';
+
+import Sticky from 'react-stickynode';
 
 import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 
@@ -215,12 +222,13 @@ class Postgame extends Component {
     if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && this.state.eventLineFrameData.length > 0 && Object.keys(this.props.staticData).length > 0){
       return (
         <div className="Postgame">
-          <div className="content">
-            <h1>Timewinder</h1>
+          <Sticky innerZ='1'>
             <ControlHeader onSliderChange={this.onSliderChange} 
                            match={this.props.matchDetails.match} 
                            timeline={this.props.matchDetails.timeline}
                            events={this.state.eventLineFrameData} />
+          </Sticky>
+          <div className="content">
             <Scoreboard currentFrame={this.state.currentFrame} 
                         frameData={this.state.frameData}
                         matchParticipants={this.props.matchDetails.match.participants}/>

@@ -7,6 +7,8 @@ import {getMatchTimeline} from '../../apiutils/matchAPIUtils';
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
 import Postgame from '../../components/postgame/post';
+import Header from '../../components/common/header';
+import Footer from '../../components/common/footer';
 
 class PostgameContainer extends Component {
   static propTypes = {
@@ -37,10 +39,14 @@ class PostgameContainer extends Component {
     const {timeline, staticData} = this.props;
 
     return (
-      <Postgame
-        matchDetails={timeline}
-        staticData={staticData}
-      />
+      <div>
+        <Header/>
+        <Postgame
+          matchDetails={timeline}
+          staticData={staticData}
+        />
+        <Footer/>
+      </div>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
-import './header.css';
+import './styles/header.css';
 
 // import { selectSummoner } from '../../actions/pregameActions';
 import {
