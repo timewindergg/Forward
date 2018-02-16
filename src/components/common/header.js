@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import './header.css';
+import './styles/header.css';
 import REGION from '../../shared/constants';
 
 import {
