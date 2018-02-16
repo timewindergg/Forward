@@ -8,7 +8,7 @@ import CompareCardHeader from './CompareCardHeader';
 import CompareCardMiddle from './CompareCardMiddle';
 import CompareCardBottom from './CompareCardBottom';
 
-import './CurrentMatchCompare.css';
+import './styles/CurrentMatchCompare.css';
 
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
 

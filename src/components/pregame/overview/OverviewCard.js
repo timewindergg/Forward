@@ -6,7 +6,7 @@ import Avatar from 'material-ui/Avatar';
 
 import OverviewCardHeader from './OverviewCardHeader';
 
-import './OverviewCard.css';
+import './styles/OverviewCard.css';
 
 import {
   getMasteryIconUrl,

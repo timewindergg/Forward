@@ -6,7 +6,7 @@ import {HorizontalBar} from 'react-chartjs-2';
 
 import Avatar from 'material-ui/Avatar';
 
-import './CompareCardMiddle.css';
+import './styles/CompareCardMiddle.css';
 
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
 

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Avatar from 'material-ui/Avatar';
 
-import './OverviewCardHeader.css';
+import './styles/OverviewCardHeader.css';
 
 import {
   getMasteryIconUrl,
@@ -45,6 +45,12 @@ class OverviewCardHeader extends Component {
     promos: '', 
   }
 
+/*
+turn  o-header-col text into 2 lines
+lp and rank in same line, take away champion name text
+
+badge icon ne
+*/
   render() {
     const {name, championID, tier, division, LP, promos, isRed, isSelected} = this.props;
     
@@ -74,9 +80,7 @@ class OverviewCardHeader extends Component {
         <Avatar src={imageUrl} className='champion-img' />
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>
-          <span className='h-text'>{championName}</span>
-          <span className='h-text'>{tierText}</span>
-          <span className='h-text'>{`${LP} LP`}</span>
+          <span className='h-text'>{`${tierText} (${LP} LP)`}</span>
         </div>
       </div>
     );

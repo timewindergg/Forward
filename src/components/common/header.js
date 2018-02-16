@@ -7,16 +7,28 @@ import {
   decodeRecentSearches,
 } from '../../shared/helpers/cookieHelper';
 
+
 class Header extends Component {
   static propTypes = {}
 
-  // TODO: fetch recent searches from cookies
+  renderSearchBar = () => {
+    return (
+      <div></div>
+    );
+  }
 
+  // TODO: fetch recent searches from cookies
+// <div className='header-gro'
+  // so over-engineered
   render() {
     return (
       <div className='rc-header'>
         <div className='header-inner'>
-          Header content
+          <div className='header-group'>
+            <span className='header-appname'>Timewindr</span>
+          </div>
+          <div className='header-group'>
+          </div>
         </div>
       </div>
     );

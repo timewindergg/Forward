@@ -11,7 +11,7 @@ import {IMG_VER} from '../../constants/Settings';
 import championMappings from '../../shared/championMappings.js';
 import {getChampionIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
-import './PregameHeader.css';
+import './styles/PregameHeader.css';
 
 class PregameHeader extends Component {
   static propTypes = {

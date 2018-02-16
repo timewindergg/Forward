@@ -7,7 +7,7 @@ import PregameHeader from './PregameHeader';
 
 import Header from '../common/header';
 
-import './pre.css';
+import './styles/pre.css';
 
 class Pregame extends Component {
   constructor(props) {

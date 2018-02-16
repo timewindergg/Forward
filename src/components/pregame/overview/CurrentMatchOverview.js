@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import OverviewCardContainer from '../../../containers/pregame/OverviewCardContainer';
 
-import './CurrentMatchOverview.css';
+import './styles/CurrentMatchOverview.css';
 
 class CurrentMatchOverview extends Component {
   constructor(props) {

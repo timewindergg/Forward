@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import Avatar from 'material-ui/Avatar';
 
-import './CompareCardBottom.css';
+import './styles/CompareCardBottom.css';
 
 import {
   getItemIconUrl
