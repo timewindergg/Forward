@@ -38,11 +38,13 @@ export const decodeRecentSearches = () => {
 
 export const addRecentSearch = (summoner, region, icon) => {
     let recentSearches = decodeRecentSearches();
+    const searchCount = recentSearches[summoner] ? recentSearches[summoner].count + 1 : 1;
 
     recentSearches[summoner] = {
         name: summoner,
         region,
-        icon
+        icon,
+        count: searchCount
     };
 
     // now store the cookie again
