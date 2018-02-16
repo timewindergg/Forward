@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import REGION from '../../shared/constants';
 
+import {
+  decodeRecentSearches,
+  // RECENT_SEARCHES_KEY
+} from '../../shared/helpers/cookieHelper';
+
 import './home.css';
 
 const quotes = [
@@ -21,7 +26,21 @@ class Home extends Component {
   state = {
     summoner: '',
     server: REGION.NA,
+    recentSearches: decodeRecentSearches()
   }
+
+  componentDidMount() {
+
+    console.log("retrieved recent searches: ", this.state.recentSearches);
+  }
+
+  searchSummoner = () => {
+    console.log("getting the cookie: ", document.cookie);
+    // console.log('searching summoner');
+    // TODO: save recent search to cookie
+    // document.cookie = ;
+  }
+
 
   static propTypes = {}
 
@@ -60,7 +79,9 @@ class Home extends Component {
             />
 
             <Link to={`/p/${server}/${summoner}`}>
-              <input id="searchButton" className="button" type="submit" name="commit" value="Search"/>
+              <input id="searchButton" className="button" type="submit" name="commit" value="Search"
+                onClick={() => this.searchSummoner()}
+              />
             </Link>
           </div>
 

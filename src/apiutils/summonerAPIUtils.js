@@ -3,6 +3,12 @@ import FormData from 'form-data';
 
 import {loadSummonerSuccess, loadSummonerFailed} from '../actions/summonerActions';
 
+import {
+  addRecentSearch,
+  decodeRecentSearches
+  // RECENT_SEARCHES_KEY
+} from '../shared/helpers/cookieHelper';
+
 export const getSummonerInfo = (summonerName, region, onSuccess) => {
   const getURI = `/get_summoner/`;
   const params = {
@@ -19,6 +25,10 @@ export const getSummonerInfo = (summonerName, region, onSuccess) => {
     // console.log('getting summoner info');
     return axios.get(getURI, {params}).then((response) => {
       console.log('loaded summoner', response.data);
+      // now add this to recent searches!
+      addRecentSearch(summonerName, region, response.data.icon);
+      console.log('RECENT SEARCHES: ', decodeRecentSearches());
+
       dispatch(loadSummonerSuccess(response.data));
 
       // onSuccess is an object like such
