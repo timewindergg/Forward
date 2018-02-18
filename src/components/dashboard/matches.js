@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 
 // Import required mappings.
@@ -189,6 +189,12 @@ class Matches extends Component {
           <div className="dashboard-matches-item-body-match-participants-blue">
             {this.renderParticipants(participants[1], version)}
           </div>
+        </div>
+        <div className="dashboard-matches-item-body-match-postgame">
+          <Link to={`/m/${match.region}/${match.match_id}`}>
+            <button>
+            </button>
+          </Link>
         </div>
       </div>
     );
