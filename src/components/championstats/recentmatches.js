@@ -17,21 +17,21 @@ class RecentMatches extends Component {
   }
 
   render() {
-    if (this.props === undefined) {
+    if (this.props.championStats === undefined || this.props.version === undefined) {
       return (<div/>);
     }
 
-    const { championStats } = this.props;
+    const { championStats, version } = this.props;
 
     return (
       <div className="champion-stats-recent-matches">
-        {this.renderMatches(championStats)}
+        {this.renderMatches(championStats, version)}
       </div>
     )
   }
 
 
-  renderMatches(championStats) {
+  renderMatches(championStats, version) {
     return championStats.recentMatches.map((m) => {
       return (
         <div className="champion-stats-match-item-wrapper" key={m.match_id}>
@@ -51,17 +51,17 @@ class RecentMatches extends Component {
           </div>
           <div className="champion-stats-match-setting-info">
             <div className="champion-stats-match-champion-image">
-              <Avatar src={getChampionIconUrl(m.champ_id, '7.24.2')}/>
+              <Avatar src={getChampionIconUrl(m.champ_id, version)}/>
               <div className="champion-stats-match-level">
                 Level: {m.level}
               </div>
             </div>
             <div className="champion-stats-match-summoner-spells">
               <div className="champion-stats-match-spell">
-                <img src={getSpellIconUrl(m.spell0, '7.24.2')} alt=""/>
+                <img src={getSpellIconUrl(m.spell0, version)} alt=""/>
               </div>
               <div className="champion-stats-match-spell">
-                <img src={getSpellIconUrl(m.spell1, '7.24.2')} alt=""/>
+                <img src={getSpellIconUrl(m.spell1, version)} alt=""/>
               </div>
             </div>
             <div className="champion-stats-match-kda">
@@ -78,27 +78,27 @@ class RecentMatches extends Component {
             </div>
             <div className="champion-stats-match-items">
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item0, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item0, version)} alt=""/>
               </div>
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item1, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item1, version)} alt=""/>
               </div>
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item2, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item2, version)} alt=""/>
               </div>
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item3, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item3, version)} alt=""/>
               </div>
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item4, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item4, version)} alt=""/>
               </div>
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item5, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item5, version)} alt=""/>
               </div>
             </div>
             <div className="champion-stats-match-trinkets">
               <div className="champion-stats-match-item">
-                <img src={getItemIconUrl(m.item6, '7.24.2')} alt=""/>
+                <img src={getItemIconUrl(m.item6, version)} alt=""/>
               </div>
             </div>
           </div>

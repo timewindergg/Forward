@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
 
+import Header from '../common/header';
+import Footer from '../common/footer';
+
 import './championstats.css';
 
 import { getMasteryIconUrl,
@@ -33,21 +36,24 @@ class ChampionStats extends Component {
   }
 
   render() {
-    const {summoner, userChampionStats} = this.props;
-    const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
+    const {summoner, userChampionStats, staticData} = this.props;
+    const profileIconUrl = getProfileIconUrl(summoner.icon, staticData.version);
     return (
       <div className='ChampionStats'>
+        <Header />
         <div className="champion-stats-header">
-          {this.renderProfile(summoner)}
+          {this.renderProfile(summoner, staticData.version)}
           {this.renderRankedTiers(summoner)}
         </div>
-        {this.renderUserChampionStats(userChampionStats)}
+        {this.renderUserChampionStats(userChampionStats, staticData)}
+
+        <Footer/>
       </div>
     );
   }
 
-  renderProfile(summoner) {
-    const profileIconUrl = getProfileIconUrl(summoner.icon, '7.24.2');
+  renderProfile(summoner, version) {
+    const profileIconUrl = getProfileIconUrl(summoner.icon, version);
     return (
       <div className="champion-stats-summoner-profile">
         <div className="summoner-icon">
@@ -83,9 +89,10 @@ class ChampionStats extends Component {
     }
   }
 
-  renderUserChampionStats(championStats) {
+  renderUserChampionStats(championStats, staticData) {
     if (championStats !== undefined && Object.keys(championStats).length !== 0) {
       const championId = championStats.championStats[0].champ_id;
+      const version = staticData.version;
       const { role } = this.state;
       const lane = mapRoleToLane(role);
       const runes = getRuneSetByLane(championStats, lane);
@@ -109,13 +116,13 @@ class ChampionStats extends Component {
             <div className="champion-stats-left-container-top">
               <div className="champion-stats-champion-profile">
                 <div className="champion-stats-champion-icon">
-                  <img src={getChampionIconUrl(championId, '7.24.2')}/>
+                  <img src={getChampionIconUrl(championId, version)}/>
                 </div>
                 <div className="champion-stats-champion-name">
                   <span>{ChampionMappings[championId].name}</span>
                 </div>
                 <div className="champion-stats-champion-summoners">
-                  {this.renderChampionSpells(championStats)}
+                  {this.renderChampionSpells(championStats, version)}
                 </div>
               </div>
               <div className="champion-stats-role-container">
@@ -139,10 +146,10 @@ class ChampionStats extends Component {
                 </div>
               </div>
             </div>
-            <Perks perks={runes}/>
-            <Items items={items}/>
+            <Perks perks={runes} perkData={staticData.runes} version={version}/>
+            <Items items={items} staticData={staticData.items} version={version}/>
             <RecentMatches
-              championStats={championStats}/>
+              championStats={championStats} version={version}/>
           </div>
           <div className="champion-stats-right-container">
             <ChampionStatsRadarGraph
@@ -157,7 +164,7 @@ class ChampionStats extends Component {
     }
   }
 
-  renderChampionSpells(championStats) {
+  renderChampionSpells(championStats, version) {
     const { role } = this.state;
     const lane = mapRoleToLane(role);
 
@@ -166,7 +173,7 @@ class ChampionStats extends Component {
           return JSON.parse(l.summoner_set).map((s) => {
             return (
               <div className="champion-stats-champion-summoners-spell">
-                <img src={getSpellIconUrl(s, "7.24.2")}/>
+                <img src={getSpellIconUrl(s, version)}/>
               </div>
             )
           })

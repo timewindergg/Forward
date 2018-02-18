@@ -11,6 +11,8 @@ import Dashboard from '../../components/dashboard/dash';
 // Import api utilities.
 import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
+import {getStaticData} from '../../apiutils/contextAPIUtils';
+
 const MH_OFFSET = 0;
 const MH_SIZE = 10;
 
@@ -20,16 +22,22 @@ class DashboardContainer extends Component {
     summoner: PropTypes.object.isRequired,
     matches: PropTypes.array.isRequired,
     currentMatch: PropTypes.object.isRequired,
+    staticData: PropTypes.object.isRequired,
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
-    getSummonerMatchHistory: PropTypes.func.isRequired
+    getSummonerMatchHistory: PropTypes.func.isRequired,
+    getStaticData: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo, getSummonerMatchHistory, getCurrentMatch} = this.props;
+    const {match, summoner, getSummonerInfo, getSummonerMatchHistory, getCurrentMatch, staticData, getStaticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
+
+    if (Object.keys(staticData).length === 0) {
+      getStaticData(region);
+    }
 
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
@@ -42,12 +50,13 @@ class DashboardContainer extends Component {
 
 
   render() {
-    const {summoner, matches, currentMatch, getSummonerMatchHistory} = this.props;
+    const {summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
     return (
       <Dashboard
         summoner={summoner}
         currentMatch={currentMatch}
         matches={matches}
+        staticData={staticData}
       />
     );
   }
@@ -57,7 +66,8 @@ class DashboardContainer extends Component {
 const mapStateToProps = (state) => ({
   summoner: state.context.summoner,
   matches: state.matchHistory.matches,
-  currentMatch: state.match.currentMatch
+  currentMatch: state.match.currentMatch,
+  staticData: state.context.staticData,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -66,6 +76,9 @@ const mapDispatchToProps = (dispatch) => {
     getCurrentMatch: (summonerName, region) => dispatch(getCurrentMatch(summonerName, region)),
     getSummonerMatchHistory: (summonerName, region, offset, size) => {
       dispatch(getSummonerMatchHistory(summonerName, region, offset, size));
+    },
+    getStaticData: (region) => {
+      dispatch(getStaticData(region))
     }
   };
 };

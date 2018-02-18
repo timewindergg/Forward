@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Radar, Line } from 'react-chartjs-2';
 import Moment from 'react-moment';
+
+import Header from '../common/header';
+import Footer from '../common/footer';
+
 // Import the calendarheatmap
 import CalendarHeatmap from 'react-calendar-heatmap';
 
@@ -14,6 +17,8 @@ import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUr
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 
 import EnhancedTable from './table';
+import Matches from './matches';
+import MatchStatsRadar from './radar';
 
 class Dashboard extends Component {
   static defaultProps = {
@@ -27,36 +32,40 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {summoner, matches, currentMatch} = this.props;
+    const {summoner, matches, currentMatch, staticData} = this.props;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
     return (
       <div className='Dashboard'>
+        <Header/>
         <Link to={`/l/${summoner.region}/${summoner.name}`}>
           <button disabled={!isSummonerInMatch}>
             Go to pregame
           </button>
         </Link>
-        {this.renderHeader(summoner)}
+        {this.renderHeader(summoner, staticData.version)}
         <div className="match-lawn">
           {this.renderMatchHeatMap(summoner.lawn)}
         </div>
-        <div className="info-radar">
-          {this.renderRadarChart()}
-        </div>
         <div>
+          <MatchStatsRadar
+            matches={matches}/>
         </div>
         <div className='game-item-list'>
-          {this.renderMatchList(matches)}
+          <Matches matches={matches}
+            version={staticData.version}/>
+
         </div>
         <EnhancedTable championStats={summoner.championStats}
-        summonerName={summoner.name}
-        summonerRegion={summoner.region}/>
+          summonerName={summoner.name}
+          summonerRegion={summoner.region}
+          version={staticData.version}/>
+        <Footer/>
       </div>
     );
   }
 
-  renderHeader(summonerInfo) {
-    const profileIconUrl = getProfileIconUrl(summonerInfo.icon, '7.24.2');
+  renderHeader(summonerInfo, version) {
+    const profileIconUrl = getProfileIconUrl(summonerInfo.icon, version);
     return (
         <div className="header">
           <div className="profile-icon" style={{backgroundImage: `url(${profileIconUrl})`}}>
@@ -69,7 +78,7 @@ class Dashboard extends Component {
             {this.renderRankedTiers(summonerInfo)}
           </div>
           <div className="top-champion-masteries">
-            {this.renderTopUserChampionMasteries(summonerInfo.championMasteries)}
+            {this.renderTopUserChampionMasteries(summonerInfo.championMasteries, version)}
           </div>
         </div>
     );
@@ -114,7 +123,7 @@ class Dashboard extends Component {
     }
   }
 
-  renderTopUserChampionMasteries(championMasteries) {
+  renderTopUserChampionMasteries(championMasteries, version) {
     if (championMasteries !== undefined) {
       // Sort the champion by points.
       championMasteries.sort((mastery1, mastery2) => {
@@ -125,7 +134,7 @@ class Dashboard extends Component {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
           <div className="champion-mastery-wrapper" key={c.champ_id}>
-            <Avatar src={getChampionIconUrl(c.champ_id, '7.24.2')} alt=""/>
+            <Avatar src={getChampionIconUrl(c.champ_id, version)} alt=""/>
             <div className="mastery-wrapper">
               <span className="mastery-points">{numberFormatter(c.total_points)}</span>
             </div>
@@ -161,192 +170,6 @@ class Dashboard extends Component {
       );
     }
   }
-
-  renderRadarChart(matches) {
-    const data = {
-      labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: 'rgba(179,181,198,1)',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: [65, 59, 90, 81, 56, 55, 40]
-        },
-        {
-          label: 'My Second dataset',
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgba(255,99,132,1)',
-          pointBackgroundColor: 'rgba(255,99,132,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(255,99,132,1)',
-          data: [28, 48, 40, 19, 96, 27, 100]
-        }
-      ]
-    };
-
-    return (
-      <Radar
-        data={data}
-        options={{
-          maintainAspectRatio: false,
-          legend: {
-            display: false
-          }
-        }}
-      />
-    )
-  }
-
-  renderParticipants(participants) {
-    const participantList = participants.map((p) => {
-      return (
-        <div key={p.summonerId} className="participant">
-          <div className="participant-champion-image">
-            <img src={p.championUrl} alt="" className="Image"/>
-          </div>
-          <div className="participant-name">
-            <span>{p.summonerName}</span>
-          </div>
-        </div>
-      );
-    });
-
-    return participantList;
-  }
-
-  renderMatchList(matches) {
-    console.log(matches);
-    const matchItems = matches.map((m) => {
-      return (
-        <div className="game-item-wrapper" key={m.match_id}>
-          <div className="game-item">
-            <div className="game-content" >
-              <div className="game-stats">
-                <div className="game-type">
-                  {m.game_type}
-                </div>
-                <div className="time-stamp">
-                  <Moment fromNow>{m.timestamp}</Moment>
-                </div>
-                <div className="bar"></div>
-                <div className="game-result">
-                  {m.won ? 'Victory' : 'Defeat'}
-                </div>
-                <div className="game-length">
-                  <span>{m.duration}</span>
-                </div>
-              </div>
-              <div className="game-setting-info">
-                <div className="champion-image">
-                  <Avatar src={m.championUrl} alt=""/>
-                </div>
-                <div className="summoner-spell">
-                  <div className="spell">
-                    <img src={m.spell1Url} alt="" className="Image"/>
-                  </div>
-                  <div className="spell">
-                    <img src={m.spell2Url} alt="" className="Image"/>
-                  </div>
-                </div>
-                <div className="runes">
-                  <div className="rune">
-                    <img src={m.rune1} alt="" className="Image"/>
-                  </div>
-                  <div className="rune">
-                    <img src= {m.rune2} alt="" className="Image"/>
-                  </div>
-                </div>
-                <div className="champion-name">
-                  <a href= "" target="_blank">{m.championName}</a>
-                </div>
-              </div>
-              <div className="kda">
-                <div className="kda-info">
-                  <span className="kill">{m.kills}</span> /
-                  <span className="death">{m.deaths}</span> /
-                  <span className="assist">{m.assists}</span>
-                </div>
-                <div className="kda-ratio">
-                  <span className="kda-ratio ">{m.kda}</span>
-                </div>
-                <div className="multi-kill">
-                  <span className="kill">Triple Kill</span>
-                </div>
-              </div>
-              <div className="stats">
-                <div className="level">
-                  {m.level}
-                </div>
-                <div className="cs">
-                  <span title="">{m.cs}</span>CS</div>
-                  <div className="" title="">
-                    {m.killParticipation}
-                  </div>
-              </div>
-              <div className="items">
-                <div className="item">
-                  <img src={m.item0Url} alt="" className="Image"/>
-                </div>
-                <div className="item">
-                  <img src={m.item1Url} alt="" className="Image"/>
-                </div>
-                <div className="item">
-                  <img src={m.item2Url} alt="" className="Image"/>
-                </div>
-                <div className="item">
-                  <img src={m.item3Url} alt="" className="Image"/>
-                </div>
-                <div className="item">
-                  <img src={m.item4Url} alt="" className="Image"/>
-                </div>
-                <div className="item">
-                  <img src={m.item5Url} alt="" className="Image"/>
-                </div>
-              </div>
-              <div className="trinkets">
-                <div className="item">
-                  <img src={m.item6Url} alt="" className="Image"/>
-                </div>
-              </div>
-              <div className="fellow-players">
-                <div className="team">
-                  {this.renderParticipants(m.participants[0])}
-                </div>
-                <div className="team">
-                  {this.renderParticipants(m.participants[1])}
-                </div>
-              </div>
-              <div className="post-game">
-                <Link to={`/m/${m.region}/${m.match_id}`}>
-                  <button>
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    });
-
-    return matchItems;
-  }
 }
-
-const getRadarStats = (matches) => {
-  if (matches.length === 0) {
-    return [];
-  }
-
-  const data = [0, 0, 0, 0, 0]
-
-  for (let i = 0; i < matches.length; i++) {
-
-  }
-};
 
 export default Dashboard;

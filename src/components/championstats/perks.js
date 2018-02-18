@@ -14,29 +14,29 @@ class Perks extends Component {
   }
 
   render() {
-    const {perks} = this.props;
+    const {perks, perkData, version} = this.props;
 
-    if (perks === undefined) {
+    if (perks === undefined || perkData === undefined || version === undefined) {
       return (<div/>);
     }
 
     return (
       <div className="champion-stats-champion-perks">
-        {this.renderPerksList(perks)}
+        {this.renderPerksList(perks, perkData, version)}
       </div>
     );
   }
 
-  renderPerksList(perks) {
+  renderPerksList(perks, perkData, version) {
     return perks.map((r) => {
       return (
         <div className="champion-stats-champion-perk-wrapper">
           <div className="champion-stats-champion-perk-icon">
-            <img src={getPerkIconUrl(r, '7.24.2')}/>
+            <img src={getPerkIconUrl(r, version)}/>
           </div>
           <div className="champion-stats-champion-perk-description">
-            <h2></h2>
-            <p></p>
+            <h2>{perkData[r].name}</h2>
+            <p>{perkData[r].shortDescription}</p>
             </div>
         </div>
       )
