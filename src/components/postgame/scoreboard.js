@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUr } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
+import { getKeystone } from '../../shared/helpers/leagueUtilities';
 
 class ScoreboardPlayer extends Component {
   constructor(props){
@@ -34,44 +35,52 @@ class ScoreboardPlayer extends Component {
       items.push(0);
     }
 
+    let keystone = getKeystone(Object.keys(p.runes));
+
     return (
       <div>
         <div className="summonerInfo">
+          <div className="runeSummIcons">
+            <div className="summonerSpells">
+              <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellDId, patchVersion)}/>
+              <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellFId, patchVersion)}/>
+            </div>
+            <div className="runes">
+              <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)}/>
+              <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, patchVersion)}/>
+            </div>
+          </div>
           <div className="iconContainer" title={p.summonerName}>
             <img className="championIcon big" src={getChampionIconUrl(p.championId, patchVersion)} />
+            <div className="level">
+              {p.level}
+            </div>
           </div>
-          <div className="summonerSpells">
-            <img className="summonerIcon icon spell0 small" src={getSpellIconUrl(p.summonerSpellDId, patchVersion)}/>
-            <img className="summonerIcon icon spell1 small" src={getSpellIconUrl(p.summonerSpellFId, patchVersion)}/>
-          </div>
-          <div className="runes">
-            
+          <div className="stats">
+            <div className="cs">
+              <span>{p.cs}</span>
+            </div>
+            <div className="score">
+              <span>{p.kills}/{p.deaths}/{p.assists}</span>
+            </div>
+            <div className="gold">
+              <span>{p.currentGold}</span>
+            </div>
+            <div className="ward">
+              <span>{p.totalWards}</span>
+            </div>
           </div>
           <div className="itemSet">
             <div className="core">
-              <img className="itemIcon icon small" src={getItemIconUrl(items[0], patchVersion)}/>
-              <img className="itemIcon icon small" src={getItemIconUrl(items[1], patchVersion)}/>
-              <img className="itemIcon icon small" src={getItemIconUrl(items[2], patchVersion)}/>
-              <img className="itemIcon icon small" src={getItemIconUrl(items[3], patchVersion)}/>
-              <img className="itemIcon icon small" src={getItemIconUrl(items[4], patchVersion)}/>
-              <img className="itemIcon icon small" src={getItemIconUrl(items[5], patchVersion)}/>
-            </div>
-            <div className="trinket">
-              <img className="itemIcon icon small" src={getItemIconUrl(trinket, patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(items[0], patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(items[1], patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(items[2], patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(items[3], patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(items[4], patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(items[5], patchVersion)}/>
+              <img className="itemIcon icon" src={getItemIconUrl(trinket, patchVersion)}/>
             </div>
           </div>
-        </div>
-        <div className="level">
-          {p.level}
-        </div>
-        <div className="score">
-          {p.kills}/{p.deaths}/{p.assists}
-        </div>
-        <div className="cs">
-          {p.cs}
-        </div>
-        <div className="gold">
-          {p.currentGold}
         </div>
       </div>
     );
@@ -93,9 +102,11 @@ class Teamboard extends Component {
     return (
       <div className="team">
         { this.renderParticipants() }
+        <div className="teamStats">
           Dragons: {this.props.teamData.dragons}
           Barons: {this.props.teamData.barons}
           Rift Heralds: {this.props.teamData.heralds}
+        </div>
       </div>
     );
   }
@@ -117,6 +128,8 @@ class Scoreboard extends Component {
       participant[1].summonerName = matchParticipant.summonerName;
       participant[1].summonerSpellDId = matchParticipant.summonerSpellDId;
       participant[1].summonerSpellFId = matchParticipant.summonerSpellFId;
+      participant[1].runes = matchParticipant.runes;
+      participant[1].stats = matchParticipant.stats;
 
       if (participant[1].side === 100){
         blueTeam.push(participant);
@@ -127,7 +140,7 @@ class Scoreboard extends Component {
     });
 
     return (
-      <div className="scoreboard recentGames row">
+      <div className="scoreboardContainer recentGames row">
         <Teamboard team="100" teamData={this.props.teamFrameData['100']} participants={blueTeam} version={this.props.version}/>
         <Teamboard team="200" teamData={this.props.teamFrameData['200']} participants={redTeam} version={this.props.version}/>
       </div>

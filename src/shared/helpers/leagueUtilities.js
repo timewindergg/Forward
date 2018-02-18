@@ -1,4 +1,5 @@
 import { roundWithPrecision } from './numberHelper';
+import RuneMappings from '../runeMappings';
 
 export const getKDA = (kills, deaths, assists) => {
   const killsAndAssists = kills + assists;
@@ -13,4 +14,14 @@ export const getKillParticipation = (userKills, userAssists, totalTeamKills) => 
   }
 
   return roundWithPrecision(((userKills + userAssists)*100/totalTeamKills), 2);
+}
+
+export const getKeystone = (runes) => {
+  for (var i = 0; i < runes.length; i++){
+    if (RuneMappings[runes[i]].keyStone){
+      return runes[i];
+    }
+  }
+
+  return 0;
 }

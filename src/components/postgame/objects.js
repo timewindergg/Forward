@@ -7,8 +7,8 @@ export class Player {
     this.kills = 0;
     this.deaths = 0;
     this.assists = 0;
-    this.totalgold = 0;
-    this.currentgold = 0;
+    this.totalGold = 0;
+    this.currentGold = 0;
     this.cs = 0;
     this.junglecs = 0;
     this.level = 0;

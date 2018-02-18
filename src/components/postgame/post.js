@@ -6,6 +6,8 @@ import './styles/scoreboard.css';
 import './styles/skillprogression.css';
 import './styles/itemprogression.css';
 import './styles/control.css';
+import './styles/champselect.css';
+import './styles/champcompare.css';
 
 import { Team, Player } from './objects.js';
 import Scoreboard from './scoreboard.js';
@@ -13,6 +15,8 @@ import ControlHeader from './control.js';
 import Minimap from './map.js';
 import SkillTable from './skilltable.js';
 import ItemProgression from './itemprogression.js';
+import ChampionSelector from './champselect.js';
+import ChampionCompare from './champcompare.js';
 
 import Sticky from 'react-stickynode';
 
@@ -29,11 +33,7 @@ class Postgame extends Component {
       playerMetadata: {},
       hasAggregated: false,
     }
-
   }
-
-  updateGameState(){
-  }    
 
   aggregateData(matchDetails, staticData){
     // must keep stack of player inventories. upon undo pop stack.
@@ -52,7 +52,7 @@ class Postgame extends Component {
       3003: 3040,
       3007: 3040,
     }
-    
+
     let tl = matchDetails.timeline;
     let maxFrames = matchDetails.timeline.frames.length;
 
@@ -204,8 +204,8 @@ class Postgame extends Component {
 
       Object.keys(pFrames).map((key) => {
         aggregateData.players[key].items = aggregateData.players[key].itemStack[aggregateData.players[key].itemStack.length - 1];
-        aggregateData.players[key].totalgold = pFrames[key].goldEarned;
-        aggregateData.players[key].currentgold = pFrames[key].currentGold;
+        aggregateData.players[key].totalGold = pFrames[key].goldEarned;
+        aggregateData.players[key].currentGold = pFrames[key].currentGold;
         aggregateData.players[key].cs = pFrames[key].creepScore;
         aggregateData.players[key].junglecs = pFrames[key].NeutralMinionsKilled;
         aggregateData.players[key].level = pFrames[key].level;
@@ -238,6 +238,12 @@ class Postgame extends Component {
   onSliderChange = (value) => {
     this.setState({
       currentFrame: value,
+    });
+  }
+
+  onChampionSelect = (id) => {
+    this.setState({
+
     });
   }
 
@@ -275,6 +281,9 @@ class Postgame extends Component {
             <ItemProgression itemOrder={this.state.frameData[this.state.currentFrame].players[2].purchaseOrder}
                              itemData={this.props.staticData.items}
                              version={this.props.staticData.version}/>
+
+            <ChampionSelector />
+            <ChampionCompare />
           </div>
         </div>
       );
