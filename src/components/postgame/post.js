@@ -13,10 +13,9 @@ import { Team, Player } from './objects.js';
 import Scoreboard from './scoreboard.js';
 import ControlHeader from './control.js';
 import Minimap from './map.js';
-import SkillTable from './skilltable.js';
-import ItemProgression from './itemprogression.js';
 import ChampionSelector from './champselect.js';
 import ChampionCompare from './champcompare.js';
+import DataTable from './datatable.js';
 
 import Sticky from 'react-stickynode';
 
@@ -30,8 +29,6 @@ class Postgame extends Component {
     this.state = {
       currentFrame: 0,
       frameData: [],
-      playerMetadata: {},
-      hasAggregated: false,
     }
   }
 
@@ -241,16 +238,25 @@ class Postgame extends Component {
     });
   }
 
-  onChampionSelect = (id) => {
-    this.setState({
-
-    });
+  onChampionSelect = (teamId, playerId) => {
+    if (teamId === 100){
+      this.setState({
+        'blueSelection': playerId,
+      });  
+    }
+    else if (teamId === 200){
+      this.setState({
+        'redSelection': playerId,
+      });  
+    }
   }
 
   componentWillUpdate(nextProps) {
     if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined){
       this.setState({
         currentFrame: nextProps.matchDetails.timeline.frames.length - 1,
+        redSelection: 1,
+        blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(nextProps.matchDetails);
     }
@@ -274,16 +280,15 @@ class Postgame extends Component {
             <Minimap mapId={this.props.matchDetails.match.mapId} 
                      version={this.props.staticData.version}
                      playerFrameData={this.state.frameData[this.state.currentFrame].players}/>
-            <SkillTable skillOrder={this.state.frameData[this.state.currentFrame].players[3].skillOrder}
-                        skillData={this.props.staticData.championSkills[this.props.matchDetails.match.participants[0].championId]}
-                        version={this.props.staticData.version}/>
-            <div className='clear'></div>
-            <ItemProgression itemOrder={this.state.frameData[this.state.currentFrame].players[2].purchaseOrder}
-                             itemData={this.props.staticData.items}
-                             version={this.props.staticData.version}/>
-
-            <ChampionSelector />
-            <ChampionCompare />
+            <ChampionSelector onChampionSelect={this.onChampionSelect}
+                              matchParticipants={this.props.matchDetails.match.participants}
+                              version={this.props.staticData.version}/>
+            <ChampionCompare frameData={this.state.frameData[this.state.currentFrame]}
+                             staticData={this.props.staticData}
+                             matchParticipants={this.props.matchDetails.match.participants}
+                             redSelection={this.state.redSelection}
+                             blueSelection={this.state.blueSelection}/>
+            <DataTable matchParticipants={this.props.matchDetails.match.participants}/>
           </div>
         </div>
       );

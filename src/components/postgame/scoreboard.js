@@ -5,10 +5,6 @@ import TRINKETS from '../../shared/trinketConstants.js';
 import { getKeystone } from '../../shared/helpers/leagueUtilities';
 
 class ScoreboardPlayer extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render() {
     if (this.props.participant === undefined){
       return (<div/>);
@@ -88,10 +84,6 @@ class ScoreboardPlayer extends Component {
 }
 
 class Teamboard extends Component {
-  constructor(props){
-    super(props);
-  }
-
   renderParticipants() {
     return this.props.participants.map((participant) => (
       <ScoreboardPlayer key={participant[0]} participant={participant[1]} version={this.props.version}/>
@@ -113,10 +105,6 @@ class Teamboard extends Component {
 }
 
 class Scoreboard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let blueTeam = [];
     let redTeam = [];

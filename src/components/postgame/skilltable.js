@@ -3,13 +3,9 @@ import React, { Component } from 'react';
 import {getChampionSpellIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
 class SkillCell extends Component{
-  constructor(props){
-    super(props);
-  }
-
   render(){
     var skillType;
-    if (this.props.type == "skillup")
+    if (this.props.type === "skillup")
       skillType = "skillupCell";
     else
       skillType = "skillCell";
@@ -21,17 +17,13 @@ class SkillCell extends Component{
 }
 
 class SkillTable extends Component {
-  constructor(props){
-    super(props);
-  }
-
   renderRow(skillId, skillImage){
     let skills = this.props.skillOrder;
     let buffer = [];
 
     buffer.push(
       <div key={skillImage}>
-        <img className="skillImage" src={getChampionSpellIconUrl(skillImage, this.props.version)}></img>
+        <img className="skillImage" src={getChampionSpellIconUrl(skillImage, this.props.version)} alt={skillImage}></img>
       </div>
     );
 

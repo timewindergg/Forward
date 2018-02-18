@@ -4,10 +4,6 @@ import Moment from 'react-moment';
 import {getItemIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
 class Item extends Component {
-  constructor(props){
-    super(props);
-  }
-
   render(){
     let id = this.props.id;
     let type = 'item';
@@ -26,11 +22,6 @@ class Item extends Component {
 
 
 class ItemProgression extends Component {
-  constructor(props){
-    super(props);
-  }
-
-
   renderItems(){
     let items = this.props.itemOrder;
 

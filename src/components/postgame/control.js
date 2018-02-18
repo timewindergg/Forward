@@ -4,10 +4,6 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 class Event extends Component{
-  constructor(props){
-    super(props);
-  }
-
   render(){
     const circleSize = [0, 8, 11, 14, 17, 20, 23];
 
@@ -55,12 +51,7 @@ class Event extends Component{
 }
 
 class EventRow extends Component{
-  constructor(props){
-    super(props);
-  }
-
   render(){
-
     const eventlist = this.props.events.map((frame, index) => {
       let offset = (index - 1) / (this.props.events.length - 1) * 100;
       let style = {
@@ -84,10 +75,6 @@ class EventRow extends Component{
 }
 
 class EventLine extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return(
       <div className="eventRows">
@@ -106,32 +93,33 @@ class ControlHeader extends Component {
 
     this.state = {
       maxFrames: 1,
-      currentFrame: 1
+      currentFrame: 1,
+      marks: {},
     }
   }
 
   componentWillMount(){
     if (this.props.timeline !== undefined){
+      let marks = {};
+
+      for (var i = 0; i < this.state.maxFrames; i+=5){
+        marks[i] = i.toString();
+      }
+
       this.setState({
         maxFrames: this.props.timeline.frames.length,
         currentFrame: this.props.timeline.frames.length,
+        marks: marks,
       });
     }
   }
 
   render() {
-    let marks = {};
-
-    for (var i = 0; i < this.state.maxFrames; i+=5){
-      marks[i] = i.toString();
-    }
-
-    console.log(marks)
 
     return(
       <div className="controlHeader">
         <div className="gameSlider" >
-          <Slider defaultValue={this.state.currentFrame} marks={marks} dots={true} max={this.state.maxFrames - 1} onChange={this.props.onSliderChange}/>
+          <Slider defaultValue={this.state.currentFrame} marks={this.state.marks} dots={true} max={this.state.maxFrames - 1} onChange={this.props.onSliderChange}/>
         </div>
         <div className="eventTimeline">
           <EventLine events={this.props.events}/>
