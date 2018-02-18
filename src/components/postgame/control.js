@@ -102,7 +102,7 @@ class ControlHeader extends Component {
     if (this.props.timeline !== undefined){
       let marks = {};
 
-      for (var i = 0; i < this.state.maxFrames; i+=5){
+      for (var i = 0; i < this.props.timeline.frames.length; i+=5){
         marks[i] = i.toString();
       }
 
