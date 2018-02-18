@@ -46,9 +46,7 @@ class Event extends Component{
       let killStyle = {
         'width': circleSize[len],
         'height': circleSize[len],
-        '-webkit-border-radius': circleSize[len] / 2,
-        '-moz-border-radius': circleSize[len] / 2,
-        'border-radius': circleSize[len] / 2,
+        'borderRadius': circleSize[len] / 2,
       };
 
       return (<div style={killStyle} className={classNames({'event': true, 'color100': blueTeam, 'color200': redTeam})}></div>);
@@ -71,7 +69,7 @@ class EventRow extends Component{
       }
 
       return (
-        <div style={style} className="eventContainer">
+        <div key={index} style={style} className="eventContainer">
           <Event offset={offset} team={this.props.team} type={this.props.type} events={frame[this.props.team][this.props.type]}/>
         </div>
       );
@@ -133,7 +131,7 @@ class ControlHeader extends Component {
     return(
       <div className="controlHeader">
         <div className="gameSlider" >
-          <Slider marks={marks} dots="true" max={this.state.maxFrames - 1} onChange={this.props.onSliderChange}/>
+          <Slider defaultValue={this.state.currentFrame} marks={marks} dots={true} max={this.state.maxFrames - 1} onChange={this.props.onSliderChange}/>
         </div>
         <div className="eventTimeline">
           <EventLine events={this.props.events}/>

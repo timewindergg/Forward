@@ -12,12 +12,9 @@ class Minimap extends Component {
   }
 
   renderParticipants() {
-    let p = this.props.participants;
-    let currentFrame = this.props.currentFrame;
-    let currentFrameData = this.props.frameData[currentFrame];
     let currentMapBounds = MapBounds[this.props.mapId];
 
-    const pt = Object.values(currentFrameData.players).map((player) => {
+    const pt = Object.values(this.props.playerFrameData).map((player) => {
       let imgX = player.x / (currentMapBounds.max.x - currentMapBounds.min.x) * 100;
       let imgY = player.y / (currentMapBounds.max.y - currentMapBounds.min.y) * 100;
       let style = {
@@ -25,7 +22,7 @@ class Minimap extends Component {
         bottom: imgY+'%'
       };
       return (
-        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrl(player.championId, this.props.staticData.version)}>
+        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrl(player.championId, this.props.version)}>
         </img>
       );
     });
@@ -36,7 +33,7 @@ class Minimap extends Component {
   render() {
     return(
       <div className="mapContainer">
-        <img className="minimap" src={getMapUrl(this.props.mapId, this.props.staticData.version)}></img>
+        <img className="minimap" src={getMapUrl(this.props.mapId, this.props.version)}></img>
         {this.renderParticipants()}
         {this.renderDeaths()}
       </div>

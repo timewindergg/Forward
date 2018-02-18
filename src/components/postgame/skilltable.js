@@ -30,7 +30,7 @@ class SkillTable extends Component {
     let buffer = [];
 
     buffer.push(
-      <div>
+      <div key={skillImage}>
         <img className="skillImage" src={getChampionSpellIconUrl(skillImage, this.props.version)}></img>
       </div>
     );
@@ -38,18 +38,18 @@ class SkillTable extends Component {
     for (var i = 0; i < 18; i++){
       if (i < skills.length && skills[i] === skillId){
         buffer.push(
-          <div className="skillCell skillUp"></div>
+          <div key={i} className="skillCell skillUp"></div>
         );
       }
       else {
         buffer.push(
-          <div className="skillCell"></div>
+          <div key={i} className="skillCell"></div>
         );
       }
     }
 
     return (
-      <div className="skillRow clear">
+      <div key={skillId} className="skillRow clear">
         {buffer}
       </div>
     );

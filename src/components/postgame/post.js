@@ -17,6 +17,7 @@ import ItemProgression from './itemprogression.js';
 import Sticky from 'react-stickynode';
 
 import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
+import TRINKETS from '../../shared/trinketConstants.js';
 
 class Postgame extends Component {
   constructor(props){
@@ -26,6 +27,7 @@ class Postgame extends Component {
       currentFrame: 0,
       frameData: [],
       playerMetadata: {},
+      hasAggregated: false,
     }
 
   }
@@ -33,7 +35,24 @@ class Postgame extends Component {
   updateGameState(){
   }    
 
-  aggregateData(matchDetails){
+  aggregateData(matchDetails, staticData){
+    // must keep stack of player inventories. upon undo pop stack.
+    // TODO: consumables? magical boots and [broken]stopwatch
+
+    // poachers dirk, manamune, seraphs get destroyed on upgrade
+    // Poacher's dirk (3252) -> Serrated Dirk (3134)
+    // manamune (3004) -> muramana (3042)
+    // manamune quick (3008) -> muramana (3042/3043?)
+    // archangels (3003) -> seraphs (3040)
+    // archangels quick (3007) -> seraphs (3040/3048?)
+    let transforms = {
+      3252: 3134,
+      3004: 3042,
+      3008: 3042,
+      3003: 3040,
+      3007: 3040,
+    }
+    
     let tl = matchDetails.timeline;
     let maxFrames = matchDetails.timeline.frames.length;
 
@@ -53,13 +72,6 @@ class Postgame extends Component {
       players: players,
     };
 
-
-    // must keep stack of player inventories. upon undo pop stack.
-    // poachers dirk, manamune, seraphs get destroyed on upgrade
-    // Poacher's dirk (3252) -> Serrated Dirk (3134)
-    // manamune (3004) -> muramana (3042)
-    // manamune quick (3008) -> muramana (3042)
-
     for (var i = 0; i < maxFrames; i++){
       aggregateData.teams['100'].gold = 0;
       aggregateData.teams['200'].gold = 0;
@@ -75,11 +87,11 @@ class Postgame extends Component {
         }
       };
 
-      let invStack = [];
-
       if (i > 0){
         for (var j = 0; j < tl.frames[i].events.length; j++){
           var evnt = tl.frames[i].events[j];
+          var player, curItems;
+
           switch(evnt.type){
             case "BUILDING_KILL":
               if (evnt.side === 100){
@@ -134,25 +146,41 @@ class Postgame extends Component {
               }
               break;
             case "ITEM_DESTROYED":
-              if (evnt.participantId > 0){
-                aggregateData.players[evnt.participantId].items[evnt.itemId]--;
+              player = aggregateData.players[evnt.participantId];
+              curItems = player.itemStack[player.itemStack.length - 1];
+              curItems[evnt.itemId]--;
+
+              if (transforms[evnt.itemId] !== undefined){
+                if (curItems[evnt.itemId] > 0){
+                  curItems[evnt.itemId]++;
+                } 
+                else {
+                  curItems[evnt.itemId] = 1;
+                }
               }
               break;
             case "ITEM_PURCHASED":
               aggregateData.players[evnt.participantId].purchaseOrder.push({'id':evnt.itemId, 'ts':evnt.timestamp});
-              if(evnt.itemId in aggregateData.players[evnt.participantId].items){
-                aggregateData.players[evnt.participantId].items[evnt.itemId]++;
-              } else {
-                aggregateData.players[evnt.participantId].items[evnt.itemId] = 1;
+              player = aggregateData.players[evnt.participantId];
+              curItems = Object.assign({}, player.itemStack[player.itemStack.length - 1]);          
+              if (evnt.itemId in curItems){
+                curItems[evnt.itemId]++;
               }
+              else {
+                curItems[evnt.itemId] = 1;
+              }
+              player.itemStack.push(curItems);
               break;
             case "ITEM_SOLD":
               aggregateData.players[evnt.participantId].purchaseOrder.push({'id':-evnt.itemId, 'ts':evnt.timestamp});
-              aggregateData.players[evnt.participantId].items[evnt.itemId]--;
+              player = aggregateData.players[evnt.participantId];
+              curItems = Object.assign({}, player.itemStack[player.itemStack.length - 1]);
+              curItems[evnt.itemId]--;
+              player.itemStack.push(curItems);
               break;
             case "ITEM_UNDO":
               aggregateData.players[evnt.participantId].purchaseOrder.pop();
-              aggregateData.players[evnt.participantId].items[evnt.itemId]--;
+              aggregateData.players[evnt.participantId].itemStack.pop();
               break;
             case "SKILL_LEVEL_UP":
               aggregateData.players[evnt.participantId].skillOrder.push(evnt.skill);
@@ -175,6 +203,7 @@ class Postgame extends Component {
       var pFrames = tl.frames[i].participantFrames;
 
       Object.keys(pFrames).map((key) => {
+        aggregateData.players[key].items = aggregateData.players[key].itemStack[aggregateData.players[key].itemStack.length - 1];
         aggregateData.players[key].totalgold = pFrames[key].goldEarned;
         aggregateData.players[key].currentgold = pFrames[key].currentGold;
         aggregateData.players[key].cs = pFrames[key].creepScore;
@@ -202,11 +231,11 @@ class Postgame extends Component {
     this.setState({
       frameData: frameData,
       eventLineFrameData: eventLineFrameData,
+      hasAggregated: true,
     }, () => {console.log(this.state.frameData); console.log(this.state.eventLineFrameData)});
   }
 
   onSliderChange = (value) => {
-    console.log(value);
     this.setState({
       currentFrame: value,
     });
@@ -214,6 +243,9 @@ class Postgame extends Component {
 
   componentWillUpdate(nextProps) {
     if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined){
+      this.setState({
+        currentFrame: nextProps.matchDetails.timeline.frames.length - 1,
+      });
       this.aggregateData(nextProps.matchDetails);
     }
   }
@@ -229,18 +261,18 @@ class Postgame extends Component {
                            events={this.state.eventLineFrameData} />
           </Sticky>
           <div className="content">
-            <Scoreboard currentFrame={this.state.currentFrame} 
-                        frameData={this.state.frameData}
-                        matchParticipants={this.props.matchDetails.match.participants}/>
+            <Scoreboard playerFrameData={this.state.frameData[this.state.currentFrame].players}
+                        teamFrameData={this.state.frameData[this.state.currentFrame].teams}
+                        matchParticipants={this.props.matchDetails.match.participants}
+                        version={this.props.staticData.version}/>
             <Minimap mapId={this.props.matchDetails.match.mapId} 
-                     staticData={this.props.staticData}
-                     currentFrame={this.state.currentFrame} 
-                     frameData={this.state.frameData}/>
-            <SkillTable skillOrder={this.state.frameData[this.state.currentFrame].players[1].skillOrder}
+                     version={this.props.staticData.version}
+                     playerFrameData={this.state.frameData[this.state.currentFrame].players}/>
+            <SkillTable skillOrder={this.state.frameData[this.state.currentFrame].players[3].skillOrder}
                         skillData={this.props.staticData.championSkills[this.props.matchDetails.match.participants[0].championId]}
                         version={this.props.staticData.version}/>
             <div className='clear'></div>
-            <ItemProgression itemOrder={this.state.frameData[this.state.currentFrame].players[1].purchaseOrder}
+            <ItemProgression itemOrder={this.state.frameData[this.state.currentFrame].players[2].purchaseOrder}
                              itemData={this.props.staticData.items}
                              version={this.props.staticData.version}/>
           </div>
