@@ -53,7 +53,6 @@ class Dashboard extends Component {
         <div className='game-item-list'>
           <Matches matches={matches}
             version={staticData.version}/>
-
         </div>
         <EnhancedTable championStats={summoner.championStats}
           summonerName={summoner.name}

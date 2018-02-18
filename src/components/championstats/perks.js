@@ -30,7 +30,7 @@ class Perks extends Component {
   renderPerksList(perks, perkData, version) {
     return perks.map((r) => {
       return (
-        <div className="champion-stats-champion-perk-wrapper">
+        <div className="champion-stats-champion-perk-wrapper" key={r}>
           <div className="champion-stats-champion-perk-icon">
             <img src={getPerkIconUrl(r, version)}/>
           </div>

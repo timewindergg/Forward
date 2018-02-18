@@ -47,8 +47,6 @@ class ChampionStatsBarGraph extends Component {
     const {classes, championStats} = this.props;
     const {value} = this.state;
 
-    console.log(championStats);
-
     if (this.props === undefined || Object.keys(championStats).length === 0) {
       return (<div/>);
     }

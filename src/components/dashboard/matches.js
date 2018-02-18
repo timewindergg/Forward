@@ -24,7 +24,7 @@ class Matches extends Component {
   }
 
   render() {
-    if (this.props.matches === undefined || this.props.summonerName === undefined || this.props.version === undefined) {
+    if (this.props.matches === undefined || this.props.version === undefined) {
       return (<div/>);
     }
 

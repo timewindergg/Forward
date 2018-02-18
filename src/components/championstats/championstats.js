@@ -172,7 +172,7 @@ class ChampionStats extends Component {
         if (l.lane === lane) {
           return JSON.parse(l.summoner_set).map((s) => {
             return (
-              <div className="champion-stats-champion-summoners-spell">
+              <div className="champion-stats-champion-summoners-spell" key={s}>
                 <img src={getSpellIconUrl(s, version)}/>
               </div>
             )
