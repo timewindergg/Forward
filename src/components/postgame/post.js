@@ -8,6 +8,8 @@ import './styles/itemprogression.css';
 import './styles/control.css';
 import './styles/champselect.css';
 import './styles/champcompare.css';
+import './styles/gamegraphs.css';
+//import './styles/datatable.css';
 
 import { Team, Player } from './objects.js';
 import Scoreboard from './scoreboard.js';
@@ -15,6 +17,8 @@ import ControlHeader from './control.js';
 import Minimap from './map.js';
 import ChampionSelector from './champselect.js';
 import ChampionCompare from './champcompare.js';
+import GoldDiffGraph from './gdgraph.js';
+import EffectiveGoldDiffGraph from './egdgraph.js';
 import DataTable from './datatable.js';
 
 import Sticky from 'react-stickynode';
@@ -107,9 +111,11 @@ class Postgame extends Component {
             case "CHAMPION_KILL":
               if (evnt.killerId > 0 && evnt.killerId <= matchDetails.match.participants.length / 2){
                 eventLineData['100']['kills'].push(evnt);
+                aggregateData.teams['100'].kills++;
               }
               else if (evnt.killerId > matchDetails.match.participants.length / 2){
                 eventLineData['200']['kills'].push(evnt);
+                aggregateData.teams['200'].kills++;
               }
 
               if (evnt.killerId > 0){
@@ -199,6 +205,8 @@ class Postgame extends Component {
       }
       var pFrames = tl.frames[i].participantFrames;
 
+      aggregateData.teams['100'].effectiveGold = 0;
+      aggregateData.teams['200'].effectiveGold = 0;
       Object.keys(pFrames).map((key) => {
         aggregateData.players[key].items = aggregateData.players[key].itemStack[aggregateData.players[key].itemStack.length - 1];
         aggregateData.players[key].totalGold = pFrames[key].goldEarned;
@@ -212,12 +220,23 @@ class Postgame extends Component {
           aggregateData.players[key].y = pFrames[key].position.y;
         }
 
+        let effectiveGold = 0;
+        Object.entries(aggregateData.players[key].items).map((item) => {
+          if (item[1] > 0){
+            let value = this.props.staticData.items[item[0]].totalGold * item[1];
+            effectiveGold += value;
+          }
+        });
+        aggregateData.players[key].effectiveGold = effectiveGold;
+
         if (key <= matchDetails.match.participants.length / 2){
           aggregateData.players[key].side = 100;
-          aggregateData.teams['100'].gold += pFrames[key].totalGold;
+          aggregateData.teams['100'].gold += pFrames[key].goldEarned;
+          aggregateData.teams['100'].effectiveGold += aggregateData.players[key].effectiveGold;
         } else {
           aggregateData.players[key].side = 200;
-          aggregateData.teams['200'].gold += pFrames[key].totalGold;
+          aggregateData.teams['200'].gold += pFrames[key].goldEarned;
+          aggregateData.teams['200'].effectiveGold += aggregateData.players[key].effectiveGold;
         }
       });
 
@@ -276,10 +295,15 @@ class Postgame extends Component {
             <Scoreboard playerFrameData={this.state.frameData[this.state.currentFrame].players}
                         teamFrameData={this.state.frameData[this.state.currentFrame].teams}
                         matchParticipants={this.props.matchDetails.match.participants}
-                        version={this.props.staticData.version}/>
-            <Minimap mapId={this.props.matchDetails.match.mapId} 
-                     version={this.props.staticData.version}
-                     playerFrameData={this.state.frameData[this.state.currentFrame].players}/>
+                        version={this.props.staticData.version}
+                        region={this.props.region}/>
+            <div className="graphsmap">
+              <GoldDiffGraph frameData={this.state.frameData}/>
+              <EffectiveGoldDiffGraph frameData={this.state.frameData}/>
+              <Minimap mapId={this.props.matchDetails.match.mapId} 
+                       version={this.props.staticData.version}
+                       playerFrameData={this.state.frameData[this.state.currentFrame].players}/>
+            </div>
             <ChampionSelector onChampionSelect={this.onChampionSelect}
                               matchParticipants={this.props.matchDetails.match.participants}
                               version={this.props.staticData.version}/>

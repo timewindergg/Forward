@@ -9,6 +9,7 @@ export class Player {
     this.assists = 0;
     this.totalGold = 0;
     this.currentGold = 0;
+    this.effectiveGold = 0;
     this.cs = 0;
     this.junglecs = 0;
     this.level = 0;
@@ -27,6 +28,7 @@ export class Team {
   constructor(){
     this.towers = 0;
     this.gold = 0;
+    this.effectiveGold = 0;
     this.kills = 0;
     this.dragons = 0;
     this.barons = 0;

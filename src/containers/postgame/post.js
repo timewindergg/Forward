@@ -44,6 +44,7 @@ class PostgameContainer extends Component {
         <Postgame
           matchDetails={timeline}
           staticData={staticData}
+          region={this.props.match.params.region}
         />
         <Footer/>
       </div>

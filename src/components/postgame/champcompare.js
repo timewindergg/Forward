@@ -4,14 +4,27 @@ import ItemProgression from './itemprogression.js';
 import SkillTable from './skilltable.js';
 
 class ChampionCompare extends Component {
-  renderSelection(teamId, player){
+  renderSelection(teamId, playerId){
+    let player = this.props.frameData.players[playerId];
+
     return(
       <div className="selectionDetails">
-        <SkillTable skillOrder={this.props.frameData.players[player].skillOrder}
-                    skillData={this.props.staticData.championSkills[this.props.matchParticipants[player - 1].championId]}
+        <div className="stats">
+          {player.totalGold}
+          {player.effectiveGold}
+          
+          {player.cs}
+          {player.level}
+          {player.kills}
+          {player.deaths}
+          {player.assists}
+          {player.xp}
+        </div>
+        <SkillTable skillOrder={player.skillOrder}
+                    skillData={this.props.staticData.championSkills[this.props.matchParticipants[playerId - 1].championId]}
                     version={this.props.staticData.version}/>
         <div className='clear'/>
-        <ItemProgression itemOrder={this.props.frameData.players[player].purchaseOrder}
+        <ItemProgression itemOrder={player.purchaseOrder}
                          itemData={this.props.staticData.items}
                          version={this.props.staticData.version}/>
       </div>

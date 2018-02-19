@@ -1,5 +1,5 @@
 .selectorContainer{
-    display: inline-block;
+    display: flex;
 }
 
 .selectionParticipant{
@@ -10,8 +10,13 @@
         width: 75px;
         height: 75px;
     }
+
+    .selected{
+        border: 3px solid #ff0000;
+    }
 }
 
 .selectorTeam{
-    display: block;
+    flex-grow: 1;
+    text-align: center;
 }
