@@ -9,6 +9,7 @@ import './styles/control.css';
 import './styles/champselect.css';
 import './styles/champcompare.css';
 import './styles/gamegraphs.css';
+import './styles/runestats.css';
 //import './styles/datatable.css';
 
 import { Team, Player } from './objects.js';

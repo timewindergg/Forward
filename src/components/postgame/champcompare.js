@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ItemProgression from './itemprogression.js';
 import SkillTable from './skilltable.js';
+import RuneStats from './runestats.js';
 
 class ChampionCompare extends Component {
   renderSelection(teamId, playerId){
