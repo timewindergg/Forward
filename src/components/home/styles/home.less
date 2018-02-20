@@ -1,0 +1,95 @@
+@import '../../common/styles/colors';
+
+.Home{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    
+    h1{
+        color:@blue-dk;
+        font-weight:700;
+        font-size:60px;
+        text-align:center;
+        margin:0px;
+    }
+
+    h3{
+        color:@grey;
+        margin:0px;
+        text-align:center;
+    }
+
+    .content{
+        margin-top: -150px;
+
+        #quote{
+            width:100%;
+            height:50px;
+            margin:15px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #lookup{
+            height:45px;
+            
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            
+            margin-top: 40px;
+            position: relative;
+
+            .regionSelector{
+                background: @grey-lt;
+                font-size:14px;
+                width:60px;
+                
+                padding: 13px 0;
+
+                &:hover{
+                    background: @grey;
+                }
+
+                .Dropdown-menu{
+                    background-color: white;
+                    border: 1px solid #ccc;
+                    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+                    box-sizing: border-box;
+                    margin-top: -1px;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    position: absolute;
+                    top: 100%;
+                    width: 100%;
+                    z-index: 1000;
+                }
+            }
+
+            #searchField{
+                background: #f6f7f8;
+                padding: 13px 15px;
+                border: none;
+                outline: none;
+                width:400px;
+                //height:100%;
+                font-size:12pt;
+            }
+
+            .searchIcon{
+                width: 25px;
+                background: #f6f7f8;
+                padding: 12px;
+                color: #000;
+
+                &:hover{
+                    color: #999;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

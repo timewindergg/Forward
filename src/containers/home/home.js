@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Home from '../../components/home/home';
+import Footer from '../../components/common/footer';
 
 class HomeContainer extends Component {
   static propTypes = {}
 
   render() {
     return (
-      <Home />
+      <div>
+        <Home />
+        <Footer />
+      </div>
     );
   }
 }

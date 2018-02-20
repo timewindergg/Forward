@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 import REGION from '../../shared/constants';
+import RegionSelector from './regionselector.js';
 
 import {
   decodeRecentSearches,
   // RECENT_SEARCHES_KEY
 } from '../../shared/helpers/cookieHelper';
 
-import './home.css';
+import './styles/home.css';
 
 const quotes = [
   "Some things do get better with time.",
@@ -19,7 +22,6 @@ const quotes = [
   "One mistake, means I start over. From the very beginning...and over...and over again. Until I get it right.",
   "It's not how much time you have, it's how you use it.",
   "One step closer to greater understanding!",
-  "Indeed, a wise choice."
 ];
 
 class Home extends Component {
@@ -27,63 +29,45 @@ class Home extends Component {
     summoner: '',
     server: REGION.NA,
     recentSearches: decodeRecentSearches()
-  }
+  }  
+  static propTypes = {}
 
   componentDidMount() {
-
     console.log("retrieved recent searches: ", this.state.recentSearches);
   }
 
-  static propTypes = {}
+  onRegionSelect = (region) => {
+    this.setState({
+      server: region,
+    });
+  }
 
   render() {
     const {summoner, server} = this.state;
 
+    let quote = quotes[Math.floor(Math.random() * quotes.length)];
+
     return (
       <div className="Home">
         <div className="content">
-          <h1>Timewinder</h1>
-          <h3>League match timeline statistics</h3>
-
-          <div id="quote"></div>
+          <h1>Timewinder.gg</h1>
+          <h3>Master yourself. Master the enemy.</h3>
 
           <div id="lookup">
-            <select
-              id='searchServer' className='form-control'
-              onChange={event => this.setState({server: event.target.value})}
-              value={server}
-            >
-              <option value={REGION.NA}>NA</option>
-              <option value={REGION.EUW}>EUW</option>
-              <option value={REGION.EUNE}>EUNE</option>
-              <option value={REGION.KR}>KR</option>
-              <option value={REGION.BR}>BR</option>
-              <option value={REGION.LAN}>LAN</option>
-              <option value={REGION.LAS}>LAS</option>
-              <option value={REGION.OCE}>OCE</option>
-              <option value={REGION.RU}>RU</option>
-              <option value={REGION.TR}>TR</option>
-            </select>
-            <input id="searchField" className="textfield form-control" type="text"
-              placeholder="Enter Summoner Name"
+            <RegionSelector onRegionSelect={this.onRegionSelect}/>
+            <input id="searchField" className="textfield" type="text"
+              maxlength="25"
+              placeholder="Search summoner name"
               value={summoner}
               onChange={(event) => this.setState({summoner: event.target.value})}
             />
-
-            <Link to={`/p/${server}/${summoner}`}>
-              <input id="searchButton" className="button" type="submit" name="commit" value="Search" />
+            <Link className={classNames({'inactive': this.state.summoner.length === 0})} to={`/p/${server}/${summoner}`}>
+              <div className="searchIcon">
+                <i className="fas fa-search"></i>
+              </div>
             </Link>
           </div>
-
-          <div id="searchLoader" className="loader"></div>
-
-          <div className="clear"></div>
-
-          <div id="error">
-          </div>
-
-          <div id="history"></div>
-          </div>
+        </div>
       </div>
     );
   }
