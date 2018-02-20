@@ -6,8 +6,7 @@
     display: flex;
     align-items: center;
     text-align: center;
-
-    
+ 
     h1{
         color:@blue-dk;
         font-weight:700;
@@ -44,28 +43,45 @@
             position: relative;
 
             .regionSelector{
-                background: @grey-lt;
+                background: @red-dk;
                 font-size:14px;
                 width:60px;
-                
-                padding: 13px 0;
+                height: 100%;
+                position: relative;
 
                 &:hover{
-                    background: @grey;
+                    background: @red-md;
                 }
 
+                .Dropdown-root{
+                    color: #fff;
+                    height: 100%;
+                }
+                .Dropdown-control{
+                    height: 100%;
+                }
+                .Dropdown-placeholder{
+                    height:100%;
+                    line-height: 45px;
+                }
                 .Dropdown-menu{
-                    background-color: white;
-                    border: 1px solid #ccc;
+                    background: @red-md;
                     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
                     box-sizing: border-box;
                     margin-top: -1px;
-                    max-height: 200px;
                     overflow-y: auto;
                     position: absolute;
                     top: 100%;
                     width: 100%;
                     z-index: 1000;
+                    color: #fff;
+                }
+                .Dropdown-option{
+                    padding: 3px 0;
+                    &:hover{
+                        background: @red-dk;
+                        color: #fff;
+                    }
                 }
             }
 

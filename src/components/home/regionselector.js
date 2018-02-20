@@ -8,8 +8,15 @@ class RegionSelector extends Component{
     super(props);
 
     this.state = {
-      region: REGION.NA,
+      region: REGION.NA.toUpperCase(),
     };
+  }
+
+  _onChange = (option) => {
+    this.props.onRegionSelect(option);
+    this.setState({
+      region: option.value,
+    });
   }
 
   render(){
@@ -17,7 +24,7 @@ class RegionSelector extends Component{
 
     return(
       <div className="regionSelector">
-        <Dropdown className="dropdown" options={regions} onChange={this._onSelect} value={regions[0]} placeholder="Select an option" />
+        <Dropdown className="dropdown" options={regions} onChange={this._onChange} value={this.state.region} placeholder="Select an option" />
       </div>
     );
   }

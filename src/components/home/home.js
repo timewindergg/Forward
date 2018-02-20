@@ -13,17 +13,6 @@ import {
 
 import './styles/home.css';
 
-const quotes = [
-  "Some things do get better with time.",
-  "Time flies like an arrow; fruit flies like banana.",
-  "Here's the thing about time; if you can't make the most out of any given moment, then you don't deserve a single extra second.",
-  "Things aren't gonna' improve themselves.",
-  "Time to start some trouble.",
-  "One mistake, means I start over. From the very beginning...and over...and over again. Until I get it right.",
-  "It's not how much time you have, it's how you use it.",
-  "One step closer to greater understanding!",
-];
-
 class Home extends Component {
   state = {
     summoner: '',
@@ -36,16 +25,24 @@ class Home extends Component {
     console.log("retrieved recent searches: ", this.state.recentSearches);
   }
 
-  onRegionSelect = (region) => {
+  onRegionSelect = (option) => {
     this.setState({
-      server: region,
+      server: REGION[option.value],
     });
   }
 
+  _handleKeyPress = (event) => {
+    if (event.key === 'Enter'){
+      if (this.state.summoner.length > 0){
+        window.location.href = `/p/${this.state.server}/${this.state.summoner}`;
+      }
+      event.preventDefault();
+    }
+  }
+
+
   render() {
     const {summoner, server} = this.state;
-
-    let quote = quotes[Math.floor(Math.random() * quotes.length)];
 
     return (
       <div className="Home">
@@ -55,12 +52,15 @@ class Home extends Component {
 
           <div id="lookup">
             <RegionSelector onRegionSelect={this.onRegionSelect}/>
-            <input id="searchField" className="textfield" type="text"
-              maxlength="25"
-              placeholder="Search summoner name"
-              value={summoner}
-              onChange={(event) => this.setState({summoner: event.target.value})}
-            />
+            <form onSubmit={this.searchSummoner}>
+              <input id="searchField" className="textfield" type="text"
+                maxLength="25"
+                placeholder="Search summoner name"
+                value={summoner}
+                onChange={(event) => this.setState({summoner: event.target.value})}
+                onKeyPress={this._handleKeyPress}
+              />
+            </form>
             <Link className={classNames({'inactive': this.state.summoner.length === 0})} to={`/p/${server}/${summoner}`}>
               <div className="searchIcon">
                 <i className="fas fa-search"></i>

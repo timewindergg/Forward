@@ -1,15 +1,15 @@
 const REGION = {
-  NA: 'NA',
-  EUW: 'EUW',
-  EUNE: 'EUNE',
-  KR: 'KR',
-  BR: 'BR',
-  LAN: 'LAN',
-  LAS: 'LAS',
-  OCE: 'OCE',
-  RU: 'RU',
-  TR: 'TR',
-  JP: 'JP',
+  NA: 'na',
+  EUW: 'euw',
+  EUNE: 'eune',
+  KR: 'kr',
+  BR: 'br',
+  LAN: 'lan',
+  LAS: 'las',
+  OCE: 'oce',
+  RU: 'ru',
+  TR: 'tr',
+  JP: 'jp',
 };
 
 export default REGION;
