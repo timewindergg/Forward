@@ -9,10 +9,6 @@ import { getMasteryIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 
 class Items extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { items, itemData, version } = this.props;
 
@@ -31,6 +27,7 @@ class Items extends Component {
   }
 
   renderItems(items, version) {
+    console.log(items);
     return items.map((i) => {
       return (
         <div className="champion-stats-champion-item" key={i}>

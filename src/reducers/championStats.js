@@ -26,6 +26,7 @@ const clearUserChampionStats = (state, payload) => {
 const championStats = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CHAMPION_STATS_SUCCESS:
+      console.log("loaded champion stats: ", action.payload);
       return loadUserChampionStats(state, action.payload);
     case LOAD_CHAMPION_STATS_FAILED:
       return clearUserChampionStats(state, action.payload);

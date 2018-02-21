@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Avatar from 'material-ui/Avatar';
-
-import Header from '../common/header';
-import Footer from '../common/footer';
-
-import './championstats.css';
 
 import { getMasteryIconUrl,
   getTierIconUrl,
@@ -17,15 +11,20 @@ import { getMasteryIconUrl,
 
 import ChampionMappings from '../../shared/championMappings';
 
+import './styles/championstats.css';
+import './styles/recentmatches.css';
+import './styles/championprofile.css';
+import './styles/championmatchups.css';
+
 import ChampionStatsBarGraph from './bargraph';
 import ChampionStatsRadarGraph from './radargraph';
 import RecentMatches from './recentmatches';
 import Perks from './perks';
 import Items from './items';
 import ChampionMatchups from './championmatchups';
+import ChampionProfile from './championprofile';
 
 class ChampionStats extends Component {
-
   state = {
     role: ''
   }
@@ -35,21 +34,64 @@ class ChampionStats extends Component {
     userChampionStats: PropTypes.object.isRequired
   }
 
+  onRoleSelection = (role) => {
+    this.setState({
+      role: role
+    });
+  }
+
   render() {
     const {summoner, userChampionStats, staticData} = this.props;
-    const profileIconUrl = getProfileIconUrl(summoner.icon, staticData.version);
-    return (
-      <div className='ChampionStats'>
-        <Header />
-        <div className="champion-stats-header">
-          {this.renderProfile(summoner, staticData.version)}
-          {this.renderRankedTiers(summoner)}
-        </div>
-        {this.renderUserChampionStats(userChampionStats, staticData)}
 
-        <Footer/>
-      </div>
-    );
+    if (userChampionStats !== undefined && Object.keys(userChampionStats).length !== 0) {
+      let championStats = userChampionStats;
+      const profileIconUrl = getProfileIconUrl(summoner.icon, staticData.version);
+      const championId = championStats.championId;
+      const version = staticData.version;
+      const { role } = this.state;
+      const lane = mapRoleToLane(role);
+      const runes = getRuneSetByLane(championStats, lane);
+      let items = {
+            "items": [],
+            "boots": []
+      };
+
+      if (championStats.championItems[role] !== undefined) {
+        items = championStats.championItems[role];
+
+        // prune the items for duplicates.
+        items.items = Array.from(new Set(items.items));
+      }
+
+      const championStatsByLane = getChampionStatsByLane(championStats, lane);
+
+      return (
+        <div className='ChampionStats'>
+          <div className='content'>
+            <div className="champion-stats-container">
+              <div className="left-container">
+                <ChampionProfile 
+                  championStats={championStats} 
+                  championId={championId} 
+                  onRoleSelection={this.onRoleSelection} 
+                  championData={staticData.champions}
+                  version={version}/>
+                <Perks perks={runes} perkData={staticData.runes} version={version}/>
+                <Items items={items} staticData={staticData.items} version={version}/>
+                <RecentMatches championId={championId} championStats={championStats} version={version}/>
+              </div>
+              <div className="right-container">
+                <ChampionStatsRadarGraph championStats={championStatsByLane}/>
+                <ChampionStatsBarGraph championStats={championStatsByLane}/>
+                <ChampionMatchups championMatchups={championStats.championMatchups} version={version}/>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return(<div/>);
   }
 
   renderProfile(summoner, version) {
@@ -84,81 +126,6 @@ class ChampionStats extends Component {
       return (
         <div className="champion-stats-summoner-ranked">
           <img src={getTierIconUrl(Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier)}/>
-        </div>
-      );
-    }
-  }
-
-  renderUserChampionStats(championStats, staticData) {
-    if (championStats !== undefined && Object.keys(championStats).length !== 0) {
-      const championId = championStats.championStats[0].champ_id;
-      const version = staticData.version;
-      const { role } = this.state;
-      const lane = mapRoleToLane(role);
-      const runes = getRuneSetByLane(championStats, lane);
-      let items = {
-            "items": [],
-            "boots": []
-      };
-
-      if (championStats.championItems[role] !== undefined) {
-        items = championStats.championItems[role];
-
-        // prune the items for duplicates.
-        items.items = Array.from(new Set(items.items));
-      }
-
-      const championStatsByLane = getChampionStatsByLane(championStats, lane);
-
-      return (
-        <div className="champion-stats-container">
-          <div className="champion-stats-left-container">
-            <div className="champion-stats-left-container-top">
-              <div className="champion-stats-champion-profile">
-                <div className="champion-stats-champion-icon">
-                  <img src={getChampionIconUrl(championId, version)}/>
-                </div>
-                <div className="champion-stats-champion-name">
-                  <span>{ChampionMappings[championId].name}</span>
-                </div>
-                <div className="champion-stats-champion-summoners">
-                  {this.renderChampionSpells(championStats, version)}
-                </div>
-              </div>
-              <div className="champion-stats-role-container">
-                <div className="champion-roles">
-                    <div className="role-button">
-                      <button id="top-role-button" value="top" onClick={event => this.setState({role: event.target.value})}>
-                      </button>
-                    </div>
-                    <div className="role-button">
-                      <button id="jungle-role-button" value="jungle" onClick={event => this.setState({role: event.target.value})}>
-                      </button>
-                    </div>
-                    <div className="role-button">
-                      <button id="mid-role-button" value="mid" onClick={event => this.setState({role: event.target.value})}>
-                      </button>
-                    </div>
-                    <div className="role-button">
-                      <button id="bot-role-button" value="bot" onClick={event => this.setState({role: event.target.value})}>
-                      </button>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <Perks perks={runes} perkData={staticData.runes} version={version}/>
-            <Items items={items} staticData={staticData.items} version={version}/>
-            <RecentMatches
-              championStats={championStats} version={version}/>
-          </div>
-          <div className="champion-stats-right-container">
-            <ChampionStatsRadarGraph
-              championStats={championStatsByLane}/>
-            <ChampionStatsBarGraph
-              championStats={championStatsByLane}/>
-            <ChampionMatchups
-              championMatchups={championStats.championMatchups}/>
-          </div>
         </div>
       );
     }

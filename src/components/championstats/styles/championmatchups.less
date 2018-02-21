@@ -1,0 +1,45 @@
+.champion-stats-match-ups{
+    overflow-y: auto;
+    height: 500px;
+
+    .championIcon{
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+
+    .matchup{
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        justify-content: center;
+        text-align: center;
+        line-height: 0;
+        margin: 3px 0;
+        padding: 3px 0;
+
+        .championImage{
+            flex-grow: 1;
+        }
+
+        .winrate{
+            flex-grow: 1;
+            width: 70px;
+        }
+
+        .progressBar{
+            flex-grow: 1;
+        }
+
+        .winloss{
+            flex-grow: 1;
+            width: 90px;
+        }
+    }
+
+    .progressBar{
+        width: 250px;
+        height: 15px;
+    }
+}

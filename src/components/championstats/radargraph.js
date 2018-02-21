@@ -18,7 +18,6 @@ class ChampionStatsRadarGraph extends Component {
       labels: ['Gold', 'Kill', 'Death', 'Assists', 'CS'],
       datasets: [
         {
-          label: 'My First dataset',
           backgroundColor: 'rgba(179,181,198,0.2)',
           borderColor: 'rgba(179,181,198,1)',
           pointBackgroundColor: 'rgba(179,181,198,1)',
@@ -26,7 +25,7 @@ class ChampionStatsRadarGraph extends Component {
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgba(179,181,198,1)',
           data: normalizeRadarStats(championStats)
-        }
+        },
       ]
     };
 

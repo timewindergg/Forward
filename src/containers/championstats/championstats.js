@@ -9,6 +9,9 @@ import {getUserChampionStats} from '../../apiutils/championStatsAPIUtils';
 import ChampionStats from '../../components/championstats/championstats';
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
+import Header from '../../components/common/header';
+import Footer from '../../components/common/footer';
+
 class ChampionStatsContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router ONLY
@@ -29,26 +32,26 @@ class ChampionStatsContainer extends Component {
 
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
-    if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
-      getSummonerInfo(summonerName, region);
-      getUserChampionStats(summonerName, region, championName);
-    } else {
-      getUserChampionStats(summonerName, region, championName);
-    }
-
     if (Object.keys(staticData).length === 0) {
       getStaticData(region);
     }
+    if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
+      getSummonerInfo(summonerName, region);
+    }
+    getUserChampionStats(summonerName, region, championName);
   }
 
   render() {
     const {summoner, userChampionStats, staticData} = this.props;
     return (
-      <ChampionStats
-        summoner={summoner}
-        userChampionStats={userChampionStats}
-        staticData={staticData}
-      />
+      <div>
+        <Header />
+        <ChampionStats
+          summoner={summoner}
+          userChampionStats={userChampionStats}
+          staticData={staticData}/>
+        <Footer />
+      </div>
     );
   }
 }

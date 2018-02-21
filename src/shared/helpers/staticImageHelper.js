@@ -13,6 +13,11 @@ export const getTierIconUrl = (division) => {
   return baseUrl + `/tiers/${divisionIconName}.png`;
 }
 
+export const getRoleIconUrl = (role) => {
+  const roleStr = role.split('_')[0].toLowerCase();
+  return baseUrl + `/roles/${roleStr}.png`;
+}
+
 const opggBaseUrl = "http://opgg-static.akamaized.net/images/lol/"
 const opggPerkIcon = "perk/"
 const opggPerkStyleIcon = "perkStyle/"

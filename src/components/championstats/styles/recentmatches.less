@@ -1,0 +1,102 @@
+@import '../../common/styles/colors';
+
+.champion-stats-recent-matches{
+}
+
+.RecentMatch{
+    .icon{
+        margin: 1px;
+        height: 23px;
+        width: 23px;
+    }
+
+    .matchInfo{
+        background: @blue-lt;
+        width: 100%;
+        display:flex;
+        align-items: center;
+    }
+
+    .summonerInfo{
+        background: @blue-lt;
+        padding: 5px 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .runeSummIcons{
+            padding-left: 15px; 
+            line-height: 0;
+            width: 10%;
+
+            .runeIcon{
+                
+            }
+
+            .summonerSpells{
+                .summonerIcon{
+                    
+                }
+            }   
+        }
+
+        .iconContainer{
+            position: relative;
+
+            .championIcon{
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+            }
+
+            .level{
+                padding-right:1px;
+                width: 16px;
+                height: 16px;
+                border-radius: 30%;
+                border: 1px solid;
+                background: @blue-dk;
+                color: #fff;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                font-size: 12px;
+                text-align: center;
+            }
+        }
+
+        .name{
+            margin-left: 25px;
+        }
+        .stats{
+            width: 150px;
+            margin: 0 10px;
+            display: flex;
+
+
+            .stat{
+                padding: 0 15px;
+                text-align: center;
+            }
+            .cs{
+                width: 15%;
+            }
+            .score{
+                width: 35%;   
+            }
+            .gold{
+                width: 40%;
+            }
+            .ward{
+                width: 10%;
+            }
+        }
+
+        .itemSet{
+            margin-left:10px;
+            .itemIcon{
+                
+            }
+        }
+    }
+}
