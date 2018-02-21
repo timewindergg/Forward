@@ -14,7 +14,7 @@ import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
 const MH_OFFSET = 0;
-const MH_SIZE = 10;
+const MH_SIZE = 100;
 
 class DashboardContainer extends Component {
   static propTypes = {

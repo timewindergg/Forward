@@ -24,24 +24,24 @@ class Matches extends Component {
   }
 
   render() {
-    if (this.props.matches === undefined || this.props.version === undefined) {
+    if (this.props.matches === undefined || this.props.version === undefined || this.props.limit === undefined) {
       return (<div/>);
     }
 
-    const { matches, version } = this.props;
+    const { matches, version, limit } = this.props;
 
     return (
       <div className="dashboard-matches">
-        {this.renderMatchList(matches, version)}
+        {this.renderMatchList(matches, version, limit)}
       </div>
     )
 
   }
 
-  renderMatchList(matches, version) {
-    const matchItems = matches.map((m) => {
+  renderMatchList(matches, version, limit) {
+    const matchItems = matches.slice(0, limit).map((m) => {
       return (
-        <div className={"dashboard-matches-item " + (m.team === m.winner ? 'victory' : 'defeat')} key={m.match_id}>
+        <div className={"dashboard-matches-item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
           {this.renderMatchHeader(m)}
           {this.renderMatchBody(m, version)}
         </div>
@@ -111,7 +111,7 @@ class Matches extends Component {
             <span>{ChampionMappings[match.champ_id].name}</span>
           </div>
           <div className="dashboard-matches-item-body-champion-info-champion-level">
-            <span>{match.level}</span>
+            <span>{`Lvl ${match.level}`}</span>
           </div>
         </div>
         <div className="dashboard-matches-item-body-champion-settings">
@@ -162,7 +162,7 @@ class Matches extends Component {
         <div className="dashboard-matches-item-body-match-stats">
           <div className="dashboard-matches-item-body-match-stats-kda">
             <span>{`${match.kills}/${match.deaths}/${match.assists}`}</span>
-            <span>{`${getKDA(match.kills, match.deaths, match.assists)}:KDA`}</span>
+            <span>{`${roundWithPrecision(getKDA(match.kills, match.deaths, match.assists), 2)}:KDA`}</span>
           </div>
           <div className="dashboard-matches-item-body-match-stats-detailed">
             <div className="dashboard-matches-item-body-match-stat">
@@ -186,7 +186,7 @@ class Matches extends Component {
           <div className="dashboard-matches-item-body-match-participants-blue">
             {this.renderParticipants(participants[0], version)}
           </div>
-          <div className="dashboard-matches-item-body-match-participants-blue">
+          <div className="dashboard-matches-item-body-match-participants-red">
             {this.renderParticipants(participants[1], version)}
           </div>
         </div>
@@ -205,7 +205,7 @@ class Matches extends Component {
       return (
         <div key={p.summonerId} className="dashboard-matches-item-body-match-participant">
           <div className="dashboard-matches-item-body-match-participant-champion-image">
-            <Avatar src={p.championUrl} alt=""/>
+            <img src={p.championUrl} alt=""/>
           </div>
           <div className="dashboard-matches-item-body-match-participant-name">
             <span>{p.summonerName}</span>

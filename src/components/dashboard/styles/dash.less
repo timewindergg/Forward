@@ -1,0 +1,237 @@
+@import '../../common/styles/colors';
+
+.Dashboard{
+
+  .dashboard-header {
+    display: flex;
+    margin-left: 50px;
+    padding: 20px;
+  }
+
+  .dashboard-header-profile-icon {
+    img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  .dashboard-header-summoner-profile {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .dashboard-header-ranked-info {
+    display: flex;
+    margin-left: 20px;
+  }
+
+  .dashboard-header-ranked-tier {
+    img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  .dashboard-header-ranked-stats {
+    margin-left: 10px;
+    span {
+      display: block;
+    }
+  }
+
+  .dashboard-header-top-champion-masteries {
+    margin-left: 400px;
+    display: flex;
+  }
+
+  .dashboard-header-mastery-icon {
+    img {
+      height: 35px;
+    }
+  }
+
+  .dashboard-body {
+    padding: 20px;
+    display: flex;
+  }
+
+  .dashboard-body-left-container {
+    width: 65%;
+    padding: 40px;
+  }
+
+  .dashboard-body-right-container {
+    width: 35%;
+  }
+
+  .dashboard-match-heat-map {
+    width: 300px;
+    height: 300px;
+  }
+
+  .dashboard-body-graphs {
+    display: flex;
+  }
+
+  .dashboard-summoner-radar-stats {
+    width: 250px;
+    height: 250px;
+    margin-left: 20px;
+  }
+
+  .dashboard-matches-item {
+    margin-top: 5px;
+  }
+
+  .victory {
+    background-color: @blue-lt;
+  }
+
+  .defeat {
+    background-color: @red-lt;
+  }
+
+  .dashboard-matches-item-header-match-team-objectives {
+    display: flex;
+  }
+
+  .dashboard-matches-item-header {
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+  }
+
+  .dashboard-matches-item-body {
+    display: flex;
+    padding: 5px;
+  }
+
+  .dashboard-matches-item-body-champion-settings {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+  }
+
+  .dashboard-matches-item-body-champion-settings-summoners {
+    display: flex;
+    margin-left: 5px;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .dashboard-matches-item-body-champion-settings-perks {
+    display: flex;
+    margin-left: 5px;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .dashboard-matches-item-body-champion-items {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .dashboard-matches-item-body-champion-items-row {
+    display: flex;
+  }
+
+  .dashboard-matches-item-body-match-stats {
+    display: flex;
+    margin-left: 5px;
+  }
+
+  .dashboard-matches-item-body-match-stats-kda {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard-matches-item-body-match-stats-detailed {
+    margin-left: 5px;
+  }
+
+  .dashboard-matches-item-body-match-participants {
+    display: flex;
+    margin-left: 5px;
+  }
+
+  .dashboard-matches-item-body-match-participant {
+    display: flex;
+
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  .dashboard-show-more {
+    text-align: center;
+    margin-top: 5px;
+    border: 2px solid;
+  }
+
+  .dashboard-matches-item-body-match-participants-red {
+    margin-left: 5px;
+  }
+
+  .react-calendar-heatmap .color-empty {
+    fill: #424d73;
+  }
+
+  .react-calendar-heatmap .color-scale-loss-1 {
+    fill: #ff4c74;
+    opacity: 0.2;
+  }
+
+  .react-calendar-heatmap .color-scale-tie-1 {
+    fill: #eb8638;
+    opacity: 0.2;
+  }
+
+  .react-calendar-heatmap .color-scale-win-1 {
+    fill: #57c681;
+    opacity: 0.2;
+  }
+
+  .react-calendar-heatmap .color-scale-loss-2 {
+    fill: #ff4c74;
+    opacity: 0.6;
+  }
+
+  .react-calendar-heatmap .color-scale-tie-2 {
+    fill: #eb8638;
+    opacity: 0.6;
+  }
+
+  .react-calendar-heatmap .color-scale-win-2 {
+    fill: #57c681;
+    opacity: 0.6;
+  }
+
+  .react-calendar-heatmap .color-scale-loss-3 {
+    fill: #ff4c74;
+    opacity: 1.0;
+  }
+
+  .react-calendar-heatmap .color-scale-tie-3 {
+    fill: #eb8638;
+    opacity: 1.0;
+  }
+
+  .react-calendar-heatmap .color-scale-win-3 {
+    fill: #57c681;
+    opacity: 1.0;
+  }
+}
