@@ -24,7 +24,10 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      matchesToDisplay: 10
+      matchesToDisplay: 10,
+      dateFilter: '',
+      championFilter: '',
+      queueFilter: ''
     }
   }
 
@@ -38,9 +41,27 @@ class Dashboard extends Component {
     currentMatch: PropTypes.object.isRequired
   }
 
+  onDateSelect = (date) => {
+    this.setState({
+      dateFilter: date.date
+    });
+  }
+
+  onQueueSelect = (option) => {
+    this.setState({
+      queueFilter: option.value,
+    });
+  }
+
+  onChampionSelect = (champion) => {
+    this.setState({
+      championFilter: champion
+    });
+  }
+
   render() {
     const {summoner, matches, currentMatch, staticData} = this.props;
-    const {matchesToDisplay} = this.state;
+    const {matchesToDisplay, dateFilter, championFilter, queueFilter} = this.state;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
     return (
       <div className='Dashboard'>
@@ -56,12 +77,15 @@ class Dashboard extends Component {
           <div className="dashboard-body">
             <div className="dashboard-body-left-container">
               <div className="dashboard-body-graphs">
-                <MatchLawn lawn={summoner.lawn}/>
+                <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
                 <MatchStatsRadar matches={matches}/>
               </div>
               <Matches matches={matches}
                 version={staticData.version}
-                limit={matchesToDisplay}/>
+                limit={matchesToDisplay}
+                dateFilter={dateFilter}
+                championFilter={championFilter}
+                queueFilter={queueFilter}/>
               <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
                 <h2>Load 10 more matches</h2>
               </div>

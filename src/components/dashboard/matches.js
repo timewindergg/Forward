@@ -28,18 +28,36 @@ class Matches extends Component {
       return (<div/>);
     }
 
-    const { matches, version, limit } = this.props;
+    const { matches, version, limit, dateFilter, championFilter, queueFilter} = this.props;
 
     return (
       <div className="dashboard-matches">
-        {this.renderMatchList(matches, version, limit)}
+        {this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter)}
       </div>
     )
 
   }
 
-  renderMatchList(matches, version, limit) {
-    const matchItems = matches.slice(0, limit).map((m) => {
+  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter) {
+    const matchItems = matches.filter((match) => {
+      if (dateFilter.length !== 0) {
+        // The date format is 2018-01-18.
+          const d1 = new Date(dateFilter);
+          const d2 = new Date(match.timestamp*1000);
+
+          return d1.toDateString() === d2.toDateString();
+      }
+
+      if (championFilter.length !== 0) {
+
+      }
+
+      if (queueFilter.length !== 0) {
+
+      }
+
+      return true;
+    }).slice(0, limit).map((m) => {
       return (
         <div className={"dashboard-matches-item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
           {this.renderMatchHeader(m)}

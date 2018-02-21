@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 
 class MatchLawn extends Component {
-
   render() {
     if (this.props.lawn === undefined) {
       return (<div/>);
     }
 
-    const { lawn } = this.props;
+    const { lawn, onDateSelect} = this.props;
 
     // Calculate the beginning of 3 months ago.
     const d = new Date();
@@ -20,6 +19,7 @@ class MatchLawn extends Component {
     return (
       <div className="dashboard-match-heat-map">
         <CalendarHeatmap
+          onClick={(value) => {onDateSelect(value)}}
           endDate={new Date()}
           startDate={beginningDate}
           values={lawn}
