@@ -43,37 +43,38 @@ class ChampionStats extends Component {
   render() {
     const {summoner, userChampionStats, staticData} = this.props;
 
-    if (userChampionStats !== undefined && Object.keys(userChampionStats).length !== 0) {
+    if (userChampionStats !== undefined && Object.keys(userChampionStats).length !== 0 && Object.keys(staticData).length !== 0) {
       let championStats = userChampionStats;
       const profileIconUrl = getProfileIconUrl(summoner.icon, staticData.version);
       const championId = championStats.championId;
       const version = staticData.version;
       const { role } = this.state;
       const lane = mapRoleToLane(role);
-      const runes = getRuneSetByLane(championStats, lane);
+      const runes = getRuneSetByLane(championStats, role);
       let items = {
             "items": [],
             "boots": []
       };
 
-      if (championStats.championItems[role] !== undefined) {
-        items = championStats.championItems[role];
+      if (championStats.championItems[lane] !== undefined) {
+        items = championStats.championItems[lane];
 
         // prune the items for duplicates.
+        items.boots = Array.from(new Set(items.boots));
         items.items = Array.from(new Set(items.items));
       }
 
-      const championStatsByLane = getChampionStatsByLane(championStats, lane);
+      const championStatsByLane = getChampionStatsByLane(championStats, role);
 
       return (
         <div className='ChampionStats'>
           <div className='content'>
             <div className="champion-stats-container">
               <div className="left-container">
-                <ChampionProfile 
-                  championStats={championStats} 
-                  championId={championId} 
-                  onRoleSelection={this.onRoleSelection} 
+                <ChampionProfile
+                  championStats={championStats}
+                  championId={championId}
+                  onRoleSelection={this.onRoleSelection}
                   championData={staticData.champions}
                   version={version}/>
                 <Perks perks={runes} perkData={staticData.runes} version={version}/>
@@ -150,10 +151,10 @@ class ChampionStats extends Component {
 }
 
 const mapRoleToLane = (role) => {
-  let lane = role.toUpperCase();
+  let lane = role.toLowerCase();
 
-  if (lane !== 'JUNGLE') {
-    lane = lane + '_LANE';
+  if (lane !== 'jungle') {
+    lane = lane.split('_')[0];
   }
 
   return lane;
@@ -171,9 +172,10 @@ const getRuneSetByLane = (championStats, lane) => {
 }
 
 const getChampionStatsByLane = (championStats, lane) => {
-  for (let i = 0; i < championStats.championStats.length; i++) {
-    if (championStats.championStats[i].lane === lane) {
-      return championStats.championStats[i];
+
+  for (let key in championStats.championStats) {
+    if (key === lane) {
+      return championStats.championStats[key];
     }
   }
 

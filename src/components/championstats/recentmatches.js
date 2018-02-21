@@ -21,7 +21,7 @@ class RecentMatch extends Component{
     }
     else if (m.team === 200){
       let rt = JSON.parse(m.red_team);
-      return rt.participants[m.participant_id - rt.participants.length - 1]; 
+      return rt.participants[m.participant_id - rt.participants.length - 1];
     }
   }
 
@@ -31,8 +31,6 @@ class RecentMatch extends Component{
 
     let p = this.getStats(m);
     let keystone = getKeystone(Object.keys(p.runes));
-    
-    console.log(p)
 
     return(
       <div className="RecentMatch" key={m.match_id}>
@@ -103,7 +101,7 @@ class RecentMatches extends Component {
   renderMatches(championStats, version) {
     return championStats.recentMatches.map((m) => {
       return (
-        <RecentMatch match={m} version={version}/>
+        <RecentMatch match={m} version={version} key={m.match_id}/>
       );
     })
   }

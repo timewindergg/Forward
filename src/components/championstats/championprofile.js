@@ -5,13 +5,13 @@ import ChampionMappings from '../../shared/championMappings';
 
 class ChampionProfile extends Component {
 
-  renderChampionRoles(){
+  renderChampionRoles(championStats, onRoleSelection){
     const roleOrder = ['TOP_LANE', 'JUNGLE', 'MID_LANE', 'BOT_LANE'];
 
     return roleOrder.map((role) => {
-      if (role in this.props.championStats){
+      if (role in championStats){
         return (
-          <div id="role-button" onClick={() => {this.onRoleSelection(role)}}>
+          <div id="role-button" onClick={() => {onRoleSelection(role)}} key={role}>
             <img className="roleIcon" src={getRoleIconUrl(role)} />
           </div>
         );
@@ -33,7 +33,7 @@ class ChampionProfile extends Component {
         </div>
         <div className="champion-stats-role-container">
           <div className='champion-roles'>
-            {this.renderChampionRoles()}
+            {this.renderChampionRoles(this.props.championStats.championStats, this.props.onRoleSelection)}
           </div>
         </div>
       </div>
