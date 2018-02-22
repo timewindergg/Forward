@@ -28,9 +28,9 @@ class CompareCardBottom extends Component {
 
     const items = isDetailsLoaded ? compareData.build[itemType].map((item) => {
       return (
-        <img className='compare-item' src={getItemIconUrl(item, IMG_VER)} key={item} />
+        <img className='compare-item' src={getItemIconUrl(item, IMG_VER)} key={item} alt=''/>
       );
-    }) : <img className='compare-item' src='' />;
+    }) : <img className='compare-item' src='' alt=''/>;
 
     return (
       <div className={classNames('compare-items', {

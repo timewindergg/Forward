@@ -7,13 +7,8 @@ import Avatar from 'material-ui/Avatar';
 import './styles/CompareCardHeader.css';
 
 import {
-  getMasteryIconUrl,
-  getTierIconUrl,
+  getTierIconUrl, // TODO: use later
   getChampionIconUrl,
-  getSpellIconUrl,
-  getPerkIconUrl,
-  getPerkStyleIconUrl,
-  getItemIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
 import championMappings from '../../../shared/championMappings.js';
@@ -88,7 +83,7 @@ class CompareCard extends Component {
   }
 
   renderEmptyCard = (cardClass) => {
-    const {isRed, compareData} = this.props;
+    const {isRed} = this.props;
 
     const teamName = isRed ? 'red' : 'blue';
     return (
@@ -99,7 +94,7 @@ class CompareCard extends Component {
   }
 
   render() {
-    const {isRed, compareData, winsSelf, totalGames, rankedDetails, otherChamp, teamWinRate} = this.props;
+    const {isRed, compareData,rankedDetails, teamWinRate} = this.props;
 
     // const colorClass = isRed ? 'compare-card-red' : 'compare-card-blue';
     // const cardClass = classNames(
@@ -116,8 +111,6 @@ class CompareCard extends Component {
 
     const imageUrl = getChampionIconUrl(compareData.champion_id, IMG_VER);
 
-    // const isDetailsLoaded = !!compareData.stats;
-
     const championName = !!championMappings[compareData.champion_id] ?
       championMappings[compareData.champion_id].name : '';
 
@@ -125,7 +118,8 @@ class CompareCard extends Component {
 
     const nameClass = classNames('h-primary-text' ,'h-text');
 
-    const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp);
+    // TODO: use this later?
+    // const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp);
     const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
 
     return (

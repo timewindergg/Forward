@@ -7,23 +7,15 @@ import Avatar from 'material-ui/Avatar';
 import './styles/OverviewCardHeader.css';
 
 import {
-  getMasteryIconUrl,
   getTierIconUrl,
-  getChampionIconUrl,
-  getSpellIconUrl,
-  getPerkIconUrl,
-  getPerkStyleIconUrl
+  getChampionIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
-import championMappings from '../../../shared/championMappings.js';
+// import championMappings from '../../../shared/championMappings.js';
 
 import {IMG_VER} from '../../../constants/Settings';
 
 class OverviewCardHeader extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     name: PropTypes.string.isRequired,
     championID: PropTypes.number.isRequired,
@@ -66,7 +58,6 @@ badge icon ne
       }
     );    
 
-    const championName = !!championMappings[championID] ? championMappings[championID].name : '';
     const tierText = `${tier} ${division}`;
 
     const nameClass = classNames({

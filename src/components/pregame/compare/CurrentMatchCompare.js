@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import _ from 'lodash';
 
-import CompareCard from './CompareCard';
 import CompareCardHeader from './CompareCardHeader';
 import CompareCardMiddle from './CompareCardMiddle';
 import CompareCardBottom from './CompareCardBottom';
@@ -15,10 +14,6 @@ import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
 const UNSELECT_ID = -1;
 
 class CurrentMatchCompare extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     currentMatch: PropTypes.object.isRequired,
     currentMatchDetails: PropTypes.object.isRequired,

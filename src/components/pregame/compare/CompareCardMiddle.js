@@ -11,10 +11,6 @@ import './styles/CompareCardMiddle.css';
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
 
 class CompareCardMiddle extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     dataRed: PropTypes.object.isRequired,
     dataBlue: PropTypes.object.isRequired
