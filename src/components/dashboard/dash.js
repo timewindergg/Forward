@@ -12,12 +12,15 @@ import './styles/dash.css';
 
 import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
+import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 
 import Matches from './matches';
 import MatchStatsRadar from './radar';
 import ChampionTable from './championtable';
 import DashboardHeader from './dashboardheader';
 import MatchLawn from './matchlawn';
+
+import LoadingScreen from '../common/loadingscreen';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -63,6 +66,11 @@ class Dashboard extends Component {
     const {summoner, matches, currentMatch, staticData} = this.props;
     const {matchesToDisplay, dateFilter, championFilter, queueFilter} = this.state;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
+
+    if (!hasDataLoaded([summoner, matches, staticData])){
+      return(<LoadingScreen/>);
+    }
+
     return (
       <div className='Dashboard'>
         <Header/>

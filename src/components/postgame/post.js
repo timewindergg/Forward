@@ -12,6 +12,8 @@ import './styles/gamegraphs.css';
 import './styles/runestats.css';
 //import './styles/datatable.css';
 
+import LoadingScreen from '../common/loadingscreen';
+
 import { Team, Player } from './objects.js';
 import Scoreboard from './scoreboard.js';
 import ControlHeader from './control.js';
@@ -24,7 +26,13 @@ import DataTable from './datatable.js';
 
 import Sticky from 'react-stickynode';
 
-import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrl, 
+         getItemIconUrl, 
+         getPerkIconUrl, 
+         getSpellIconUrl, 
+         getPerkStyleIconUrl, 
+         getMapUrl } from '../../shared/helpers/staticImageHelper.js';
+import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
 
 class Postgame extends Component {
@@ -248,7 +256,6 @@ class Postgame extends Component {
     this.setState({
       frameData: frameData,
       eventLineFrameData: eventLineFrameData,
-      hasAggregated: true,
     }, () => {console.log(this.state.frameData); console.log(this.state.eventLineFrameData)});
   }
 
@@ -283,44 +290,45 @@ class Postgame extends Component {
   }
 
   render() {
-    if (this.props.matchDetails.match !== undefined && this.state.frameData.length > 0 && this.state.eventLineFrameData.length > 0 && Object.keys(this.props.staticData).length > 0){
-      return (
-        <div className="Postgame">
-          <Sticky innerZ='1'>
-            <ControlHeader onSliderChange={this.onSliderChange} 
-                           match={this.props.matchDetails.match} 
-                           timeline={this.props.matchDetails.timeline}
-                           events={this.state.eventLineFrameData} />
-          </Sticky>
-          <div className="content">
-            <Scoreboard playerFrameData={this.state.frameData[this.state.currentFrame].players}
-                        teamFrameData={this.state.frameData[this.state.currentFrame].teams}
-                        matchParticipants={this.props.matchDetails.match.participants}
-                        version={this.props.staticData.version}
-                        region={this.props.region}/>
-            <div className="graphsmap">
-              <GoldDiffGraph frameData={this.state.frameData}/>
-              <EffectiveGoldDiffGraph frameData={this.state.frameData}/>
-              <Minimap mapId={this.props.matchDetails.match.mapId} 
-                       version={this.props.staticData.version}
-                       playerFrameData={this.state.frameData[this.state.currentFrame].players}/>
-            </div>
-            <ChampionSelector onChampionSelect={this.onChampionSelect}
-                              matchParticipants={this.props.matchDetails.match.participants}
-                              version={this.props.staticData.version}/>
-            <ChampionCompare frameData={this.state.frameData[this.state.currentFrame]}
-                             staticData={this.props.staticData}
-                             matchParticipants={this.props.matchDetails.match.participants}
-                             redSelection={this.state.redSelection}
-                             blueSelection={this.state.blueSelection}/>
-            <DataTable matchParticipants={this.props.matchDetails.match.participants}/>
-          </div>
-        </div>
-      );
-    }
+    const { matchDetails, staticData, region} = this.props;
+    const { frameData, eventLineFrameData, currentFrame } = this.state;
 
+    if (!hasDataLoaded([matchDetails, frameData, eventLineFrameData, staticData])){
+      return(<LoadingScreen/>);
+    }
+    
     return (
-      <div/>
+      <div className="Postgame">
+        <Sticky innerZ='1'>
+          <ControlHeader onSliderChange={this.onSliderChange} 
+                         match={matchDetails.match} 
+                         timeline={matchDetails.timeline}
+                         events={eventLineFrameData} />
+        </Sticky>
+        <div className="content">
+          <Scoreboard playerFrameData={frameData[currentFrame].players}
+                      teamFrameData={frameData[currentFrame].teams}
+                      matchParticipants={matchDetails.match.participants}
+                      version={staticData.version}
+                      region={region}/>
+          <div className="graphsmap">
+            <GoldDiffGraph frameData={frameData}/>
+            <EffectiveGoldDiffGraph frameData={frameData}/>
+            <Minimap mapId={matchDetails.match.mapId} 
+                     version={staticData.version}
+                     playerFrameData={frameData[currentFrame].players}/>
+          </div>
+          <ChampionSelector onChampionSelect={this.onChampionSelect}
+                            matchParticipants={matchDetails.match.participants}
+                            version={staticData.version}/>
+          <ChampionCompare frameData={frameData[currentFrame]}
+                           staticData={staticData}
+                           matchParticipants={matchDetails.match.participants}
+                           redSelection={this.state.redSelection}
+                           blueSelection={this.state.blueSelection}/>
+          <DataTable matchParticipants={matchDetails.match.participants}/>
+        </div>
+      </div>
     );
   }
 }

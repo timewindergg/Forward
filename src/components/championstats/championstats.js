@@ -8,6 +8,7 @@ import { getMasteryIconUrl,
   getItemIconUrl,
   getPerkIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 
 import ChampionMappings from '../../shared/championMappings';
 
@@ -29,6 +30,8 @@ import Items from './items';
 import ChampionMatchups from './championmatchups';
 import ChampionProfile from './championprofile';
 
+import LoadingScreen from '../common/loadingscreen';
+
 class ChampionStats extends Component {
   state = {
     role: ''
@@ -48,73 +51,73 @@ class ChampionStats extends Component {
   render() {
     const {summoner, userChampionStats, staticData} = this.props;
 
-    if (userChampionStats !== undefined && Object.keys(userChampionStats).length !== 0 && Object.keys(staticData).length !== 0) {
-      let championStats = userChampionStats;
-      
-      const championId = championStats.championId;
-      const version = staticData.version;
+    if (!hasDataLoaded([summoner, userChampionStats, staticData])){
+      return(<LoadingScreen/>);
+    }
 
-      let roleFrequencies = {
-        "TOP_LANE": 0,
-        "JUNGLE": 0,
-        "MID_LANE": 0,
-        "BOT_LANE": 0,
-      };
-      let defaultRole;
-      let totalGames = 0;
+    let championStats = userChampionStats;
+    
+    const championId = championStats.championId;
+    const version = staticData.version;
 
-      let max = 0;
-      Object.entries(championStats.championStats).map((stat) => {
-        roleFrequencies[stat[0]] = stat[1].total_games;
-        totalGames += stat[1].total_games;
-        if (roleFrequencies[stat[0]] > max){
-          max = roleFrequencies[stat[0]];
-          defaultRole = stat[0];
-        }
-      });
+    let roleFrequencies = {
+      "TOP_LANE": 0,
+      "JUNGLE": 0,
+      "MID_LANE": 0,
+      "BOT_LANE": 0,
+    };
+    let defaultRole;
+    let totalGames = 0;
 
-      let role;
-      if (this.state.role === ''){
-        role = defaultRole;
+    let max = 0;
+    Object.entries(championStats.championStats).map((stat) => {
+      roleFrequencies[stat[0]] = stat[1].total_games;
+      totalGames += stat[1].total_games;
+      if (roleFrequencies[stat[0]] > max){
+        max = roleFrequencies[stat[0]];
+        defaultRole = stat[0];
       }
-      else {
-        role = this.state.role;
-      }
+    });
 
-      const championStatsByLane = championStats.championStats[role];
+    let role;
+    if (this.state.role === ''){
+      role = defaultRole;
+    }
+    else {
+      role = this.state.role;
+    }
 
-      return (
-        <div className='ChampionStats'>
-          <div className='content'>
-            <div className="summonerHeader">
+    const championStatsByLane = championStats.championStats[role];
+
+    return (
+      <div className='ChampionStats'>
+        <div className='content'>
+          <div className="summonerHeader">
+          </div>
+          <div className="champion-stats-container">
+            <div className="left-container">
+              <ChampionProfile
+                role={role}
+                championStats={championStats}
+                championId={championId}
+                onRoleSelection={this.onRoleSelection}
+                championData={staticData.champions}
+                totalGames={totalGames}
+                version={version}/>
+              <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
+              <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
+              <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
+              <RecentMatches championId={championId} championStats={championStats} version={version}/>
             </div>
-            <div className="champion-stats-container">
-              <div className="left-container">
-                <ChampionProfile
-                  role={role}
-                  championStats={championStats}
-                  championId={championId}
-                  onRoleSelection={this.onRoleSelection}
-                  championData={staticData.champions}
-                  totalGames={totalGames}
-                  version={version}/>
-                <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
-                <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
-                <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
-                <RecentMatches championId={championId} championStats={championStats} version={version}/>
-              </div>
-              <div className="right-container">
-                <ChampionStatsRadarGraph championStats={championStatsByLane}/>
-                <ChampionStatsBarGraphs championStats={championStatsByLane}/>
-                <ChampionMatchups championMatchups={championStats.championMatchups} version={version}/>
-              </div>
+            <div className="right-container">
+              <ChampionStatsRadarGraph championStats={championStatsByLane}/>
+              <ChampionStatsBarGraphs championStats={championStatsByLane}/>
+              <ChampionMatchups championMatchups={championStats.championMatchups} version={version}/>
             </div>
           </div>
         </div>
-      );
-    }
-
-    return(<div/>);
+      </div>
+    );
   }
 }
 
