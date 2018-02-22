@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import moment from 'moment';
 
-import Avatar from 'material-ui/Avatar';
-
 import {GameTypes} from '../../constants/GameTypes';
 import {IMG_VER} from '../../constants/Settings';
 
@@ -32,7 +30,7 @@ class PregameHeader extends Component {
     const banIcons = bans.map((ban) => {
       if (!championMappings[ban]) {
         return (
-          <Avatar
+          <img
             key={ban}
             src=''
             className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
@@ -43,7 +41,7 @@ class PregameHeader extends Component {
       const imageUrl = getChampionIconUrl(ban, IMG_VER);
 
       return (
-        <Avatar
+        <img
           key={ban}
           src={imageUrl}
           className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}

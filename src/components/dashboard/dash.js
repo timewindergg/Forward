@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
-import Header from '../common/header';
-import Footer from '../common/footer';
-
-import Avatar from 'material-ui/Avatar';
-
 import './styles/dash.css';
 
 import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
@@ -73,7 +68,6 @@ class Dashboard extends Component {
 
     return (
       <div className='Dashboard'>
-        <Header/>
         <Link to={`/l/${summoner.region}/${summoner.name}`}>
           <button disabled={!isSummonerInMatch}>
             Go to pregame

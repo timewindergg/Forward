@@ -1,0 +1,75 @@
+@import './colors';
+
+.lookup{
+    height:45px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+
+    .regionSelector{
+        background: @red-dk;
+        font-size:14px;
+        width:60px;
+        height: 100%;
+        position: relative;
+
+        &:hover{
+            background: @red-md;
+        }
+
+        .Dropdown-root{
+            color: #fff;
+            height: 100%;
+        }
+        .Dropdown-control{
+            height: 100%;
+        }
+        .Dropdown-placeholder{
+            height:100%;
+            line-height: 45px;
+        }
+        .Dropdown-menu{
+            background: @red-md;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+            box-sizing: border-box;
+            margin-top: -1px;
+            overflow-y: auto;
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            z-index: 1000;
+            color: #fff;
+        }
+        .Dropdown-option{
+            padding: 3px 0;
+            &:hover{
+                background: @red-dk;
+                color: #fff;
+            }
+        }
+    }
+
+    #searchField{
+        background: #f6f7f8;
+        padding: 13px 15px;
+        border: none;
+        outline: none;
+        width:400px;
+        //height:100%;
+        font-size:12pt;
+    }
+
+    .searchIcon{
+        width: 25px;
+        background: #f6f7f8;
+        padding: 13px;
+        color: #000;
+
+        &:hover{
+            color: #999;
+            cursor: pointer;
+        }
+    }
+}

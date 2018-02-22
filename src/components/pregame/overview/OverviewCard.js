@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Avatar from 'material-ui/Avatar';
-
 import OverviewCardHeader from './OverviewCardHeader';
 
 import './styles/OverviewCard.css';

@@ -7,6 +7,8 @@ import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
 import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
 
 import Dashboard from '../../components/dashboard/dash';
+import Header from '../../components/common/header';
+import Footer from '../../components/common/footer';
 
 // Import api utilities.
 import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
@@ -52,12 +54,16 @@ class DashboardContainer extends Component {
   render() {
     const {summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
     return (
-      <Dashboard
-        summoner={summoner}
-        currentMatch={currentMatch}
-        matches={matches}
-        staticData={staticData}
-      />
+      <div>
+        <Header/>
+        <Dashboard
+          summoner={summoner}
+          currentMatch={currentMatch}
+          matches={matches}
+          staticData={staticData}
+        />
+        <Footer/>
+      </div>
     );
   }
 }

@@ -1,6 +1,8 @@
+@import '../../common/styles/colors';
+
 .rc-header {
-    height: 40px;
-    background-color: #eee;
+    height: 46px;
+    background-color: @grey-lt;
     border-bottom: 1px solid #aaa;
 
     .header-inner {
@@ -12,6 +14,16 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        .header-appname{
+            color: @blue-dk;
+            font-weight: 700;
+            font-size: 18px;
+
+            &:hover{
+                cursor: pointer;
+            }
+        }
     }
     
     .header-search-bar {

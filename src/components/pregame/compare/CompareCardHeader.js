@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Avatar from 'material-ui/Avatar';
-
 import './styles/CompareCardHeader.css';
 
 import {
@@ -124,7 +122,7 @@ class CompareCard extends Component {
 
     return (
       <div className={cardClass}>
-        <Avatar src={imageUrl} className='champion-img' />
+        <img src={imageUrl} className='champion-img' />
         <div className={classNames('c-header-col', {'c-header-col-blue': !isRed})}>
           <span className={nameClass}>{compareData.name}</span>
           <span className='h-text'>{championName}</span>

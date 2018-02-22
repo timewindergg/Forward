@@ -23,11 +23,6 @@ const createChampionListData = (championLists) => {
 class ChampionTable extends Component {
 
   render() {
-    if (this.props.championStats === undefined || this.props.summonerName === undefined ||
-        this.props.summonerRegion === undefined || this.props.version === undefined) {
-      return (<div/>);
-    }
-
     const { championStats, summonerName, summonerRegion, version } = this.props;
 
     const data = createChampionListData(championStats);
@@ -125,7 +120,7 @@ class ChampionTable extends Component {
               ]
             }
           ]}
-          defaultPageSize={10}
+          showPagination={false}
           className="-striped -highlight"
         />
       </div>

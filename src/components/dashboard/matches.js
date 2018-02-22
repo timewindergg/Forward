@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Avatar from 'material-ui/Avatar';
 
 // Import required mappings.
 import ChampionMappings from '../../shared/championMappings.js';
@@ -124,7 +123,7 @@ class Matches extends Component {
     return (
       <div className="dashboard-matches-item-body">
         <div className="dashboard-matches-item-body-champion-info">
-          <Avatar src={getChampionIconUrl(match.champ_id, version)}/>
+          <img className="championIcon icon" src={getChampionIconUrl(match.champ_id, version)}/>
           <div className="dashboard-matches-item-body-champion-info-champion-name">
             <span>{ChampionMappings[match.champ_id].name}</span>
           </div>

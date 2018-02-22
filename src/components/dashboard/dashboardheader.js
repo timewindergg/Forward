@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Avatar from 'material-ui/Avatar';
-
 import { numberFormatter} from '../../shared/helpers/numberHelper.js';
 
 import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
@@ -84,7 +82,7 @@ class DashboardHeader extends Component {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
           <div className="dashboard-header-champion-mastery-wrapper" key={c.champ_id}>
-            <Avatar src={getChampionIconUrl(c.champ_id, version)} alt=""/>
+            <img className="championIcon icon" src={getChampionIconUrl(c.champ_id, version)} alt=""/>
             <div className="dashboard-header-mastery-icon">
               <img src={masteryIcon} alt=""/>
             </div>

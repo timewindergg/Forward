@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import Avatar from 'material-ui/Avatar';
-
 import './styles/OverviewCardHeader.css';
 
 import {
@@ -68,7 +66,7 @@ badge icon ne
 
     return (
       <div className={cardClass}>
-        <Avatar src={imageUrl} className='champion-img' />
+        <img src={imageUrl} className='champion-img' />
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>
           <span className='h-text'>{`${tierText} (${LP} LP)`}</span>
