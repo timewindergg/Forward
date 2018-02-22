@@ -6,10 +6,6 @@ import OverviewCardContainer from '../../../containers/pregame/OverviewCardConta
 import './styles/CurrentMatchOverview.css';
 
 class CurrentMatchOverview extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static defaultProps = {
     redTeam: [],
     blueTeam: [],

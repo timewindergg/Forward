@@ -43,12 +43,12 @@ class OverviewCard extends Component {
 
     // TODO: have a placeholder gif
     const spell0 = isSummonerLoaded ? (
-      <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, IMG_VER)} />
-    ) : <img className='overview-spell' src='' />;
+      <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, IMG_VER)} alt=''/>
+    ) : <img className='overview-spell' src='' alt=''/>;
 
     const spell1 = isSummonerLoaded ? (
-      <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} />
-    ) : <img className='overview-spell' src='' />;
+      <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} alt=''/>
+    ) : <img className='overview-spell' src='' alt=''/>;
 
     return (
       <div className={classNames('overview-icon-list')}>
@@ -67,9 +67,9 @@ class OverviewCard extends Component {
       const runeClass = classNames({'overview-rune': true, 'overview-keystone-rune': isKeystone});
 
       return (
-        <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} />
+        <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} alt=''/>
       );
-    }) : <img className='overview-rune' src='' />;
+    }) : <img className='overview-rune' src='' alt=''/>;
 
     return (
       <div className={classNames('overview-icon-list')}>
