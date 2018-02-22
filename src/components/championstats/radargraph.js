@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import { Radar } from 'react-chartjs-2';
 
 class ChampionStatsRadarGraph extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (this.props.championStats === undefined) {
       return (<div/>);
@@ -42,7 +38,11 @@ class ChampionStatsRadarGraph extends Component {
 
 const normalizeRadarStats = (championStats) => {
    // The different areas will be Gold, Kill, Death, Assists, CS
-   return [championStats.gold/20000, championStats.kills/20, championStats.deaths/20, championStats.assists/20, (championStats.total_cs/championStats.total_games)/400]
+   return [championStats.gold/championStats.total_games/20000,
+           championStats.kills/championStats.total_games/20,
+           championStats.deaths/championStats.total_games/20,
+           championStats.assists/championStats.total_games/20,
+           championStats.total_cs/championStats.total_games/400]
 }
 
 export default ChampionStatsRadarGraph;

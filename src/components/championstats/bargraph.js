@@ -1,109 +1,122 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import Typography from 'material-ui/Typography';
 
 import { HorizontalBar } from 'react-chartjs-2';
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    marginTop: theme.spacing.unit * 3,
-    backgroundColor: theme.palette.background.paper,
-    width: 500
-  },
-});
-
-
-
-class ChampionStatsBarGraph extends Component {
-  state = {
-    value: 0,
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
+class ChampionStatsBarGraphs extends Component {
   render() {
-    const {classes, championStats} = this.props;
-    const {value} = this.state;
-
-    if (this.props === undefined || Object.keys(championStats).length === 0) {
-      return (<div/>);
-    }
+    const { championStats } = this.props;
 
     const csData = {
-      labels: ['CS Diff at 10', 'CS Diff at 20', 'CS Diff at 30'],
+      labels: ['CS@10', 'CS@20', 'CS@30'],
       datasets: [{
-        data: [championStats.cs_diff10, championStats.cs_diff20, championStats.cs_diff30]
+        data: [Math.round(championStats.cs10 * 10), 
+               Math.round(championStats.cs10 * 10 + championStats.cs20 * 10),
+               Math.round(championStats.cs10 * 10 + championStats.cs20 * 10 +championStats.cs30 * 10)]
+      }]
+    }
+    const csdData = {
+      labels: ['CSD@10', 'CSD@20', 'CSD@30'],
+      datasets: [{
+        data: [Math.round(championStats.cs_diff10 * 10),
+               Math.round(championStats.cs_diff20 * 10), 
+               Math.round(championStats.cs_diff30 * 10)]
       }]
     }
 
     const xpData = {
-      labels: ['XP Diff at 10', 'XP Diff at 20', 'XP Diff at 30'],
+      labels: ['XP@10', 'XP@20', 'XP@30'],
       datasets: [{
-        data: [championStats.xp_diff10, championStats.xp_diff20, championStats.xp_diff30]
+        data: [Math.round(championStats.xp10 * 10),
+               Math.round(championStats.xp10 * 10 + championStats.xp20 * 10), 
+               Math.round(championStats.xp10 * 10 + championStats.xp20 * 10 + championStats.xp30 * 10)]
+      }]
+    }
+    const xpdData = {
+      labels: ['XPD@10', 'XPD@20', 'XPD@30'],
+      datasets: [{
+        data: [Math.round(championStats.xp_diff10 * 10), 
+               Math.round(championStats.xp_diff20 * 10), 
+               Math.round(championStats.xp_diff30 * 10)]
       }]
     }
 
-    const damageData = {
-      labels: ['Damage Taken at 10', 'Damage Taken at 20', 'Damage Taken at 30'],
+    const goldData = {
+      labels: ['G@10', 'G@20', 'G@30'],
       datasets: [{
-        data: [championStats.dmg_taken10, championStats.dmg_taken20, championStats.dmg_taken30]
+        data: [Math.round(championStats.gold10 * 10), 
+               Math.round(championStats.gold10 * 10 + championStats.gold20 * 10),
+               Math.round(championStats.gold10 * 10 + championStats.gold20 * 10 + championStats.gold30 * 10)]
       }]
     }
 
     return (
-      <div className={classes.root}>
-        <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="CS Diff" />
-            <Tab label="XP Diff" />
-            <Tab label="Damage Taken"/>
-          </Tabs>
-        </AppBar>
-        {value === 0 && <TabContainer>{this.renderBarGraph(csData)}</TabContainer>}
-        {value === 1 && <TabContainer>{this.renderBarGraph(xpData)}</TabContainer>}
-        {value === 2 && <TabContainer>{this.renderBarGraph(damageData)}</TabContainer>}
+      <div className="graphs">
+        <div className="csGraphs">
+          <div className="graphItem">
+            <h3>CS</h3>
+            {this.renderBarGraph(csData)}
+          </div>
+          <div className="graphItem">
+            <h3>CS Differential</h3>
+            {this.renderBarGraph(csdData)}
+          </div>
+        </div>
+        <div className="xpGraphs">
+          <div className="graphItem">
+            <h3>XP</h3>
+            {this.renderBarGraph(xpData)}
+          </div>
+          <div className="graphItem">
+            <h3>XP Differential</h3>
+            {this.renderBarGraph(xpdData)}
+          </div>
+        </div>
+        <div className="goldGraphs">
+          <div className="graphItem">
+            <h3>Total Gold</h3>
+            {this.renderBarGraph(goldData)}
+          </div>
+        </div>
       </div>
     );
   }
 
   renderBarGraph(data) {
     return (
-      <div className='compare-graph'>
+      <div className="graph">
         <HorizontalBar
           data={data}
           legend={{display: false}}
           ref={'GoldGraph'}
-          options={{maintainAspectRatio: false}}
+          options={{
+            maintainAspectRatio: false,
+            scales: {
+              xAxes: [{
+                gridLines: {
+                  display:true
+                },
+                ticks: {
+                  fontFamily: "Muli",
+                  autoSkip: true,
+                  maxTicksLimit: 10
+                }
+              }],
+              yAxes: [{
+                barThickness : 15,
+                gridLines: {
+                  display:false
+                },
+                ticks: {
+                  fontFamily: "Muli",
+                }
+              }]
+            }
+          }}
         />
       </div>
     );
   }
 }
 
-ChampionStatsBarGraph.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ChampionStatsBarGraph);
+export default ChampionStatsBarGraphs;

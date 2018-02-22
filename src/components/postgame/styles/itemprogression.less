@@ -1,26 +1,27 @@
 .itemProgressContainer{
     width: 100%;
+
+    .itemContainer{
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 20px;
+    }
+
+    .item{
+        width: 30px;
+        height: 30px;
+    }
+
+    .sold{
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        filter: grayscale(100%); 
+    }
+
+    .itemTs{
+        display:block;
+    }
 }
 
-.itemContainer{
-    display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 20px;
-}
-
-.item{
-    width: 30px;
-    height: 30px;
-}
-
-.sold{
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    filter: grayscale(100%); 
-}
-
-.itemTs{
-    display:block;
-}

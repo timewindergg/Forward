@@ -15,10 +15,15 @@ import './styles/championstats.css';
 import './styles/recentmatches.css';
 import './styles/championprofile.css';
 import './styles/championmatchups.css';
+import './styles/summoners.css';
+import './styles/perks.css';
+import './styles/items.css';
+import './styles/bargraphs.css';
 
-import ChampionStatsBarGraph from './bargraph';
+import ChampionStatsBarGraphs from './bargraph';
 import ChampionStatsRadarGraph from './radargraph';
 import RecentMatches from './recentmatches';
+import Summoners from './summoners';
 import Perks from './perks';
 import Items from './items';
 import ChampionMatchups from './championmatchups';
@@ -45,45 +50,62 @@ class ChampionStats extends Component {
 
     if (userChampionStats !== undefined && Object.keys(userChampionStats).length !== 0 && Object.keys(staticData).length !== 0) {
       let championStats = userChampionStats;
-      const profileIconUrl = getProfileIconUrl(summoner.icon, staticData.version);
+      
       const championId = championStats.championId;
       const version = staticData.version;
-      const { role } = this.state;
-      const lane = mapRoleToLane(role);
-      const runes = getRuneSetByLane(championStats, role);
-      let items = {
-            "items": [],
-            "boots": []
+
+      let roleFrequencies = {
+        "TOP_LANE": 0,
+        "JUNGLE": 0,
+        "MID_LANE": 0,
+        "BOT_LANE": 0,
       };
+      let defaultRole;
+      let totalGames = 0;
 
-      if (championStats.championItems[lane] !== undefined) {
-        items = championStats.championItems[lane];
+      let max = 0;
+      Object.entries(championStats.championStats).map((stat) => {
+        roleFrequencies[stat[0]] = stat[1].total_games;
+        totalGames += stat[1].total_games;
+        if (roleFrequencies[stat[0]] > max){
+          max = roleFrequencies[stat[0]];
+          defaultRole = stat[0];
+        }
+      });
 
-        // prune the items for duplicates.
-        items.boots = Array.from(new Set(items.boots));
-        items.items = Array.from(new Set(items.items));
+      let role;
+      if (this.state.role === ''){
+        role = defaultRole;
+      }
+      else {
+        role = this.state.role;
       }
 
-      const championStatsByLane = getChampionStatsByLane(championStats, role);
+      const championStatsByLane = championStats.championStats[role];
 
       return (
         <div className='ChampionStats'>
           <div className='content'>
+            <div className="summonerHeader">
+            </div>
             <div className="champion-stats-container">
               <div className="left-container">
                 <ChampionProfile
+                  role={role}
                   championStats={championStats}
                   championId={championId}
                   onRoleSelection={this.onRoleSelection}
                   championData={staticData.champions}
+                  totalGames={totalGames}
                   version={version}/>
-                <Perks perks={runes} perkData={staticData.runes} version={version}/>
-                <Items items={items} staticData={staticData.items} version={version}/>
+                <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
+                <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
+                <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
                 <RecentMatches championId={championId} championStats={championStats} version={version}/>
               </div>
               <div className="right-container">
                 <ChampionStatsRadarGraph championStats={championStatsByLane}/>
-                <ChampionStatsBarGraph championStats={championStatsByLane}/>
+                <ChampionStatsBarGraphs championStats={championStatsByLane}/>
                 <ChampionMatchups championMatchups={championStats.championMatchups} version={version}/>
               </div>
             </div>
@@ -93,60 +115,6 @@ class ChampionStats extends Component {
     }
 
     return(<div/>);
-  }
-
-  renderProfile(summoner, version) {
-    const profileIconUrl = getProfileIconUrl(summoner.icon, version);
-    return (
-      <div className="champion-stats-summoner-profile">
-        <div className="summoner-icon">
-          <img src={profileIconUrl} alt=""/>
-        </div>
-        <div className="summoner-name">
-          <span>{summoner.name}</span>
-        </div>
-        <div className="summoner-level">
-          <span>{summoner.level}</span>
-        </div>
-      </div>
-    );
-  }
-
-  renderRankedTiers(summoner) {
-    if (summoner !== undefined && summoner.leagues !== undefined) {
-      const leagues = summoner.leagues;
-      // Only show the solo q info.
-      // Sort the objects by their id.
-      let rankedInfo = {};
-      leagues.forEach((league) => {
-        if (league.queue === 'RANKED_SOLO_5x5') {
-          Object.assign(rankedInfo, league);
-        }
-      });
-
-      return (
-        <div className="champion-stats-summoner-ranked">
-          <img src={getTierIconUrl(Object.keys(rankedInfo).length === 0 && rankedInfo.constructor === Object ? 'Unranked' : rankedInfo.tier)}/>
-        </div>
-      );
-    }
-  }
-
-  renderChampionSpells(championStats, version) {
-    const { role } = this.state;
-    const lane = mapRoleToLane(role);
-
-    return championStats.championSummoners.map((l) => {
-        if (l.lane === lane) {
-          return JSON.parse(l.summoner_set).map((s) => {
-            return (
-              <div className="champion-stats-champion-summoners-spell" key={s}>
-                <img src={getSpellIconUrl(s, version)}/>
-              </div>
-            )
-          })
-        }
-    });
   }
 }
 
@@ -171,15 +139,15 @@ const getRuneSetByLane = (championStats, lane) => {
   return [];
 }
 
-const getChampionStatsByLane = (championStats, lane) => {
-
-  for (let key in championStats.championStats) {
-    if (key === lane) {
-      return championStats.championStats[key];
+const getSummonerSetByLane = (championStats, lane) => {
+  // Loop through the championRunes and return rune set matches the lane.
+  for (let i = 0; i < championStats.championSummoners.length; i++) {
+    if (championStats.championSummoners[i].lane === lane) {
+      return JSON.parse(championStats.championSummoners[i].summoner_set);
     }
   }
 
-  return {};
+  return [];
 }
 
 export default ChampionStats;

@@ -22,7 +22,7 @@ class ChampionMatchups extends Component {
 
     return (
       <div>
-        <h3>Win rates (includes all champions in a match)</h3>
+        <h3>Win rates (champions encountered)</h3>
         <div className="champion-stats-match-ups">
           {this.renderMatchups(championMatchups)}
         </div>
@@ -36,7 +36,6 @@ class ChampionMatchups extends Component {
     });
 
     return championMatchups.map((c) => {
-      console.log(c);
       let winrate = Math.round(c.wins / c.total_games * 100);
       let color = calculateGradient('01627f', 'ff6666', winrate / 100);
 
