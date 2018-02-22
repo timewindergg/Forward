@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import CurrentMatchOverview from './overview/CurrentMatchOverview';
 import CurrentMatchCompare from './compare/CurrentMatchCompare';
 import PregameHeader from './PregameHeader';
 
 import Header from '../common/header';
+import Footer from '../common/footer';
 
 import './styles/pre.css';
 
@@ -29,8 +31,8 @@ class Pregame extends Component {
 
   render() {
     /*
-    container has max-width of ~1200px and is centered
-    and content flows downwards and user can scroll, obviously
+    container has max-width of ~1300px and is centered
+    content flows downwards and user can scroll, obviously
     */
     const {
       summoner,
@@ -44,7 +46,7 @@ class Pregame extends Component {
     const queueName = !!currentMatch && !!currentMatch.queue ? currentMatch.queue.value : '';
 
     return (
-      <div className='rc-pregame'>
+      <div className={classNames('rc-pregame', 'content')}>
         <Header />
         <div className='pregame-container'>
           <PregameHeader
@@ -69,6 +71,7 @@ class Pregame extends Component {
           />
         </div>
 
+        <Footer />
       </div>
     );
   }
