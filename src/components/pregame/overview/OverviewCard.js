@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import OverviewCardHeader from './OverviewCardHeader';
+import Tooltip from '../../common/tooltip';
 
 import './styles/OverviewCard.css';
 
@@ -42,11 +43,19 @@ class OverviewCard extends Component {
 
     // TODO: have a placeholder gif
     const spell0 = ( 
-      <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, IMG_VER)} alt=''/>
+      <Tooltip
+        text={'asdfsdfasfsadfsdfadsfdsafa'}
+      >
+        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, IMG_VER)} alt=''/>
+      </Tooltip>
     );
 
     const spell1 = (
-      <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} alt=''/>
+      <Tooltip
+        text={'asdfsdfasfsadfsdfadsfdsafa'}
+      >
+        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} alt=''/>
+      </Tooltip>
     );
 
     return (
