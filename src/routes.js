@@ -7,7 +7,7 @@ import DashboardContainer from './containers/dashboard/dash';
 import PostgameContainer from './containers/postgame/post';
 import PregameContainer from './containers/pregame/pregame';
 import ChampionStatsContainer from './containers/championstats/championstats';
-import NotFound from './containers/notfound/notfound';
+import NotFoundContainer from './containers/notfound/notfound';
 
 import {
   SUMMONER_PARAM,
@@ -40,7 +40,7 @@ const Routes = () => (
             path={`/c/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}(\\w+)/:${CHAMPION_PARAM}(\\w+)`}
             component={ChampionStatsContainer}
           />
-          <Route path="*" component={NotFound} />
+          <Route path="*" component={NotFoundContainer} />
         </Switch>
     </BrowserRouter>
   </Provider>
