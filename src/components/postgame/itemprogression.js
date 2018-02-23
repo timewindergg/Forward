@@ -6,7 +6,7 @@ import {getItemIconUrl} from '../../shared/helpers/staticImageHelper.js';
 class Item extends Component {
   render(){
     let id = this.props.id;
-    let type = 'item';
+    let type = 'icon item';
     if (this.props.id < 0){
       type += ' sold';
     }

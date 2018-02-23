@@ -232,7 +232,7 @@ class Postgame extends Component {
         let effectiveGold = 0;
         Object.entries(aggregateData.players[key].items).map((item) => {
           if (item[1] > 0){
-            let value = this.props.staticData.items[item[0]].totalGold * item[1];
+            let value = staticData.items[item[0]].totalGold * item[1];
             effectiveGold += value;
           }
         });
@@ -279,13 +279,23 @@ class Postgame extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined){
+    if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined
+      && Object.keys(this.props.staticData).length > 0){
       this.setState({
         currentFrame: nextProps.matchDetails.timeline.frames.length - 1,
         redSelection: 1,
         blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
-      this.aggregateData(nextProps.matchDetails);
+      this.aggregateData(nextProps.matchDetails, this.props.staticData);
+    } 
+    else if (Object.keys(this.props.staticData).length === 0 && Object.keys(nextProps.staticData).length > 0
+      && this.props.matchDetails.timeline !== undefined){
+      this.setState({
+        currentFrame: nextProps.matchDetails.timeline.frames.length - 1,
+        redSelection: 1,
+        blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
+      });
+      this.aggregateData(this.props.matchDetails, nextProps.staticData);
     }
   }
 
@@ -296,7 +306,7 @@ class Postgame extends Component {
     if (!hasDataLoaded([matchDetails, frameData, eventLineFrameData, staticData])){
       return(<LoadingScreen/>);
     }
-    
+
     return (
       <div className="Postgame">
         <Sticky innerZ='1'>

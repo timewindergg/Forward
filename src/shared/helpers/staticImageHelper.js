@@ -3,6 +3,10 @@ import SummonerSpellMappings from '../summonerSpellMappings.js';
 
 const baseUrl = 'http://127.0.0.1:8000/static';
 
+export const getStaticImage = (path) => {
+  return baseUrl + path;
+}
+
 export const getMasteryIconUrl = (masteryLevel) => {
   return baseUrl + `/masteries/${masteryLevel}.png`;
 }

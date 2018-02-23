@@ -23,7 +23,7 @@ class SkillTable extends Component {
 
     buffer.push(
       <div key={skillImage}>
-        <img className="skillImage" src={getChampionSpellIconUrl(skillImage, this.props.version)} alt={skillImage}></img>
+        <img className="icon skillImage" src={getChampionSpellIconUrl(skillImage, this.props.version)} alt={skillImage}></img>
       </div>
     );
 

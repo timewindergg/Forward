@@ -11,15 +11,19 @@ class ChampionCompare extends Component {
     return(
       <div className="selectionDetails">
         <div className="stats">
-          {player.totalGold}
-          {player.effectiveGold}
+          <div className="totalGold">
+            Gold: {player.totalGold} Effective: {player.effectiveGold}
+          </div>
+          <div className="cs">
+            CS: {player.cs}
+          </div>
           
-          {player.cs}
-          {player.level}
-          {player.kills}
-          {player.deaths}
-          {player.assists}
-          {player.xp}
+          <div className="level">
+            Level {player.level}
+          </div>
+          <div className="kda">
+            {player.kills}/{player.deaths}/{player.assists}
+          </div>
         </div>
         <SkillTable skillOrder={player.skillOrder}
                     skillData={this.props.staticData.championSkills[this.props.matchParticipants[playerId - 1].championId]}
