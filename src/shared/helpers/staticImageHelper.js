@@ -43,12 +43,26 @@ export const getDDAsset = (version, assetType, assetId) => {
   return ddBaseUrl + version + assetType + assetId + ".png";
 }
 
+export const getDDAImage = (version, assetType, assetId) => {
+  return ddBaseUrl + version + assetType + assetId;
+}
+
 export const getProfileIconUrl = (id, version) => {
   return getDDAsset(version, AssetType.PROFILE_ICON, id);
 }
 
 export const getChampionIconUrl = (id, version) => {
   return getDDAsset(version, AssetType.CHAMPION, ChampionMappings[id].image);
+}
+
+// NEW FOR STATICDATA
+export const getChampionIcon = (champion, version) => {
+  return getDDAImage(version, AssetType.CHAMPION, champion.img);
+}
+
+// NEW FOR STATICDATA
+export const getChampionSpellIcon = (championSpell, version) => {
+  return getDDAImage(version, AssetType.SPELL, championSpell.img);
 }
 
 export const getSpellIconUrl = (id, version) => {

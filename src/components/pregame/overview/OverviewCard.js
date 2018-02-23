@@ -29,7 +29,8 @@ class OverviewCard extends Component {
     isRed: PropTypes.bool.isRequired,
     queueName: PropTypes.string.isRequired,
     isSelected: PropTypes.bool.isRequired,
-    onSelect: PropTypes.func.isRequired
+    onSelect: PropTypes.func.isRequired,
+    staticData: PropTypes.object.isRequired
   }
 
   selectSummoner = () => {
@@ -40,13 +41,13 @@ class OverviewCard extends Component {
     const {summoner} = this.props;
 
     // TODO: have a placeholder gif
-    const spell0 = isSummonerLoaded ? (
+    const spell0 = ( 
       <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, IMG_VER)} alt=''/>
-    ) : <img className='overview-spell' src='' alt=''/>;
+    );
 
-    const spell1 = isSummonerLoaded ? (
+    const spell1 = (
       <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} alt=''/>
-    ) : <img className='overview-spell' src='' alt=''/>;
+    );
 
     return (
       <div className={classNames('overview-icon-list')}>
@@ -56,18 +57,17 @@ class OverviewCard extends Component {
     );
   }
 
-  renderRunes = (isSummonerLoaded) => {
-    const {summoner} = this.props;
+  renderRunes = () => {
+    const {summoner, staticData} = this.props;
 
-
-    const runes = isSummonerLoaded ? summoner.runes.map((rune) => {
-      const isKeystone = runeMappings[rune].keyStone;
+    const runes = summoner.runes.map((rune) => {
+      const isKeystone = staticData.runes[rune].isKeyStone;
       const runeClass = classNames({'overview-rune': true, 'overview-keystone-rune': isKeystone});
 
       return (
         <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} alt=''/>
       );
-    }) : <img className='overview-rune' src='' alt=''/>;
+    });
 
     return (
       <div className={classNames('overview-icon-list')}>
@@ -76,8 +76,8 @@ class OverviewCard extends Component {
     );
   }
 
-  getRankedDetails = (isDetailsLoaded, details, queueName) => {
-    if (!isDetailsLoaded || !details.leagues || !details.leagues[queueName]) {
+  getRankedDetails = (details, queueName) => {
+    if (!details.leagues || !details.leagues[queueName]) {
       return {
         tier: '',
         division: '',
@@ -94,25 +94,22 @@ class OverviewCard extends Component {
   }
 
   render() {
-    const {summoner, details, isRed, isSelected, queueName} = this.props;
+    const {summoner, details, isRed, isSelected, queueName, staticData} = this.props;
     
-    const isSummonerLoaded = Object.keys(summoner).length > 0;
-    const isDetailsLoaded = Object.keys(details).length > 0;
-
     const winsLoss = (
       <div className='overview-row'>
         <span className='overview-heading'>Wins/Losses:</span>
-        {isDetailsLoaded && <span className='overview-greentext'>{`${details.stats.wins}/`}</span>}
-        {isDetailsLoaded && <span className='overview-redtext'>{details.stats.losses}</span>}
+        <span className='overview-greentext'>{`${details.stats.wins}/`}</span>
+        <span className='overview-redtext'>{details.stats.losses}</span>
       </div>
     );
 
     const kda = (
       <div className='overview-row'>
         <span className='overview-heading'>K/D/A:</span>
-        {isDetailsLoaded && <span className='overview-greentext'>{`${details.stats.kills}/`}</span>}
-        {isDetailsLoaded && <span className='overview-redtext'>{`${details.stats.deaths}/`}</span>}
-        {isDetailsLoaded && <span className='overview-greentext'>{`${details.stats.assists}`}</span>}
+        <span className='overview-greentext'>{`${details.stats.kills}/`}</span>
+        <span className='overview-redtext'>{`${details.stats.deaths}/`}</span>
+        <span className='overview-greentext'>{`${details.stats.assists}`}</span>
       </div>
     );
 
@@ -120,11 +117,10 @@ class OverviewCard extends Component {
       <div className='overview-row'>
         <span className='overview-heading'>CS 10/20/30/Total:</span>
         <br />
-        {!isDetailsLoaded && <br />}
-        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.cs10}/`}</span>}
-        {isDetailsLoaded && <span className='overview-text'>{details.stats.cs20}/</span>}
-        {isDetailsLoaded && <span className='overview-text'>{details.stats.cs30}</span>}
-        {isDetailsLoaded && <span className='overview-heading'>{`\t${details.stats.totalCs}`} </span>}
+        <span className='overview-text'>{`${details.stats.cs10}/`}</span>}
+        <span className='overview-text'>{details.stats.cs20}/</span>}
+        <span className='overview-text'>{details.stats.cs30}</span>
+        <span className='overview-heading'>{`\t${details.stats.totalCs}`} </span>
       </div>
     );
 
@@ -132,15 +128,14 @@ class OverviewCard extends Component {
       <div className='overview-row'>
         <span className='overview-heading'>Gold 10/20/30:</span>
         <br />
-        {!isDetailsLoaded && <br />}
-        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.gold10}/`}</span>}
-        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.gold20}/`}</span>}
-        {isDetailsLoaded && <span className='overview-text'>{`${details.stats.gold30}`}</span>}
+        <span className='overview-text'>{`${details.stats.gold10}/`}</span>
+        <span className='overview-text'>{`${details.stats.gold20}/`}</span>
+        <span className='overview-text'>{`${details.stats.gold30}`}</span>
       </div>
     );
 
-    const summonerSpells = this.renderSummonerSpells(isSummonerLoaded);
-    const runes = this.renderRunes(isSummonerLoaded);
+    const summonerSpells = this.renderSummonerSpells();
+    const runes = this.renderRunes();
 
     const colorClass = isRed ? 'overview-card-red' : 'overview-card-blue';
     
@@ -153,13 +148,13 @@ class OverviewCard extends Component {
     );    
 
     // TODO: think of a different product flow for selecting champions to compare head to head
-    const {tier, division, points} = this.getRankedDetails(isDetailsLoaded, details, queueName);
+    const {tier, division, points} = this.getRankedDetails(details, queueName);
 
     return (
       <div className={cardClass} onClick={this.selectSummoner}>
         <OverviewCardHeader
           name={summoner.name}
-          championID={summoner.champion_id}
+          champion={staticData.champions[summoner.champion_id]}
 
           tier={tier}
           division={division}

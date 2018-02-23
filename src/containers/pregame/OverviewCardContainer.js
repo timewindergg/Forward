@@ -12,6 +12,7 @@ class OverviewCardContainer extends Component {
     details: PropTypes.object.isRequired,
     isRed: PropTypes.bool.isRequired,
     queueName: PropTypes.string.isRequired,
+    staticData: PropTypes.object.isRequired,
 
     selectedRed: PropTypes.number.isRequired,
     selectedBlue: PropTypes.number.isRequired,
@@ -19,12 +20,13 @@ class OverviewCardContainer extends Component {
   }
 
   render() {
-    const {summoner, details, isRed, selectedRed, selectedBlue, onSelect, queueName} = this.props;
+    const {summoner, details, isRed, selectedRed, selectedBlue, onSelect, queueName, staticData} = this.props;
     const isSelected = isRed ?
       summoner.id === selectedRed : summoner.id === selectedBlue;
 
     return (
       <OverviewCard
+        staticData={staticData}
         summoner={summoner}
         details={details}
         queueName={queueName}

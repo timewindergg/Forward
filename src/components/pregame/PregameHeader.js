@@ -33,6 +33,7 @@ class PregameHeader extends Component {
           <img
             key={ban}
             src=''
+            alt=''
             className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
           />
         );
@@ -44,6 +45,7 @@ class PregameHeader extends Component {
         <img
           key={ban}
           src={imageUrl}
+          alt=''
           className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
         />
       );

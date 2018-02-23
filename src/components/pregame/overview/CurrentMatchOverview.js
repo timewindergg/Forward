@@ -15,7 +15,8 @@ class CurrentMatchOverview extends Component {
     redTeam: PropTypes.array.isRequired,
     blueTeam: PropTypes.array.isRequired,
     matchDetails: PropTypes.object.isRequired,
-    queueName: PropTypes.string.isRequired
+    queueName: PropTypes.string.isRequired,
+    staticData: PropTypes.object.isRequired
   }
 
   renderTeamList = (team, isRed) => {
@@ -26,6 +27,7 @@ class CurrentMatchOverview extends Component {
       return (
         <div className='pregame-team-list-item' key={summoner.id}>
           <OverviewCardContainer
+            staticData={this.props.staticData}
             summoner={summoner}
             details={details}
             isRed={isRed}

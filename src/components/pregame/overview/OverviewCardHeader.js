@@ -6,17 +6,16 @@ import './styles/OverviewCardHeader.css';
 
 import {
   getTierIconUrl,
-  getChampionIconUrl
+  getChampionIcon
 } from '../../../shared/helpers/staticImageHelper.js';
 
-// import championMappings from '../../../shared/championMappings.js';
 
 import {IMG_VER} from '../../../constants/Settings';
 
 class OverviewCardHeader extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    championID: PropTypes.number.isRequired,
+    champion: PropTypes.object.isRequired,
     tier: PropTypes.string.isRequired,
     division: PropTypes.string.isRequired,
     LP: PropTypes.number.isRequired,
@@ -28,7 +27,6 @@ class OverviewCardHeader extends Component {
 
   static defaultProps = {
     name: '--',
-    championID: 0,
     tier: '',
     division: '',
     LP: 0,
@@ -42,9 +40,11 @@ lp and rank in same line, take away champion name text
 badge icon ne
 */
   render() {
-    const {name, championID, tier, division, LP, promos, isRed, isSelected} = this.props;
+    const {name, champion, tier, division, LP, promos, isRed, isSelected} = this.props;
     
-    const imageUrl = getChampionIconUrl(championID, IMG_VER);
+
+    const imageUrl = getChampionIcon(champion, IMG_VER);
+    console.log('CHAMPICON', champion, imageUrl);
 
     const colorClass = isRed ? 'hred' : 'hblue';
     

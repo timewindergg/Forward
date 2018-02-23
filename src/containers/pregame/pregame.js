@@ -9,6 +9,8 @@ import {
   getCurrentMatchDetails
 } from '../../apiutils/matchAPIUtils';
 
+import {getStaticData} from '../../apiutils/contextAPIUtils';
+
 import Pregame from '../../components/pregame/pre';
 
 class PregameContainer extends Component {
@@ -23,6 +25,7 @@ class PregameContainer extends Component {
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
+    getStaticData: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
@@ -31,9 +34,12 @@ class PregameContainer extends Component {
       summoner,
       currentMatch,
       getSummonerInfo,
-      getCurrentMatch
+      getCurrentMatch,
+      staticData,
+      getStaticData
     } = this.props;
 
+    // console.log('MATCH PARAMS', match.params);
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     
@@ -43,22 +49,30 @@ class PregameContainer extends Component {
       getSummonerInfo(summonerName, region);
       getCurrentMatch(summonerName, region);
     }
+
+    if (Object.keys(staticData).length === 0) {
+      getStaticData(region);
+    }
   }
 
   componentWillUpdate(nextProps, nextState) {
     const curSummoner = this.props.match.params[SUMMONER_PARAM];
     const newSummoner = nextProps.match.params[SUMMONER_PARAM];
+    const curRegion = this.props.match.params[REGION_PARAM];
     const newRegion = nextProps.match.params[REGION_PARAM];
 
-    console.log(curSummoner, newSummoner);
     if (curSummoner !== newSummoner) {
       this.props.getSummonerInfo(newSummoner, newRegion);
       this.props.getCurrentMatch(newSummoner, newRegion);
     }
+
+    if (newRegion !== curRegion) {
+      this.props.getStaticData(newRegion);
+    }
   }
 
   render() {
-    const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue} = this.props;
+    const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue, staticData} = this.props;
 
     return (
       <Pregame
@@ -67,6 +81,7 @@ class PregameContainer extends Component {
         currentMatchDetails={currentMatchDetails}
         selectedRed={selectedRed}
         selectedBlue={selectedBlue}
+        staticData={staticData}
       />
     );
   }
@@ -77,7 +92,9 @@ const mapStateToProps = (state) => ({
   currentMatch: state.match.currentMatch,
   currentMatchDetails: state.match.currentMatchDetails,
   selectedRed: state.pregame.selectedRed,
-  selectedBlue: state.pregame.selectedBlue
+  selectedBlue: state.pregame.selectedBlue,
+
+  staticData: state.context.staticData
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -89,7 +106,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getCurrentMatchDetails(s.id, s.name, region, s.champion_id));
       });
     }))
-  }
+  },
+  getStaticData: (region) => dispatch(getStaticData(region))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PregameContainer);
