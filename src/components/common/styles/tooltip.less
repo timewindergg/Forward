@@ -1,17 +1,23 @@
+@import './colors';
+
 .rc-tooltip {
     position: relative;
+    display: inline-flex;
     .tooltip-text {
         visibility: hidden;
-        width: 120px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
+        width: 250px;
+        background-color: @grey-dk;
+        color: @grey-lt;
+        text-align: left;
+        padding: 5px;
+        // word-break: break-all;
+        // word-wrap: break-word;
 
         /* Position the tooltip */
         position: absolute;
         z-index: 1;
+
+        font-size: 11px;
     }
 }
 

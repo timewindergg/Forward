@@ -41,10 +41,7 @@ badge icon ne
 */
   render() {
     const {name, champion, tier, division, LP, promos, isRed, isSelected} = this.props;
-    
-
     const imageUrl = getChampionIcon(champion, IMG_VER);
-    console.log('CHAMPICON', champion, imageUrl);
 
     const colorClass = isRed ? 'hred' : 'hblue';
     

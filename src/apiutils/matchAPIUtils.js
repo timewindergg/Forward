@@ -57,7 +57,7 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
 
   return (dispatch) => {
     return axios.get(uri, {params}).then((response) => {
-      console.log('loaded current match details', response.data);
+      // console.log('loaded current match details', response.data);
       const {stats, build, leagues} = response.data;
 
       dispatch(loadCurrentMatchDetailsSuccess(

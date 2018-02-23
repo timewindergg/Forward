@@ -52,7 +52,7 @@ class OverviewCard extends Component {
 
     const spell1 = (
       <Tooltip
-        text={'asdfsdfasfsadfsdfadsfdsafa'}
+        text={'asdfsdfasfsadfsdfadsfdsafa fasdfasfadsfsdafasfasdf'}
       >
         <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} alt=''/>
       </Tooltip>
@@ -70,11 +70,16 @@ class OverviewCard extends Component {
     const {summoner, staticData} = this.props;
 
     const runes = summoner.runes.map((rune) => {
-      const isKeystone = staticData.runes[rune].isKeyStone;
+      const runeData = staticData.runes[rune];
+      const isKeystone = runeData.isKeyStone;
       const runeClass = classNames({'overview-rune': true, 'overview-keystone-rune': isKeystone});
 
       return (
-        <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} alt=''/>
+        <Tooltip
+          text={runeData.shortDescription}
+        >
+          <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} alt=''/>
+        </Tooltip>
       );
     });
 
