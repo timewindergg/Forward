@@ -23,6 +23,9 @@ class MatchFilter extends Component{
 
   _onChampionChange = (champion) => {
     this.props.onChampionSelect(champion);
+    this.setState({
+      champion: champion,
+    });
   }
 
   _resetQueueFilter = () => {
@@ -45,8 +48,8 @@ class MatchFilter extends Component{
 
   _handleKeyPress = (event) => {
     if (event.key === 'Enter'){
-      if (this.state.champion.length > 0){
-        this._onChampionChange(this.state.champion);
+      if (event.target.value.length > 0){
+        this._onChampionChange(event.target.value);
       }
       event.preventDefault();
     }
@@ -67,7 +70,7 @@ class MatchFilter extends Component{
     return(
       <div className="dashboard-filter">
         <div className="queue-selector">
-          <Dropdown className="dropdown" options={queues} onChange={this._onQueueChange} value={this.state.queue} placeholder="All queues" />
+          <Dropdown className="queue-dropdown" options={queues} onChange={this._onQueueChange} value={this.state.queue} placeholder="All Queues" />
         </div>
         {this.renderChampionSelector(championData)}
         {this.renderUserSelectedFilters(this.props.dateFilter)}
@@ -79,11 +82,12 @@ class MatchFilter extends Component{
   renderChampionSelector(championData) {
     return (
       <div className="champion-selector">
-        <input id="color" list="champion-suggestions" onChange={(event) => this.setState({champion: event.target.value})}
+        <input id="champions" list="champion-suggestions"
           onKeyPress={this._handleKeyPress}/>
           <datalist id="champion-suggestions">
             {this.generateDataListOptions(championData)}
           </datalist>
+          <div className="search-icon"><i className="fas fa-search"></i></div>
       </div>
     )
   }
@@ -91,7 +95,7 @@ class MatchFilter extends Component{
   generateDataListOptions(championData) {
     return Object.keys(championData).map((key, index) => {
       return (
-        <option value={championData[key].name}/>
+        <option value={championData[key].name} key={key}/>
       )
     });
   }
@@ -102,15 +106,15 @@ class MatchFilter extends Component{
     let dateSelectedFilter = null;
 
     if (this.state.queue.length !== 0) {
-      queueSelectedFilter = <div><button onClick={(event) => {this._resetQueueFilter()}}>{this.state.queue}</button></div>;
+      queueSelectedFilter = <div><button onClick={(event) => {this._resetQueueFilter()}}><h1>{this.state.queue}</h1> <i class="ion-close-round"></i></button></div>;
     }
 
     if (this.state.champion.length !== 0) {
-      championSelectedFilter = <div><button onClick={(event) => {this._resetChampionFilter()}}>{this.state.champion}</button></div>;
+      championSelectedFilter = <div><button onClick={(event) => {this._resetChampionFilter()}}><h1>{this.state.champion}</h1> <i class="ion-close-round"></i></button></div>;
     }
 
     if (dateFilter.length !== 0) {
-      dateSelectedFilter = <div><button onClick={(event) => {this._resetDateFilter()}}>{dateFilter}</button></div>;
+      dateSelectedFilter = <div><button onClick={(event) => {this._resetDateFilter()}}><h1>{dateFilter}</h1> <i class="ion-close-round"></i></button></div>;
     }
 
     return (
