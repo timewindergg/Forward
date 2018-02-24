@@ -27,35 +27,39 @@ class Matches extends Component {
       return (<div/>);
     }
 
-    const { matches, version, limit, dateFilter, championFilter, queueFilter} = this.props;
+    const { matches, version, limit, dateFilter, championFilter, queueFilter, championData} = this.props;
 
     return (
       <div className="dashboard-matches">
-        {this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter)}
+        {this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData)}
       </div>
     )
 
   }
 
-  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter) {
+  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData) {
     const matchItems = matches.filter((match) => {
+      let passesDateFilter = true;
+      let passesChampionFilter = true;
+      let passesQueueFilter = true;
+
       if (dateFilter.length !== 0) {
         // The date format is 2018-01-18.
           const d1 = new Date(dateFilter);
           const d2 = new Date(match.timestamp*1000);
 
-          return d1.toDateString() === d2.toDateString();
+          passesDateFilter = d1.toDateString() === d2.toDateString();
       }
 
       if (championFilter.length !== 0) {
-
+        return championData[match.champ_id].name.toLowerCase() === championFilter.toLowerCase();
       }
 
       if (queueFilter.length !== 0) {
-
+        passesQueueFilter = QueueIdMappings[match.queue_id].name === queueFilter;
       }
 
-      return true;
+      return passesDateFilter && passesChampionFilter && passesQueueFilter;
     }).slice(0, limit).map((m) => {
       return (
         <div className={"dashboard-matches-item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
@@ -385,7 +389,6 @@ const getPlayerRunes = (team, summonerId) => {
     if (player.summonerId === summonerId) {
       // Loop through user runes and find the keystone.
       for (let key in player.runes) {
-        console.log(key);
         if (RuneMappings[key].keyStone === true) {
           runes.push(parseInt(key));
         }

@@ -14,6 +14,7 @@ import MatchStatsRadar from './radar';
 import ChampionTable from './championtable';
 import DashboardHeader from './dashboardheader';
 import MatchLawn from './matchlawn';
+import MatchFilter from './matchfilter';
 
 import LoadingScreen from '../common/loadingscreen';
 
@@ -45,9 +46,9 @@ class Dashboard extends Component {
     });
   }
 
-  onQueueSelect = (option) => {
+  onQueueSelect = (queue) => {
     this.setState({
-      queueFilter: option.value,
+      queueFilter: queue,
     });
   }
 
@@ -82,12 +83,19 @@ class Dashboard extends Component {
                 <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
                 <MatchStatsRadar matches={matches}/>
               </div>
+              <MatchFilter matches={matches}
+                onQueueSelect={this.onQueueSelect}
+                onChampionSelect={this.onChampionSelect}
+                onDateFilter={this.onDateSelect}
+                championData={staticData.champions}
+                dateFilter={this.state.dateFilter}/>
               <Matches matches={matches}
                 version={staticData.version}
                 limit={matchesToDisplay}
                 dateFilter={dateFilter}
                 championFilter={championFilter}
-                queueFilter={queueFilter}/>
+                queueFilter={queueFilter}
+                championData={staticData.champions}/>
               <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
                 <h2>Load 10 more matches</h2>
               </div>
@@ -96,7 +104,8 @@ class Dashboard extends Component {
               <ChampionTable championStats={summoner.championStats}
                 summonerName={summoner.name}
                 summonerRegion={summoner.region}
-                version={staticData.version}/>
+                version={staticData.version}
+                championData={staticData.champions}/>
             </div>
           </div>
         </div>
