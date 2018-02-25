@@ -31,9 +31,8 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "HTTPS=true && npm run build-css && run-p -ncr watch-css start-js",
+    "start": "npm run build-css && run-p -ncr watch-css start-js",
     "start-js": "react-scripts start",
-    "start-prod": "HTTPS=true NODE_ENV=development npm run build-css && run-p -ncr start-js",
     "build": "run-s -n build-css build-js",
     "build-js": "react-scripts build",
     "test": "run-s -n build-css test-js",
@@ -42,7 +41,15 @@
     "watch-css": "node-less-chokidar src --watch",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://timewinder-rewind.herokuapp.com/",
+  "proxy": {
+    "/api": {
+      "target": "https://timewinder-rewind.herokuapp.com",
+      "pathRewrite": {
+        "^/api": ""
+      },
+      "changeOrigin": true
+    }
+  },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.2"
   }
