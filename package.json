@@ -39,7 +39,7 @@
     "watch-css": "node-less-chokidar src --watch",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8000",
+  "proxy": "https://timewinder-rewind.herokuapp.com/",
   "devDependencies": {
     "node-less-chokidar": "^0.1.2",
     "npm-run-all": "^4.1.2",
