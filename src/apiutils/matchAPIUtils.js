@@ -16,7 +16,7 @@ import {
 // provides an overview of the current match
 // i.e. the summoners in the match on each team and limited info on their champions/stats
 export const getCurrentMatch = (summonerName, region, onSuccess) => {
-  const uri = '/get_current_match/';
+  const uri = '/api/get_current_match/';
   console.log('attempting to get current match', summonerName, region);
   const params = {
     summoner_name: summonerName,
@@ -48,7 +48,7 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
 
 // provides detailed info on ONE summoner/champion within a current match
 export const getCurrentMatchDetails = (summonerID, summonerName, region, championId) => {
-  const uri = '/get_current_match_details_by_id/';
+  const uri = '/api/get_current_match_details_by_id/';
   const params = {
     summoner_name: summonerName,
     region: region,
@@ -74,7 +74,7 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
 }
 
 export const getMatchTimeline = (matchId, region, onSuccess) => {
-  const uri = '/get_match_timeline/';
+  const uri = '/api/get_match_timeline/';
   console.log('attempting to get match timeline');
   const params = {
     match_id: matchId,

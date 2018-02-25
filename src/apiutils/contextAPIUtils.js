@@ -8,7 +8,7 @@ import {
 export const getStaticData = (region, onSuccess) => {
   console.log('attempting to get static data', region);
 
-  const uri = `/get_static_data/${region}/`;
+  const uri = `/api/get_static_data/${region}/`;
 
   return (dispatch) => {
     return axios.get(uri).then((response) => {

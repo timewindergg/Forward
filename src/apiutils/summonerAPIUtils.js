@@ -10,7 +10,7 @@ import {
 } from '../shared/helpers/cookieHelper';
 
 export const getSummonerInfo = (summonerName, region, onSuccess) => {
-  const getURI = `/get_summoner/`;
+  const getURI = `/api/get_summoner/`;
   const params = {
     summoner_name: summonerName,
     region: region
