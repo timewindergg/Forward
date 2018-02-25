@@ -33,7 +33,7 @@
   "scripts": {
     "start": "npm run build-css && run-p -ncr watch-css start-js",
     "start-js": "react-scripts start",
-    "start-prod": "npm run build-css && run-p -ncr start-js",
+    "start-prod": "NODE_ENV=development npm run build-css && run-p -ncr start-js",
     "build": "run-s -n build-css build-js",
     "build-js": "react-scripts build",
     "test": "run-s -n build-css test-js",
