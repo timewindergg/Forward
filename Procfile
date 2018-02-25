@@ -1,1 +1,1 @@
-web: npm run-s start-prod
+web: bin/boot
