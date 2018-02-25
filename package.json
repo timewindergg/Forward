@@ -31,7 +31,7 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "npm run build-css && run-p -ncr watch-css start-js",
+    "start": "HTTPS=true && npm run build-css && run-p -ncr watch-css start-js",
     "start-js": "react-scripts start",
     "start-prod": "NODE_ENV=development npm run build-css && run-p -ncr start-js",
     "build": "run-s -n build-css build-js",
