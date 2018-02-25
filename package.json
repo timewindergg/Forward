@@ -11,6 +11,7 @@
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "node-less-chokidar": "^0.1.2",
+    "npm-run-all": "^4.1.2",
     "prop-types": "^15.6.0",
     "rc-progress": "^2.2.5",
     "rc-slider": "^8.6.0",
@@ -43,7 +44,6 @@
   },
   "proxy": "https://timewinder-rewind.herokuapp.com/",
   "devDependencies": {
-    "npm-run-all": "^4.1.2",
     "redux-devtools-extension": "^2.13.2"
   }
 }
