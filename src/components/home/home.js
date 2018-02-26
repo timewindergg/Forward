@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import REGION from '../../shared/constants';
-
 import Search from '../../components/common/search.js';
+import splash from'./splash.png';
 
 import {
   decodeRecentSearches,
@@ -33,6 +33,9 @@ class Home extends Component {
     return (
       <div className="Home">
         <div className="content">
+          <div className="splashContainer">
+            <img className="splash" src={splash} alt=""/>
+          </div>
           <h1>Timewinder.gg</h1>
           <h3>Master yourself. Master the enemy.</h3>
           <Search />
