@@ -1,7 +1,7 @@
 import ChampionMappings from '../championMappings.js';
 import SummonerSpellMappings from '../summonerSpellMappings.js';
 
-const baseUrl = 'http://127.0.0.1:8000/static';
+const baseUrl = '/api/static';
 
 export const getStaticImage = (path) => {
   return baseUrl + path;
@@ -22,11 +22,11 @@ export const getRoleIconUrl = (role) => {
   return baseUrl + `/roles/${roleStr}.png`;
 }
 
-const opggBaseUrl = "http://opgg-static.akamaized.net/images/lol/"
+const opggBaseUrl = "https://opgg-static.akamaized.net/images/lol/"
 const opggPerkIcon = "perk/"
 const opggPerkStyleIcon = "perkStyle/"
 
-const ddBaseUrl = "http://ddragon.leagueoflegends.com/cdn/";
+const ddBaseUrl = "https://ddragon.leagueoflegends.com/cdn/";
 const ddProfileIcon = "/img/profileicon/"
 const ddChampionIcon = "/img/champion/"
 const ddSpellIcon = "/img/spell/"
