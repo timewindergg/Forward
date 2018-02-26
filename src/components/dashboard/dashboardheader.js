@@ -82,12 +82,15 @@ class DashboardHeader extends Component {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
           <div className="dashboard-header-champion-mastery-wrapper" key={c.champ_id}>
-            <img className="championIcon icon" src={getChampionIconUrlByImage(championData[c.champ_id].img.split('.')[0], version)} alt=""/>
+            <div className="dashboard-header-mastery-wrapper">
+              <span>{numberFormatter(c.total_points)}</span>
+            </div>
+            <img className="champion-mastery-icon" src={getChampionIconUrlByImage(championData[c.champ_id].img.split('.')[0], version)} alt=""/>
             <div className="dashboard-header-mastery-icon">
               <img src={masteryIcon} alt=""/>
             </div>
-            <div className="dashboard-header-mastery-wrapper">
-              <span>{numberFormatter(c.total_points)}</span>
+            <div className="champion-name">
+              <span>{championData[c.champ_id].name}</span>
             </div>
           </div>
         );
