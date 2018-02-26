@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { getMasteryIconUrl,
   getTierIconUrl,
-  getChampionIconUrl,
+  getChampionIconUrlByImage,
   getProfileIconUrl,
   getItemIconUrl,
   getPerkIconUrl,
@@ -18,19 +18,19 @@ class ChampionMatchups extends Component {
       return (<div/>);
     }
 
-    const { championMatchups, version } = this.props;
+    const { championMatchups, version, staticData} = this.props;
 
     return (
       <div>
         <h3>Win rates (champions encountered)</h3>
         <div className="champion-stats-match-ups">
-          {this.renderMatchups(championMatchups)}
+          {this.renderMatchups(championMatchups, staticData.champions)}
         </div>
       </div>
     );
   }
 
-  renderMatchups(championMatchups) {
+  renderMatchups(championMatchups, championData) {
     championMatchups.sort((a, b) => {
       return b.wins/b.total_games - a.wins/a.total_games;
     });
@@ -42,7 +42,7 @@ class ChampionMatchups extends Component {
       return (
         <div className="matchup" key={c.enemy_champ_id}>
           <div className="championImage">
-            <img className="championIcon" src={getChampionIconUrl(c.enemy_champ_id, this.props.version)}/>
+            <img className="championIcon" src={getChampionIconUrlByImage(championData[c.enemy_champ_id].img.split('.')[0], this.props.version)}/>
           </div>
           <span className="winrate">{winrate + '%'}</span>
           <div className="progressBar">

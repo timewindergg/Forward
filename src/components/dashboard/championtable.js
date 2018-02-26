@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 
-import { getChampionIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrlByImage } from '../../shared/helpers/staticImageHelper.js';
 
 const createChampionListData = (championLists, championData, version) => {
   return championLists.map((c) => {
@@ -44,7 +44,7 @@ class ChampionTable extends Component {
                     let championUrl = "";
                     for (let key in championData) {
                       if (championData[key].name === props.value) {
-                        championUrl = getChampionIconUrl(key, version);
+                        championUrl = getChampionIconUrlByImage(championData[key].img.split('.')[0], version);
                       }
                     }
 

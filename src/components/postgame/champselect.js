@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { getChampionIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrlByImage } from '../../shared/helpers/staticImageHelper.js';
 
 class ChampionSelector extends Component {
   constructor(props){
@@ -13,7 +13,7 @@ class ChampionSelector extends Component {
     }
   }
 
-  renderParticipants(teamId, team){
+  renderParticipants(teamId, team, championData){
     return team.map((participant) => {
       return (
         <div key={participant.id} className="selectionParticipant" onClick={() => {
@@ -29,16 +29,16 @@ class ChampionSelector extends Component {
             });
           }
         }}>
-          <img className={classNames({"championIcon": true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})} src={getChampionIconUrl(participant.championId, this.props.version)}/>
+          <img className={classNames({"championIcon": true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})} src={getChampionIconUrlByImage(championData[participant.championId].img.split('.')[0], this.props.version)}/>
         </div>
       );
     });
   }
 
-  renderTeam(teamId, team){
+  renderTeam(teamId, team, championData){
     return(
       <div className="selectorTeam">
-        {this.renderParticipants(teamId, team)}
+        {this.renderParticipants(teamId, team, championData)}
       </div>
     );
   }
@@ -47,12 +47,13 @@ class ChampionSelector extends Component {
     let len = this.props.matchParticipants.length;
     let blueTeam = this.props.matchParticipants.slice(0, len / 2);
     let redTeam = this.props.matchParticipants.slice(len / 2, len);
+    let championData = this.props.championData;
 
     return (
       <div className="selectorContainer">
-        {this.renderTeam(100, blueTeam)}
+        {this.renderTeam(100, blueTeam, championData)}
         vs
-        {this.renderTeam(200, redTeam)}
+        {this.renderTeam(200, redTeam, championData)}
       </div>
     );
   }

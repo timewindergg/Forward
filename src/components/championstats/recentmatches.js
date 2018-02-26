@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 
 import {
-  getChampionIconUrl,
+  getChampionIconUrlByImage,
   getItemIconUrl,
   getPerkIconUrl,
   getPerkStyleIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
-
-import { getKeystone } from '../../shared/helpers/leagueUtilities.js';
-
-import ChampionMappings from '../../shared/championMappings';
 
 class RecentMatch extends Component{
 
@@ -28,9 +24,19 @@ class RecentMatch extends Component{
   render(){
     let m = this.props.match;
     let version = this.props.version;
+    let runeData = this.props.runeData;
+    let championData = this.props.championData;
 
     let p = this.getStats(m);
-    let keystone = getKeystone(Object.keys(p.runes));
+
+    let keystone = 0;
+
+    for (let key in p.runes) {
+      if (runeData[key].isKeystone === true) {
+        keystone = key;
+        break;
+      }
+    }
 
     return(
       <div className="RecentMatch" key={m.match_id}>
@@ -60,7 +66,7 @@ class RecentMatch extends Component{
             </div>
           </div>
           <div className="iconContainer">
-            <img className="championIcon big" src={getChampionIconUrl(m.champ_id, version)} />
+            <img className="championIcon big" src={getChampionIconUrlByImage(championData[m.champ_id].img.split('.')[0], version)} />
             <div className="level">
               {m.level}
             </div>
@@ -88,20 +94,20 @@ class RecentMatch extends Component{
 
 class RecentMatches extends Component {
   render() {
-    const { championStats, version } = this.props;
+    const { championStats, version, staticData} = this.props;
 
     return (
       <div className="champion-stats-recent-matches">
-        <h3>Recent Matches on {ChampionMappings[this.props.championId].name}</h3>
-        {this.renderMatches(championStats, version)}
+        <h3>Recent Matches on {staticData.champions[this.props.championId].name}</h3>
+        {this.renderMatches(championStats, version, staticData)}
       </div>
     );
   }
 
-  renderMatches(championStats, version) {
+  renderMatches(championStats, version, staticData) {
     return championStats.recentMatches.map((m) => {
       return (
-        <RecentMatch match={m} version={version} key={m.match_id}/>
+        <RecentMatch match={m} version={version} key={m.match_id} runeData={staticData.runes} championData={staticData.champions}/>
       );
     })
   }

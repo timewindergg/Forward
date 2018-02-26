@@ -55,6 +55,10 @@ export const getChampionIconUrl = (id, version) => {
   return getDDAsset(version, AssetType.CHAMPION, ChampionMappings[id].image);
 }
 
+export const getChampionIconUrlByImage = (imageName, version) => {
+  return getDDAsset(version, AssetType.CHAMPION, imageName);
+}
+
 export const getSpellIconUrl = (id, version) => {
   return getDDAsset(version, AssetType.SPELL, SummonerSpellMappings[id].image);
 }

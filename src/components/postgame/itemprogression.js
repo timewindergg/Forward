@@ -26,7 +26,7 @@ class ItemProgression extends Component {
     let items = this.props.itemOrder;
 
     return items.map((item) => (
-      <Item id={item.id} ts={item.ts} version={this.props.version}></Item>
+      <Item id={item.id} ts={item.ts} version={this.props.version} key={item.ts}></Item>
     ));
   }
 

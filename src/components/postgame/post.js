@@ -26,11 +26,10 @@ import DataTable from './datatable.js';
 
 import Sticky from 'react-stickynode';
 
-import { getChampionIconUrl, 
-         getItemIconUrl, 
-         getPerkIconUrl, 
-         getSpellIconUrl, 
-         getPerkStyleIconUrl, 
+import { getItemIconUrl,
+         getPerkIconUrl,
+         getSpellIconUrl,
+         getPerkStyleIconUrl,
          getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
@@ -89,7 +88,7 @@ class Postgame extends Component {
       let eventLineData = {
         '100': {
           'objs':[],
-          'kills':[] 
+          'kills':[]
         },
         '200': {
           'objs':[],
@@ -165,7 +164,7 @@ class Postgame extends Component {
               if (transforms[evnt.itemId] !== undefined){
                 if (curItems[evnt.itemId] > 0){
                   curItems[evnt.itemId]++;
-                } 
+                }
                 else {
                   curItems[evnt.itemId] = 1;
                 }
@@ -174,7 +173,7 @@ class Postgame extends Component {
             case "ITEM_PURCHASED":
               aggregateData.players[evnt.participantId].purchaseOrder.push({'id':evnt.itemId, 'ts':evnt.timestamp});
               player = aggregateData.players[evnt.participantId];
-              curItems = Object.assign({}, player.itemStack[player.itemStack.length - 1]);          
+              curItems = Object.assign({}, player.itemStack[player.itemStack.length - 1]);
               if (evnt.itemId in curItems){
                 curItems[evnt.itemId]++;
               }
@@ -269,12 +268,12 @@ class Postgame extends Component {
     if (teamId === 100){
       this.setState({
         'blueSelection': playerId,
-      });  
+      });
     }
     else if (teamId === 200){
       this.setState({
         'redSelection': playerId,
-      });  
+      });
     }
   }
 
@@ -287,7 +286,7 @@ class Postgame extends Component {
         blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(nextProps.matchDetails, this.props.staticData);
-    } 
+    }
     else if (Object.keys(this.props.staticData).length === 0 && Object.keys(nextProps.staticData).length > 0
       && this.props.matchDetails.timeline !== undefined){
       this.setState({
@@ -310,8 +309,8 @@ class Postgame extends Component {
     return (
       <div className="Postgame">
         <Sticky innerZ='1'>
-          <ControlHeader onSliderChange={this.onSliderChange} 
-                         match={matchDetails.match} 
+          <ControlHeader onSliderChange={this.onSliderChange}
+                         match={matchDetails.match}
                          timeline={matchDetails.timeline}
                          events={eventLineFrameData} />
         </Sticky>
@@ -320,17 +319,20 @@ class Postgame extends Component {
                       teamFrameData={frameData[currentFrame].teams}
                       matchParticipants={matchDetails.match.participants}
                       version={staticData.version}
-                      region={region}/>
+                      region={region}
+                      staticData={staticData}/>
           <div className="graphsmap">
             <GoldDiffGraph frameData={frameData}/>
             <EffectiveGoldDiffGraph frameData={frameData}/>
-            <Minimap mapId={matchDetails.match.mapId} 
+            <Minimap mapId={matchDetails.match.mapId}
                      version={staticData.version}
-                     playerFrameData={frameData[currentFrame].players}/>
+                     playerFrameData={frameData[currentFrame].players}
+                     championData={staticData.champions}/>
           </div>
           <ChampionSelector onChampionSelect={this.onChampionSelect}
                             matchParticipants={matchDetails.match.participants}
-                            version={staticData.version}/>
+                            version={staticData.version}
+                            championData={staticData.champions}/>
           <ChampionCompare frameData={frameData[currentFrame]}
                            staticData={staticData}
                            matchParticipants={matchDetails.match.participants}

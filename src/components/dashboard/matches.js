@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // Import required mappings.
-import ChampionMappings from '../../shared/championMappings.js';
 import QueueIdMappings from '../../shared/queueIdMappings.js';
-import RuneMappings from '../../shared/runeMappings.js';
 
-import { getChampionIconUrl,
+import { getChampionIconUrlByImage,
   getItemIconUrl,
   getPerkIconUrl,
   getPerkStyleIconUrl,
@@ -27,17 +25,17 @@ class Matches extends Component {
       return (<div/>);
     }
 
-    const { matches, version, limit, dateFilter, championFilter, queueFilter, championData} = this.props;
+    const { matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData} = this.props;
 
     return (
       <div className="dashboard-matches">
-        {this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData)}
+        {this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData)}
       </div>
     )
 
   }
 
-  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData) {
+  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData) {
     const matchItems = matches.filter((match) => {
       let passesDateFilter = true;
       let passesChampionFilter = true;
@@ -64,7 +62,7 @@ class Matches extends Component {
       return (
         <div className={"dashboard-matches-item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
           {this.renderMatchHeader(m)}
-          {this.renderMatchBody(m, version)}
+          {this.renderMatchBody(m, version, runeData, championData)}
         </div>
       )
     });
@@ -113,23 +111,23 @@ class Matches extends Component {
     );
   }
 
-  renderMatchBody(match, version) {
+  renderMatchBody(match, version, runeData, championData) {
     // Set user primary and secondary runes.
-    const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, match.user_id);
+    const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, match.user_id, runeData);
     const team = match.team === 100 ? match.blue_team : match.red_team;
     const teamKDA = getTeamKDAStat(team);
     const kp = getKillParticipation(match.kills, match.assists, teamKDA[0]);
     const matchStats = getUserMatchStats(match);
     const minutes = Math.floor(match.duration / 60);
     // Get the list of participants and their champions.
-    const participants = getParticipants(match.blue_team, match.red_team, version);
+    const participants = getParticipants(match.blue_team, match.red_team, version, championData);
 
     return (
       <div className="dashboard-matches-item-body">
         <div className="dashboard-matches-item-body-champion-info">
-          <img className="championIcon icon" src={getChampionIconUrl(match.champ_id, version)}/>
+          <img className="championIcon icon" src={getChampionIconUrlByImage(championData[match.champ_id].img.split('.')[0], version)}/>
           <div className="dashboard-matches-item-body-champion-info-champion-name">
-            <span>{ChampionMappings[match.champ_id].name}</span>
+            <span>{championData[match.champ_id].name}</span>
           </div>
           <div className="dashboard-matches-item-body-champion-info-champion-level">
             <span>{`Lvl ${match.level}`}</span>
@@ -302,7 +300,7 @@ const getTeamKDAStat = (team) => {
   ]
 */
 
-const getParticipants = (blueTeam, redTeam, version) => {
+const getParticipants = (blueTeam, redTeam, version, championData) => {
   const teams = [];
   const _blueTeam = new Array(5);
   const _redTeam = new Array(5);
@@ -324,8 +322,8 @@ const getParticipants = (blueTeam, redTeam, version) => {
     redPlayerEntry['summonerId'] = redTeam.participants[i].summonerId;
 
     // Fill in the championIcons.
-    bluePlayerEntry['championUrl'] = getChampionIconUrl(blueTeam.participants[i].championId, version);
-    redPlayerEntry['championUrl'] = getChampionIconUrl(redTeam.participants[i].championId, version);
+    bluePlayerEntry['championUrl'] = getChampionIconUrlByImage(championData[blueTeam.participants[i].championId].img.split('.')[0], version);
+    redPlayerEntry['championUrl'] = getChampionIconUrlByImage(championData[redTeam.participants[i].championId].img.split('.')[0], version);
 
     // Set the appropriate element in the _blueTeam and _redTeam to the player entry if there's no entry already.
     const bluePlayerPosition = getPlayerPosition(blueTeam.participants[i].timeline.role, blueTeam.participants[i].timeline.lane);
@@ -383,13 +381,13 @@ const getPlayerPosition = (role, lane) => {
 }
 
 // Return an array of two elements where the first one is the user's primary runes and the second is the secondary one.
-const getPlayerRunes = (team, summonerId) => {
+const getPlayerRunes = (team, summonerId, runeData) => {
   const runes = [];
   team.participants.forEach((player) => {
     if (player.summonerId === summonerId) {
       // Loop through user runes and find the keystone.
       for (let key in player.runes) {
-        if (RuneMappings[key].keyStone === true) {
+        if (runeData[key].isKeystone === true) {
           runes.push(parseInt(key));
         }
       }

@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 
 import { getMasteryIconUrl,
   getTierIconUrl,
-  getChampionIconUrl,
   getProfileIconUrl,
   getItemIconUrl,
   getPerkIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
-
-import ChampionMappings from '../../shared/championMappings';
 
 import './styles/championstats.css';
 import './styles/recentmatches.css';
@@ -56,7 +53,7 @@ class ChampionStats extends Component {
     }
 
     let championStats = userChampionStats;
-    
+
     const championId = championStats.championId;
     const version = staticData.version;
 
@@ -107,12 +104,12 @@ class ChampionStats extends Component {
               <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
               <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
               <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
-              <RecentMatches championId={championId} championStats={championStats} version={version}/>
+              <RecentMatches championId={championId} championStats={championStats} version={version} staticData={staticData}/>
             </div>
             <div className="right-container">
               <ChampionStatsRadarGraph championStats={championStatsByLane}/>
               <ChampionStatsBarGraphs championStats={championStatsByLane}/>
-              <ChampionMatchups championMatchups={championStats.championMatchups} version={version}/>
+              <ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>
             </div>
           </div>
         </div>

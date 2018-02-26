@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getChampionIconUrl, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrlByImage, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 import MapBounds from '../../shared/mapConstants.js';
 
 class Minimap extends Component {
@@ -7,7 +7,7 @@ class Minimap extends Component {
 
   }
 
-  renderParticipants() {
+  renderParticipants(championData) {
     let currentMapBounds = MapBounds[this.props.mapId];
 
     const pt = Object.values(this.props.playerFrameData).map((player) => {
@@ -18,7 +18,7 @@ class Minimap extends Component {
         bottom: imgY+'%'
       };
       return (
-        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrl(player.championId, this.props.version)}>
+        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrlByImage(championData[player.championId].img.split('.')[0], this.props.version)}>
         </img>
       );
     });
@@ -30,7 +30,7 @@ class Minimap extends Component {
     return(
       <div className="mapContainer">
         <img className="minimap" src={getMapUrl(this.props.mapId, this.props.version)}></img>
-        {this.renderParticipants()}
+        {this.renderParticipants(this.props.championData)}
         {this.renderDeaths()}
       </div>
     );

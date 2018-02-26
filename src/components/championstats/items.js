@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 
-import { getMasteryIconUrl,
-  getTierIconUrl,
-  getChampionIconUrl,
-  getProfileIconUrl,
-  getItemIconUrl,
-  getPerkIconUrl,
-  getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getItemIconUrl } from '../../shared/helpers/staticImageHelper.js';
 
 class Items extends Component {
   render() {
@@ -19,7 +13,7 @@ class Items extends Component {
           <h4>Boots</h4>
           {this.renderItems(items.boots, version)}
         </div>
-        
+
         <div className="core">
           <h4>Core Items</h4>
           {this.renderItems(items.items, version)}

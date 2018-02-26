@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { getChampionIconUrl, getRoleIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrlByImage, getRoleIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
-import ChampionMappings from '../../shared/championMappings';
 
 class ChampionProfile extends Component {
   renderChampionRoles(championStats, onRoleSelection, roleFrequencies){
@@ -27,7 +26,7 @@ class ChampionProfile extends Component {
   }
 
   render(){
-    const { championStats } = this.props;
+    const { championStats, championData} = this.props;
 
     let totalWins = 0;
     let totalLosses = 0;
@@ -40,7 +39,7 @@ class ChampionProfile extends Component {
       <div className="profileContainer">
         <div className="champion-stats-champion-profile">
           <div className="champion-stats-champion-icon">
-            <img className="championIcon" src={getChampionIconUrl(this.props.championId, this.props.version)}/>
+            <img className="championIcon" src={getChampionIconUrlByImage(championData[this.props.championId].img.split('.')[0], this.props.version)}/>
           </div>
           <div className="championDescriptor">
             <span className="champion-name">{this.props.championData[this.props.championId].name}</span>
