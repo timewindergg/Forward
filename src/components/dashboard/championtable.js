@@ -49,7 +49,7 @@ class ChampionTable extends Component {
                     }
 
                     return (
-                      <Link to={`/c/${summonerRegion}/${summonerName}/${props.value}`}>
+                      <Link to={`/c/${summonerRegion}/${summonerName}/${props.value.replace(/\W/g, '')}`}>
                         <div>
                           <img src={championUrl} className="champion-table-image"/>
                           <p>{props.value}</p>
