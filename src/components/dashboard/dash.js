@@ -86,7 +86,7 @@ class Dashboard extends Component {
               <MatchFilter matches={matches}
                 onQueueSelect={this.onQueueSelect}
                 onChampionSelect={this.onChampionSelect}
-                onDateFilter={this.onDateSelect}
+                onDateSelect={this.onDateSelect}
                 championData={staticData.champions}
                 dateFilter={this.state.dateFilter}/>
               <Matches matches={matches}

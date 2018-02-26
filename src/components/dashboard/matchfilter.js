@@ -113,7 +113,7 @@ class MatchFilter extends Component{
       championSelectedFilter = <div><button onClick={(event) => {this._resetChampionFilter()}}><h1>{this.state.champion}</h1> <i class="ion-close-round"></i></button></div>;
     }
 
-    if (dateFilter.length !== 0) {
+    if (dateFilter !== undefined && dateFilter.length !== 0) {
       dateSelectedFilter = <div><button onClick={(event) => {this._resetDateFilter()}}><h1>{dateFilter}</h1> <i class="ion-close-round"></i></button></div>;
     }
 

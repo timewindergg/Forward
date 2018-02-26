@@ -41,7 +41,7 @@ class Matches extends Component {
       let passesChampionFilter = true;
       let passesQueueFilter = true;
 
-      if (dateFilter.length !== 0) {
+      if (dateFilter !== undefined && dateFilter.length !== 0) {
         // The date format is 2018-01-18.
           const d1 = new Date(dateFilter);
           const d2 = new Date(match.timestamp*1000);
