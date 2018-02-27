@@ -5,7 +5,6 @@ import Moment from 'react-moment';
 
 import './styles/dash.css';
 
-import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 
@@ -14,6 +13,7 @@ import MatchStatsRadar from './radar';
 import ChampionTable from './championtable';
 import DashboardHeader from './dashboardheader';
 import MatchLawn from './matchlawn';
+import MatchFilter from './matchfilter';
 
 import LoadingScreen from '../common/loadingscreen';
 
@@ -45,9 +45,9 @@ class Dashboard extends Component {
     });
   }
 
-  onQueueSelect = (option) => {
+  onQueueSelect = (queue) => {
     this.setState({
-      queueFilter: option.value,
+      queueFilter: queue,
     });
   }
 
@@ -75,19 +75,28 @@ class Dashboard extends Component {
         </Link>
         <div className="content">
           <DashboardHeader summonerInfo={summoner}
-            version={staticData.version}/>
+            version={staticData.version}
+            staticData={staticData}/>
           <div className="dashboard-body">
             <div className="dashboard-body-left-container">
               <div className="dashboard-body-graphs">
                 <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
                 <MatchStatsRadar matches={matches}/>
               </div>
+              <MatchFilter matches={matches}
+                onQueueSelect={this.onQueueSelect}
+                onChampionSelect={this.onChampionSelect}
+                onDateSelect={this.onDateSelect}
+                championData={staticData.champions}
+                dateFilter={this.state.dateFilter}/>
               <Matches matches={matches}
                 version={staticData.version}
                 limit={matchesToDisplay}
                 dateFilter={dateFilter}
                 championFilter={championFilter}
-                queueFilter={queueFilter}/>
+                queueFilter={queueFilter}
+                championData={staticData.champions}
+                runeData={staticData.runes}/>
               <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
                 <h2>Load 10 more matches</h2>
               </div>
@@ -96,7 +105,8 @@ class Dashboard extends Component {
               <ChampionTable championStats={summoner.championStats}
                 summonerName={summoner.name}
                 summonerRegion={summoner.region}
-                version={staticData.version}/>
+                version={staticData.version}
+                championData={staticData.champions}/>
             </div>
           </div>
         </div>

@@ -5,26 +5,38 @@
     height: 100vh;
     display: flex;
     align-items: center;
- 
-    h1{
-        color:@blue-dk;
-        font-weight:700;
-        font-size:60px;
-        text-align:center;
-        margin:0px;
-    }
-
-    h3{
-        color:@grey;
-        margin:0px;
-        text-align:center;
-    }
 
     .content{
-        margin-top: -150px;
+        margin-top: -200px;
+
+        h1{
+            color:@blue-dk;
+            font-weight:700;
+            font-size:40px;
+            text-align:center;
+            margin:0px;
+        }
+
+        h3{
+            color:@grey-dk;
+            margin:0px;
+            text-align:center;
+        }
+
+        .splashContainer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .splash{
+                max-width:450px;
+                width: auto;
+                height: auto;
+            }
+        }
 
         .lookup{
-            margin-top: 40px;
+            margin-top: 30px;
         }
     }
 }

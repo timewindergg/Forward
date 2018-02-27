@@ -6,7 +6,7 @@ import {getItemIconUrl} from '../../shared/helpers/staticImageHelper.js';
 class Item extends Component {
   render(){
     let id = this.props.id;
-    let type = 'item';
+    let type = 'icon item';
     if (this.props.id < 0){
       type += ' sold';
     }
@@ -26,7 +26,7 @@ class ItemProgression extends Component {
     let items = this.props.itemOrder;
 
     return items.map((item) => (
-      <Item id={item.id} ts={item.ts} version={this.props.version}></Item>
+      <Item id={item.id} ts={item.ts} version={this.props.version} key={item.ts}></Item>
     ));
   }
 

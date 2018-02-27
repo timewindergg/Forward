@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import { getPerkIconUrl } from '../../shared/helpers/staticImageHelper.js';
-import RuneMappings from '../../shared/runeMappings.js';
 
 class Perk extends Component {
   render(){

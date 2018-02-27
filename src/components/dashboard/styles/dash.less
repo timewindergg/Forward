@@ -45,6 +45,24 @@
     display: flex;
   }
 
+  .dashboard-header-champion-mastery-wrapper {
+    margin-left: 25px;
+    text-align: center;
+  }
+
+  .dashboard-header-mastery-icon {
+    margin-top: -15px;
+  }
+
+  .champion-mastery-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
   .dashboard-header-mastery-icon {
     img {
       height: 35px;
@@ -182,6 +200,123 @@
     border: 2px solid;
   }
 
+  .dashboard-champion-table {
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+
+  .dashboard-filter {
+    display: flex;
+    padding: 5px;
+    outline: 1px solid;
+  }
+
+  .queue-selector {
+    width: 90px;
+    background: @red-dk;
+
+    &:hover{
+        background: @red-md;
+    }
+
+    .queue-dropdown {
+      position: absolute;
+    }
+
+    .Dropdown-root {
+      color: #fff;
+    }
+
+    .Dropdown-menu{
+        background: @red-md;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+        box-sizing: border-box;
+        margin-top: -1px;
+        overflow-y: auto;
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        z-index: 1000;
+        color: #fff;
+    }
+    .Dropdown-option{
+        padding: 3px 0;
+        &:hover{
+            background: @red-dk;
+            color: #fff;
+        }
+    }
+  }
+
+  .champion-selector {
+    position: relative;
+    margin-left: 20px;
+  }
+
+  .champion-selector input {
+    border: none;
+    color: @grey-dk;
+    border-bottom: 2px solid @grey-dk;
+    outline: none;
+    border-radius: 0;
+    line-height: 14px;
+  }
+
+  .champion-selector input { text-indent: 25px;}
+  .champion-selector .fa-search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 3px;
+    color: @grey-dk;
+    font-size: 0.85em;
+  }
+
+  .dashboard-selected-filters {
+    display: flex;
+
+    button {
+      padding: 3px 5px;
+      margin: 2px 3px;
+      background: @red-dk;
+      color: #fff;
+      border-radius: 3px;
+    }
+
+    button:focus {
+      outline:0;
+    }
+
+    h1 {
+      font-size: 12px;
+      display: inline-block;
+      vertical-align: top;
+      line-height: 15px;
+    }
+
+    .ion-close-round:before {
+      content: "\d7";
+      font-size: small;
+    }
+  }
+
+
+
   .dashboard-matches-item-body-match-participants-red {
     margin-left: 5px;
   }
@@ -233,5 +368,19 @@
   .react-calendar-heatmap .color-scale-win-3 {
     fill: #57c681;
     opacity: 1.0;
+  }
+
+  .react-calendar-heatmap text {
+    font-size: 10px;
+    fill: #aaa;
+  }
+
+  .react-calendar-heatmap .react-calendar-heatmap-small-text {
+    font-size: 5px;
+  }
+
+  .react-calendar-heatmap rect:hover {
+    stroke: #555;
+    stroke-width: 1px;
   }
 }

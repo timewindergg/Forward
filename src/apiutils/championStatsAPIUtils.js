@@ -6,7 +6,7 @@ import {
 } from '../actions/summonerActions';
 
 export const getUserChampionStats = (summonerName, region, championName) => {
-  const uri = '/get_user_champion_stats_by_name/';
+  const uri = '/api/get_user_champion_stats_by_name/';
   const params = {
     summoner_name: summonerName,
     region: region,

@@ -25,7 +25,9 @@ class Header extends Component {
       <div className='rc-header'>
         <div className='header-inner'>
           <div className='header-group'>
-            <span className='header-appname'>Timewinder.gg</span>
+            <a href="/" style={{'text-decoration': 'none'}}>
+              <span className='header-appname'>Timewinder.gg</span>
+            </a>
           </div>
           <div className='header-group'>
             <Search />

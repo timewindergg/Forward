@@ -1,7 +1,11 @@
 import ChampionMappings from '../championMappings.js';
 import SummonerSpellMappings from '../summonerSpellMappings.js';
 
-const baseUrl = 'http://127.0.0.1:8000/static';
+const baseUrl = '/api/static';
+
+export const getStaticImage = (path) => {
+  return baseUrl + path;
+}
 
 export const getMasteryIconUrl = (masteryLevel) => {
   return baseUrl + `/masteries/${masteryLevel}.png`;
@@ -18,11 +22,11 @@ export const getRoleIconUrl = (role) => {
   return baseUrl + `/roles/${roleStr}.png`;
 }
 
-const opggBaseUrl = "http://opgg-static.akamaized.net/images/lol/"
+const opggBaseUrl = "https://opgg-static.akamaized.net/images/lol/"
 const opggPerkIcon = "perk/"
 const opggPerkStyleIcon = "perkStyle/"
 
-const ddBaseUrl = "http://ddragon.leagueoflegends.com/cdn/";
+const ddBaseUrl = "https://ddragon.leagueoflegends.com/cdn/";
 const ddProfileIcon = "/img/profileicon/"
 const ddChampionIcon = "/img/champion/"
 const ddSpellIcon = "/img/spell/"
@@ -63,6 +67,10 @@ export const getChampionIcon = (champion, version) => {
 // NEW FOR STATICDATA
 export const getChampionSpellIcon = (championSpell, version) => {
   return getDDAImage(version, AssetType.SPELL, championSpell.img);
+}
+
+export const getChampionIconUrlByImage = (imageName, version) => {
+  return getDDAsset(version, AssetType.CHAMPION, imageName);
 }
 
 export const getSpellIconUrl = (id, version) => {

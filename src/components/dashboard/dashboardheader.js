@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { numberFormatter} from '../../shared/helpers/numberHelper.js';
 
-import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrl, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
+import { getMasteryIconUrl, getTierIconUrl, getChampionIconUrlByImage, getProfileIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
 class DashboardHeader extends Component {
   render() {
@@ -11,7 +11,7 @@ class DashboardHeader extends Component {
       return (<div/>);
     }
 
-    const { summonerInfo, version } = this.props;
+    const { summonerInfo, version, staticData } = this.props;
 
     const profileIconUrl = getProfileIconUrl(summonerInfo.icon, version);
     return (
@@ -25,7 +25,7 @@ class DashboardHeader extends Component {
           </div>
           {this.renderRankedTiers(summonerInfo)}
           <div className="dashboard-header-top-champion-masteries">
-            {this.renderTopUserChampionMasteries(summonerInfo.championMasteries, version)}
+            {this.renderTopUserChampionMasteries(summonerInfo.championMasteries, version, staticData.champions)}
           </div>
         </div>
     );
@@ -71,7 +71,7 @@ class DashboardHeader extends Component {
     }
   }
 
-  renderTopUserChampionMasteries(championMasteries, version) {
+  renderTopUserChampionMasteries(championMasteries, version, championData) {
     if (championMasteries !== undefined) {
       // Sort the champion by points.
       championMasteries.sort((mastery1, mastery2) => {
@@ -82,12 +82,15 @@ class DashboardHeader extends Component {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
           <div className="dashboard-header-champion-mastery-wrapper" key={c.champ_id}>
-            <img className="championIcon icon" src={getChampionIconUrl(c.champ_id, version)} alt=""/>
+            <div className="dashboard-header-mastery-wrapper">
+              <span>{numberFormatter(c.total_points)}</span>
+            </div>
+            <img className="champion-mastery-icon" src={getChampionIconUrlByImage(championData[c.champ_id].img.split('.')[0], version)} alt=""/>
             <div className="dashboard-header-mastery-icon">
               <img src={masteryIcon} alt=""/>
             </div>
-            <div className="dashboard-header-mastery-wrapper">
-              <span>{numberFormatter(c.total_points)}</span>
+            <div className="champion-name">
+              <span>{championData[c.champ_id].name}</span>
             </div>
           </div>
         );

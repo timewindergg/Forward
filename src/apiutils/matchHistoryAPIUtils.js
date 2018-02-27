@@ -3,7 +3,7 @@ import axios from 'axios';
 import { fetchMatchHistorySuccess } from '../actions/matchHistoryActions';
 
 export const getSummonerMatchHistory = (summoner_name, region, offset, size) => {
-  const uri = `/get_match_history/`;
+  const uri = `/api/get_match_history/`;
   const params = {
     summoner_name,
     region,

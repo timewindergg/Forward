@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-import { getChampionIconUrl, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { getChampionIconUrlByImage, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
-import { getKeystone } from '../../shared/helpers/leagueUtilities';
 
 class ScoreboardPlayer extends Component {
   render() {
@@ -12,6 +11,9 @@ class ScoreboardPlayer extends Component {
     }
     let patchVersion = this.props.version;
     let p = this.props.participant;
+    let runeData = this.props.runeData;
+    let championData = this.props.championData;
+
     let items = [];
     let trinket = 3340;
 
@@ -32,7 +34,13 @@ class ScoreboardPlayer extends Component {
       items.push(0);
     }
 
-    let keystone = getKeystone(Object.keys(p.runes));
+    let keystone = 0;
+
+    for (let key in p.runes) {
+      if (runeData[key].isKeystone === true) {
+        keystone = key;
+      }
+    }
 
     return (
       <div className="summonerInfo">
@@ -47,7 +55,7 @@ class ScoreboardPlayer extends Component {
           </div>
         </div>
         <div className="iconContainer">
-          <img className="championIcon big" src={getChampionIconUrl(p.championId, patchVersion)} />
+          <img className="championIcon big" src={getChampionIconUrlByImage(championData[p.championId].img.split('.')[0], patchVersion)} />
           <div className="level">
             {p.level}
           </div>
@@ -64,13 +72,13 @@ class ScoreboardPlayer extends Component {
           </div>
         </div>
         <div className="itemSet">
-          <img className="itemIcon icon" src={getItemIconUrl(items[0], patchVersion)}/>
-          <img className="itemIcon icon" src={getItemIconUrl(items[1], patchVersion)}/>
-          <img className="itemIcon icon" src={getItemIconUrl(items[2], patchVersion)}/>
-          <img className="itemIcon icon" src={getItemIconUrl(items[3], patchVersion)}/>
-          <img className="itemIcon icon" src={getItemIconUrl(items[4], patchVersion)}/>
-          <img className="itemIcon icon" src={getItemIconUrl(items[5], patchVersion)}/>
-          <img className="itemIcon icon" src={getItemIconUrl(trinket, patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[0] === 0})} src={getItemIconUrl(items[0], patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})} src={getItemIconUrl(items[1], patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[2] === 0})} src={getItemIconUrl(items[2], patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[3] === 0})} src={getItemIconUrl(items[3], patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[4] === 0})} src={getItemIconUrl(items[4], patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[5] === 0})} src={getItemIconUrl(items[5], patchVersion)}/>
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)}/>
         </div>
       </div>
     );
@@ -80,7 +88,7 @@ class ScoreboardPlayer extends Component {
 class Teamboard extends Component {
   renderParticipants() {
     return this.props.participants.map((participant) => (
-      <ScoreboardPlayer region={this.props.region} key={participant[0]} participant={participant[1]} version={this.props.version}/>
+      <ScoreboardPlayer region={this.props.region} key={participant[0]} participant={participant[1]} version={this.props.version} runeData={this.props.staticData.runes} championData={this.props.staticData.champions}/>
     ));
   }
 
@@ -130,6 +138,8 @@ class Scoreboard extends Component {
     let blueTeam = [];
     let redTeam = [];
 
+    const {staticData} = this.props;
+
     Object.entries(this.props.playerFrameData).map((participant) => {
       let matchParticipant = this.props.matchParticipants[participant[0] - 1];
 
@@ -152,8 +162,8 @@ class Scoreboard extends Component {
       <div className="scoreboardContainer recentGames row">
         <ScoreboardHeader blueData={this.props.teamFrameData['100']} redData={this.props.teamFrameData['200']}/>
         <IconHeader />
-        <Teamboard team="100" participants={blueTeam} version={this.props.version} region={this.props.region}/>
-        <Teamboard team="200" participants={redTeam} version={this.props.version} region={this.props.region}/>
+        <Teamboard team="100" participants={blueTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
+        <Teamboard team="200" participants={redTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
       </div>
     );
   }
