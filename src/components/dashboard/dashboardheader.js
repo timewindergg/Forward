@@ -16,15 +16,15 @@ class DashboardHeader extends Component {
     const profileIconUrl = getProfileIconUrl(summonerInfo.icon, version);
     return (
         <div className="dashboard-header">
-          <div className="dashboard-header-profile-icon">
+          <div className="profile-icon">
             <img src={profileIconUrl}/>
           </div>
-          <div className="dashboard-header-summoner-profile">
-            <span className="dashboard-header-summoner-name">{summonerInfo.name}</span>
-            <span className="dashboard-header-summoner-level">{`Lv ${summonerInfo.level}`}</span>
+          <div className="summoner-profile">
+            <span className="summoner-name">{summonerInfo.name}</span>
+            <span className="summoner-level">{`Lv ${summonerInfo.level}`}</span>
           </div>
           {this.renderRankedTiers(summonerInfo)}
-          <div className="dashboard-header-top-champion-masteries">
+          <div className="top-champion-masteries">
             {this.renderTopUserChampionMasteries(summonerInfo.championMasteries, version, staticData.champions)}
           </div>
         </div>
@@ -56,11 +56,11 @@ class DashboardHeader extends Component {
 
 
       return (
-        <div className="dashboard-header-ranked-info">
-          <div className="dashboard-header-ranked-tier">
+        <div className="ranked-info">
+          <div className="ranked-tier">
             <img src={getTierIconUrl(tier)}/>
           </div>
-          <div className="dashboard-header-ranked-stats">
+          <div className="ranked-stats">
             <span> {tier} </span>
             <span>{`${summoner.wins}W ${summoner.losses}L`}</span>
             <span>{winRate}</span>
@@ -81,12 +81,12 @@ class DashboardHeader extends Component {
       const champions = championMasteries.map((c) => {
         const masteryIcon = getMasteryIconUrl(c.level);
         return (
-          <div className="dashboard-header-champion-mastery-wrapper" key={c.champ_id}>
-            <div className="dashboard-header-mastery-wrapper">
+          <div className="champion-mastery-wrapper" key={c.champ_id}>
+            <div className="mastery-wrapper">
               <span>{numberFormatter(c.total_points)}</span>
             </div>
             <img className="champion-mastery-icon" src={getChampionIconUrlByImage(championData[c.champ_id].img.split('.')[0], version)} alt=""/>
-            <div className="dashboard-header-mastery-icon">
+            <div className="mastery-icon">
               <img src={masteryIcon} alt=""/>
             </div>
             <div className="champion-name">

@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 import './styles/dash.css';
+import './styles/lawn.css';
+import './styles/profileheader.css';
+import './styles/matchlist.css';
+import './styles/championtable.css';
+import './styles/matchfilter.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';

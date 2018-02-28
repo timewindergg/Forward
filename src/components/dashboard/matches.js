@@ -60,7 +60,7 @@ class Matches extends Component {
       return passesDateFilter && passesChampionFilter && passesQueueFilter;
     }).slice(0, limit).map((m) => {
       return (
-        <div className={"dashboard-matches-item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
+        <div className={"item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
           {this.renderMatchHeader(m)}
           {this.renderMatchBody(m, version, runeData, championData)}
         </div>
@@ -87,16 +87,16 @@ class Matches extends Component {
     const teamKDA = getTeamKDAStat(team);
 
     return (
-      <div className="dashboard-matches-item-header">
-        <div className="dashboard-matches-item-header-match-info">
+      <div className="item-header">
+        <div className="item-header-match-info">
           <span>{QueueIdMappings[match.queue_id].name}</span>
           <Moment fromNow>{gameDate}</Moment>
           <span>{duration}</span>
         </div>
-        <div className="dashboard-matches-item-header-match-team-scores">
+        <div className="item-header-match-team-scores">
           <span>{`${teamKDA[0]}/${teamKDA[1]}/${teamKDA[2]}`}</span>
         </div>
-        <div className="dashboard-matches-item-header-match-team-objectives">
+        <div className="item-header-match-team-objectives">
           <div className="icon-baron">
           </div>
           <span>{team.baronKills}</span>
@@ -123,93 +123,93 @@ class Matches extends Component {
     const participants = getParticipants(match.blue_team, match.red_team, version, championData);
 
     return (
-      <div className="dashboard-matches-item-body">
-        <div className="dashboard-matches-item-body-champion-info">
+      <div className="item-body">
+        <div className="champion-info">
           <img className="championIcon icon" src={getChampionIconUrlByImage(championData[match.champ_id].img.split('.')[0], version)}/>
-          <div className="dashboard-matches-item-body-champion-info-champion-name">
+          <div className="champion-info-champion-name">
             <span>{championData[match.champ_id].name}</span>
           </div>
-          <div className="dashboard-matches-item-body-champion-info-champion-level">
+          <div className="champion-info-champion-level">
             <span>{`Lvl ${match.level}`}</span>
           </div>
         </div>
-        <div className="dashboard-matches-item-body-champion-settings">
-          <div className="dashboard-matches-item-body-champion-settings-summoners">
-            <div className= "dashboard-matches-item-body-champion-settings-summoner">
+        <div className="champion-settings">
+          <div className="summoners">
+            <div className= "summoner">
               <img src={getSpellIconUrl(match.spell0, version)} alt=""/>
             </div>
-            <div className= "dashboard-matches-item-body-champion-settings-summoner">
+            <div className= "summoner">
               <img src={getSpellIconUrl(match.spell1, version)} alt="" />
             </div>
           </div>
-          <div className="dashboard-matches-item-body-champion-settings-perks">
-            <div className="dashboard-matches-item-body-champion-settings-perk">
+          <div className="perks">
+            <div className="perk">
               <img src={getPerkIconUrl(runes[0], version)} alt=""/>
             </div>
-            <div className="dashboard-matches-item-body-champion-settings-perk">
+            <div className="perk">
               <img src={getPerkStyleIconUrl(runes[1], version)} alt=""/>
             </div>
           </div>
         </div>
-        <div className="dashboard-matches-item-body-champion-items">
-          <div className="dashboard-matches-item-body-champion-items-row">
-            <div className="dashboard-matches-item-body-champion-item">
+        <div className="champion-items">
+          <div className="champion-items-row">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item0, version)} alt=""/>
             </div>
-            <div className="dashboard-matches-item-body-champion-item">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item1, version)} alt=""/>
             </div>
-            <div className="dashboard-matches-item-body-champion-item">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item2, version)} alt=""/>
             </div>
-            <div className="dashboard-matches-item-body-champion-item">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item6, version)} alt=""/>
             </div>
           </div>
-          <div className="dashboard-matches-item-body-champion-items-row">
-            <div className="dashboard-matches-item-body-champion-item">
+          <div className="champion-items-row">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item3, version)} alt=""/>
             </div>
-            <div className="dashboard-matches-item-body-champion-item">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item4, version)} alt=""/>
             </div>
-            <div className="dashboard-matches-item-body-champion-item">
+            <div className="champion-item">
               <img src={getItemIconUrl(match.item5, version)} alt=""/>
             </div>
           </div>
         </div>
-        <div className="dashboard-matches-item-body-match-stats">
-          <div className="dashboard-matches-item-body-match-stats-kda">
+        <div className="match-stats">
+          <div className="match-stats-kda">
             <span>{`${match.kills}/${match.deaths}/${match.assists}`}</span>
             <span>{`${roundWithPrecision(getKDA(match.kills, match.deaths, match.assists), 2)}:KDA`}</span>
           </div>
-          <div className="dashboard-matches-item-body-match-stats-detailed">
-            <div className="dashboard-matches-item-body-match-stat">
+          <div className="match-stats-detailed">
+            <div className="match-stat">
               <span>{`${kp}%`}</span>
             </div>
-            <div className="dashboard-matches-item-body-match-stat">
+            <div className="match-stat">
               <span>{`${roundWithPrecision(matchStats[0]/minutes, 0)} cs/m`}</span>
             </div>
-            <div className="dashboard-matches-item-body-match-stat">
+            <div className="match-stat">
               <span>{`${roundWithPrecision(matchStats[1]/minutes, 0)} gold/m`}</span>
             </div>
-            <div className="dashboard-matches-item-body-match-stat">
+            <div className="match-stat">
               <span>{`${matchStats[2]}`}</span>
             </div>
-            <div className="dashboard-matches-item-body-match-stat">
+            <div className="match-stat">
               <span>{`${roundWithPrecision(matchStats[3]/minutes, 0)} vision/m`}</span>
             </div>
           </div>
         </div>
-        <div className="dashboard-matches-item-body-match-participants">
-          <div className="dashboard-matches-item-body-match-participants-blue">
+        <div className="match-participants">
+          <div className="match-participants-blue">
             {this.renderParticipants(participants[0], version)}
           </div>
-          <div className="dashboard-matches-item-body-match-participants-red">
+          <div className="match-participants-red">
             {this.renderParticipants(participants[1], version)}
           </div>
         </div>
-        <div className="dashboard-matches-item-body-match-postgame">
+        <div className="match-postgame">
           <Link to={`/m/${match.region}/${match.match_id}`}>
             <button>
             </button>
@@ -222,11 +222,11 @@ class Matches extends Component {
   renderParticipants(participants, version) {
     return participants.map((p) => {
       return (
-        <div key={p.summonerId} className="dashboard-matches-item-body-match-participant">
-          <div className="dashboard-matches-item-body-match-participant-champion-image">
+        <div key={p.summonerId} className="match-participant">
+          <div className="match-participant-champion-image">
             <img src={p.championUrl} alt=""/>
           </div>
-          <div className="dashboard-matches-item-body-match-participant-name">
+          <div className="match-participant-name">
             <span>{p.summonerName}</span>
           </div>
         </div>

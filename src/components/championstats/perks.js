@@ -2,13 +2,22 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import { getPerkIconUrl } from '../../shared/helpers/staticImageHelper.js';
+import { Colors } from '../../shared/colors.js';
 
 class Perk extends Component {
   render(){
     return (
       <div className="perk">
         <div className="perkImg">
-          <img className={`perkIcon ${this.props.type}`} src={getPerkIconUrl(this.props.perk, this.props.version)}/>
+          <img className={classNames({
+            perkIcon: true,
+            keystone: this.props.perkData.isKeystone,
+            precision: this.props.perkData.path === "Precision" && !this.props.perkData.isKeystone,
+            domination: this.props.perkData.path === "Domination" && !this.props.perkData.isKeystone,
+            inspiration: this.props.perkData.path === "Inspiration" && !this.props.perkData.isKeystone,
+            resolve: this.props.perkData.path === "Resolve" && !this.props.perkData.isKeystone,
+            sorcery: this.props.perkData.path === "Sorcery" && !this.props.perkData.isKeystone,
+          })} src={getPerkIconUrl(this.props.perk, this.props.version)}/>
         </div>
         <div className="description">
           <h4>{this.props.perkData.name}</h4>
@@ -23,7 +32,7 @@ class Perks extends Component {
   renderPrimary(keystone, perks){
     return(
       <div className="primaryPerks">
-        <Perk type="keystone" perk={keystone} version={this.props.version} perkData={this.props.perkData[keystone]}/>
+        <Perk perk={keystone} version={this.props.version} perkData={this.props.perkData[keystone]}/>
         <Perk perk={perks[0]} version={this.props.version} perkData={this.props.perkData[perks[0]]}/>
         <Perk perk={perks[1]} version={this.props.version} perkData={this.props.perkData[perks[1]]}/>
         <Perk perk={perks[2]} version={this.props.version} perkData={this.props.perkData[perks[2]]}/>

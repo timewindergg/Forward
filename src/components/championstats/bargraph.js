@@ -10,16 +10,21 @@ class ChampionStatsBarGraphs extends Component {
     const csData = {
       labels: ['CS@10', 'CS@20', 'CS@30'],
       datasets: [{
-        data: [Math.round(championStats.cs10 * 10), 
+		backgroundColor: "rgba(128,0,128,0.5)",
+  	    borderColor: "rgba(128,0,128,0.5)",
+        data: [Math.round(championStats.cs10 * 10),
                Math.round(championStats.cs10 * 10 + championStats.cs20 * 10),
                Math.round(championStats.cs10 * 10 + championStats.cs20 * 10 +championStats.cs30 * 10)]
       }]
     }
     const csdData = {
       labels: ['CSD@10', 'CSD@20', 'CSD@30'],
+
       datasets: [{
+		backgroundColor: "rgba(128,0,128,0.5)",
+	    borderColor: "rgba(128,0,128,0.5)",
         data: [Math.round(championStats.cs_diff10 * 10),
-               Math.round(championStats.cs_diff20 * 10), 
+               Math.round(championStats.cs_diff20 * 10),
                Math.round(championStats.cs_diff30 * 10)]
       }]
     }
@@ -27,16 +32,20 @@ class ChampionStatsBarGraphs extends Component {
     const xpData = {
       labels: ['XP@10', 'XP@20', 'XP@30'],
       datasets: [{
+		backgroundColor: "rgba(1,98,127,0.5)",
+  	    borderColor: "rgba(1,98,127,0.5)",
         data: [Math.round(championStats.xp10 * 10),
-               Math.round(championStats.xp10 * 10 + championStats.xp20 * 10), 
+               Math.round(championStats.xp10 * 10 + championStats.xp20 * 10),
                Math.round(championStats.xp10 * 10 + championStats.xp20 * 10 + championStats.xp30 * 10)]
       }]
     }
     const xpdData = {
       labels: ['XPD@10', 'XPD@20', 'XPD@30'],
       datasets: [{
-        data: [Math.round(championStats.xp_diff10 * 10), 
-               Math.round(championStats.xp_diff20 * 10), 
+		backgroundColor: "rgba(1,98,127,0.5)",
+    	borderColor: "rgba(1,98,127,0.5)",
+        data: [Math.round(championStats.xp_diff10 * 10),
+               Math.round(championStats.xp_diff20 * 10),
                Math.round(championStats.xp_diff30 * 10)]
       }]
     }
@@ -44,7 +53,9 @@ class ChampionStatsBarGraphs extends Component {
     const goldData = {
       labels: ['G@10', 'G@20', 'G@30'],
       datasets: [{
-        data: [Math.round(championStats.gold10 * 10), 
+		backgroundColor: "rgba(255,215,0,0.5)",
+  	    borderColor: "rgba(255,215,0,0.5)",
+        data: [Math.round(championStats.gold10 * 10),
                Math.round(championStats.gold10 * 10 + championStats.gold20 * 10),
                Math.round(championStats.gold10 * 10 + championStats.gold20 * 10 + championStats.gold30 * 10)]
       }]
