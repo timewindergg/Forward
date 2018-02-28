@@ -111,6 +111,17 @@ class Matches extends Component {
     );
   }
 
+  renderItems(items, version){
+    return items.map((item) => {
+      return (
+        <div className="champion-item">
+          <img className="icon" src={getItemIconUrl(item, version)} alt=""/>
+        </div>
+      );
+    });
+
+  }
+
   renderMatchBody(match, version, runeData, championData) {
     // Set user primary and secondary runes.
     const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, match.user_id, runeData);
@@ -125,21 +136,21 @@ class Matches extends Component {
     return (
       <div className="item-body">
         <div className="champion-info">
-          <img className="championIcon icon" src={getChampionIconUrlByImage(championData[match.champ_id].img.split('.')[0], version)}/>
-          <div className="champion-info-champion-name">
+          <img className="champion-icon" src={getChampionIconUrlByImage(championData[match.champ_id].img.split('.')[0], version)}/>
+          <div className="champion-name">
             <span>{championData[match.champ_id].name}</span>
           </div>
-          <div className="champion-info-champion-level">
+          <div className="champion-level">
             <span>{`Lvl ${match.level}`}</span>
           </div>
         </div>
         <div className="champion-settings">
           <div className="summoners">
-            <div className= "summoner">
-              <img src={getSpellIconUrl(match.spell0, version)} alt=""/>
+            <div className="summoner">
+              <img className="icon" src={getSpellIconUrl(match.spell0, version)} alt=""/>
             </div>
-            <div className= "summoner">
-              <img src={getSpellIconUrl(match.spell1, version)} alt="" />
+            <div className="summoner">
+              <img className="icon" src={getSpellIconUrl(match.spell1, version)} alt="" />
             </div>
           </div>
           <div className="perks">
@@ -152,31 +163,7 @@ class Matches extends Component {
           </div>
         </div>
         <div className="champion-items">
-          <div className="champion-items-row">
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item0, version)} alt=""/>
-            </div>
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item1, version)} alt=""/>
-            </div>
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item2, version)} alt=""/>
-            </div>
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item6, version)} alt=""/>
-            </div>
-          </div>
-          <div className="champion-items-row">
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item3, version)} alt=""/>
-            </div>
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item4, version)} alt=""/>
-            </div>
-            <div className="champion-item">
-              <img src={getItemIconUrl(match.item5, version)} alt=""/>
-            </div>
-          </div>
+          {this.renderItems([match.item0, match.item1, match.item2, match.item3, match.item4, match.item5, match.item6], version)}
         </div>
         <div className="match-stats">
           <div className="match-stats-kda">
@@ -202,17 +189,16 @@ class Matches extends Component {
           </div>
         </div>
         <div className="match-participants">
-          <div className="match-participants-blue">
+          <div className="team">
             {this.renderParticipants(participants[0], version)}
           </div>
-          <div className="match-participants-red">
+          <div className="team">
             {this.renderParticipants(participants[1], version)}
           </div>
         </div>
         <div className="match-postgame">
           <Link to={`/m/${match.region}/${match.match_id}`}>
-            <button>
-            </button>
+            <i className="fas fa-angle-right"></i>
           </Link>
         </div>
       </div>
@@ -223,11 +209,11 @@ class Matches extends Component {
     return participants.map((p) => {
       return (
         <div key={p.summonerId} className="match-participant">
-          <div className="match-participant-champion-image">
+          <div className="champion-image">
             <img src={p.championUrl} alt=""/>
           </div>
-          <div className="match-participant-name">
-            <span>{p.summonerName}</span>
+          <div className="name">
+            {p.summonerName}
           </div>
         </div>
       );

@@ -1,4 +1,7 @@
 .dashboard-matches{
+  font-size: 12px;
+  font-weight: 400;
+
   .item-header-match-team-objectives {
     display: flex;
   }
@@ -11,15 +14,24 @@
 
   .item-body {
     display: flex;
+    align-items: center;
     padding: 5px;
+
+    .champion-info{
+      .champion-icon{
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+    }
 
     .champion-settings {
       display: flex;
-      flex-direction: column;
       margin-left: 5px;
 
       .summoners {
-        display: flex;
+        display: block;
+        line-height: 0;
         margin-left: 5px;
 
         img {
@@ -29,7 +41,8 @@
       }
 
       .perks {
-        display: flex;
+        display: block;
+        line-height:0;
         margin-left: 5px;
 
         img {
@@ -41,7 +54,6 @@
 
     .champion-items {
       display: flex;
-      flex-direction: column;
       margin-left: 5px;
 
       img {
@@ -72,17 +84,41 @@
       display: flex;
       margin-left: 5px;
 
-      .match-participant {
-        display: flex;
+      .team{
+        .match-participant {
+          display: flex;
 
-        img {
-          width: 25px;
-          height: 25px;
+          .name{
+            width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .champion-image{
+            line-height: 0;
+          }
+          img {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+          }
         }
       }
+    }
 
-      .match-participants-red {
-        margin-left: 5px;
+    .match-postgame{
+      font-size: 30px;
+      color: #000;
+      .postgame-button{
+        flex: 1;
+        height:100%;
+        width:25px;
+        background:#000;
+
+        &:hover{
+          background:#fff;
+        }
       }
     }
   }
