@@ -36,7 +36,7 @@ class ChampionMatchups extends Component {
     });
 
     return championMatchups.map((c) => {
-      let winrate = Math.round(c.wins / c.total_games * 100);
+      let winrate = Math.round(c.wins * 100 / c.total_games);
       let color = calculateGradient('01627f', 'ff6666', winrate / 100);
 
       return (

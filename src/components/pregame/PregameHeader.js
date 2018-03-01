@@ -4,10 +4,8 @@ import classNames from 'classnames';
 import moment from 'moment';
 
 import {GameTypes} from '../../constants/GameTypes';
-import {IMG_VER} from '../../constants/Settings';
 
-import championMappings from '../../shared/championMappings.js';
-import {getChampionIconUrl} from '../../shared/helpers/staticImageHelper.js';
+import {getChampionIconUrlByImage} from '../../shared/helpers/staticImageHelper.js';
 
 import './styles/PregameHeader.css';
 
@@ -26,9 +24,12 @@ class PregameHeader extends Component {
     queueID: 0
   }
 
-  renderBans = (bans, isRed) => {
+  renderBans = (bans, isRed, staticData) => {
+    const championData = staticData.champions;
+    const version = staticData.version;
+
     const banIcons = bans.map((ban) => {
-      if (!championMappings[ban]) {
+      if (!championData[ban]) {
         return (
           <img
             key={ban}
@@ -39,7 +40,7 @@ class PregameHeader extends Component {
         );
       }
 
-      const imageUrl = getChampionIconUrl(ban, IMG_VER);
+      const imageUrl = getChampionIconUrlByImage(championData[ban].img.split('.')[0], version);
 
       return (
         <img
@@ -72,16 +73,16 @@ class PregameHeader extends Component {
   }
 
   render() {
-    const {redBans, blueBans, matchCreationTime, queueID} = this.props;
+    const {redBans, blueBans, matchCreationTime, queueID, staticData} = this.props;
 
     const gameMap = GameTypes[queueID]['map'];
     const gameType = GameTypes[queueID].desc;
 
     return (
       <div className='rc-pregame-header'>
-        {this.renderBans(redBans, true)}
+        {this.renderBans(redBans, true, staticData)}
         {this.renderHeaderText(gameType, gameMap, matchCreationTime)}
-        {this.renderBans(blueBans, false)}
+        {this.renderBans(blueBans, false, staticData)}
       </div>
     )
   }

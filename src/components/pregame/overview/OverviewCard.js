@@ -17,7 +17,6 @@ import {
 } from '../../../shared/helpers/staticImageHelper.js';
 
 import runeMappings from '../../../shared/runeMappings.js';
-import {IMG_VER} from '../../../constants/Settings';
 
 class OverviewCard extends Component {
   constructor(props) {
@@ -39,14 +38,14 @@ class OverviewCard extends Component {
   }
 
   renderSummonerSpells = (isSummonerLoaded) => {
-    const {summoner} = this.props;
+    const {summoner, staticData} = this.props;
 
     // TODO: have a placeholder gif
-    const spell0 = ( 
+    const spell0 = (
       <Tooltip
         text={'asdfsdfasfsadfsdfadsfdsafa'}
       >
-        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, IMG_VER)} alt=''/>
+        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, staticData.version)} alt=''/>
       </Tooltip>
     );
 
@@ -54,7 +53,7 @@ class OverviewCard extends Component {
       <Tooltip
         text={'asdfsdfasfsadfsdfadsfdsafa fasdfasfadsfsdafasfasdf'}
       >
-        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, IMG_VER)} alt=''/>
+        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, staticData.version)} alt=''/>
       </Tooltip>
     );
 
@@ -78,7 +77,7 @@ class OverviewCard extends Component {
         <Tooltip
           text={runeData.shortDescription}
         >
-          <img className={runeClass} src={getPerkIconUrl(rune, IMG_VER)} key={rune} alt=''/>
+          <img className={runeClass} src={getPerkIconUrl(rune, staticData.version)} key={rune} alt=''/>
         </Tooltip>
       );
     });
@@ -109,7 +108,7 @@ class OverviewCard extends Component {
 
   render() {
     const {summoner, details, isRed, isSelected, queueName, staticData} = this.props;
-    
+
     const winsLoss = (
       <div className='overview-row'>
         <span className='overview-heading'>Wins/Losses:</span>
@@ -152,14 +151,14 @@ class OverviewCard extends Component {
     const runes = this.renderRunes();
 
     const colorClass = isRed ? 'overview-card-red' : 'overview-card-blue';
-    
+
     const cardClass = classNames(
       'rc-overview-card',
       colorClass, {
         overviewsred: isRed && isSelected,
         overviewsblue: !isRed && isSelected
       }
-    );    
+    );
 
     // TODO: think of a different product flow for selecting champions to compare head to head
     const {tier, division, points} = this.getRankedDetails(details, queueName);
@@ -169,12 +168,13 @@ class OverviewCard extends Component {
         <OverviewCardHeader
           name={summoner.name}
           champion={staticData.champions[summoner.champion_id]}
+          staticData={staticData}
 
           tier={tier}
           division={division}
           LP={points}
           isRed={isRed}
-          isSelected={isSelected}          
+          isSelected={isSelected}
         />
 
         <div className='overview-body'>

@@ -27,6 +27,7 @@
     "react-spinners": "^0.2.6",
     "react-stickynode": "^1.4.1",
     "react-table": "^6.7.6",
+    "react-tooltip": "^3.4.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   },

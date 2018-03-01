@@ -28,7 +28,7 @@ const createChampionListData = (championLists, championData, version) => {
       games: c.total_games,
       kda: roundWithPrecision((c.kills + c.assists) / c.deaths, 2),
       cs: roundWithPrecision(c.total_cs / c.total_games, 0),
-      winrate: roundWithPrecision(c.wins / c.total_games, 2),
+      winrate: Math.round(c.wins / c.total_games * 100),
       gold: Math.round(c.gold / c.total_games),
       lane: capitalize(c.lane.split('_')[0].toLowerCase()),
     }
@@ -131,7 +131,7 @@ class ChampionTable extends Component {
                   Cell: props => {
                     return (
                       <div>
-                        {props.value * 100}%
+                        {props.value}%
                       </div>
                     );
                   }
@@ -140,7 +140,7 @@ class ChampionTable extends Component {
             }
           ]}
           style={{
-            height: "600px"
+            height: "500px"
           }}
           defaultPageSize={data.length}
           showPagination={false}

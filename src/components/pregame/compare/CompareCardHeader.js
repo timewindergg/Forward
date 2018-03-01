@@ -6,10 +6,9 @@ import './styles/CompareCardHeader.css';
 
 import {
   getTierIconUrl, // TODO: use later
-  getChampionIconUrl,
+  getChampionIconUrlByImage,
 } from '../../../shared/helpers/staticImageHelper.js';
 
-import championMappings from '../../../shared/championMappings.js';
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
 import {IMG_VER} from '../../../constants/Settings';
 
@@ -23,10 +22,12 @@ class CompareCard extends Component {
     totalGames: PropTypes.number.isRequired,
 
     teamWinRate: PropTypes.number.isRequired,
-    
+
     rankedDetails: PropTypes.object.isRequired,
 
-    compareMetadata: PropTypes.object.isRequired
+    compareMetadata: PropTypes.object.isRequired,
+
+    staticData: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -44,8 +45,8 @@ class CompareCard extends Component {
     }
   }
 
-  renderChampionWinRate = (winsSelf, totalGames, otherChamp) => {
-    const otherChampName = otherChamp === -1 ? '' : championMappings[otherChamp].name;
+  renderChampionWinRate = (winsSelf, totalGames, otherChamp, championData) => {
+    const otherChampName = otherChamp === -1 ? '' : championData[otherChamp].name;
 
     let winRate = '--';
     if (totalGames > 0) {
@@ -92,7 +93,7 @@ class CompareCard extends Component {
   }
 
   render() {
-    const {isRed, compareData,rankedDetails, teamWinRate} = this.props;
+    const {isRed, compareData,rankedDetails, teamWinRate, staticData} = this.props;
 
     // const colorClass = isRed ? 'compare-card-red' : 'compare-card-blue';
     // const cardClass = classNames(
@@ -100,24 +101,27 @@ class CompareCard extends Component {
     //   colorClass
     // );
     const cardClass = classNames('rc-compare-card-header', {
-      'rc-compare-card-header-right': !isRed 
+      'rc-compare-card-header-right': !isRed
     });
 
     if (Object.keys(compareData).length === 0) {
       return this.renderEmptyCard(cardClass);
     }
 
-    const imageUrl = getChampionIconUrl(compareData.champion_id, IMG_VER);
+    const championData = staticData.champions;
+    const version = staticData.version;
 
-    const championName = !!championMappings[compareData.champion_id] ?
-      championMappings[compareData.champion_id].name : '';
+    const imageUrl = getChampionIconUrlByImage(championData[compareData.champion_id].img.split('.')[0], version);
+
+    const championName = !!championData[compareData.champion_id] ?
+      championData[compareData.champion_id].name : '';
 
     const tierText = `${rankedDetails.tier} ${rankedDetails.division}`;
 
     const nameClass = classNames('h-primary-text' ,'h-text');
 
     // TODO: use this later?
-    // const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp);
+    // const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp, championData);
     const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
 
     return (

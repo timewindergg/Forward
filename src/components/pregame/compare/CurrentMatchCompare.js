@@ -105,7 +105,7 @@ class CurrentMatchCompare extends Component {
   }
 
   render() {
-    const {currentMatch, currentMatchDetails, selectedRed, selectedBlue, queueName} = this.props;
+    const {currentMatch, currentMatchDetails, selectedRed, selectedBlue, queueName, staticData} = this.props;
 
     const matchAndDetails = this.combineMatchAndDetails(currentMatch, currentMatchDetails);
 
@@ -137,6 +137,8 @@ class CurrentMatchCompare extends Component {
             totalGames={winsDataRed.totalGames}
 
             teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, true)}
+
+            staticData={staticData}
           />
           <CompareCardHeader
             isRed={false}
@@ -148,6 +150,8 @@ class CurrentMatchCompare extends Component {
             totalGames={winsDataBlue.totalGames}
 
             teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, false)}
+
+            staticData={staticData}
           />
         </div>
         <div className='compare-row'>

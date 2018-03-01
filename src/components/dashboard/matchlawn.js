@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import CalendarHeatmap from 'react-calendar-heatmap';
 
+import ReactTooltip from 'react-tooltip';
+
 class MatchLawn extends Component {
   render() {
     if (this.props.lawn === undefined) {
@@ -15,6 +17,10 @@ class MatchLawn extends Component {
     d.setDate(1); // sets it to the beginning of the month.
     d.setMonth(d.getMonth() - 4);
 
+    const customTooltipDataAttrs = (value) => ({
+      'data-tip': !value.date ? 'no data' : `${value.date}: ${value.wins + value.losses} Records: ${value.wins}w-${value.losses}l`
+    });
+
     const beginningDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDay() + 1;
     return (
       <div className="dashboard-match-heat-map">
@@ -23,6 +29,7 @@ class MatchLawn extends Component {
           endDate={new Date()}
           startDate={beginningDate}
           values={lawn}
+          tooltipDataAttrs={customTooltipDataAttrs}
           classForValue={(value) => {
             if (!value) {
               return 'color-empty';
@@ -45,6 +52,7 @@ class MatchLawn extends Component {
             return `color-scale-${matchOutcome}-${scale}`;
           }}
         />
+        <ReactTooltip/>
       </div>
     )
   }

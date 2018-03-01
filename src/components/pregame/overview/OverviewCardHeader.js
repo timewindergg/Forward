@@ -20,6 +20,7 @@ class OverviewCardHeader extends Component {
     division: PropTypes.string.isRequired,
     LP: PropTypes.number.isRequired,
     promos: PropTypes.string.isRequired,
+    staticData: PropTypes.object.isRequired,
 
     isRed: PropTypes.bool.isRequired,
     isSelected: PropTypes.bool.isRequired
@@ -30,7 +31,7 @@ class OverviewCardHeader extends Component {
     tier: '',
     division: '',
     LP: 0,
-    promos: '', 
+    promos: '',
   }
 
 /*
@@ -40,18 +41,18 @@ lp and rank in same line, take away champion name text
 badge icon ne
 */
   render() {
-    const {name, champion, tier, division, LP, promos, isRed, isSelected} = this.props;
-    const imageUrl = getChampionIcon(champion, IMG_VER);
+    const {name, champion, tier, division, LP, promos, isRed, isSelected, staticData} = this.props;
+    const imageUrl = getChampionIcon(champion, staticData.version);
 
     const colorClass = isRed ? 'hred' : 'hblue';
-    
+
     const cardClass = classNames(
       'rc-overview-card-header',
       colorClass, {
         hsred: isRed && isSelected,
         hsblue: !isRed && isSelected
       }
-    );    
+    );
 
     const tierText = `${tier} ${division}`;
 

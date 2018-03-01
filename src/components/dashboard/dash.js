@@ -9,6 +9,7 @@ import './styles/profileheader.css';
 import './styles/matchlist.css';
 import './styles/championtable.css';
 import './styles/matchfilter.css';
+import './styles/recentlyplayedlist.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
@@ -19,6 +20,7 @@ import ChampionTable from './championtable';
 import DashboardHeader from './dashboardheader';
 import MatchLawn from './matchlawn';
 import MatchFilter from './matchfilter';
+import RecentlyPlayedWith from './recentlyplayedlist';
 
 import LoadingScreen from '../common/loadingscreen';
 
@@ -71,7 +73,6 @@ class Dashboard extends Component {
       return(<LoadingScreen/>);
     }
 
-console.log(matches)
     return (
       <div className='Dashboard'>
         <Link to={`/l/${summoner.region}/${summoner.name}`}>
@@ -115,6 +116,7 @@ console.log(matches)
                 summonerRegion={summoner.region}
                 version={staticData.version}
                 championData={staticData.champions}/>
+              <RecentlyPlayedWith matches={matches}/>
             </div>
           </div>
         </div>
