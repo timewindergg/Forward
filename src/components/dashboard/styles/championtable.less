@@ -1,7 +1,21 @@
+@import '../../common/styles/colors';
+
 .dashboard-champion-table {
+  font-size: 12px;
+  height: 500px;
+
+  .-headerGroups{
+    visibility: hidden;
+    height: 0;
+  }
+
+  .ReactTable{
+    border-radius: 5px;
+  }
+
   img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     margin-left: auto;
     margin-right: auto;
@@ -10,10 +24,19 @@
 
   p {
     text-align: center;
+    margin: 0;
   }
 
   a {
     text-decoration: none;
     color: black;
+  }
+
+  .-odd{
+    background: @grey-lt !important;
+  }
+
+  .-even{
+
   }
 }

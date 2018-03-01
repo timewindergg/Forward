@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 // Import required mappings.
 import QueueIdMappings from '../../shared/queueIdMappings.js';
@@ -60,7 +61,8 @@ class Matches extends Component {
       return passesDateFilter && passesChampionFilter && passesQueueFilter;
     }).slice(0, limit).map((m) => {
       return (
-        <div className={"item " + (m.team === m.winner ? 'blue-lt-bg' : 'red-lt-bg')} key={m.match_id}>
+        <div className={"item"} key={m.match_id}>
+          <div className={classNames({"result-indicator": true, 'victory': m.team === m.winner, 'defeat': m.team !== m.winner})}></div>
           {this.renderMatchHeader(m)}
           {this.renderMatchBody(m, version, runeData, championData)}
         </div>
@@ -88,15 +90,15 @@ class Matches extends Component {
 
     return (
       <div className="item-header">
-        <div className="item-header-match-info">
-          <span>{QueueIdMappings[match.queue_id].name}</span>
-          <Moment fromNow>{gameDate}</Moment>
-          <span>{duration}</span>
+        <div className="match-info">
+          <span className="queue">{QueueIdMappings[match.queue_id].name}</span>
+          <Moment className="timestamp" fromNow>{gameDate}</Moment>
+          <span className="duration">{duration}</span>
         </div>
-        <div className="item-header-match-team-scores">
+        <div className="team-scores">
           <span>{`${teamKDA[0]}/${teamKDA[1]}/${teamKDA[2]}`}</span>
         </div>
-        <div className="item-header-match-team-objectives">
+        <div className="team-objectives">
           <div className="icon-baron">
           </div>
           <span>{team.baronKills}</span>
@@ -107,12 +109,23 @@ class Matches extends Component {
           </div>
           <span>{team.towerKills}</span>
         </div>
+        <div className="match-postgame">
+          <Link to={`/m/${match.region}/${match.match_id}`}>
+            <span>Analysis</span>
+            <i className="fas fa-angle-right"></i>
+          </Link>
+        </div>
       </div>
     );
   }
 
-  renderItems(items, version){
-    return items.map((item) => {
+  renderItems(items, trinket, version){
+    const core = items.map((item) => {
+      if (item === 0){
+        return (
+          <div className="champion-item filler icon"></div>
+        );
+      }
       return (
         <div className="champion-item">
           <img className="icon" src={getItemIconUrl(item, version)} alt=""/>
@@ -120,6 +133,16 @@ class Matches extends Component {
       );
     });
 
+    return (
+      <div className="champion-items">
+        <div className="core">
+          {core}
+        </div>
+        <div className="champion-item trinket">
+          <img className="icon" src={getItemIconUrl(trinket, version)} alt=""/>
+        </div>
+      </div>
+    );
   }
 
   renderMatchBody(match, version, runeData, championData) {
@@ -162,28 +185,26 @@ class Matches extends Component {
             </div>
           </div>
         </div>
-        <div className="champion-items">
-          {this.renderItems([match.item0, match.item1, match.item2, match.item3, match.item4, match.item5, match.item6], version)}
-        </div>
+        {this.renderItems([match.item0, match.item1, match.item2, match.item3, match.item4, match.item5], match.item6, version)}
         <div className="match-stats">
           <div className="match-stats-kda">
             <span>{`${match.kills}/${match.deaths}/${match.assists}`}</span>
-            <span>{`${roundWithPrecision(getKDA(match.kills, match.deaths, match.assists), 2)}:KDA`}</span>
+            <span>{`${roundWithPrecision(getKDA(match.kills, match.deaths, match.assists), 2)} KDA`}</span>
           </div>
           <div className="match-stats-detailed">
-            <div className="match-stat">
+            <div className="match-stat kp">
               <span>{`${kp}%`}</span>
             </div>
-            <div className="match-stat">
+            <div className="match-stat csm">
               <span>{`${roundWithPrecision(matchStats[0]/minutes, 0)} cs/m`}</span>
             </div>
-            <div className="match-stat">
+            <div className="match-stat goldm">
               <span>{`${roundWithPrecision(matchStats[1]/minutes, 0)} gold/m`}</span>
             </div>
-            <div className="match-stat">
+            <div className="match-stat gold">
               <span>{`${matchStats[2]}`}</span>
             </div>
-            <div className="match-stat">
+            <div className="match-stat visionm">
               <span>{`${roundWithPrecision(matchStats[3]/minutes, 0)} vision/m`}</span>
             </div>
           </div>
@@ -195,11 +216,6 @@ class Matches extends Component {
           <div className="team">
             {this.renderParticipants(participants[1], version)}
           </div>
-        </div>
-        <div className="match-postgame">
-          <Link to={`/m/${match.region}/${match.match_id}`}>
-            <i className="fas fa-angle-right"></i>
-          </Link>
         </div>
       </div>
     );

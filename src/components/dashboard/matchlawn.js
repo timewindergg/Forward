@@ -13,7 +13,7 @@ class MatchLawn extends Component {
     // Calculate the beginning of 3 months ago.
     const d = new Date();
     d.setDate(1); // sets it to the beginning of the month.
-    d.setMonth(d.getMonth() - 3);
+    d.setMonth(d.getMonth() - 4);
 
     const beginningDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDay() + 1;
     return (
@@ -51,7 +51,3 @@ class MatchLawn extends Component {
 }
 
 export default MatchLawn;
-
-
-
-

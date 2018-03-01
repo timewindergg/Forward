@@ -8,11 +8,12 @@
 
   .dashboard-body-left-container {
     width: 65%;
-    padding: 40px;
+    padding-right: 20px;
   }
 
   .dashboard-body-right-container {
     width: 35%;
+    padding-left: 20px;
   }
 
   .dashboard-match-heat-map {
@@ -29,21 +30,25 @@
     margin-left: 20px;
   }
 
-  .item {
-    margin-top: 5px;
-  }
-
   .victory {
-    background-color: @blue-lt;
+    background-color: @blue-dk;
   }
 
   .defeat {
-    background-color: @red-lt;
+    background-color: @red-dk;
   }
 
   .dashboard-show-more {
     text-align: center;
     margin-top: 5px;
-    border: 2px solid;
+
+    &:hover{
+      background: #fff;
+    }
+  }
+
+  .matchlist-container{
+    background: #fff;
+    border-radius: 5px;
   }
 }

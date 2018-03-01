@@ -71,6 +71,7 @@ class Dashboard extends Component {
       return(<LoadingScreen/>);
     }
 
+console.log(matches)
     return (
       <div className='Dashboard'>
         <Link to={`/l/${summoner.region}/${summoner.name}`}>
@@ -88,22 +89,24 @@ class Dashboard extends Component {
                 <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
                 <MatchStatsRadar matches={matches}/>
               </div>
-              <MatchFilter matches={matches}
-                onQueueSelect={this.onQueueSelect}
-                onChampionSelect={this.onChampionSelect}
-                onDateSelect={this.onDateSelect}
-                championData={staticData.champions}
-                dateFilter={this.state.dateFilter}/>
-              <Matches matches={matches}
-                version={staticData.version}
-                limit={matchesToDisplay}
-                dateFilter={dateFilter}
-                championFilter={championFilter}
-                queueFilter={queueFilter}
-                championData={staticData.champions}
-                runeData={staticData.runes}/>
-              <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
-                <h2>Load 10 more matches</h2>
+              <div className="matchlist-container">
+                <MatchFilter matches={matches}
+                  onQueueSelect={this.onQueueSelect}
+                  onChampionSelect={this.onChampionSelect}
+                  onDateSelect={this.onDateSelect}
+                  championData={staticData.champions}
+                  dateFilter={this.state.dateFilter}/>
+                <Matches matches={matches}
+                  version={staticData.version}
+                  limit={matchesToDisplay}
+                  dateFilter={dateFilter}
+                  championFilter={championFilter}
+                  queueFilter={queueFilter}
+                  championData={staticData.champions}
+                  runeData={staticData.runes}/>
+                <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
+                  <h2>Load 10 more matches</h2>
+                </div>
               </div>
             </div>
             <div className="dashboard-body-right-container">
