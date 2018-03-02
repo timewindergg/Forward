@@ -48,7 +48,7 @@ class Pregame extends Component {
 
     if (!assertDataLoaded([
       [currentMatch],
-      [currentMatchDetails, details => Object.keys(details).length >= 10],
+      // [currentMatchDetails, details => Object.keys(details).length >= 10],
       [summoner],
       [staticData]
     ])){

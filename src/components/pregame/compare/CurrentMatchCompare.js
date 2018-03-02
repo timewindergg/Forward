@@ -114,7 +114,6 @@ class CurrentMatchCompare extends Component {
 
     // other champion (blue champ) used for the red team player's compare card
     const otherChampRed = matchAndDetails[selectedBlue] ? compareDataBlue.championID : -1;
-
     // ditto but for the blue team player
     const otherChampBlue = matchAndDetails[selectedRed] ? compareDataRed.championID : -1;
 

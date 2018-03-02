@@ -12,7 +12,7 @@ import LoadingState from '../shared/LoadingState';
 // so we assume people don't have id of -1
 // TODO: this is really bad in terms of managing loading state but oh well
 const initialState = {
-  loadingState: LoadingState.IDLE, // idle or failed
+  loadingState: LoadingState.IDLE, // idle or failed for match
   selectedRed: -1,
   selectedBlue: -1
 };
@@ -47,8 +47,8 @@ const pregame = (state = initialState, action) => {
       return loadSummonerDetailsSuccess(state, action.payload);
     case LOAD_CURRENT_MATCH_FAILED:
       return loadSummonerDetailsFailed(state, action.payload);
-    case LOAD_CURRENT_MATCH_DETAILS_FAILED:
-      return loadSummonerDetailsFailed(state, action.payload);
+    // case LOAD_CURRENT_MATCH_DETAILS_FAILED:
+      // return loadSummonerDetailsFailed(state, action.payload);
     default:
       return state;
   };
