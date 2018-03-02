@@ -43,7 +43,6 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
       dispatch(loadCurrentMatchFailed(error));
     });
   }
-  console.log("FUCK YOU");
 }
 
 // provides detailed info on ONE summoner/champion within a current match
