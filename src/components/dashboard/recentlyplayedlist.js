@@ -20,7 +20,7 @@ class RecentlyPlayedWith extends Component {
                 {
                   Header: "Summoner",
                   accessor: "playerName",
-                  width: 70,
+                  width: 150,
                 }
               ]
             },
@@ -56,7 +56,7 @@ class RecentlyPlayedWith extends Component {
                 {
                   Header: "WR",
                   accessor: "winRate",
-                  width: 60,
+                  width: 40,
                   Cell: props => {
                     return (
                       <div>
@@ -68,9 +68,6 @@ class RecentlyPlayedWith extends Component {
               ]
             }
           ]}
-          style={{
-            height: "300px"
-          }}
           defaultPageSize={players.length}
           showPagination={false}
           resizable={false}

@@ -82,7 +82,7 @@ class ChampionTable extends Component {
                 {
                   Header: "Lane",
                   accessor: "lane",
-                  width: 50,
+                  width: 48,
                 }
               ]
             },
@@ -91,7 +91,7 @@ class ChampionTable extends Component {
                 {
                   Header: "Games",
                   accessor: "games",
-                  width: 50,
+                  width: 48,
                 }
               ]
             },
@@ -100,7 +100,7 @@ class ChampionTable extends Component {
                 {
                   Header: "KDA",
                   accessor: "kda",
-                  width: 50,
+                  width: 45,
                 }
               ]
             },
@@ -109,7 +109,7 @@ class ChampionTable extends Component {
                 {
                   Header: "CS",
                   accessor: "cs",
-                  width: 50,
+                  width: 35,
                 }
               ]
             },
@@ -118,7 +118,7 @@ class ChampionTable extends Component {
                 {
                   Header: "Gold",
                   accessor: "gold",
-                  width: 70,
+                  width: 55,
                 }
               ]
             },
@@ -127,7 +127,7 @@ class ChampionTable extends Component {
                 {
                   Header: "WR",
                   accessor: "winrate",
-                  width: 60,
+                  width: 40,
                   Cell: props => {
                     return (
                       <div>
