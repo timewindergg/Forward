@@ -16,6 +16,7 @@
     "rc-progress": "^2.2.5",
     "rc-slider": "^8.6.0",
     "react": "^16.0.0",
+    "react-autosuggest": "^9.3.4",
     "react-calendar-heatmap": "^1.6.3",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.0.0",

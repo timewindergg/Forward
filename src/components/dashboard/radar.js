@@ -19,7 +19,7 @@ class MatchStatsRadar extends Component {
     const userStats = generateRadarData(matches);
 
     const data = {
-      labels: ['KDA', 'KP', 'Dmg to Objective', 'Gold', 'Vision', 'CS'],
+      labels: ['KDA', 'KP', 'Obj Dmg', 'Gold', 'Vision', 'CS'],
       datasets: [
         {
           data: [userStats[0]/4, userStats[1]/60, userStats[2]/7000, userStats[3]/20000, userStats[4]/8, userStats[5]/70]

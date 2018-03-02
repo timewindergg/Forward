@@ -10,6 +10,7 @@ import './styles/matchlist.css';
 import './styles/championtable.css';
 import './styles/matchfilter.css';
 import './styles/recentlyplayedlist.css';
+import './styles/championfilter.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
@@ -34,10 +35,6 @@ class Dashboard extends Component {
       championFilter: '',
       queueFilter: ''
     }
-  }
-
-  static defaultProps = {
-    gotoPregame: () => {console.log('TODO')}
   }
 
   static propTypes = {
@@ -75,11 +72,6 @@ class Dashboard extends Component {
 
     return (
       <div className='Dashboard'>
-        <Link to={`/l/${summoner.region}/${summoner.name}`}>
-          <button disabled={!isSummonerInMatch}>
-            Go to pregame
-          </button>
-        </Link>
         <div className="content">
           <DashboardHeader summonerInfo={summoner}
             version={staticData.version}
@@ -96,7 +88,8 @@ class Dashboard extends Component {
                   onChampionSelect={this.onChampionSelect}
                   onDateSelect={this.onDateSelect}
                   championData={staticData.champions}
-                  dateFilter={this.state.dateFilter}/>
+                  dateFilter={this.state.dateFilter}
+                  version={staticData.version}/>
                 <Matches matches={matches}
                   version={staticData.version}
                   limit={matchesToDisplay}

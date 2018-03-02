@@ -193,7 +193,7 @@ class Matches extends Component {
           </div>
           <div className="match-stats-detailed">
             <div className="match-stat kp">
-              <span>{`${kp}%`}</span>
+              <span>{`${kp}% kp`}</span>
             </div>
             <div className="match-stat csm">
               <span>{`${roundWithPrecision(matchStats[0]/minutes, 0)} cs/m`}</span>
@@ -202,10 +202,10 @@ class Matches extends Component {
               <span>{`${roundWithPrecision(matchStats[1]/minutes, 0)} gold/m`}</span>
             </div>
             <div className="match-stat gold">
-              <span>{`${matchStats[2]}`}</span>
+              <span>{`${matchStats[2]} dmg`}</span>
             </div>
             <div className="match-stat visionm">
-              <span>{`${roundWithPrecision(matchStats[3]/minutes, 0)} vision/m`}</span>
+              <span>{`${roundWithPrecision(matchStats[3], 0)} vs`}</span>
             </div>
           </div>
         </div>
