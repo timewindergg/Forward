@@ -7,7 +7,9 @@ import CurrentMatchCompare from './compare/CurrentMatchCompare';
 import PregameHeader from './PregameHeader';
 
 import LoadingScreen from '../common/loadingscreen';
+import NotFound from '../common/notfound';
 
+import LoadingState from '../../shared/LoadingState';
 import { assertDataLoaded } from '../../shared/helpers/loaderHelper.js';
 
 import './styles/pre.css';
@@ -20,7 +22,8 @@ class Pregame extends Component {
     staticData: PropTypes.object.isRequired,
 
     selectedRed: PropTypes.number.isRequired,
-    selectedBlue: PropTypes.number.isRequired
+    selectedBlue: PropTypes.number.isRequired,
+    loadingState: PropTypes.string.isRequired
   }
 
   render() {
@@ -34,8 +37,14 @@ class Pregame extends Component {
       currentMatchDetails,
       staticData,
       selectedRed,
-      selectedBlue
+      selectedBlue,
+      loadingState
     } = this.props;
+
+    if (loadingState === LoadingState.FAILED) {
+      return(<NotFound />);
+    }
+
 
     if (!assertDataLoaded([
       [currentMatch],
@@ -43,7 +52,13 @@ class Pregame extends Component {
       [summoner],
       [staticData]
     ])){
-      return(<LoadingScreen/>);
+      const loadingText = `Crunching live game stats, summoners loaded: ${Object.keys(currentMatchDetails).length}/10`
+
+      return(
+        <LoadingScreen
+          loadingText={loadingText}
+        />
+      );
     }
 
     const queueID = !!currentMatch && !!currentMatch.queue ? currentMatch.queue.id : 0;
@@ -51,7 +66,7 @@ class Pregame extends Component {
 
     return (
       <div className='rc-pregame'>
-        <div className="content">
+        <div className='content'>
           <div className={classNames('pregame-container')}>
             <PregameHeader
               redBans={currentMatch.red_bans}

@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ClimbingBoxLoader } from 'react-spinners';
 
-class LoadingScreen extends Component{
-  render(){
+class LoadingScreen extends Component {
+  static defaultProps = {
+    loadingText: 'grinding elo...'
+  }
+
+  static propTypes = {
+    loadingText: PropTypes.string
+  }
+
+  render() {
     return(
       <div className='loadingScreen'>
         <div className='loader'>
@@ -10,7 +19,7 @@ class LoadingScreen extends Component{
             color={'#ff6666'} 
             loading={true} 
           />
-          <h4>Grinding elo ...</h4>
+          <h4>{this.props.loadingText}</h4>
         </div>
       </div>
     );

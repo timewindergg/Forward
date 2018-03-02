@@ -24,6 +24,7 @@ class PregameContainer extends Component {
     currentMatchDetails: PropTypes.object.isRequired,
     selectedRed: PropTypes.number.isRequired,
     selectedBlue: PropTypes.number.isRequired,
+    loadingState: PropTypes.string.isRequired,
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
@@ -85,6 +86,8 @@ class PregameContainer extends Component {
           currentMatchDetails={currentMatchDetails}
           selectedRed={selectedRed}
           selectedBlue={selectedBlue}
+          loadingState={this.props.loadingState}
+
           staticData={staticData}
         />
         <Footer/>
@@ -99,6 +102,7 @@ const mapStateToProps = (state) => ({
   currentMatchDetails: state.match.currentMatchDetails,
   selectedRed: state.pregame.selectedRed,
   selectedBlue: state.pregame.selectedBlue,
+  loadingState: state.pregame.loadingState,
 
   staticData: state.context.staticData
 });
