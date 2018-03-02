@@ -64,7 +64,9 @@ badge icon ne
 
     return (
       <div className={cardClass}>
-        <img src={imageUrl} className='champion-img' />
+        <div className='champion-img-container'>
+          <img src={imageUrl} className='champion-img' />
+        </div>
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>
           <span className='h-text'>{`${tierText} (${LP} LP)`}</span>

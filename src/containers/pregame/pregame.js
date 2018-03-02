@@ -12,6 +12,8 @@ import {
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
 import Pregame from '../../components/pregame/pre';
+import Header from '../../components/common/header';
+import Footer from '../../components/common/footer';
 
 class PregameContainer extends Component {
   static propTypes = {
@@ -75,14 +77,18 @@ class PregameContainer extends Component {
     const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue, staticData} = this.props;
 
     return (
-      <Pregame
-        summoner={summoner}
-        currentMatch={currentMatch}
-        currentMatchDetails={currentMatchDetails}
-        selectedRed={selectedRed}
-        selectedBlue={selectedBlue}
-        staticData={staticData}
-      />
+      <div>
+        <Header/>
+        <Pregame
+          summoner={summoner}
+          currentMatch={currentMatch}
+          currentMatchDetails={currentMatchDetails}
+          selectedRed={selectedRed}
+          selectedBlue={selectedBlue}
+          staticData={staticData}
+        />
+        <Footer/>
+      </div>
     );
   }
 }

@@ -1,52 +1,48 @@
 @import '../../common/styles/colors';
 
 .rc-pregame-header {
-	width: 100%;
-	height: 150px;
-	background-color: #037;
+    width: 100%;
+    height: 80px;
 
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-	.pregame-header-text {
-		text-align: center;
-		margin-left: 40px;
-		margin-right: 40px;
+    .pregame-header-text {
+        text-align: center;
+        margin-left: 40px;
+        margin-right: 40px;
 
-		h2 {
-			color: #fafafa;
-			font-size: 44px;			
-		}
-		
-		.white-text {
-			color: #fafafa;
-		}
+        h2, h4 {            
+            margin: 3px;
+        }
+        
+        .white-text {
+        }
 
-		.grey-text {
-			color: #eee;
-		}
-	}
+        .grey-text {
+        }
+    }
 
-	.pregame-header-ban {
-		flex-direction: row;
-		display: flex;
-	}
+    .pregame-header-ban {
+        flex-direction: row;
+        display: flex;
+    }
 
-	.ban-champ {
-		border: 5px solid;
-		height: 60px;
-		width: 60px;
-		margin-left: 5px;
-		margin-right: 5px;
-		border-radius: 50%;
-	}
+    .ban-champ {
+        border: 3px solid;
+        height: 45px;
+        width: 45px;
+        margin-left: 5px;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
 
-	.red-ban {
-		border-color: @red-dk;
-	}
+    .red-ban {
+        border-color: @red-dk;
+    }
 
-	.blue-ban {
-		border-color: @blue-md;
-	}
+    .blue-ban {
+        border-color: @blue-md;
+    }
 }

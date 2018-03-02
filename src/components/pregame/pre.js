@@ -6,8 +6,6 @@ import CurrentMatchOverview from './overview/CurrentMatchOverview';
 import CurrentMatchCompare from './compare/CurrentMatchCompare';
 import PregameHeader from './PregameHeader';
 
-import Header from '../common/header';
-import Footer from '../common/footer';
 import LoadingScreen from '../common/loadingscreen';
 
 import { assertDataLoaded } from '../../shared/helpers/loaderHelper.js';
@@ -53,34 +51,33 @@ class Pregame extends Component {
 
     return (
       <div className='rc-pregame'>
-        <Header />
-        <div className={classNames('pregame-container', 'content')}>
-          <PregameHeader
-            redBans={currentMatch.red_bans}
-            blueBans={currentMatch.blue_bans}
-            matchCreationTime={currentMatch.creation}
-            queueID={queueID}
-            staticData={staticData}
-          />
-          <CurrentMatchOverview
-            redTeam={currentMatch.red_team}
-            blueTeam={currentMatch.blue_team}
-            matchDetails={currentMatchDetails}
-            queueName={queueName}
-            staticData={staticData}
-          />
-          <div className='pregame-divider'></div>
-          <CurrentMatchCompare
-            currentMatch={currentMatch}
-            currentMatchDetails={currentMatchDetails}
-            selectedRed={selectedRed}
-            selectedBlue={selectedBlue}
-            queueName={queueName}
-            staticData={staticData}
-          />
+        <div className="content">
+          <div className={classNames('pregame-container')}>
+            <PregameHeader
+              redBans={currentMatch.red_bans}
+              blueBans={currentMatch.blue_bans}
+              matchCreationTime={currentMatch.creation}
+              queueID={queueID}
+              staticData={staticData}
+            />
+            <CurrentMatchOverview
+              redTeam={currentMatch.red_team}
+              blueTeam={currentMatch.blue_team}
+              matchDetails={currentMatchDetails}
+              queueName={queueName}
+              staticData={staticData}
+            />
+            <div className='pregame-divider'></div>
+            <CurrentMatchCompare
+              currentMatch={currentMatch}
+              currentMatchDetails={currentMatchDetails}
+              selectedRed={selectedRed}
+              selectedBlue={selectedBlue}
+              queueName={queueName}
+              staticData={staticData}
+            />
+          </div>
         </div>
-
-        <Footer />
       </div>
     );
   }

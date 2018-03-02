@@ -1,49 +1,63 @@
+@import '../../../common/styles/colors.less';
+
 .rc-overview-card-header {
-	height: 60px;
-	width: 100%;
-	display: flex;
-	border-bottom: 1px solid #999;
-	
-	.champion-img {
-		width: 60px;
-		height: 60px;
-		border-radius: 0;
-	}
+    height: 60px;
+    width: 100%;
+    display: flex;
+    border-bottom: 2px solid #999;
+    border-radius: 5px 5px 0 0;
+    align-items: center;
+    
+    .champion-img-container{
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-	.o-header-col {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		padding-left: 10px;
-		padding-top: 5px;
+        .champion-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+    }
 
-		.h-primary-text {
-			font-weight: 600;
-		}
+    .o-header-col {
+        display: flex;
+        height: 60px;
+        flex-grow: 1;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 5px;
 
-		.h-text {
-			font-size: 14px;
-		}
+        .h-primary-text {
+            font-weight: 600;
+        }
 
-		.h-s-text {
-			font-size: 11px;
-		}
-	}
+        .h-text {
+            font-size: 14px;
+        }
+
+        .h-s-text {
+            font-size: 11px;
+        }
+    }
 }
 
 .hred {
-	background-color: #ffbbbb;
+    border-color: @red-dk;
 }
 
 .hblue {
-	background-color: #77bbff;
+    border-color: @blue-dk;
 }
 
 .hsred {
-	background-color: #ff8888  ~'!important';
+    background: #fff;
+    border-color: @red-dk;
 }
 
 .hsblue {
-	background-color: #44aaff ~'!important';
-	// border: 3px solid #333 ~'!important';
+    background: #fff;   
+    border-color: @blue-dk;
 }

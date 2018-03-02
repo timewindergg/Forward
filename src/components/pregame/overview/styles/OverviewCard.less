@@ -1,6 +1,10 @@
+@import '../../../common/styles/colors.less';
+
 .rc-overview-card {
-	border: 1px solid #777;
-	min-height: 450px;
+	border: 2px solid #777;
+	border-radius: 5px;
+	margin: 5px;
+	background: @grey-lt;
 
 	.overview-body {
 		box-sizing: border-box;
@@ -60,19 +64,21 @@
 }
 
 .overview-card-red {
-	background-color: #ffdddd;
+	border-color: @red-dk;
 }
 
 .overview-card-blue {
-	background-color: #99ddff;
+	border-color: @blue-dk;
 }
 
 .overviewsred {
-	background-color: #ffbbbb  ~'!important';
-	// border: 3px solid #333 ~'!important';
+	border-color: @red-dk;
+	background: #fff;
+	box-shadow: 0 0 10px fade(@red-dk, 80%);
 }
 
 .overviewsblue {
-	background-color: #77bbff ~'!important';
-	// border: 3px solid #333 ~'!important';
+	border-color: @blue-dk;	
+	background: #fff;
+	box-shadow: 0 0 10px fade(@blue-dk, 80%);
 }

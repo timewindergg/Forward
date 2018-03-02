@@ -8,13 +8,11 @@ import Tooltip from '../../common/tooltip';
 import './styles/OverviewCard.css';
 
 import {
-  getMasteryIconUrl,
-  getTierIconUrl,
-  getChampionIconUrl,
   getSpellIconUrl,
-  getPerkIconUrl,
-  getPerkStyleIconUrl
+  getPerkIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
+
+import { roundWithPrecision } from '../../../shared/helpers/numberHelper.js';
 
 import runeMappings from '../../../shared/runeMappings.js';
 
@@ -45,7 +43,7 @@ class OverviewCard extends Component {
       <Tooltip
         text={'asdfsdfasfsadfsdfadsfdsafa'}
       >
-        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell0, staticData.version)} alt=''/>
+        <img className='overview-spell icon' src={getSpellIconUrl(summoner.summoner_spell0, staticData.version)} alt=''/>
       </Tooltip>
     );
 
@@ -53,7 +51,7 @@ class OverviewCard extends Component {
       <Tooltip
         text={'asdfsdfasfsadfsdfadsfdsafa fasdfasfadsfsdafasfasdf'}
       >
-        <img className='overview-spell' src={getSpellIconUrl(summoner.summoner_spell1, staticData.version)} alt=''/>
+        <img className='overview-spell icon' src={getSpellIconUrl(summoner.summoner_spell1, staticData.version)} alt=''/>
       </Tooltip>
     );
 
@@ -111,39 +109,38 @@ class OverviewCard extends Component {
 
     const winsLoss = (
       <div className='overview-row'>
-        <span className='overview-heading'>Wins/Losses:</span>
-        <span className='overview-greentext'>{`${details.stats.wins}/`}</span>
-        <span className='overview-redtext'>{details.stats.losses}</span>
+        <span className='overview-greentext'>{details.stats.wins}W</span>
+        <span className='overview-redtext'>{details.stats.losses}L</span>
       </div>
     );
 
     const kda = (
       <div className='overview-row'>
-        <span className='overview-heading'>K/D/A:</span>
+        <span className='overview-heading'>KDA</span>
         <span className='overview-greentext'>{`${details.stats.kills}/`}</span>
         <span className='overview-redtext'>{`${details.stats.deaths}/`}</span>
         <span className='overview-greentext'>{`${details.stats.assists}`}</span>
+        <span className='overview-heading'>({roundWithPrecision((details.stats.kills + details.stats.assists) / details.stats.deaths, 1)})</span>
       </div>
     );
 
     const cs = (
       <div className='overview-row'>
-        <span className='overview-heading'>CS 10/20/30/Total:</span>
+        <span className='overview-heading'>CS@10/20/30</span>
         <br />
-        <span className='overview-text'>{`${details.stats.cs10}/`}</span>}
-        <span className='overview-text'>{details.stats.cs20}/</span>}
-        <span className='overview-text'>{details.stats.cs30}</span>
-        <span className='overview-heading'>{`\t${details.stats.totalCs}`} </span>
+        <span className='overview-text'>{roundWithPrecision(details.stats.cs10, 0)}/</span>
+        <span className='overview-text'>{roundWithPrecision(details.stats.cs20, 0)}/</span>
+        <span className='overview-text'>{roundWithPrecision(details.stats.cs30, 0)}</span>
       </div>
     );
 
     const gold = (
       <div className='overview-row'>
-        <span className='overview-heading'>Gold 10/20/30:</span>
+        <span className='overview-heading'>Gold@10/20/30</span>
         <br />
-        <span className='overview-text'>{`${details.stats.gold10}/`}</span>
-        <span className='overview-text'>{`${details.stats.gold20}/`}</span>
-        <span className='overview-text'>{`${details.stats.gold30}`}</span>
+        <span className='overview-text'>{roundWithPrecision(details.stats.gold10, 0)}/</span>
+        <span className='overview-text'>{roundWithPrecision(details.stats.gold20, 0)}/</span>
+        <span className='overview-text'>{roundWithPrecision(details.stats.gold30, 0)}</span>
       </div>
     );
 
