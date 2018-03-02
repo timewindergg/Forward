@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import OverviewCardHeader from './OverviewCardHeader';
-import Tooltip from '../../common/tooltip';
+import Tooltip from '../../common/tooltip/Tooltip';
+import TOOLTIP_TYPES from '../../../constants/TooltipTypes';
 
 import './styles/OverviewCard.css';
 
@@ -40,19 +41,11 @@ class OverviewCard extends Component {
 
     // TODO: have a placeholder gif
     const spell0 = (
-      <Tooltip
-        text={'asdfsdfasfsadfsdfadsfdsafa'}
-      >
-        <img className='overview-spell icon' src={getSpellIconUrl(summoner.summoner_spell0, staticData.version)} alt=''/>
-      </Tooltip>
+      <img className='overview-spell icon' src={getSpellIconUrl(summoner.summoner_spell0, staticData.version)} alt=''/>
     );
 
     const spell1 = (
-      <Tooltip
-        text={'asdfsdfasfsadfsdfadsfdsafa fasdfasfadsfsdafasfasdf'}
-      >
-        <img className='overview-spell icon' src={getSpellIconUrl(summoner.summoner_spell1, staticData.version)} alt=''/>
-      </Tooltip>
+      <img className='overview-spell icon' src={getSpellIconUrl(summoner.summoner_spell1, staticData.version)} alt=''/>
     );
 
     return (
@@ -73,7 +66,10 @@ class OverviewCard extends Component {
 
       return (
         <Tooltip
-          text={runeData.shortDescription}
+          containerClassName={'overview-rune'}
+          type={TOOLTIP_TYPES.RUNE}
+          id={rune}
+          data={runeData}
         >
           <img className={runeClass} src={getPerkIconUrl(rune, staticData.version)} key={rune} alt=''/>
         </Tooltip>
