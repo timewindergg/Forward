@@ -39,7 +39,7 @@
     }
 
 	.c-header-col {
-		flex-grow: 1;
+		flex-grow: 0;
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
@@ -61,13 +61,14 @@
 	}
 
 	.cch-wr-wrapper {
-		flex-grow: 0;
+		flex-grow: 1;
 		display: flex;
 		justify-content: flex-end;
 
-		max-width: 120px;
+		// max-width: 120px;
 		box-sizing: border-box;
 		padding: 10px;
+		padding-top: 5px;
 	}
 	.cch-wr-wrapper-blue {
 		justify-content: flex-start ~'!important';
@@ -78,25 +79,46 @@
 		flex-direction: column;
 
 		box-sizing: border-box;
-		padding-left: 20px;
-		padding-right: 20px;
-		padding-top: 5px;
 
 		text-align: center;
 
 		.cch-wr-head {
-			
-			
+			font-size: 10pt;
 		}
 
-		.cch-wr-subhead {
+		.cch-progress-bar {
+			width: 120px;
+			margin-top: 5px;
+
+			.CircularProgressbar-path {
+				stroke: @red-dk;
+				stroke-linecap: butt;
+			}
+
+			.CircularProgressbar-text {
+				fill: @grey-dk;
+				font-size: 24px;
+			}
 			
+// 			.CircularProgressbar-path       { stroke: red; }
+// .CircularProgressbar-trail      { stroke: gray; }
+// .CircularProgressbar-text       { fill: yellow; }
+// .CircularProgressbar-background { fill: green; }
 		}
 
-		.cch-wr-rate {
-			font-size: 50px;
-			font-weight: 600;
+		.cch-progress-bar-blue {
+			.CircularProgressbar-path {
+				stroke: @blue-md3 ~'!important';
+			}
+
+			.CircularProgressbar-text {
+			}
 		}
+
+		// .cch-wr-rate {
+		// 	font-size: 50px;
+		// 	font-weight: 600;
+		// }
 	}
 }
 

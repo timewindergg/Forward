@@ -80,7 +80,13 @@ class CompareCard extends Component {
       })}>
         <div className='cch-wr'>
           <span className='cch-wr-head'>Team Win Rate</span>
-          <CircularProgressbar percentage={teamWinRate} />
+          <CircularProgressbar
+            className={classNames({
+              'cch-progress-bar': true,
+              'cch-progress-bar-blue': !this.props.isRed
+            })}
+            percentage={teamWinRate}
+          />
         </div>
       </div>
     );
