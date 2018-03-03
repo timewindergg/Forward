@@ -52,12 +52,10 @@ class Pregame extends Component {
       [summoner],
       [staticData]
     ])){
-      const loadingText = `Crunching live game stats, summoners loaded: ${Object.keys(currentMatchDetails).length}/10`
+      // const loadingText = `Crunching live game stats, summoners loaded: ${Object.keys(currentMatchDetails).length}/10`
 
       return(
-        <LoadingScreen
-          loadingText={loadingText}
-        />
+        <LoadingScreen/>
       );
     }
 

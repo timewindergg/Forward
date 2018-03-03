@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { ClipLoader } from 'react-spinners';
 import _ from 'lodash';
 
 import CompareCardHeader from './CompareCardHeader';
@@ -111,6 +112,22 @@ class CurrentMatchCompare extends Component {
 
     const compareDataRed = matchAndDetails[selectedRed] ? matchAndDetails[selectedRed] : {};
     const compareDataBlue = matchAndDetails[selectedBlue] ? matchAndDetails[selectedBlue] : {};
+
+    // if either compare data is empty we return loading
+    if (!currentMatchDetails[selectedRed] || !currentMatchDetails[selectedBlue]) {
+      return (
+        <div className='rc-current-match-compare'>
+          <div className='cmc-loader'>
+            <ClipLoader
+              size={80}
+              color='#ff6666'
+              loading={true} 
+            />
+            <h4>{`Loading:`}</h4>
+          </div>
+        </div>
+      );
+    }
 
     // other champion (blue champ) used for the red team player's compare card
     const otherChampRed = matchAndDetails[selectedBlue] ? compareDataBlue.championID : -1;
