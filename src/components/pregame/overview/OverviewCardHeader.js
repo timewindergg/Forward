@@ -55,6 +55,7 @@ badge icon ne
     );
 
     const tierText = `${tier} ${division} (${LP} LP)`;
+    const tierIcon = getTierIconUrl(tier);
 
     const nameClass = classNames({
       'h-primary-text': true,
@@ -83,6 +84,7 @@ badge icon ne
       <div className={cardClass}>
         <div className='champion-img-container'>
           <img src={imageUrl} className='champion-img' />
+          <img src={tierIcon} className='tier-img' />
         </div>
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>

@@ -12,16 +12,28 @@
         width: 60px;
         height: 60px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        position: relative;
 
         .champion-img {
             width: 45px;
             height: 45px;
             border-radius: 50%;
-        }
-    }
 
+            position: absolute;
+        }
+        
+        .tier-img {
+            width: 40px;
+            height: auto;
+            position: absolute;
+            top: 37px;
+        }
+
+    }
     .o-header-col {
         display: flex;
         height: 60px;
