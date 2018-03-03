@@ -11,6 +11,9 @@ import {
 
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
+// so why does this only work on a single player
+// import {getUserChampionStats} from '../../apiutils/championStatsAPIUtils';
+
 import Pregame from '../../components/pregame/pre';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
@@ -106,6 +109,13 @@ const mapStateToProps = (state) => ({
 
   staticData: state.context.staticData
 });
+
+
+  // getSummonerInfo: (summonerName, region) => {
+  //   dispatch(getSummonerInfo(summonerName, region, (data) => {
+  //     dispatch(getUserChampionStats(summonerName, region, data.))
+  //   }))
+  // },
 
 const mapDispatchToProps = (dispatch) => ({
   getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
