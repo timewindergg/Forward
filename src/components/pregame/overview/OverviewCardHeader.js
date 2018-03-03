@@ -19,7 +19,7 @@ class OverviewCardHeader extends Component {
     tier: PropTypes.string.isRequired,
     division: PropTypes.string.isRequired,
     LP: PropTypes.number.isRequired,
-    promos: PropTypes.string.isRequired,
+    promos: PropTypes.array.isRequired,
     staticData: PropTypes.object.isRequired,
 
     isRed: PropTypes.bool.isRequired,
@@ -31,7 +31,7 @@ class OverviewCardHeader extends Component {
     tier: '',
     division: '',
     LP: 0,
-    promos: '',
+    promos: [],
   }
 
 /*
@@ -54,12 +54,29 @@ badge icon ne
       }
     );
 
-    const tierText = `${tier} ${division}`;
+    const tierText = `${tier} ${division} (${LP} LP)`;
 
     const nameClass = classNames({
       'h-primary-text': true,
       'h-text': name.length < 15,
       'h-s-text': name.length >= 15
+    });
+
+    const tierClass = classNames({
+      'h-text': tierText.length < 15,
+      'h-s-text': tierText.length >= 15
+    })
+
+    const promoList = promos.map((promo) => {
+      let p = (<i class="far fa-window-minimize promo-i promo-up"></i>);
+
+      if (promo === 'W') {
+        p = (<i class="fas fa-check promo-i promo-win"></i>);
+      } else if (promo === 'L') {
+        p = (<i class="fas fa-times promo-i promo-lose"></i>);
+      }
+
+      return p;
     });
 
     return (
@@ -69,7 +86,12 @@ badge icon ne
         </div>
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>
-          <span className='h-text'>{`${tierText} (${LP} LP)`}</span>
+          <span className={tierClass}>{tierText}</span>
+          {promos.length > 0 &&
+            <div className='promos'>
+              {`Promos: `}{promoList}
+            </div>
+          }
         </div>
       </div>
     );

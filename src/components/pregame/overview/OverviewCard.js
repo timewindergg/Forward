@@ -96,15 +96,19 @@ class OverviewCard extends Component {
       return {
         tier: '',
         division: '',
-        points: 0
+        points: 0,
+        promos: []
       };
     }
 
     const rankedDetails = details.leagues[queueName];
+    const promos = rankedDetails.promos ? rankedDetails.promos : [];
+
     return {
       tier: rankedDetails.tier,
       division: rankedDetails.division,
-      points: rankedDetails.points
+      points: rankedDetails.points,
+      promos: promos
     };
   }
 
@@ -178,7 +182,7 @@ class OverviewCard extends Component {
     const runes = this.renderRunes();
 
     // TODO: think of a different product flow for selecting champions to compare head to head
-    const {tier, division, points} = this.getRankedDetails(details, queueName);
+    const {tier, division, points, promos} = this.getRankedDetails(details, queueName);
 
     return (
       <div className={cardClass} onClick={this.selectSummoner}>
@@ -189,6 +193,7 @@ class OverviewCard extends Component {
 
           tier={tier}
           division={division}
+          promos={promos}
           LP={points}
           isRed={isRed}
           isSelected={isSelected}
