@@ -25,7 +25,7 @@ const Routes = () => (
         <Switch>
           <Route exact path="/" component={HomeContainer} />
           <Route
-            path={`/p/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}(\\w+)`}
+            path={`/p/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}`}
             component={DashboardContainer}
           />
           <Route
@@ -33,11 +33,11 @@ const Routes = () => (
             component={PostgameContainer}
           />
           <Route
-            path={`/l/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}(\\w+)`}
+            path={`/l/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}`}
             component={PregameContainer}
           />
           <Route
-            path={`/c/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}(\\w+)/:${CHAMPION_PARAM}(\\w+)`}
+            path={`/c/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}/:${CHAMPION_PARAM}(\\w+)`}
             component={ChampionStatsContainer}
           />
           <Route path="*" component={NotFoundContainer} />
@@ -47,4 +47,3 @@ const Routes = () => (
 );
 
 export default Routes;
-
