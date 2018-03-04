@@ -69,7 +69,8 @@ class CompareCard extends Component {
           <CircularProgressbar
             className={classNames({
               'cch-progress-bar': true,
-              'cch-progress-bar-blue': !this.props.isRed
+              'cch-progress-bar-blue': !this.props.isRed && winRate !== '--',
+              'cch-progress-bar-empty': winRate === '--'
             })}
             percentage={winRate}
           />
@@ -155,12 +156,14 @@ class CompareCard extends Component {
       <div className={cardClass}>
         <div className='champion-img-container'>
           <img src={imageUrl} className='champion-img' />
-          <img src={tierIcon} className='tier-img' />
         </div>
         <div className={classNames('c-header-col', {'c-header-col-blue': !isRed})}>
           <span className={nameClass}>{compareData.name}</span>
           <span className='h-text'>{championName}</span>
-          <span className='h-text'>{tierText}</span>
+          <span className={classNames('h-text', 'cph-tier', {'cph-tier-blue': !isRed})}>
+            <img src={tierIcon} className='tier-img' />
+            {tierText}
+          </span>
           <span className='h-text'>{`${rankedDetails.points} LP`}</span>
         </div>
         {championWinRate}

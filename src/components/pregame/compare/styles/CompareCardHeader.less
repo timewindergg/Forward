@@ -24,15 +24,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-
             position: absolute;
-        }
-        
-        .tier-img {
-            width: 60px;
-            height: auto;
-            position: absolute;
-            top: 48px;
         }
 
 		margin: 8px;
@@ -54,6 +46,24 @@
 
 		.h-text {
 			font-size: 12pt;
+		}
+
+		.cph-tier {
+			display: flex;
+			height: 20px;
+			align-items: center;
+			justify-content: flex-start;
+			flex-direction: row-reverse;
+
+			.tier-img {
+	            width: 30px;
+	            margin: 0px 5px;
+	        }
+		}
+
+		.cph-tier-blue {
+			justify-content: flex-end ~'!important';
+			flex-direction: row ~'!important';
 		}
 	}
 	.c-header-col-blue {
@@ -99,11 +109,6 @@
 				fill: @grey-dk;
 				font-size: 24px;
 			}
-			
-// 			.CircularProgressbar-path       { stroke: red; }
-// .CircularProgressbar-trail      { stroke: gray; }
-// .CircularProgressbar-text       { fill: yellow; }
-// .CircularProgressbar-background { fill: green; }
 		}
 
 		.cch-progress-bar-blue {
@@ -115,10 +120,14 @@
 			}
 		}
 
-		// .cch-wr-rate {
-		// 	font-size: 50px;
-		// 	font-weight: 600;
-		// }
+		.cch-progress-bar-empty {
+			.CircularProgressbar-path {
+				stroke: #d6d6d6 ~'!important';
+			}
+
+			.CircularProgressbar-text {
+			}	
+		}
 	}
 }
 
