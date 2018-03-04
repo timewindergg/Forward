@@ -55,7 +55,7 @@ class CompareCard extends Component {
 
     let winRate = '--';
     if (totalGames > 0) {
-      winRate = roundWithPrecision(100*winsSelf/totalGames, 2);
+      winRate = roundWithPrecision(100*winsSelf/totalGames, 1);
     }
 
     return (
@@ -66,7 +66,13 @@ class CompareCard extends Component {
         <div className='cch-wr'>
           <span className='cch-wr-head'>Win Rate</span>
           <span className='cch-wr-subhead'>{`(vs. ${otherChampName})`}</span>
-          <span className='cch-wr-rate'>{`${winRate}%`}</span>
+          <CircularProgressbar
+            className={classNames({
+              'cch-progress-bar': true,
+              'cch-progress-bar-blue': !this.props.isRed
+            })}
+            percentage={winRate}
+          />
         </div>
       </div>
     );
@@ -90,18 +96,6 @@ class CompareCard extends Component {
         </div>
       </div>
     );
-
-    // return (
-    //   <div className={classNames({
-    //     'cch-wr-wrapper': true,
-    //     'cch-wr-wrapper-blue': !this.props.isRed
-    //   })}>
-    //     <div className='cch-wr'>
-    //       <span className='cch-wr-head'>Team Win Rate</span>
-    //       <span className='cch-wr-rate'>{`${teamWinRate}%`}</span>
-    //     </div>
-    //   </div>
-    // );
   }
 
   renderEmptyCard = (cardClass) => {
@@ -154,8 +148,8 @@ class CompareCard extends Component {
     const nameClass = classNames('h-primary-text' ,'h-text');
 
     // TODO: use this later?
-    // const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp, championData);
-    const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
+    const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp, championData);
+    // const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
 
     return (
       <div className={cardClass}>
@@ -169,7 +163,7 @@ class CompareCard extends Component {
           <span className='h-text'>{tierText}</span>
           <span className='h-text'>{`${rankedDetails.points} LP`}</span>
         </div>
-        {teamWinRateSection}
+        {championWinRate}
       </div>
     );
   }

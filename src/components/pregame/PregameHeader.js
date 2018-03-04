@@ -77,12 +77,15 @@ class PregameHeader extends Component {
     const banIcons = bans.map((ban) => {
       if (!championData[ban]) {
         return (
+          <div className='ban-container'>
+          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})}></i>
           <img
             key={ban}
             src=''
             alt=''
-            className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
+            className={classNames('ban-champ')}
           />
+          </div>
         );
       }
 

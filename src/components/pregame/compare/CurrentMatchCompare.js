@@ -30,7 +30,10 @@ class CurrentMatchCompare extends Component {
       totalGames: 0
     };
 
+
+
     if (!currentMatch.winrates || Object.keys(compareData).length === 0) {
+      console.log('cant fetch winrates1');
       return placeholder;
     }
 
@@ -38,6 +41,8 @@ class CurrentMatchCompare extends Component {
     const ourChamp = compareData.champion_id;
     const ourWinData = winrates[ourChamp];
     if (!ourWinData || !ourWinData[otherChamp]) {
+      console.log('winrates', winrates, ourChamp, otherChamp);
+      console.log('cant fetch winrates2');
       return placeholder;
     }
 
@@ -130,9 +135,9 @@ class CurrentMatchCompare extends Component {
     }
 
     // other champion (blue champ) used for the red team player's compare card
-    const otherChampRed = matchAndDetails[selectedBlue] ? compareDataBlue.championID : -1;
+    const otherChampRed = matchAndDetails[selectedBlue] ? compareDataBlue.champion_id : -1;
     // ditto but for the blue team player
-    const otherChampBlue = matchAndDetails[selectedRed] ? compareDataRed.championID : -1;
+    const otherChampBlue = matchAndDetails[selectedRed] ? compareDataRed.champion_id : -1;
 
     const rankedDetailsRed = this.getRankedDetails(compareDataRed, queueName);
     const rankedDetailsBlue = this.getRankedDetails(compareDataBlue, queueName);
