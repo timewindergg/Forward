@@ -4,16 +4,31 @@
 	display: inline-flex;
 	background-color: #fafafa;
 	width: 50%;
-	height: 100px;
+	height: 115px;
 
 	border-bottom: 1px solid #999;
 	
-	.champion-img {
-		flex-grow: 0;
-		width: 60px;
-		height: 60px;
-		border-radius: 50%;
-	}
+    .champion-img-container{
+        width: 80px;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        position: relative;
+
+        flex-grow: 0;
+
+        .champion-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+		margin: 8px;
+    }
 
 	.c-header-col {
 		flex-grow: 0;
@@ -26,10 +41,29 @@
 
 		.h-primary-text {
 			font-weight: 600;
+			font-size: 14pt;
 		}
 
 		.h-text {
-			
+			font-size: 12pt;
+		}
+
+		.cph-tier {
+			display: flex;
+			height: 20px;
+			align-items: center;
+			justify-content: flex-start;
+			flex-direction: row-reverse;
+
+			.tier-img {
+	            width: 30px;
+	            margin: 0px 5px;
+	        }
+		}
+
+		.cph-tier-blue {
+			justify-content: flex-end ~'!important';
+			flex-direction: row ~'!important';
 		}
 	}
 	.c-header-col-blue {
@@ -40,6 +74,11 @@
 		flex-grow: 1;
 		display: flex;
 		justify-content: flex-end;
+
+		// max-width: 120px;
+		box-sizing: border-box;
+		padding: 10px;
+		padding-top: 5px;
 	}
 	.cch-wr-wrapper-blue {
 		justify-content: flex-start ~'!important';
@@ -50,24 +89,44 @@
 		flex-direction: column;
 
 		box-sizing: border-box;
-		padding-left: 20px;
-		padding-right: 20px;
-		padding-top: 5px;
 
 		text-align: center;
 
 		.cch-wr-head {
-			
-			
+			font-size: 10pt;
 		}
 
-		.cch-wr-subhead {
-			
+		.cch-progress-bar {
+			width: 120px;
+			margin-top: 5px;
+
+			.CircularProgressbar-path {
+				stroke: @red-dk;
+				stroke-linecap: butt;
+			}
+
+			.CircularProgressbar-text {
+				fill: @grey-dk;
+				font-size: 24px;
+			}
 		}
 
-		.cch-wr-rate {
-			font-size: 50px;
-			font-weight: 600;
+		.cch-progress-bar-blue {
+			.CircularProgressbar-path {
+				stroke: @blue-md3 ~'!important';
+			}
+
+			.CircularProgressbar-text {
+			}
+		}
+
+		.cch-progress-bar-empty {
+			.CircularProgressbar-path {
+				stroke: #d6d6d6 ~'!important';
+			}
+
+			.CircularProgressbar-text {
+			}	
 		}
 	}
 }

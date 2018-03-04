@@ -12,10 +12,10 @@ class MatchLawn extends Component {
 
     const { lawn, onDateSelect} = this.props;
 
-    // Calculate the beginning of 3 months ago.
+    // Calculate the beginning of 4 months ago.
     const d = new Date();
     d.setDate(1); // sets it to the beginning of the month.
-    d.setMonth(d.getMonth() - 4);
+    d.setMonth(d.getMonth() - 5);
 
     const customTooltipDataAttrs = (value) => ({
       'data-tip': !value.date ? 'no data' : `${value.date}: ${value.wins + value.losses} Records: ${value.wins}w-${value.losses}l`
@@ -49,7 +49,7 @@ class MatchLawn extends Component {
               matchOutcome = 'loss';
             }
 
-            return `color-scale-${matchOutcome}-${scale}`;
+            return `color-scale-${matchOutcome} scale${scale}`;
           }}
         />
         <ReactTooltip/>

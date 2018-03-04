@@ -18,21 +18,25 @@
     padding-left: 15px;
   }
 
-  .dashboard-match-heat-map {
-    height: 200px;
-    width: 300px;
-  }
+  
 
   .dashboard-body-graphs {
     display: flex;
     padding: 5px;
+    align-items: center;
+
+    .dashboard-match-heat-map {
+      width: 300px;
+    }
+
+    .dashboard-summoner-radar-stats {
+      width: 150px;
+      height: 150px;
+      padding-left: 10px;
+    }
   }
 
-  .dashboard-summoner-radar-stats {
-    width: 150px;
-    height: 150px;
-    padding-left: 10px;
-  }
+  
 
   .victory {
     background-color: @blue-dk;

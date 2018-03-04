@@ -11,6 +11,9 @@ import {
 
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
+// so why does this only work on a single player
+// import {getUserChampionStats} from '../../apiutils/championStatsAPIUtils';
+
 import Pregame from '../../components/pregame/pre';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
@@ -24,6 +27,7 @@ class PregameContainer extends Component {
     currentMatchDetails: PropTypes.object.isRequired,
     selectedRed: PropTypes.number.isRequired,
     selectedBlue: PropTypes.number.isRequired,
+    loadingState: PropTypes.string.isRequired,
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
@@ -85,6 +89,8 @@ class PregameContainer extends Component {
           currentMatchDetails={currentMatchDetails}
           selectedRed={selectedRed}
           selectedBlue={selectedBlue}
+          loadingState={this.props.loadingState}
+
           staticData={staticData}
         />
         <Footer/>
@@ -99,9 +105,17 @@ const mapStateToProps = (state) => ({
   currentMatchDetails: state.match.currentMatchDetails,
   selectedRed: state.pregame.selectedRed,
   selectedBlue: state.pregame.selectedBlue,
+  loadingState: state.pregame.loadingState,
 
   staticData: state.context.staticData
 });
+
+
+  // getSummonerInfo: (summonerName, region) => {
+  //   dispatch(getSummonerInfo(summonerName, region, (data) => {
+  //     dispatch(getUserChampionStats(summonerName, region, data.))
+  //   }))
+  // },
 
 const mapDispatchToProps = (dispatch) => ({
   getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),

@@ -9,6 +9,52 @@ import {getChampionIconUrlByImage} from '../../shared/helpers/staticImageHelper.
 
 import './styles/PregameHeader.css';
 
+
+class PregameTime extends Component {
+  constructor(props) {
+    super(props);
+
+    const {matchCreationTime} = props;
+    const dateDiff = (Date.now() / 1000) - (matchCreationTime);
+
+    this.state = {
+      diff: dateDiff,
+      timerID: 0
+    };
+  }
+
+  static propTypes = {
+    matchCreationTime: PropTypes.number.isRequired
+  }
+
+  componentWillMount() {
+    this.setState({
+      timerID: setInterval(this.incrementMatchTime, 1000)
+    });
+  }
+
+  incrementMatchTime = () => {
+    this.setState({
+      diff: this.state.diff + 1
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timerID);
+  }
+
+  render() {
+    const diffText = new Date(this.state.diff * 1000).toISOString().substr(11, 8);
+
+    return (
+      <h4 className='rc-pregame-time'>
+        <span className='grey-text'>{`Match Time Elapsed: ${diffText}`}</span>
+      </h4>
+    );
+  }
+}
+
+
 class PregameHeader extends Component {
   static propTypes = {
     redBans: PropTypes.array.isRequired,
@@ -31,24 +77,31 @@ class PregameHeader extends Component {
     const banIcons = bans.map((ban) => {
       if (!championData[ban]) {
         return (
+          <div className='ban-container'>
+          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})}></i>
           <img
             key={ban}
             src=''
             alt=''
-            className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
+            className={classNames('ban-champ')}
           />
+          </div>
         );
       }
 
       const imageUrl = getChampionIconUrlByImage(championData[ban].img.split('.')[0], version);
 
+      // <i class="fas fa-ban"></i>
       return (
-        <img
-          key={ban}
-          src={imageUrl}
-          alt=''
-          className={classNames('ban-champ', {'red-ban': isRed, 'blue-ban': !isRed})}
-        />
+        <div className='ban-container'>
+          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})}></i>
+          <img
+            key={ban}
+            src={imageUrl}
+            alt=''
+            className={classNames('ban-champ')}
+          />
+        </div>
       );
     });
 
@@ -60,14 +113,11 @@ class PregameHeader extends Component {
   }
 
   renderHeaderText = (gameType, gameMap, matchCreationTime) => {
-    const dateDiff = Date.now() - (matchCreationTime * 1000);
-    const diffText = moment(dateDiff / 1000).format('MM:SS');
-
     return (
       <div className='pregame-header-text'>
         <h2 className='white-text'>{gameType}</h2>
         <h4><span className='white-text'>{gameMap}</span></h4>
-        <h4><span className='grey-text'>{`Match Time Elapsed: ${diffText}`}</span></h4>
+        <PregameTime matchCreationTime={matchCreationTime}/>
       </div>
     );
   }

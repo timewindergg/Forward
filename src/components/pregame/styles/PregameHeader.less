@@ -29,20 +29,41 @@
         display: flex;
     }
 
-    .ban-champ {
-        border: 3px solid;
+    .ban-container {
+        position: relative;
+        width: 55px;
         height: 45px;
-        width: 45px;
-        margin-left: 5px;
-        margin-right: 5px;
-        border-radius: 50%;
-    }
 
-    .red-ban {
-        border-color: @red-dk;
-    }
+        .ban-champ {
+            position: absolute;
+            // border: 3px solid;
+            height: 45px;
+            width: 45px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 50%;
+            background-color: @grey-md;
+        }
 
-    .blue-ban {
-        border-color: @blue-md;
+        .red-ban {
+            position: absolute;
+            color: @red-dk;
+
+            left: 22px;
+            top: 18px;
+            transform: scale(4,4);
+            z-index: 1;
+        }
+
+        .blue-ban {
+            position: absolute;
+            color: @blue-md3;
+
+            left: 22px;
+            top: 18px;
+            transform: scale(4.1,4.1);
+            z-index: 1;
+        }
     }
+    
 }

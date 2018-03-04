@@ -17,16 +17,16 @@ import {
 // i.e. the summoners in the match on each team and limited info on their champions/stats
 export const getCurrentMatch = (summonerName, region, onSuccess) => {
   const uri = '/api/get_current_match/';
-  console.log('attempting to get current match', summonerName, region);
+  // console.log('attempting to get current match', summonerName, region);
   const params = {
     summoner_name: summonerName,
     region: region
   };
 
   return (dispatch) => {
-    console.log(dispatch);
+    // console.log(dispatch);
     return axios.get(uri, {params}).then((response) => {
-      console.log('loaded current match', response.data);
+      // console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
 
       const isRed = response.data.red_team.some(red => red.name.toLowerCase() === summonerName.toLowerCase());
@@ -34,7 +34,11 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
         response.data.red_team.find(red => red.name.toLowerCase() === summonerName.toLowerCase()).id :
         response.data.blue_team.find(blue => blue.name.toLowerCase() === summonerName.toLowerCase()).id;
 
+      // pick first player of OTHER TEAM
+      const otherID = isRed ? response.data.blue_team[0].id : response.data.red_team[0].id;
+
       dispatch(selectSummoner(ownID, isRed));
+      dispatch(selectSummoner(otherID, !isRed));
       if (!!onSuccess) {
         onSuccess(response.data);
       }

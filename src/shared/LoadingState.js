@@ -1,7 +1,8 @@
 const LoadingState = {
   IDLE: 'IDLE',
   LOADING: 'LOADING',
-  FINISHED: 'FINISHED'
+  FINISHED: 'FINISHED',
+  FAILED: 'FAILED'
 };
 
 export default LoadingState;

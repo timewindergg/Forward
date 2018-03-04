@@ -35,8 +35,8 @@ export const getSummonerInfo = (summonerName, region, onSuccess) => {
       // (args) => actionName(action params provided by the caller that defines onSuccess)
       // args would be from the API result
       if (!!onSuccess) {
-        console.log('chaining');
-        dispatch(onSuccess());
+        // console.log('chaining');
+        onSuccess(response.data);
       }
       // TODO: dispatch action here
     }).catch((error) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { ClipLoader } from 'react-spinners';
 
 import OverviewCardHeader from './OverviewCardHeader';
 import Tooltip from '../../common/tooltip/Tooltip';
@@ -16,6 +17,9 @@ import {
 import { roundWithPrecision } from '../../../shared/helpers/numberHelper.js';
 
 import runeMappings from '../../../shared/runeMappings.js';
+
+
+
 
 class OverviewCard extends Component {
   constructor(props) {
@@ -88,20 +92,50 @@ class OverviewCard extends Component {
       return {
         tier: '',
         division: '',
-        points: 0
+        points: 0,
+        promos: []
       };
     }
 
     const rankedDetails = details.leagues[queueName];
+    const promos = rankedDetails.promos ? rankedDetails.promos : [];
+
     return {
       tier: rankedDetails.tier,
       division: rankedDetails.division,
-      points: rankedDetails.points
+      points: rankedDetails.points,
+      promos: promos
     };
   }
 
   render() {
     const {summoner, details, isRed, isSelected, queueName, staticData} = this.props;
+
+    // if details is empty then show a loading card
+    const colorClass = isRed ? 'overview-card-red' : 'overview-card-blue';
+
+    const cardClass = classNames(
+      'rc-overview-card',
+      colorClass, {
+        overviewsred: isRed && isSelected,
+        overviewsblue: !isRed && isSelected
+      }
+    );
+
+    if (!details || Object.keys(details).length === 0) {
+      return (
+        <div className={cardClass}>
+          <div className='oc-loader'>
+            <ClipLoader
+              size={80}
+              color={isRed ? '#ff6666' : '#4488ff'} 
+              loading={true} 
+            />
+            <h4>{`Loading:`}</h4>
+          </div>
+        </div>
+      );
+    }
 
     const winsLoss = (
       <div className='overview-row'>
@@ -143,18 +177,8 @@ class OverviewCard extends Component {
     const summonerSpells = this.renderSummonerSpells();
     const runes = this.renderRunes();
 
-    const colorClass = isRed ? 'overview-card-red' : 'overview-card-blue';
-
-    const cardClass = classNames(
-      'rc-overview-card',
-      colorClass, {
-        overviewsred: isRed && isSelected,
-        overviewsblue: !isRed && isSelected
-      }
-    );
-
     // TODO: think of a different product flow for selecting champions to compare head to head
-    const {tier, division, points} = this.getRankedDetails(details, queueName);
+    const {tier, division, points, promos} = this.getRankedDetails(details, queueName);
 
     return (
       <div className={cardClass} onClick={this.selectSummoner}>
@@ -165,6 +189,7 @@ class OverviewCard extends Component {
 
           tier={tier}
           division={division}
+          promos={promos}
           LP={points}
           isRed={isRed}
           isSelected={isSelected}

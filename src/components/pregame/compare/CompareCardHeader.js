@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import CircularProgressbar from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 import './styles/CompareCardHeader.css';
 
+
+
 import {
-  getTierIconUrl, // TODO: use later
+  getTierIconUrl,
   getChampionIconUrlByImage,
 } from '../../../shared/helpers/staticImageHelper.js';
 
@@ -50,7 +55,7 @@ class CompareCard extends Component {
 
     let winRate = '--';
     if (totalGames > 0) {
-      winRate = roundWithPrecision(100*winsSelf/totalGames, 2);
+      winRate = roundWithPrecision(100*winsSelf/totalGames, 1);
     }
 
     return (
@@ -61,7 +66,14 @@ class CompareCard extends Component {
         <div className='cch-wr'>
           <span className='cch-wr-head'>Win Rate</span>
           <span className='cch-wr-subhead'>{`(vs. ${otherChampName})`}</span>
-          <span className='cch-wr-rate'>{`${winRate}%`}</span>
+          <CircularProgressbar
+            className={classNames({
+              'cch-progress-bar': true,
+              'cch-progress-bar-blue': !this.props.isRed && winRate !== '--',
+              'cch-progress-bar-empty': winRate === '--'
+            })}
+            percentage={winRate}
+          />
         </div>
       </div>
     );
@@ -75,7 +87,13 @@ class CompareCard extends Component {
       })}>
         <div className='cch-wr'>
           <span className='cch-wr-head'>Team Win Rate</span>
-          <span className='cch-wr-rate'>{`${teamWinRate}%`}</span>
+          <CircularProgressbar
+            className={classNames({
+              'cch-progress-bar': true,
+              'cch-progress-bar-blue': !this.props.isRed
+            })}
+            percentage={teamWinRate}
+          />
         </div>
       </div>
     );
@@ -93,7 +111,16 @@ class CompareCard extends Component {
   }
 
   render() {
-    const {isRed, compareData,rankedDetails, teamWinRate, staticData} = this.props;
+    const {
+      isRed,
+      compareData,
+      rankedDetails,
+      teamWinRate,
+      staticData,
+      winsSelf,
+      totalGames,
+      otherChamp
+    } = this.props;
 
     // const colorClass = isRed ? 'compare-card-red' : 'compare-card-blue';
     // const cardClass = classNames(
@@ -117,23 +144,29 @@ class CompareCard extends Component {
       championData[compareData.champion_id].name : '';
 
     const tierText = `${rankedDetails.tier} ${rankedDetails.division}`;
+    const tierIcon = getTierIconUrl(rankedDetails.tier);
 
     const nameClass = classNames('h-primary-text' ,'h-text');
 
     // TODO: use this later?
-    // const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp, championData);
-    const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
+    const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp, championData);
+    // const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
 
     return (
       <div className={cardClass}>
-        <img src={imageUrl} className='champion-img' />
+        <div className='champion-img-container'>
+          <img src={imageUrl} className='champion-img' />
+        </div>
         <div className={classNames('c-header-col', {'c-header-col-blue': !isRed})}>
           <span className={nameClass}>{compareData.name}</span>
           <span className='h-text'>{championName}</span>
-          <span className='h-text'>{tierText}</span>
+          <span className={classNames('h-text', 'cph-tier', {'cph-tier-blue': !isRed})}>
+            <img src={tierIcon} className='tier-img' />
+            {tierText}
+          </span>
           <span className='h-text'>{`${rankedDetails.points} LP`}</span>
         </div>
-        {teamWinRateSection}
+        {championWinRate}
       </div>
     );
   }
