@@ -185,10 +185,12 @@ class CurrentMatchCompare extends Component {
           <CompareCardBottom
             isRed={true}
             compareData={compareDataRed}
+            staticData={staticData}
           />
           <CompareCardBottom
             isRed={false}
             compareData={compareDataBlue}
+            staticData={staticData}
           />
         </div>
       </div>

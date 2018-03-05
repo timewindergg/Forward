@@ -13,6 +13,12 @@ import {
   selectSummoner
 } from '../actions/pregameActions';
 
+import {cacheSummoner} from '../actions/contextActions';
+
+import {
+  normalizeName
+} from '../shared/helpers/stringHelper';
+
 // provides an overview of the current match
 // i.e. the summoners in the match on each team and limited info on their champions/stats
 export const getCurrentMatch = (summonerName, region, onSuccess) => {
@@ -29,16 +35,25 @@ export const getCurrentMatch = (summonerName, region, onSuccess) => {
       // console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
 
-      const isRed = response.data.red_team.some(red => red.name.toLowerCase() === summonerName.toLowerCase());
+      const nSummonerName = normalizeName(summonerName);
+      const {red_team, blue_team} = response.data;
+
+      const isRed = red_team.some(red => normalizeName(red.name) === nSummonerName);
       const ownID = isRed ?
-        response.data.red_team.find(red => red.name.toLowerCase() === summonerName.toLowerCase()).id :
-        response.data.blue_team.find(blue => blue.name.toLowerCase() === summonerName.toLowerCase()).id;
+        red_team.find(red => normalizeName(red.name) === nSummonerName).id :
+        blue_team.find(blue => normalizeName(blue.name) === nSummonerName).id;
 
       // pick first player of OTHER TEAM
-      const otherID = isRed ? response.data.blue_team[0].id : response.data.red_team[0].id;
+      const otherID = isRed ? blue_team[0].id : red_team[0].id;
 
       dispatch(selectSummoner(ownID, isRed));
       dispatch(selectSummoner(otherID, !isRed));
+
+      // cache both the red team and the blue team
+      [...red_team, ...blue_team].forEach((s) => {
+        dispatch(cacheSummoner(s.name, region, s.id));
+      });
+
       if (!!onSuccess) {
         onSuccess(response.data);
       }
@@ -55,7 +70,8 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
   const params = {
     summoner_name: summonerName,
     region: region,
-    champion_id: championId
+    champion_id: championId,
+    id: summonerID
   };
 
   return (dispatch) => {

@@ -2,6 +2,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 
 import {loadSummonerSuccess, loadSummonerFailed} from '../actions/summonerActions';
+import {cacheSummoner} from '../actions/contextActions';
 
 import {
   addRecentSearch,
@@ -26,10 +27,14 @@ export const getSummonerInfo = (summonerName, region, onSuccess) => {
     return axios.get(getURI, {params}).then((response) => {
       console.log('loaded summoner', response.data);
       // now add this to recent searches!
-      addRecentSearch(summonerName, region, response.data.icon);
+      addRecentSearch(response.data.name, region, response.data.icon);
       console.log('RECENT SEARCHES: ', decodeRecentSearches());
 
       dispatch(loadSummonerSuccess(response.data));
+
+      dispatch(cacheSummoner(response.data.name, region, response.data.user_id));
+
+      // populate name cache?
 
       // onSuccess is an object like such
       // (args) => actionName(action params provided by the caller that defines onSuccess)

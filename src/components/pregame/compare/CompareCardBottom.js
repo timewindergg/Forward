@@ -8,8 +8,6 @@ import {
   getItemIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
-import {IMG_VER} from '../../../constants/Settings';
-
 class CompareCardBottom extends Component {
   constructor(props) {
     super(props);
@@ -17,16 +15,17 @@ class CompareCardBottom extends Component {
 
   static propTypes = {
     isRed: PropTypes.bool.isRequired,
-    compareData: PropTypes.object.isRequired
+    compareData: PropTypes.object.isRequired,
+    staticData: PropTypes.object.isRequired
   }
 
   renderItems = (itemType, isRed) => {
-    const {compareData} = this.props;
+    const {compareData, staticData} = this.props;
     const isDetailsLoaded = !!compareData.build;
 
     const items = isDetailsLoaded ? compareData.build[itemType].map((item) => {
       return (
-        <img className='compare-item' src={getItemIconUrl(item, IMG_VER)} key={item} alt=''/>
+        <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
       );
     }) : <img className='compare-item' src='' alt=''/>;
 

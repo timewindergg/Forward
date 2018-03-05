@@ -52,6 +52,7 @@ class PregameContainer extends Component {
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
+      // TODO: clear current match?
       getSummonerInfo(summonerName, region);
       getCurrentMatch(summonerName, region);
     }
