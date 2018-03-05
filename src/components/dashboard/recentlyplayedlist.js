@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-
+import { Link } from 'react-router-dom';
 
 class RecentlyPlayedWith extends Component {
   render() {
-    const { matches } = this.props;
+    const { matches, region } = this.props;
 
     const players = getTopPlayed(matches, 5);
 
@@ -21,6 +21,15 @@ class RecentlyPlayedWith extends Component {
                   Header: "Summoner",
                   accessor: "playerName",
                   width: 150,
+                  Cell: props => {
+                    return (
+                      <Link to={`/p/${region}/${props.value}`}>
+                        <div>
+                          {props.value}
+                        </div>
+                      </Link>
+                    );
+                  }
                 }
               ]
             },

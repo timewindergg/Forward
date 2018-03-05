@@ -17,6 +17,7 @@ import './styles/summoners.css';
 import './styles/perks.css';
 import './styles/items.css';
 import './styles/bargraphs.css';
+import '../common/styles/summonerheader.css';
 
 import ChampionStatsBarGraphs from './bargraph';
 import ChampionStatsRadarGraph from './radargraph';
@@ -26,6 +27,7 @@ import Perks from './perks';
 import Items from './items';
 import ChampionMatchups from './championmatchups';
 import ChampionProfile from './championprofile';
+import SummonerHeader from '../common/summonerheader';
 
 import LoadingScreen from '../common/loadingscreen';
 
@@ -89,8 +91,8 @@ class ChampionStats extends Component {
     return (
       <div className='ChampionStats'>
         <div className='content'>
-          <div className="summonerHeader">
-          </div>
+          <SummonerHeader summonerInfo={summoner}
+            staticData={staticData}/>
           <div className="champion-stats-container">
             <div className="left-container">
               <ChampionProfile

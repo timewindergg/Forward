@@ -5,12 +5,12 @@ import Moment from 'react-moment';
 
 import './styles/dash.css';
 import './styles/lawn.css';
-import './styles/profileheader.css';
 import './styles/matchlist.css';
 import './styles/championtable.css';
 import './styles/matchfilter.css';
 import './styles/recentlyplayedlist.css';
 import './styles/championfilter.css';
+import '../common/styles/summonerheader.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
@@ -18,10 +18,10 @@ import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 import Matches from './matches';
 import MatchStatsRadar from './radar';
 import ChampionTable from './championtable';
-import DashboardHeader from './dashboardheader';
 import MatchLawn from './matchlawn';
 import MatchFilter from './matchfilter';
 import RecentlyPlayedWith from './recentlyplayedlist';
+import SummonerHeader from '../common/summonerheader';
 
 import LoadingScreen from '../common/loadingscreen';
 
@@ -63,6 +63,7 @@ class Dashboard extends Component {
 
   render() {
     const {summoner, matches, currentMatch, staticData} = this.props;
+    console.log(matches);
     const {matchesToDisplay, dateFilter, championFilter, queueFilter} = this.state;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
 
@@ -73,8 +74,7 @@ class Dashboard extends Component {
     return (
       <div className='Dashboard'>
         <div className="content">
-          <DashboardHeader summonerInfo={summoner}
-            version={staticData.version}
+          <SummonerHeader summonerInfo={summoner}
             staticData={staticData}/>
           <div className="dashboard-body">
             <div className="dashboard-body-left-container">
@@ -109,7 +109,7 @@ class Dashboard extends Component {
                 summonerRegion={summoner.region}
                 version={staticData.version}
                 championData={staticData.champions}/>
-              <RecentlyPlayedWith matches={matches}/>
+              <RecentlyPlayedWith matches={matches} region={summoner.region}/>
             </div>
           </div>
         </div>

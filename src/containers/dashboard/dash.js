@@ -50,6 +50,22 @@ class DashboardContainer extends Component {
     }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const curSummoner = this.props.match.params[SUMMONER_PARAM];
+    const newSummoner = nextProps.match.params[SUMMONER_PARAM];
+    const curRegion = this.props.match.params[REGION_PARAM];
+    const newRegion = nextProps.match.params[REGION_PARAM];
+
+    if (curSummoner !== newSummoner) {
+      this.props.getSummonerInfo(newSummoner, newRegion);
+      this.props.getSummonerMatchHistory(newSummoner,newRegion, MH_OFFSET, MH_SIZE);
+      this.props.getCurrentMatch(newSummoner, newRegion);
+    }
+
+    if (newRegion !== curRegion) {
+      this.props.getStaticData(newRegion);
+    }
+  }
 
   render() {
     const {summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
