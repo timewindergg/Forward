@@ -10,16 +10,21 @@ import {
   // RECENT_SEARCHES_KEY
 } from '../shared/helpers/cookieHelper';
 
-export const getSummonerInfo = (summonerName, region, onSuccess) => {
+export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
   const getURI = `/api/get_summoner/`;
   const params = {
     summoner_name: summonerName,
     region: region
   };
 
-  const formData = new FormData();
-  formData.append('summoner_name', summonerName);
-  formData.append('region', region);
+  if (id !== undefined) {
+    console.log('ID found?');
+    params.id = id;
+  }
+
+  // const formData = new FormData();
+  // formData.append('summoner_name', summonerName);
+  // formData.append('region', region);
 
   // workaround until Peter abstracts this logic away
   return (dispatch) => {
@@ -28,13 +33,10 @@ export const getSummonerInfo = (summonerName, region, onSuccess) => {
       console.log('loaded summoner', response.data);
       // now add this to recent searches!
       addRecentSearch(response.data.name, region, response.data.icon);
-      console.log('RECENT SEARCHES: ', decodeRecentSearches());
 
       dispatch(loadSummonerSuccess(response.data));
-
       dispatch(cacheSummoner(response.data.name, region, response.data.user_id));
 
-      // populate name cache?
 
       // onSuccess is an object like such
       // (args) => actionName(action params provided by the caller that defines onSuccess)

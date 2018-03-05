@@ -12,9 +12,13 @@ import {getStaticData} from '../../apiutils/contextAPIUtils';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
 
+import {getIDFromCache} from '../../shared/helpers/cacheHelper';
+
 class ChampionStatsContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router ONLY
+    cache: PropTypes.object.isRequired,
+
     summoner: PropTypes.object.isRequired,
     userChampionStats: PropTypes.object.isRequired,
     staticData: PropTypes.object.isRequired,
@@ -25,10 +29,11 @@ class ChampionStatsContainer extends Component {
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo, getUserChampionStats, getStaticData, staticData} = this.props;
+    const {match, cache, summoner, getSummonerInfo, getUserChampionStats, getStaticData, staticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     const championName = match.params[CHAMPION_PARAM];
+    const id = getIDFromCache(cache, summonerName, region);
 
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
@@ -36,9 +41,9 @@ class ChampionStatsContainer extends Component {
       getStaticData(region);
     }
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
-      getSummonerInfo(summonerName, region);
+      getSummonerInfo(summonerName, region, id);
     }
-    getUserChampionStats(summonerName, region, championName);
+    getUserChampionStats(summonerName, region, id, championName);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -49,8 +54,10 @@ class ChampionStatsContainer extends Component {
     const curChampion = this.props.match.params[CHAMPION_PARAM];
     const newChampion = nextProps.match.params[CHAMPION_PARAM];
 
+    const newID = getIDFromCache(nextProps.cache, newSummoner, newRegion);
+
     if (curSummoner !== newSummoner) {
-      this.props.getSummonerInfo(newSummoner, newRegion);
+      this.props.getSummonerInfo(newSummoner, newRegion, newID);
     }
 
     if (newRegion !== curRegion) {
@@ -58,7 +65,7 @@ class ChampionStatsContainer extends Component {
     }
 
     if (curChampion !== newChampion) {
-      this.props.getUserChampionStats(newSummoner, newRegion, newChampion);
+      this.props.getUserChampionStats(newSummoner, newRegion, newID, newChampion);
     }
   }
 
@@ -79,6 +86,7 @@ class ChampionStatsContainer extends Component {
 
 // maps states from the reducers to the component
 const mapStateToProps = (state) => ({
+  cache: state.context.IDCache,
   summoner: state.context.summoner,
   userChampionStats: state.championStats.championStats,
   staticData: state.context.staticData,
@@ -86,8 +94,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
-    getUserChampionStats: (summonerName, region, championName) => dispatch(getUserChampionStats(summonerName, region, championName)),
+    getSummonerInfo: (summonerName, region, id) => dispatch(getSummonerInfo(summonerName, region)),
+    getUserChampionStats: (summonerName, region, id, championName) => dispatch(getUserChampionStats(summonerName, region, championName)),
     getStaticData: (region) => dispatch(getStaticData(region))
   };
 };
