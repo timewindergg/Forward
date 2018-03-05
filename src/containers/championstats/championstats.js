@@ -56,6 +56,7 @@ class ChampionStatsContainer extends Component {
 
     const newID = getIDFromCache(nextProps.cache, newSummoner, newRegion);
 
+
     if (curSummoner !== newSummoner) {
       this.props.getSummonerInfo(newSummoner, newRegion, newID);
     }
@@ -94,8 +95,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSummonerInfo: (summonerName, region, id) => dispatch(getSummonerInfo(summonerName, region)),
-    getUserChampionStats: (summonerName, region, id, championName) => dispatch(getUserChampionStats(summonerName, region, championName)),
+    getSummonerInfo: (summonerName, region, id) => dispatch(getSummonerInfo(summonerName, region, id)),
+    getUserChampionStats: (summonerName, region, id, championName) => dispatch(getUserChampionStats(summonerName, region, id, championName)),
     getStaticData: (region) => dispatch(getStaticData(region))
   };
 };

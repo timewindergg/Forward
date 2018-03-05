@@ -14,12 +14,12 @@ export const getIDFromCache = (cache, name, region) => {
   const nn = normalizeName(name);
   const nr = normalizeName(region);
 
-  // console.log('CACHE INFO:', cache, nn, nr, !!cache[nr]);
-  // if (!!cache[nr]) {
-  //   console.log('DEEP CACHE', cache[nr], cache[nr][nn]);
-  // }
+  console.log('CACHE INFO:', cache, nn, nr, !!cache[nr]);
+  if (!!cache[nr]) {
+    console.log('DEEP CACHE', cache[nr], cache[nr][nn]);
+  }
   if (!hasID(cache, nn, nr)) {
-    // console.log('no mapping');
+    console.log('no mapping');
     return undefined;
   }
 
