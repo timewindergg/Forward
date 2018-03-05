@@ -26,7 +26,7 @@ const createChampionListData = (championLists, championData, version) => {
       id: c.champ_id,
       name: championData[c.champ_id].name,
       games: c.total_games,
-      kda: roundWithPrecision((c.kills + c.assists) / c.deaths, 2),
+      kda: roundWithPrecision(c.deaths === 0 ? (c.kills + c.assists) : (c.kills + c.assists) / c.deaths, 2),
       cs: roundWithPrecision(c.total_cs / c.total_games, 0),
       winrate: Math.round(c.wins / c.total_games * 100),
       gold: Math.round(c.gold / c.total_games),
