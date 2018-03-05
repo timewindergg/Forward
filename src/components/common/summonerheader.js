@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { numberFormatter} from '../../shared/helpers/numberHelper.js';
 
@@ -18,6 +19,9 @@ class SummonerHeader extends Component {
           <div className="summoner-profile">
             <span className="summoner-name">{summonerInfo.name}</span>
             <span className="summoner-level">{`Lv ${summonerInfo.level}`}</span>
+            <Link to={`/l/${summonerInfo.region}/${summonerInfo.name}`}>
+              <button>Live Game</button>
+            </Link>
           </div>
           {this.renderRankedTiers(summonerInfo)}
           <div className="top-champion-masteries">

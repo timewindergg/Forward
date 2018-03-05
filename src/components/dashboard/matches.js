@@ -11,7 +11,7 @@ import { getChampionIconUrlByImage,
   getPerkStyleIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 
-import { getKDA, getKillParticipation } from '../../shared/helpers/leagueUtilities';
+import { getKDA, getKillParticipation, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper';
 
 import Moment from 'react-moment';
@@ -237,10 +237,6 @@ class Matches extends Component {
   }
 }
 
-const strPadLeft = (string, pad, length) => {
-  return (new Array(length+1).join(pad)+string).slice(-length);
-}
-
 // returns [cs, gold, damage to objective, visison score]
 const getUserMatchStats = (match) => {
   // set the initial stats to cs, gold and append other ones later.
@@ -273,22 +269,6 @@ const fetchRoleIconName = (lane, role) => {
       return 'Mid';
   }
 }
-
-// Returns an array of the kills, deaths and assists.
-const getTeamKDAStat = (team) => {
-  let kills = 0;
-  let deaths = 0;
-  let assists = 0;
-
-  team.participants.forEach((player) => {
-    kills += player.stats.kills;
-    deaths += player.stats.deaths;
-    assists += player.stats.assists;
-  });
-
-  return [kills, deaths, assists];
-}
-
 
 // Takes in team data and return a list of the following structure where the first element is the blue team.
 // Note that the players are sorted top -> jungle -> mid -> adc -> support.

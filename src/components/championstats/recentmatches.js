@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 import {
   getChampionIconUrlByImage,
@@ -7,6 +9,11 @@ import {
   getPerkIconUrl,
   getPerkStyleIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
+
+  // Import required mappings.
+import QueueIdMappings from '../../shared/queueIdMappings.js';
+import { getKDA, getKillParticipation, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
+import { roundWithPrecision } from '../../shared/helpers/numberHelper';
 
 class RecentMatch extends Component{
 
@@ -40,20 +47,8 @@ class RecentMatch extends Component{
 
     return(
       <div className="RecentMatch" key={m.match_id}>
-        <div className="matchInfo">
-          <div className="champion-stats-match-type">
-            {m.game_type}
-          </div>
-          <div className="time-stamp">
-            <Moment fromNow>{new Date(0).setUTCSeconds(m.timestamp)}</Moment>
-          </div>
-          <div className="champion-stats-match-result">
-            {m.won ? 'Victory' : 'Defeat'}
-          </div>
-          <div className="champion-stats-match-length">
-            <Moment format="mm:ss">{m.duration * 1000}</Moment>
-          </div>
-        </div>
+        <div className={classNames({"result-indicator": true, 'victory': m.team === m.winner, 'defeat': m.team !== m.winner})}></div>
+        {this.renderMatchHeader(m)}
         <div className="champion-stats-match-setting-info summonerInfo">
           <div className="runeSummIcons">
             <div className="summonerSpells">
@@ -71,11 +66,13 @@ class RecentMatch extends Component{
               {m.level}
             </div>
           </div>
-          <div>
-            <div className="stats">
-              <span className="stat cs">{m.cs}</span>
-              <span className="stat score">{m.kills}/{m.deaths}/{m.assists}</span>
+          <div className="stats">
+            <span className="stat cs">{`${m.cs} CS`}</span>
+            <div className="stat score">
+              <span>{`${m.kills}/${m.deaths}/${m.assists}`}</span>
+              <span>{`${roundWithPrecision(getKDA(m.kills, m.deaths, m.assists), 2)} KDA`}</span>
             </div>
+
           </div>
           <div className="itemSet">
             <img className="itemIcon icon" src={getItemIconUrl(m.item0, version)}/>
@@ -86,6 +83,55 @@ class RecentMatch extends Component{
             <img className="itemIcon icon" src={getItemIconUrl(m.item5, version)}/>
             <img className="itemIcon icon" src={getItemIconUrl(m.item6, version)}/>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderMatchHeader(match) {
+    // Set up to get relative time.
+    const gameDate = new Date(0);
+    gameDate.setUTCSeconds(match.timestamp);
+
+    let duration = match.duration;
+    // Format the game duration.
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+
+    duration = strPadLeft(minutes, '0', 2) +  ':' + strPadLeft(seconds, '0', 2);
+
+    let team = match.team === 100 ? match.blue_team : match.red_team;
+
+    team = JSON.parse(team);
+
+    const teamKDA = getTeamKDAStat(team);
+
+    return (
+      <div className="item-header">
+        <div className="match-info">
+          <span className="queue">{QueueIdMappings[match.queue_id].name}</span>
+          <Moment className="timestamp" fromNow>{gameDate}</Moment>
+          <span className="duration">{duration}</span>
+        </div>
+        <div className="team-scores">
+          <span>{`${teamKDA[0]}/${teamKDA[1]}/${teamKDA[2]}`}</span>
+        </div>
+        <div className="team-objectives">
+          <div className="icon-baron">
+          </div>
+          <span>{team.baronKills}</span>
+          <div className="icon-dragon">
+          </div>
+          <span>{team.dragonKills}</span>
+          <div className="icon-tower">
+          </div>
+          <span>{team.towerKills}</span>
+        </div>
+        <div className="match-postgame">
+          <Link to={`/m/${match.region}/${match.match_id}`}>
+            <span>Analysis</span>
+            <i className="fas fa-angle-right"></i>
+          </Link>
         </div>
       </div>
     );
@@ -112,5 +158,7 @@ class RecentMatches extends Component {
     })
   }
 }
+
+
 
 export default RecentMatches;
