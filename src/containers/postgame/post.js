@@ -23,7 +23,7 @@ class PostgameContainer extends Component {
     const {match, timeline, staticData, getMatchTimeline, getStaticData} = this.props;
     const matchId = match.params[MATCH_PARAM];
     const region = match.params[REGION_PARAM];
-    
+
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(timeline).length === 0 ) {
@@ -32,6 +32,21 @@ class PostgameContainer extends Component {
 
     if (Object.keys(staticData).length === 0) {
       getStaticData(region);
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const curMatch = this.props.match.params[MATCH_PARAM];
+    const newMatch = nextProps.match.params[MATCH_PARAM];
+    const curRegion = this.props.match.params[REGION_PARAM];
+    const newRegion = nextProps.match.params[REGION_PARAM];
+
+    if (newRegion !== curRegion) {
+      this.props.getStaticData(newRegion);
+    }
+
+    if (curMatch !== newMatch) {
+      this.props.getMatchTimeline(newMatch, newRegion);
     }
   }
 

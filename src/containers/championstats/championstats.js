@@ -41,6 +41,27 @@ class ChampionStatsContainer extends Component {
     getUserChampionStats(summonerName, region, championName);
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const curSummoner = this.props.match.params[SUMMONER_PARAM];
+    const newSummoner = nextProps.match.params[SUMMONER_PARAM];
+    const curRegion = this.props.match.params[REGION_PARAM];
+    const newRegion = nextProps.match.params[REGION_PARAM];
+    const curChampion = this.props.match.params[CHAMPION_PARAM];
+    const newChampion = nextProps.match.params[CHAMPION_PARAM];
+
+    if (curSummoner !== newSummoner) {
+      this.props.getSummonerInfo(newSummoner, newRegion);
+    }
+
+    if (newRegion !== curRegion) {
+      this.props.getStaticData(newRegion);
+    }
+
+    if (curChampion !== newChampion) {
+      this.props.getUserChampionStats(newSummoner, newRegion, newChampion);
+    }
+  }
+
   render() {
     const {summoner, userChampionStats, staticData} = this.props;
     return (
