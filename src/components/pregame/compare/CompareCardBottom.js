@@ -4,6 +4,9 @@ import classNames from 'classnames';
 
 import './styles/CompareCardBottom.css';
 
+import Tooltip from '../../common/tooltip/Tooltip';
+import TOOLTIP_TYPES from '../../../constants/TooltipTypes';
+
 import {
   getItemIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
@@ -19,13 +22,25 @@ class CompareCardBottom extends Component {
     staticData: PropTypes.object.isRequired
   }
 
+  // staticData[string(item.id)]
   renderItems = (itemType, isRed) => {
     const {compareData, staticData} = this.props;
     const isDetailsLoaded = !!compareData.build;
 
     const items = isDetailsLoaded ? compareData.build[itemType].map((item) => {
+      // return (
+      //   <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
+      // );
+      const itemData = staticData.items[item.toString()];
       return (
-        <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
+        <Tooltip
+          containerClassName={'overview-rune'}
+          type={TOOLTIP_TYPES.ITEM}
+          id={item}
+          data={itemData}
+        >
+          <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
+        </Tooltip>
       );
     }) : <img className='compare-item' src='' alt=''/>;
 
