@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { fetchMatchHistorySuccess } from '../actions/matchHistoryActions';
 
-export const getSummonerMatchHistory = (summoner_name, region, offset, size) => {
+export const getSummonerMatchHistory = (summoner_name, region, id, offset, size) => {
   const uri = `/api/get_match_history/`;
   const params = {
     summoner_name,
@@ -10,6 +10,10 @@ export const getSummonerMatchHistory = (summoner_name, region, offset, size) => 
     offset,
     size
   };
+
+  if (id !== undefined) {
+    params.id = id;
+  }
 
   return (dispatch) => {
     axios.get(uri, {params})

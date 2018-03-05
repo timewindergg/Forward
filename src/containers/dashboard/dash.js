@@ -15,12 +15,16 @@ import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
+import {getIDFromCache} from '../../shared/helpers/cacheHelper';
+
 const MH_OFFSET = 0;
 const MH_SIZE = 100;
 
 class DashboardContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router ONLY
+
+    cache: PropTypes.object.isRequired,
     summoner: PropTypes.object.isRequired,
     matches: PropTypes.array.isRequired,
     currentMatch: PropTypes.object.isRequired,
@@ -33,9 +37,10 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-    const {match, summoner, getSummonerInfo, getSummonerMatchHistory, getCurrentMatch, staticData, getStaticData} = this.props;
+    const {match, cache, summoner, getSummonerInfo, getSummonerMatchHistory, getCurrentMatch, staticData, getStaticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
+    const id = getIDFromCache(cache, summonerName, region);
 
     if (Object.keys(staticData).length === 0) {
       getStaticData(region);
@@ -44,9 +49,9 @@ class DashboardContainer extends Component {
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
-      getSummonerInfo(summonerName, region);
-      getSummonerMatchHistory(summonerName, region, MH_OFFSET, MH_SIZE);
-      getCurrentMatch(summonerName, region);
+      getSummonerInfo(summonerName, region, id);
+      getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE);
+      getCurrentMatch(summonerName, region, id);
     }
   }
 
@@ -56,10 +61,12 @@ class DashboardContainer extends Component {
     const curRegion = this.props.match.params[REGION_PARAM];
     const newRegion = nextProps.match.params[REGION_PARAM];
 
+    const newID = getIDFromCache(nextProps.cache, newSummoner, newRegion);
+
     if (curSummoner !== newSummoner) {
-      this.props.getSummonerInfo(newSummoner, newRegion);
-      this.props.getSummonerMatchHistory(newSummoner,newRegion, MH_OFFSET, MH_SIZE);
-      this.props.getCurrentMatch(newSummoner, newRegion);
+      this.props.getSummonerInfo(newSummoner, newRegion, newID);
+      this.props.getSummonerMatchHistory(newSummoner,newRegion, newID, MH_OFFSET, MH_SIZE);
+      this.props.getCurrentMatch(newSummoner, newRegion, newID);
     }
 
     if (newRegion !== curRegion) {
@@ -86,6 +93,7 @@ class DashboardContainer extends Component {
 
 // maps states from the reducers to the component
 const mapStateToProps = (state) => ({
+  cache: state.context.IDCache,
   summoner: state.context.summoner,
   matches: state.matchHistory.matches,
   currentMatch: state.match.currentMatch,
@@ -94,10 +102,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getSummonerInfo: (summonerName, region) => dispatch(getSummonerInfo(summonerName, region)),
-    getCurrentMatch: (summonerName, region) => dispatch(getCurrentMatch(summonerName, region)),
-    getSummonerMatchHistory: (summonerName, region, offset, size) => {
-      dispatch(getSummonerMatchHistory(summonerName, region, offset, size));
+    getSummonerInfo: (summonerName, region, id) => dispatch(getSummonerInfo(summonerName, region, id)),
+    getCurrentMatch: (summonerName, region, id) => dispatch(getCurrentMatch(summonerName, region, id)),
+    getSummonerMatchHistory: (summonerName, region, id, offset, size) => {
+      dispatch(getSummonerMatchHistory(summonerName, region, id, offset, size));
     },
     getStaticData: (region) => {
       dispatch(getStaticData(region))

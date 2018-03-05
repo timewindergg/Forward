@@ -46,9 +46,9 @@ export const decodeRecentSearches = () => {
       return 0;
     }).forEach((rs, idx) => {
       // I have no idea what to do here. Maybe a timestamp based approach?
-      // if (idx < TOP_N) {
+      if (idx < 1) {
         rsCopy[rs.key] = recentSearches[rs.key];
-      // }
+      }
     });
 
     recentSearches = rsCopy;

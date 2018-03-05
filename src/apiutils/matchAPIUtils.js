@@ -21,13 +21,17 @@ import {
 
 // provides an overview of the current match
 // i.e. the summoners in the match on each team and limited info on their champions/stats
-export const getCurrentMatch = (summonerName, region, onSuccess) => {
+export const getCurrentMatch = (summonerName, region, id, onSuccess) => {
   const uri = '/api/get_current_match/';
   // console.log('attempting to get current match', summonerName, region);
   const params = {
     summoner_name: summonerName,
     region: region
   };
+
+  if (id !== undefined) {
+    params.id = id;
+  }
 
   return (dispatch) => {
     // console.log(dispatch);
