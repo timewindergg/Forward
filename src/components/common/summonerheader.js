@@ -103,7 +103,9 @@ class SummonerHeader extends Component {
     return (
       <div className="summoner-ranks">
         {solo5v5}
+        <div className="divider"></div>
         {flex5v5}
+        <div className="divider"></div>
         {flex3v3}
       </div>
     );

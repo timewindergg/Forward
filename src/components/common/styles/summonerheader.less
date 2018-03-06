@@ -1,3 +1,4 @@
+@import './colors';
 
   .summoner-header {
     display: flex;
@@ -7,6 +8,16 @@
           width: 85px;
           height: 85px;
         }
+      }
+
+      .divider {
+        content: "";
+        right: 0;
+        height: 61%;
+        border-right: 2px solid @grey-md;
+        -webkit-transform: skewX(-20deg);
+        transform: skewX(-20deg);
+        margin-top: 10px;
       }
 
       .summoner-profile {

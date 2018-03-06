@@ -72,17 +72,8 @@ class RecentMatch extends Component{
               <span>{`${m.kills}/${m.deaths}/${m.assists}`}</span>
               <span>{`${roundWithPrecision(getKDA(m.kills, m.deaths, m.assists), 2)} KDA`}</span>
             </div>
-
           </div>
-          <div className="itemSet">
-            <img className="itemIcon icon" src={getItemIconUrl(m.item0, version)}/>
-            <img className="itemIcon icon" src={getItemIconUrl(m.item1, version)}/>
-            <img className="itemIcon icon" src={getItemIconUrl(m.item2, version)}/>
-            <img className="itemIcon icon" src={getItemIconUrl(m.item3, version)}/>
-            <img className="itemIcon icon" src={getItemIconUrl(m.item4, version)}/>
-            <img className="itemIcon icon" src={getItemIconUrl(m.item5, version)}/>
-            <img className="itemIcon icon" src={getItemIconUrl(m.item6, version)}/>
-          </div>
+          {this.renderItems([m.item0, m.item1, m.item2, m.item3, m.item4, m.item5, m.item6], version)}
         </div>
       </div>
     );
@@ -133,6 +124,25 @@ class RecentMatch extends Component{
             <i className="fas fa-angle-right"></i>
           </Link>
         </div>
+      </div>
+    );
+  }
+
+  renderItems(items, version) {
+    const itemSet = items.map((item) => {
+      if (item === 0){
+        return (
+          <div className="itemIcon icon filler"></div>
+        );
+      }
+      return (
+          <img className="itemIcon icon icon" src={getItemIconUrl(item, version)} alt=""/>
+      );
+    });
+
+    return (
+      <div className="itemSet">
+        {itemSet}
       </div>
     );
   }
