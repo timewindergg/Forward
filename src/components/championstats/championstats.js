@@ -18,6 +18,7 @@ import './styles/perks.css';
 import './styles/items.css';
 import './styles/bargraphs.css';
 import '../common/styles/summonerheader.css';
+import '../common/styles/userchampionlist.css';
 
 import ChampionStatsBarGraphs from './bargraph';
 import ChampionStatsRadarGraph from './radargraph';
@@ -30,6 +31,7 @@ import ChampionProfile from './championprofile';
 import SummonerHeader from '../common/summonerheader';
 
 import LoadingScreen from '../common/loadingscreen';
+import UserChampionList from '../common/userchampionlist';
 
 class ChampionStats extends Component {
   state = {
@@ -112,6 +114,10 @@ class ChampionStats extends Component {
               <ChampionStatsRadarGraph championStats={championStatsByLane}/>
               <ChampionStatsBarGraphs championStats={championStatsByLane}/>
               <ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>
+              <UserChampionList championStats={summoner.championStats}
+                summonerName={summoner.name}
+                summonerRegion={summoner.region}
+                staticData={staticData}/>
             </div>
           </div>
         </div>

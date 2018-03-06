@@ -6,24 +6,23 @@ import Moment from 'react-moment';
 import './styles/dash.css';
 import './styles/lawn.css';
 import './styles/matchlist.css';
-import './styles/championtable.css';
 import './styles/matchfilter.css';
 import './styles/recentlyplayedlist.css';
 import './styles/championfilter.css';
 import '../common/styles/summonerheader.css';
+import '../common/styles/userchampionlist.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 
 import Matches from './matches';
 import MatchStatsRadar from './radar';
-import ChampionTable from './championtable';
 import MatchLawn from './matchlawn';
 import MatchFilter from './matchfilter';
 import RecentlyPlayedWith from './recentlyplayedlist';
 import SummonerHeader from '../common/summonerheader';
-
 import LoadingScreen from '../common/loadingscreen';
+import UserChampionList from '../common/userchampionlist';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -104,11 +103,10 @@ class Dashboard extends Component {
               </div>
             </div>
             <div className="dashboard-body-right-container">
-              <ChampionTable championStats={summoner.championStats}
+              <UserChampionList championStats={summoner.championStats}
                 summonerName={summoner.name}
                 summonerRegion={summoner.region}
-                version={staticData.version}
-                championData={staticData.champions}/>
+                staticData={staticData}/>
               <RecentlyPlayedWith matches={matches} region={summoner.region}/>
             </div>
           </div>

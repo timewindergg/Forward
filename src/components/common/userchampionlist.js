@@ -35,15 +35,17 @@ const createChampionListData = (championLists, championData, version) => {
   });
 }
 
-class ChampionTable extends Component {
-
+class UserChampionList extends Component {
   render() {
-    const { championStats, summonerName, summonerRegion, version, championData} = this.props;
+    const { championStats, summonerName, summonerRegion, staticData} = this.props;
 
-    const data = createChampionListData(championStats, championData, version);
+    const data = createChampionListData(championStats, staticData.champions, staticData.version);
+
+    const version = staticData.version;
+    const championData = staticData.champions;
 
     return (
-      <div className="dashboard-champion-table">
+      <div className="user-champion-list">
         <h3>Champion Stats</h3>
         <ReactTable
           data={data}
@@ -152,4 +154,4 @@ class ChampionTable extends Component {
   }
 }
 
-export default ChampionTable;
+export default UserChampionList;
