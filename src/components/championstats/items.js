@@ -16,14 +16,18 @@ class Items extends Component {
 
         <div className="core">
           <h4>Core Items</h4>
-          {this.renderItems(items.items, version)}
+          {this.renderItems(items.core, version)}
+        </div>
+        <div className="situational">
+          <h4>Situational Items</h4>
+          {this.renderItems(items.situational, version)}
         </div>
       </div>
     );
   }
 
   renderItems(items, version) {
-    return items.map((i) => {
+    return Object.keys(items).map((i) => {
       return (
         <div className="item" key={i}>
           <img className="icon" src={getItemIconUrl(i, version)}/>
