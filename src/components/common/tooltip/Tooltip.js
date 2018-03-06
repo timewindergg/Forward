@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import TOOLTIP_TYPES from '../../../constants/TooltipTypes';
 
 import RuneTooltip from './RuneTooltip';
+import ItemTooltip from './ItemTooltip';
 
 import './styles/tooltip.css';
 
@@ -25,7 +26,7 @@ class Tooltip extends Component{
     ttClassName: PropTypes.any,
     data: PropTypes.object,      // staticData for specific object
     type: PropTypes.string,      // object type
-    id: PropTypes.any,        // object id
+    id: PropTypes.any,           // object id
     content: PropTypes.element,  // custom content (optional)
   }
 
@@ -41,9 +42,15 @@ class Tooltip extends Component{
           <RuneTooltip data={data}/>
         );    
         break;
+      case TOOLTIP_TYPES.ITEM:
+        childComponent = (
+          <ItemTooltip data={data}/>
+        );    
+        break;
 
       // TOOLTIP_TYPES.CUSTOM
       // TOOLTIP_TYPES.SPELL
+      // TOOLTIP_TYPES.CHAMPIONSKILL
       // default:
     }
 
