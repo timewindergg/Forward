@@ -43,9 +43,11 @@ class Dashboard extends Component {
   }
 
   onDateSelect = (date) => {
-    this.setState({
-      dateFilter: date.date
-    });
+    if (date){
+      this.setState({
+        dateFilter: date.date
+      });
+    }
   }
 
   onQueueSelect = (queue) => {
