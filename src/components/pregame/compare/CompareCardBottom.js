@@ -27,7 +27,7 @@ class CompareCardBottom extends Component {
     const {compareData, staticData} = this.props;
     const isDetailsLoaded = !!compareData.build;
 
-    const items = isDetailsLoaded ? compareData.build[itemType].map((item) => {
+    const items = isDetailsLoaded ? Object.keys(compareData.build[itemType]).map((item) => {
       // return (
       //   <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
       // );
@@ -77,6 +77,7 @@ class CompareCardBottom extends Component {
       return this.renderEmptyCard(cardClass);
     }
 
+    // console.log(compareData,)
     const bootItems = this.renderItems('boots', isRed);
     const coreItems = this.renderItems('core', isRed);
     const situationalItems = this.renderItems('situational', isRed);
@@ -88,6 +89,18 @@ class CompareCardBottom extends Component {
         {situationalItems}
       </div>
     );
+
+    // const bootItems = this.renderItems('boots', isRed);
+    // const coreItems = this.renderItems('core', isRed);
+    // const situationalItems = this.renderItems('situational', isRed);
+
+    // return (
+    //   <div className={cardClass}>
+    //     {bootItems}
+    //     {coreItems}
+    //     {situationalItems}
+    //   </div>
+    // );
   }
 }
 
