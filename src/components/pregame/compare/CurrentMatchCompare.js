@@ -8,6 +8,8 @@ import CompareCardHeader from './CompareCardHeader';
 import CompareCardMiddle from './CompareCardMiddle';
 import CompareCardBottom from './CompareCardBottom';
 
+import SkillTable from '../../common/skilltable.js';
+
 import './styles/CurrentMatchCompare.css';
 
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
@@ -30,10 +32,8 @@ class CurrentMatchCompare extends Component {
       totalGames: 0
     };
 
-
-
     if (!currentMatch.winrates || Object.keys(compareData).length === 0) {
-      console.log('cant fetch winrates1');
+      console.warn('cant fetch winrates, data does not exist');
       return placeholder;
     }
 
@@ -41,8 +41,7 @@ class CurrentMatchCompare extends Component {
     const ourChamp = compareData.champion_id;
     const ourWinData = winrates[ourChamp];
     if (!ourWinData || !ourWinData[otherChamp]) {
-      console.log('winrates', winrates, ourChamp, otherChamp);
-      console.log('cant fetch winrates2');
+      console.warn('cant fetch winrates: mapping does not exist', winrates, ourChamp, otherChamp);
       return placeholder;
     }
 
@@ -145,6 +144,17 @@ class CurrentMatchCompare extends Component {
     const winsDataRed = this.getWinsData(currentMatch, compareDataRed, otherChampRed);
     const winsDataBlue = this.getWinsData(currentMatch, compareDataBlue, otherChampBlue);
 
+
+    /*
+
+<SkillTable skillOrder={player.skillOrder}
+        skillData={this.props.staticData.championSkills[this.props.matchParticipants[playerId - 1].championId]}
+        version={this.props.staticData.version}/>
+    */
+    // currentMatch.skill_orders[compareDataRed.champion_id]
+    // currentMatch.skill_orders[compareDataBlue.champion_id]
+
+    // champions
     return (
       <div className='rc-current-match-compare'>
         <div className='compare-row'>
@@ -191,6 +201,20 @@ class CurrentMatchCompare extends Component {
             isRed={false}
             compareData={compareDataBlue}
             staticData={staticData}
+          />
+        </div>
+        <div className='compare-row'>
+          <SkillTable
+            isRed={true}
+            skillOrder={currentMatch.skill_orders[compareDataRed.champion_id]}
+            skillData={staticData.championSkills[compareDataRed.champion_id]}
+            version={staticData.version}
+          />
+          <SkillTable
+            isRed={false}
+            skillOrder={currentMatch.skill_orders[compareDataBlue.champion_id]}
+            skillData={staticData.championSkills[compareDataBlue.champion_id]}
+            version={staticData.version}
           />
         </div>
       </div>

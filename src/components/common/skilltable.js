@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import {getChampionSpellIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
+import './styles/skillprogression.css';
+
 class SkillCell extends Component{
   render(){
     var skillType;
@@ -48,6 +50,7 @@ class SkillTable extends Component {
   }
 
   render(){
+    // TODO: what about the "p" skill?
     return (
       <div className="skillContainer">
         <div className="skillTable">

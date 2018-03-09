@@ -3,7 +3,6 @@ import _ from 'lodash';
 import './styles/post.css';
 import './styles/map.css';
 import './styles/scoreboard.css';
-import './styles/skillprogression.css';
 import './styles/itemprogression.css';
 import './styles/control.css';
 import './styles/champselect.css';

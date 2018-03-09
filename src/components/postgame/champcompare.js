@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ItemProgression from './itemprogression.js';
-import SkillTable from './skilltable.js';
+import SkillTable from '../common/skilltable.js';
 import RuneStats from './runestats.js';
 
 class ChampionCompare extends Component {
+  static propTypes = {
+    frameData: PropTypes.object.isRequired,
+    matchParticipants: PropTypes.array.isRequired,
+    redSelection: PropTypes.number.isRequired,
+    blueSelection: PropTypes.number.isRequired,
+    staticData: PropTypes.object.isRequired
+  }
+
+
   renderSelection(teamId, playerId){
     let player = this.props.frameData.players[playerId];
 
+    // TODO: work on this part (make it look pretty)
     return(
       <div className="selectionDetails">
         <div className="stats">

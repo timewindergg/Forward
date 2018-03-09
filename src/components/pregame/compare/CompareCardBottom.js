@@ -28,9 +28,6 @@ class CompareCardBottom extends Component {
     const isDetailsLoaded = !!compareData.build;
 
     const items = isDetailsLoaded ? Object.keys(compareData.build[itemType]).map((item) => {
-      // return (
-      //   <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
-      // );
       const itemData = staticData.items[item.toString()];
       return (
         <Tooltip
@@ -89,18 +86,6 @@ class CompareCardBottom extends Component {
         {situationalItems}
       </div>
     );
-
-    // const bootItems = this.renderItems('boots', isRed);
-    // const coreItems = this.renderItems('core', isRed);
-    // const situationalItems = this.renderItems('situational', isRed);
-
-    // return (
-    //   <div className={cardClass}>
-    //     {bootItems}
-    //     {coreItems}
-    //     {situationalItems}
-    //   </div>
-    // );
   }
 }
 
