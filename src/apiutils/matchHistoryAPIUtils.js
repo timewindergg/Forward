@@ -12,7 +12,7 @@ export const getSummonerMatchHistory = (summoner_name, region, id, offset, size)
   };
 
   if (id !== undefined) {
-    params.id = id;
+    params.summoner_id = id;
   }
 
   return (dispatch) => {
@@ -25,7 +25,7 @@ export const getSummonerMatchHistory = (summoner_name, region, id, offset, size)
           match.blue_team = JSON.parse(match.blue_team);
         });
 
-        dispatch(fetchMatchHistorySuccess(result));
+        dispatch(fetchMatchHistorySuccess(summoner_name, region, result));
       });
   }
 };

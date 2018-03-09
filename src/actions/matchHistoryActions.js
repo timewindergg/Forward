@@ -5,9 +5,11 @@ export const startFetchMatchHistory = () => {
   }
 };
 
-export const fetchMatchHistorySuccess = (result) => {
+export const fetchMatchHistorySuccess = (name, region, result) => {
   return {
     type: 'FETCH_MATCH_HISTORY_SUCCESS',
+    name: name,
+    region: region,
     result: result
   };
 };

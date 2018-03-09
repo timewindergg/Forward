@@ -20,7 +20,21 @@ import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 const MH_OFFSET = 0;
 const MH_SIZE = 100;
 
+const MAX_ATTEMPTS = 3; // retries
+const MATCH_PULL_INTERVAL = 2000; // retry every 3 seconds?
+
 class DashboardContainer extends Component {
+  constructor(props) {
+    super(props);
+    
+    // settimeout here
+
+    this.state = {
+      numAttempts: 0,
+      fetchTaskID: 0
+    };
+  }
+
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router ONLY
 
@@ -37,7 +51,7 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-    const {match, cache, summoner, getSummonerInfo, getSummonerMatchHistory, getCurrentMatch, staticData, getStaticData} = this.props;
+    const {match, cache, summoner, getSummonerInfo, getCurrentMatch, staticData, getStaticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     const id = getIDFromCache(cache, summonerName, region);
@@ -50,7 +64,10 @@ class DashboardContainer extends Component {
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
       getSummonerInfo(summonerName, region, id);
-      getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE);
+      // getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE);
+
+      this.pullMatchHistory(summonerName, region, id);
+
       getCurrentMatch(summonerName, region, id);
     }
   }
@@ -63,15 +80,51 @@ class DashboardContainer extends Component {
 
     const newID = getIDFromCache(nextProps.cache, newSummoner, newRegion);
 
-    if (curSummoner !== newSummoner) {
-      this.props.getSummonerInfo(newSummoner, newRegion, newID);
-      this.props.getSummonerMatchHistory(newSummoner,newRegion, newID, MH_OFFSET, MH_SIZE);
-      this.props.getCurrentMatch(newSummoner, newRegion, newID);
-    }
-
+    // context change
     if (newRegion !== curRegion) {
       this.props.getStaticData(newRegion);
+
+      if (curSummoner !== newSummoner) {
+        this.props.getSummonerInfo(newSummoner, newRegion, newID);
+        // this.props.getSummonerMatchHistory(newSummoner, newRegion, newID, MH_OFFSET, MH_SIZE);
+        this.props.getCurrentMatch(newSummoner, newRegion, newID);
+      }
+
+      // clear current timeout for getSummonerMatchHistory and call the new one
+      clearTimeout(this.state.fetchTaskID);
+      this.pullMatchHistory(newSummoner, newRegion, newID);
     }
+  }
+  
+  componentWillUnmount() {
+    clearTimeout(this.state.fetchTaskID);
+  }
+
+  pullMatchHistory = (summonerName, region, id) => {
+    // make an API request to get the recent matches
+    this.props.getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE);
+    // console.log("TIMEOUT FETCHING NOW!", this.state);
+
+    // do not call any more and reset numAttempts
+    if (this.state.numAttempts >= MAX_ATTEMPTS) {
+      // console.log("TIMEOUT ENDING LOOP", this.state);
+      this.setState({numAttempts: 0});
+      return;
+    }
+
+    // console.log("TIMEOUT CONTINUING LOOP", this.state);
+    // set state on calling this method again (based on timeout)
+    const nextPullID = setTimeout(
+      () => this.pullMatchHistory(summonerName, region, id),
+      MATCH_PULL_INTERVAL
+    );
+
+    // setTimeout(console.log('asdf'), 15);
+
+    this.setState({
+      numAttempts: this.state.numAttempts + 1,
+      fetchTaskID: nextPullID
+    });
   }
 
   render() {

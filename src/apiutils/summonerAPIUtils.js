@@ -2,7 +2,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 
 import {loadSummonerSuccess, loadSummonerFailed} from '../actions/summonerActions';
-import {cacheSummoner} from '../actions/contextActions';
+import {cacheSummoner, setSummonerContext} from '../actions/contextActions';
 
 import {
   addRecentSearch,
@@ -18,16 +18,20 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
   };
 
   if (id !== undefined) {
-    console.log('ID found?');
-    params.id = id;
+    // console.log('ID found?');
+    params.summoner_id = id;
   }
 
   // const formData = new FormData();
   // formData.append('summoner_name', summonerName);
   // formData.append('region', region);
 
+  
+
   // workaround until Peter abstracts this logic away
   return (dispatch) => {
+
+    dispatch(setSummonerContext(summonerName, region));
     // console.log('getting summoner info');
     return axios.get(getURI, {params}).then((response) => {
       console.log('loaded summoner', response.data);

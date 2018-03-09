@@ -14,7 +14,7 @@ export const getUserChampionStats = (summonerName, region, id, championName) => 
   };
 
   if (id !== undefined) {
-    params.id = id;
+    params.summoner_id = id;
   }
 
   return (dispatch) => {

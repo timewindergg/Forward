@@ -30,7 +30,7 @@ export const getCurrentMatch = (summonerName, region, id, onSuccess) => {
   };
 
   if (id !== undefined) {
-    params.id = id;
+    params.summoner_id = id;
   }
 
   return (dispatch) => {

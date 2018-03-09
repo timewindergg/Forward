@@ -1,10 +1,21 @@
 
 import LoadingState from '../shared/LoadingState';
 
+import {SET_SUMMONER_CONTEXT} from '../actions/contextActions';
+
 const initialState = {
   loadingState: LoadingState.IDLE,
-  matches: []
+  matches: [],
+  summoner: '',
+  region: ''
 }
+
+const setContext = (state, payload) => {
+  return Object.assign({}, state, {
+    summoner: payload.name,
+    region: payload.region
+  });
+};
 
 const startMatchHistory = (state) => {
   return Object.assign({}, state, {
@@ -13,6 +24,13 @@ const startMatchHistory = (state) => {
 };
 
 const receiveMatchHistoryResults = (state, action) => {
+  // reject if coming from a bad context
+  const {name, region} = action;
+  if (name !== state.summoner || region !== state.region) {
+    return state;
+  }
+
+
   return Object.assign({}, state, {
     action,
     loadingState: LoadingState.FINISHED,
@@ -26,6 +44,8 @@ const matchHistory = (state = initialState, action) => {
       return startMatchHistory(state);
     case 'FETCH_MATCH_HISTORY_SUCCESS':
       return receiveMatchHistoryResults(state, action);
+    case SET_SUMMONER_CONTEXT:
+      return setContext(state, action.payload);
 
     default:
       return state;
