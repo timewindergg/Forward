@@ -10,7 +10,7 @@ export const getUserChampionStats = (summonerName, region, id, championId) => {
   const params = {
     summoner_name: summonerName,
     region: region,
-    champion_id: championId
+    champion_name: championName
   };
 
   if (id !== undefined) {
