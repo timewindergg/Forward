@@ -83,12 +83,12 @@ class DashboardContainer extends Component {
     // context change
     if (newRegion !== curRegion) {
       this.props.getStaticData(newRegion);
+    }
 
-      if (curSummoner !== newSummoner) {
-        this.props.getSummonerInfo(newSummoner, newRegion, newID);
-        // this.props.getSummonerMatchHistory(newSummoner, newRegion, newID, MH_OFFSET, MH_SIZE);
-        this.props.getCurrentMatch(newSummoner, newRegion, newID);
-      }
+    if (newRegion !== curRegion || curSummoner !== newSummoner) {
+      this.props.getSummonerInfo(newSummoner, newRegion, newID);
+      // this.props.getSummonerMatchHistory(newSummoner, newRegion, newID, MH_OFFSET, MH_SIZE);
+      this.props.getCurrentMatch(newSummoner, newRegion, newID);
 
       // clear current timeout for getSummonerMatchHistory and call the new one
       clearTimeout(this.state.fetchTaskID);
