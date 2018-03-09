@@ -45,7 +45,7 @@
   },
   "proxy": {
     "/api": {
-      "target": "https://timewinder-rewind.herokuapp.com",
+      "target": "http://localhost:5000",
       "pathRewrite": {
         "^/api": ""
       },

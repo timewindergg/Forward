@@ -5,12 +5,12 @@ import {
   loadChampionStatsFailed
 } from '../actions/summonerActions';
 
-export const getUserChampionStats = (summonerName, region, id, championName) => {
-  const uri = '/api/get_user_champion_stats_by_name/';
+export const getUserChampionStats = (summonerName, region, id, championId) => {
+  const uri = '/api/get_user_champion_stats_by_id/';
   const params = {
     summoner_name: summonerName,
     region: region,
-    champion_name: championName
+    champion_id: championId
   };
 
   if (id !== undefined) {

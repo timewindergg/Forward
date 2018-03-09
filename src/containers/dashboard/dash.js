@@ -147,7 +147,7 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    const {summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
+    const {match, summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
     return (
       <div>
         <Header/>
@@ -156,6 +156,7 @@ class DashboardContainer extends Component {
           currentMatch={currentMatch}
           matches={matches}
           staticData={staticData}
+          region={match.params[REGION_PARAM]}
         />
         <Footer/>
       </div>
