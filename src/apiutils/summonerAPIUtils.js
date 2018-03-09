@@ -22,15 +22,7 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
     params.summoner_id = id;
   }
 
-  // const formData = new FormData();
-  // formData.append('summoner_name', summonerName);
-  // formData.append('region', region);
-
-  
-
-  // workaround until Peter abstracts this logic away
   return (dispatch) => {
-
     dispatch(setSummonerContext(summonerName, region));
     // console.log('getting summoner info');
     return axios.get(getURI, {params}).then((response) => {
@@ -39,8 +31,9 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
       addRecentSearch(response.data.name, region, response.data.icon);
 
       dispatch(loadSummonerSuccess(response.data));
-      dispatch(cacheSummoner(response.data.name, region, response.data.user_id));
 
+      // only save cache tp cookie on initial cache miss
+      dispatch(cacheSummoner(response.data.name, region, response.data.user_id, id === undefined));
 
       // onSuccess is an object like such
       // (args) => actionName(action params provided by the caller that defines onSuccess)

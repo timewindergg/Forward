@@ -18,12 +18,13 @@ export const loadStaticDataFailed = (error) => ({
   }
 });
 
-export const cacheSummoner = (name, region, id) => ({
+export const cacheSummoner = (name, region, id, saveCache) => ({
   type: CACHE_SUMMONER,
   payload: {
     name,
     region,
-    id
+    id,
+    save: saveCache
   }
 });
 

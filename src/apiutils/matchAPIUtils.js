@@ -34,7 +34,6 @@ export const getCurrentMatch = (summonerName, region, id, onSuccess) => {
   }
 
   return (dispatch) => {
-    // console.log(dispatch);
     return axios.get(uri, {params}).then((response) => {
       // console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
@@ -54,15 +53,17 @@ export const getCurrentMatch = (summonerName, region, id, onSuccess) => {
       dispatch(selectSummoner(otherID, !isRed));
 
       // cache both the red team and the blue team
-      [...red_team, ...blue_team].forEach((s) => {
-        dispatch(cacheSummoner(s.name, region, s.id));
+      const bothTeams = [...red_team, ...blue_team];
+      bothTeams.forEach((s, idx) => {
+        // only save cache to cookies on the LAST summoner loaded
+        dispatch(cacheSummoner(s.name, region, s.id, idx === bothTeams.length - 1));
       });
 
       if (!!onSuccess) {
         onSuccess(response.data);
       }
     }).catch((error) => {
-      console.log('user is not currently in a match', error);
+      console.warn('/get_current_match/ user is not currently in a match', error);
       dispatch(loadCurrentMatchFailed(error));
     });
   }
@@ -75,7 +76,7 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
     summoner_name: summonerName,
     region: region,
     champion_id: championId,
-    id: summonerID
+    summoner_id: summonerID
   };
 
   return (dispatch) => {
@@ -90,7 +91,7 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
         leagues
       ));
     }).catch((error) => {
-      console.log('/getCurrentMatchDetails/ user is not currently in a match', error);
+      console.warn('/getCurrentMatchDetails/ user is not currently in a match', error);
       dispatch(loadCurrentMatchDetailsFailed(summonerID, error));
     });
   }

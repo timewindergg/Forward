@@ -13,7 +13,8 @@ const initialState = {
 const setContext = (state, payload) => {
   return Object.assign({}, state, {
     summoner: payload.name,
-    region: payload.region
+    region: payload.region,
+    matches: []
   });
 };
 

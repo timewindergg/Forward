@@ -38,15 +38,14 @@ export const decodeRecentSearches = () => {
     let newRS = Object.keys(recentSearches).map((rs) => {
       return {
         key: rs,
-        count: recentSearches[rs].count
+        lastSearch: recentSearches[rs].lastSearch ? recentSearches[rs].lastSearch : 0
       };
     }).sort((a, b) => {
-      if (a.count < b.count){ return 1; }
-      else if (a.count > b.count) { return -1; }
+      if (a.lastSearch < b.lastSearch){ return 1; }
+      else if (a.lastSearch > b.lastSearch) { return -1; }
       return 0;
     }).forEach((rs, idx) => {
-      // I have no idea what to do here. Maybe a timestamp based approach?
-      if (idx < 1) {
+      if (idx < TOP_N) {
         rsCopy[rs.key] = recentSearches[rs.key];
       }
     });
@@ -65,22 +64,13 @@ export const addRecentSearch = (summoner, region, icon) => {
   let recentSearches = decodeRecentSearches();
   const nSummoner = normalizeName(summoner);
 
-  const searchCount = recentSearches[nSummoner] ? recentSearches[nSummoner].count + 1 : 1;
-
   recentSearches[nSummoner] = {
     name: summoner,
     region,
     icon,
-    count: searchCount
+    lastSearch: parseInt(Date.now() / 1000)
   };
 
-  // now store the cookie again
-  // TODO: length limit this?
-
-  // if (recentSearches.length > 20){
-  //  // pop off first element
-  //  recentSearches = recentSearches.slice(1);
-  // }
 
   const recentStr = encodeURIComponent(JSON.stringify(recentSearches));
   setCookie(RECENT_SEARCHES_KEY, recentStr);

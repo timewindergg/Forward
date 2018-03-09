@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import _ from 'lodash';
+
 import {SUMMONER_PARAM, REGION_PARAM} from '../../constants/RouteConstants';
 import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
 import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
@@ -20,8 +22,21 @@ import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 const MH_OFFSET = 0;
 const MH_SIZE = 100;
 
-const MAX_ATTEMPTS = 3; // retries
-const MATCH_PULL_INTERVAL = 2000; // retry every 3 seconds?
+const MAX_ATTEMPTS = 2; // retries
+const MATCH_PULL_INTERVAL = 5000; // retry every 3 seconds?
+
+// really, this is just a function that compares 2 objects deeply for differences
+// helps us a bit in telling us what ACTUALLY CHANGED
+function difference(object, base) {
+  function changes(object, base) {
+    return _.transform(object, function(result, value, key) {
+      if (!_.isEqual(value, base[key])) {
+        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+      }
+    });
+  }
+  return changes(object, base);
+}
 
 class DashboardContainer extends Component {
   constructor(props) {
@@ -51,6 +66,8 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
+    console.log('SO MANY RERENDERS LOAD');
+
     const {match, cache, summoner, getSummonerInfo, getCurrentMatch, staticData, getStaticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
@@ -73,6 +90,8 @@ class DashboardContainer extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    // console.log('SO MANY RERENDERS UPDATE', difference(this.props, nextProps), difference(this.state, nextState));
+
     const curSummoner = this.props.match.params[SUMMONER_PARAM];
     const newSummoner = nextProps.match.params[SUMMONER_PARAM];
     const curRegion = this.props.match.params[REGION_PARAM];
