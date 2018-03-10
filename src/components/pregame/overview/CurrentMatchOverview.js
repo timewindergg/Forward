@@ -49,9 +49,9 @@ class CurrentMatchOverview extends Component {
 
     return (
       <div className='rc-current-match-overview'>
-        {this.renderTeamList(redTeam, true)}
-        <div className='vs'><h2>VS.</h2></div>
         {this.renderTeamList(blueTeam, false)}
+        <div className='vs'><h2>VS.</h2></div>
+        {this.renderTeamList(redTeam, true)}
       </div>
     );
   }

@@ -160,7 +160,7 @@ class OverviewCard extends Component {
             <div className='oc-loader'>
               <ClipLoader
                 size={80}
-                color={isRed ? '#ff6666' : '#4488ff'} 
+                color={isRed ? '#ff6666' : '#4C7FCC'} 
                 loading={true} 
               />
               <h4>{`Loading...`}</h4>
