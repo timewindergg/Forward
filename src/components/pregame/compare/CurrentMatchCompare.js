@@ -28,10 +28,7 @@ class CurrentMatchCompare extends Component {
 
   getWinsData = (currentMatch, compareData, otherChamp) => {
     const placeholder = {
-      wr: '--',
-      wins: 0,
-      losses: 0,
-      totalGames: 0
+      wr: '--'
     };
 
     if (!currentMatch.winrates || Object.keys(compareData).length === 0) {
@@ -48,10 +45,7 @@ class CurrentMatchCompare extends Component {
     }
 
     return {
-      wr: ourWinData[otherChamp],
-      wins: ourWinData[otherChamp].wins__sum,
-      losses: ourWinData[otherChamp].losses__sum,
-      totalGames: ourWinData[otherChamp].total_games__sum
+      wr: ourWinData[otherChamp]
     };
   }
 
@@ -147,17 +141,13 @@ class CurrentMatchCompare extends Component {
     const winsDataRed = this.getWinsData(currentMatch, compareDataRed, otherChampRed);
     const winsDataBlue = this.getWinsData(currentMatch, compareDataBlue, otherChampBlue);
 
+    if (winsDataRed.wr !== '--') {
+      winsDataBlue.wr = 1 - winsDataRed.wr;
+    }
+    if (winsDataBlue.wr !== '--') {
+      winsDataRed.wr = 1 - winsDataBlue.wr;
+    }
 
-    /*
-
-<SkillTable skillOrder={player.skillOrder}
-        skillData={this.props.staticData.championSkills[this.props.matchParticipants[playerId - 1].championId]}
-        version={this.props.staticData.version}/>
-    */
-    // currentMatch.skill_orders[compareDataRed.champion_id]
-    // currentMatch.skill_orders[compareDataBlue.champion_id]
-
-    // champions
     return (
       <div className='rc-current-match-compare'>
         <div className='compare-row'>
@@ -168,9 +158,6 @@ class CurrentMatchCompare extends Component {
             rankedDetails={rankedDetailsRed}
 
             cWinRate={winsDataRed.wr}
-            winsSelf={winsDataRed.wins}
-            totalGames={winsDataRed.totalGames}
-
             teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, true)}
 
             staticData={staticData}
@@ -182,9 +169,6 @@ class CurrentMatchCompare extends Component {
             rankedDetails={rankedDetailsBlue}
 
             cWinRate={winsDataBlue.wr}
-            winsSelf={winsDataBlue.wins}
-            totalGames={winsDataBlue.totalGames}
-
             teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, false)}
 
             staticData={staticData}
