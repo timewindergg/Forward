@@ -17,7 +17,7 @@ import {IMG_VER} from '../../../constants/Settings';
 
 class CompareCard extends Component {
   static propTypes = {
-    isRed: PropTypes.bool.isRequired,
+    isBlue: PropTypes.bool.isRequired,
     compareData: PropTypes.object.isRequired,
     otherChamp: PropTypes.number.isRequired,
 
@@ -55,7 +55,7 @@ class CompareCard extends Component {
     return (
       <div className={classNames({
         'cch-wr-wrapper': true,
-        'cch-wr-wrapper-blue': !this.props.isRed
+        'cch-wr-wrapper-blue': !this.props.isBlue
       })}>
         <div className='cch-wr'>
           <span className='cch-wr-head'>Win Rate</span>
@@ -63,7 +63,7 @@ class CompareCard extends Component {
           <CircularProgressbar
             className={classNames({
               'cch-progress-bar': true,
-              'cch-progress-bar-blue': !this.props.isRed && winRate !== '--',
+              'cch-progress-bar-blue': this.props.isBlue && winRate !== '--',
               'cch-progress-bar-empty': winRate === '--'
             })}
             percentage={winRate}
@@ -77,14 +77,14 @@ class CompareCard extends Component {
     return (
       <div className={classNames({
         'cch-wr-wrapper': true,
-        'cch-wr-wrapper-blue': !this.props.isRed
+        'cch-wr-wrapper-blue': !this.props.isBlue
       })}>
         <div className='cch-wr'>
           <span className='cch-wr-head'>Team Win Rate</span>
           <CircularProgressbar
             className={classNames({
               'cch-progress-bar': true,
-              'cch-progress-bar-blue': !this.props.isRed
+              'cch-progress-bar-blue': !this.props.isBlue
             })}
             percentage={teamWinRate}
           />
@@ -94,9 +94,9 @@ class CompareCard extends Component {
   }
 
   renderEmptyCard = (cardClass) => {
-    const {isRed} = this.props;
+    const {isBlue} = this.props;
 
-    const teamName = isRed ? 'red' : 'blue';
+    const teamName = isBlue ? 'red' : 'blue';
     return (
       <div className={cardClass}>
         {`click a unit portrait to select a champion from the ${teamName} team`}
@@ -106,7 +106,7 @@ class CompareCard extends Component {
 
   render() {
     const {
-      isRed,
+      isBlue,
       compareData,
       rankedDetails,
       teamWinRate,
@@ -114,13 +114,13 @@ class CompareCard extends Component {
       otherChamp
     } = this.props;
 
-    // const colorClass = isRed ? 'compare-card-red' : 'compare-card-blue';
+    // const colorClass = isBlue ? 'compare-card-red' : 'compare-card-blue';
     // const cardClass = classNames(
     //   'rc-compare-card',
     //   colorClass
     // );
     const cardClass = classNames('rc-compare-card-header', {
-      'rc-compare-card-header-right': !isRed
+      'rc-compare-card-header-right': !isBlue
     });
 
     if (Object.keys(compareData).length === 0) {
@@ -149,10 +149,10 @@ class CompareCard extends Component {
         <div className='champion-img-container'>
           <img src={imageUrl} className='champion-img' />
         </div>
-        <div className={classNames('c-header-col', {'c-header-col-blue': !isRed})}>
+        <div className={classNames('c-header-col', {'c-header-col-blue': !isBlue})}>
           <span className={nameClass}>{compareData.name}</span>
           <span className='h-text'>{championName}</span>
-          <span className={classNames('h-text', 'cph-tier', {'cph-tier-blue': !isRed})}>
+          <span className={classNames('h-text', 'cph-tier', {'cph-tier-blue': !isBlue})}>
             <img src={tierIcon} className='tier-img' />
             {tierText}
           </span>

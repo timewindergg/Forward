@@ -152,18 +152,7 @@ class CurrentMatchCompare extends Component {
       <div className='rc-current-match-compare'>
         <div className='compare-row'>
           <CompareCardHeader
-            isRed={true}
-            compareData={compareDataRed}
-            otherChamp={otherChampRed}
-            rankedDetails={rankedDetailsRed}
-
-            cWinRate={winsDataRed.wr}
-            teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, true)}
-
-            staticData={staticData}
-          />
-          <CompareCardHeader
-            isRed={false}
+            isBlue={true}
             compareData={compareDataBlue}
             otherChamp={otherChampBlue}
             rankedDetails={rankedDetailsBlue}
@@ -173,11 +162,22 @@ class CurrentMatchCompare extends Component {
 
             staticData={staticData}
           />
+          <CompareCardHeader
+            isBlue={false}
+            compareData={compareDataRed}
+            otherChamp={otherChampRed}
+            rankedDetails={rankedDetailsRed}
+
+            cWinRate={winsDataRed.wr}
+            teamWinRate={this.getTeamWinRate(currentMatch, currentMatchDetails, true)}
+
+            staticData={staticData}
+          />
         </div>
         <div className='compare-row'>
           <CompareCardBottom
             isRed={true}
-            compareData={compareDataRed}
+            compareData={compareDataBlue}
             staticData={staticData}
           />
           <CompareCardMiddle
@@ -186,27 +186,27 @@ class CurrentMatchCompare extends Component {
           />
           <CompareCardBottom
             isRed={false}
-            compareData={compareDataBlue}
+            compareData={compareDataRed}
             staticData={staticData}
           />
         </div>
         
         <div className='compare-row'>
           <div className='skillProgression'>
-            <h3>Recommended skill order</h3>
+            <h3 style={{'text-align': 'right'}}>Recommended skill order</h3>
             <SkillTable
               isRed={true}
-              skillOrder={currentMatch.skill_orders[compareDataRed.champion_id]}
-              skillData={staticData.championSkills[compareDataRed.champion_id]}
+              skillOrder={currentMatch.skill_orders[compareDataBlue.champion_id]}
+              skillData={staticData.championSkills[compareDataBlue.champion_id]}
               version={staticData.version}
             />
           </div>
           <div className='skillProgression'>
-            <h3 style={{'text-align': 'right'}}>Recommended skill order</h3>
+            <h3>Recommended skill order</h3>
             <SkillTable
               isRed={false}
-              skillOrder={currentMatch.skill_orders[compareDataBlue.champion_id]}
-              skillData={staticData.championSkills[compareDataBlue.champion_id]}
+              skillOrder={currentMatch.skill_orders[compareDataRed.champion_id]}
+              skillData={staticData.championSkills[compareDataRed.champion_id]}
               version={staticData.version}
             />
           </div>

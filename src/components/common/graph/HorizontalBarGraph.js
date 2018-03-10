@@ -40,6 +40,10 @@ class HorizontalBarGraph extends Component {
     return true;
   }
 
+  getLabel = (d) => {
+    return !!d.label ? d.label : d.key;
+  }
+
   render() {
     const {
       graphID,
@@ -85,7 +89,7 @@ class HorizontalBarGraph extends Component {
 
       var y = d3.scaleBand().range([0, height]);
       y.domain(data.map((d) => {
-        return d.key; 
+        return this.getLabel(d); 
       })).padding(0.1);
 
       // TODO: class attr after enter append rect
@@ -96,32 +100,35 @@ class HorizontalBarGraph extends Component {
       
       graphInternal.append('rect')
           .attr('x', d => x(Math.min(0, d.value)))
-          .attr('y', d => y(d.key))
+          .attr('y', d => y(this.getLabel(d)))
           .attr('width', d => Math.abs(x(d.value) - x(0)))
           .attr('height', y.bandwidth())
           .attr('fill', (d) => {
             return d.value < 0 ? negColor : posColor;
           })
 
-      graphInternal.append('text')
-            .attr('class', classNames('value-text', valueLabelClass))
-            .attr('text-anchor', d => {
-              // const barLength = Math.abs(x(d.value) - x(0));
-              return d.value <= 0 ? 'start' : 'end';
-            })
-            .attr('font-weight', 600)
-            .attr('x', d => {
-              // const padding = d.value <= 0 ? y.bandwidth() / 2 : -y.bandwidth() / 2;
-              const padding = d.value <= 0 ? 8 : -8;
-              return x(d.value) + padding;
-            })
-            .attr('y', d => y(d.key) + y.bandwidth() / 2)
-            .attr('dy', '.35em') //vertical align middle
-            .text((d) => d.value);
+      // graphInternal.append('text')
+      //       .attr('class', classNames('value-text', valueLabelClass))
+      //       .attr('text-anchor', d => {
+      //         // const barLength = Math.abs(x(d.value) - x(0));
+      //         return d.value <= 0 ? 'start' : 'end';
+      //       })
+      //       .attr('font-weight', 600)
+      //       .attr('x', d => {
+      //         // const padding = d.value <= 0 ? y.bandwidth() / 2 : -y.bandwidth() / 2;
+      //         const padding = d.value <= 0 ? 8 : -8;
+      //         return x(d.value) + padding;
+      //       })
+      //       .attr('y', d => y(d.key) + y.bandwidth() / 2)
+      //       .attr('dy', '.35em') //vertical align middle
+      //       .text((d) => d.value);
 
       graph.append("g")
+        .data(data)
         .attr('class', 'y axis')
-        .attr("transform", "translate(" + width/2 + ",0)")
+        .attr('transform', d => {
+          return `translate(${width/2}, 0)`
+        })
         .call(
           d3.axisLeft(y)
         );
@@ -140,33 +147,3 @@ class HorizontalBarGraph extends Component {
 }
 
 export default HorizontalBarGraph;
-
-
-
-
-
-
-
-
-
-
-
-/*
-return (
-      <div className='rc-compare-card-middle'>
-        <div className='compare-graph'>
-          <h2>Cs Differentials</h2>
-          <div className='graph-wrapper'>
-
-          </div>
-        </div>
-        <div className='compare-graph'>
-          <h2>Gold Differentials</h2>
-          <div className='graph-wrapper'>
-            
-          </div>
-        </div>
-      </div>
-    );
-
-*/
