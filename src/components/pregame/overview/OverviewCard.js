@@ -163,7 +163,7 @@ class OverviewCard extends Component {
                 color={isRed ? '#ff6666' : '#4488ff'} 
                 loading={true} 
               />
-              <h4>{`Loading:`}</h4>
+              <h4>{`Loading...`}</h4>
             </div>
           </div>
         </div>
@@ -172,35 +172,56 @@ class OverviewCard extends Component {
 
     const winsLoss = (
       <div className='overview-row'>
-        <span className='overview-greentext'>{details.stats.wins}W</span>
+        <span className='overview-greentext'>{details.stats.wins}W </span>
         <span className='overview-redtext'>{details.stats.losses}L</span>
       </div>
     );
 
+
+
+    let kdaColor = '';
+    let kdaStat = roundWithPrecision((details.stats.kills + details.stats.assists) / details.stats.deaths, 1);
+    if (kdaStat < 3){
+
+    }
+    else if (kdaStat < 4){
+      kdaColor = 'green-txt';
+    }
+    else if (kdaStat < 5){
+      kdaColor = 'blue-dk-txt';
+    }
+    else {
+      kdaColor = 'gold-dk-txt';
+    }
+
+
     const kda = (
       <div className='overview-row'>
-        <span className='overview-heading'>KDA</span>
+        <span className={`overview-heading ${kdaColor}`}>{kdaStat} KDA</span>
         <br />
-        <span className='overview-greentext'>{`${details.stats.kills}/`}</span>
-        <span className='overview-redtext'>{`${details.stats.deaths}/`}</span>
-        <span className='overview-greentext'>{`${details.stats.assists}`}</span>
-        <span className='overview-heading'>({roundWithPrecision((details.stats.kills + details.stats.assists) / details.stats.deaths, 1)})</span>
+        <span className={`${kdaColor}`}>{`${details.stats.kills} / `}</span>
+        <span className={`${kdaColor}`}>{`${details.stats.deaths} / `}</span>
+        <span className={`${kdaColor}`}>{`${details.stats.assists}`}</span>
       </div>
     );
 
     const cs = (
       <div className='overview-row'>
-        <span className='overview-text'>{roundWithPrecision(details.stats.cs10, 0)}/</span>
-        <span className='overview-text'>{roundWithPrecision(details.stats.cs20, 0)}/</span>
-        <span className='overview-text'>{roundWithPrecision(details.stats.cs30, 0)}</span>
+        <span className='overview-heading violet-txt'>CS@10 / 20</span>
+        <br/>
+        <span className='overview-text violet-txt'>{roundWithPrecision(details.stats.cs10, 0)} / </span>
+        <span className='overview-text violet-txt'>{roundWithPrecision(details.stats.cs20, 0)} </span>
+        
       </div>
     );
 
     const gold = (
       <div className='overview-row'>
-        <span className='overview-text'>{roundWithPrecision(details.stats.gold10, 0)}/</span>
-        <span className='overview-text'>{roundWithPrecision(details.stats.gold20, 0)}/</span>
-        <span className='overview-text'>{roundWithPrecision(details.stats.gold30, 0)}</span>
+        <span className='overview-heading gold-dk-txt'>Gold@10 / 20</span>
+        <br/>
+        <span className='overview-text gold-dk-txt'>{roundWithPrecision(details.stats.gold10, 0)} / </span>
+        <span className='overview-text gold-dk-txt'>{roundWithPrecision(details.stats.gold20, 0)} </span>
+        
       </div>
     );
 
@@ -253,7 +274,7 @@ class OverviewCard extends Component {
       return (
         <div className='oc-league'>
           <img src={tierIcon} className='tier-img' />
-          <span className='overview-text'>{mapping[leagueName]}</span>
+          <span className='overview-text tier-text'>{mapping[leagueName]}</span>
         </div>
       )
     });

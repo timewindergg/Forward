@@ -124,7 +124,7 @@ class CurrentMatchCompare extends Component {
               color='#ff6666'
               loading={true} 
             />
-            <h4>{`Loading:`}</h4>
+            <h4>{`Loading...`}</h4>
           </div>
         </div>
       );

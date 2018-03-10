@@ -55,7 +55,10 @@ badge icon ne
       }
     );
 
-    const tierText = detailsLoaded ? `${tier} ${division} ${LP} LP` : '';
+    let tierText = detailsLoaded ? `${tier} ${division} ${LP} LP` : '';
+    if (detailsLoaded && tier === ''){
+      tierText = 'UNRANKED';
+    }
     const tierIcon = getTierIconUrl(tier);
 
     const nameClass = classNames({
@@ -90,9 +93,7 @@ badge icon ne
           <span className={nameClass}>{name}</span>
           <div className='och-row3'>
             <span className={tierClass}>{tierText}</span>
-            {detailsLoaded &&
-              <img src={tierIcon} className='tier-img' />
-            }
+            {detailsLoaded}
           </div>
           {promos.length > 0 &&
             <div className='promos'>

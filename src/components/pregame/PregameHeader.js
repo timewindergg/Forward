@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import moment from 'moment';
+import Moment from 'react-moment';
 
 import {GameTypes} from '../../constants/GameTypes';
 
@@ -44,11 +44,9 @@ class PregameTime extends Component {
   }
 
   render() {
-    const diffText = new Date(this.state.diff * 1000).toISOString().substr(11, 8);
-
     return (
       <h4 className='rc-pregame-time'>
-        <span className='grey-text'>{`Match Time Elapsed: ${diffText}`}</span>
+        <Moment format='mm:ss' fromNow unix>{this.state.diff}</Moment>
       </h4>
     );
   }
