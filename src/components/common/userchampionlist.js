@@ -71,7 +71,7 @@ class UserChampionList extends Component {
                       <Link to={`/c/${summonerRegion.toLowerCase()}/${summonerName}/${props.value.replace(/\W/g, '')}`}>
                         <div>
                           <img className="champion-table-image" src={championUrl}/>
-                          <p>{props.value}</p>
+                          <span>{props.value}</span>
                         </div>
                       </Link>
                     );
@@ -103,6 +103,11 @@ class UserChampionList extends Component {
                   Header: "KDA",
                   accessor: "kda",
                   width: 45,
+                  Cell: props => {
+                    return (
+                      <span className="kda">{props.value}</span>
+                    );
+                  }
                 }
               ]
             },
@@ -112,6 +117,11 @@ class UserChampionList extends Component {
                   Header: "CS",
                   accessor: "cs",
                   width: 35,
+                  Cell: props => {
+                    return (
+                      <span className="cs">{props.value}</span>
+                    );
+                  }
                 }
               ]
             },
@@ -121,6 +131,11 @@ class UserChampionList extends Component {
                   Header: "Gold",
                   accessor: "gold",
                   width: 55,
+                  Cell: props => {
+                    return (
+                      <span className="gold">{props.value}</span>
+                    );
+                  }
                 }
               ]
             },
@@ -132,9 +147,9 @@ class UserChampionList extends Component {
                   width: 40,
                   Cell: props => {
                     return (
-                      <div>
+                      <span className="win-rate">
                         {props.value}%
-                      </div>
+                      </span>
                     );
                   }
                 }
