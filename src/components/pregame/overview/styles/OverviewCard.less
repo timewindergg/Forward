@@ -14,6 +14,14 @@
 		// align-items: flex-start;
 	}
 
+	transition: all .05s ease-in-out;
+    &:hover {
+      	border-color: @red-dk;
+		background: #fff;
+		box-shadow: 0 0 10px fade(@red-dk, 80%);
+    }
+
+
 	.overview-row {
 		display: inline-block;
 		width: 100%;
@@ -100,6 +108,8 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+		    min-height: 54px;
+			justify-content: flex-end;
 
 			.tier-img {
 				width: 39px;
@@ -123,6 +133,12 @@
 
 .overview-card-blue {
 	border-color: @blue-md3;
+
+    &:hover {
+		border-color: @blue-md3 ~'!important';
+		background: #fff ~'!important';
+		box-shadow: 0 0 10px fade(@blue-dk, 80%) ~'!important';
+    }
 }
 
 .overviewsred {
