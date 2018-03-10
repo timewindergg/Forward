@@ -31,29 +31,25 @@ class CompareCardMiddle extends Component {
     let csRed = {
       cs10: 0,
       cs20: 0,
-      cs30: 0,
-      totalCs: 0
+      cs30: 0
     };
 
     let csBlue = {
       cs10: 0,
       cs20: 0,
-      cs30: 0,
-      totalCs: 0
+      cs30: 0
     };
 
     if (Object.keys(dataRed).length > 0 && !!dataRed.stats) {
       csRed.cs10 = dataRed.stats.cs10;
       csRed.cs20 = dataRed.stats.cs20;
       csRed.cs30 = dataRed.stats.cs30;
-      csRed.totalCs = dataRed.stats.totalCs;
     }
 
     if (Object.keys(dataBlue).length > 0 && !!dataBlue.stats) {
       csBlue.cs10 = dataBlue.stats.cs10;
       csBlue.cs20 = dataBlue.stats.cs20;
       csBlue.cs30 = dataBlue.stats.cs30;
-      csBlue.totalCs = dataBlue.stats.totalCs;
     }
 
     let csDiff = {};
@@ -127,7 +123,7 @@ class CompareCardMiddle extends Component {
             label='CS Advantage'
             isCentered={true}
 
-            height={120}
+            height={90}
             width={500}
 
             data={csData}

@@ -130,7 +130,7 @@ class HorizontalBarGraph extends Component {
 
     return (
       <div className='rc-horizontal-bar-graph'>
-        {label !== '' && <h2 >{label}</h2>}
+        {label !== '' && <div className='compare-heading'>{label}</div>}
         <div className={classNames(graphClass, 'hbg')} id={graphID} ref={graphRef}>
 
         </div>
