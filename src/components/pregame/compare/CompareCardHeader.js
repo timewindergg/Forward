@@ -22,9 +22,6 @@ class CompareCard extends Component {
     otherChamp: PropTypes.number.isRequired,
 
     cWinRate: PropTypes.any.isRequired,
-    winsSelf: PropTypes.number.isRequired,
-    totalGames: PropTypes.number.isRequired,
-
     teamWinRate: PropTypes.number.isRequired,
 
     rankedDetails: PropTypes.object.isRequired,
@@ -38,8 +35,6 @@ class CompareCard extends Component {
     otherChamp: -1,
 
     cWinRate: '--',
-    winsSelf: 0,
-    totalGames: 0,
     teamWinRate: 0,
     rankedDetails: {
       tier: '',
@@ -51,14 +46,11 @@ class CompareCard extends Component {
     }
   }
 
-  renderChampionWinRate = (winsSelf, totalGames, otherChamp, championData) => {
+  renderChampionWinRate = (otherChamp, championData) => {
     const otherChampName = otherChamp === -1 ? '' : championData[otherChamp].name;
 
 
     let winRate = isNumeric(this.props.cWinRate) ? roundWithPrecision(100 * this.props.cWinRate, 1) : this.props.cWinRate;
-    // if (totalGames > 0) {
-    //   winRate = roundWithPrecision(100*winsSelf/totalGames, 1);
-    // }
 
     return (
       <div className={classNames({
@@ -119,8 +111,6 @@ class CompareCard extends Component {
       rankedDetails,
       teamWinRate,
       staticData,
-      winsSelf,
-      totalGames,
       otherChamp
     } = this.props;
 
@@ -151,7 +141,7 @@ class CompareCard extends Component {
     const nameClass = classNames('h-primary-text' ,'h-text');
 
     // TODO: use this later?
-    const championWinRate = this.renderChampionWinRate(winsSelf, totalGames, otherChamp, championData);
+    const championWinRate = this.renderChampionWinRate(otherChamp, championData);
     // const teamWinRateSection = this.renderTeamWinRate(teamWinRate);
 
     return (
