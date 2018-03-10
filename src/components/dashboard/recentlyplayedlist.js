@@ -23,7 +23,7 @@ class RecentlyPlayedWith extends Component {
                   width: 150,
                   Cell: props => {
                     return (
-                      <Link to={`/p/${region}/${props.value}`}>
+                      <Link to={`/p/${region.toLowerCase()}/${props.value}`}>
                         <div>
                           {props.value}
                         </div>

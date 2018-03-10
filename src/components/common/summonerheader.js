@@ -19,7 +19,7 @@ class SummonerHeader extends Component {
           <div className="summoner-profile">
             <span className="summoner-name">{summonerInfo.name}</span>
             <span className="summoner-level">{`Lv ${summonerInfo.level}`}</span>
-            <Link to={`/l/${summonerInfo.region}/${summonerInfo.name}`}>
+            <Link to={`/l/${summonerInfo.region.toLowerCase()}/${summonerInfo.name}`}>
               <button>Live Game</button>
             </Link>
           </div>

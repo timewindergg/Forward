@@ -30,6 +30,16 @@ class ChampionStatsRadarGraph extends Component {
         <Radar
           data={data}
           legend={{display: false}}
+          options={{
+            tooltips: {
+              enabled: false
+            },
+            scale: {
+              ticks: {
+                display: false
+              },
+            }
+          }}
         />
       </div>
     )

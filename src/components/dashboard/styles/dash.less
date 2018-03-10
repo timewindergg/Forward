@@ -18,7 +18,7 @@
     padding-left: 15px;
   }
 
-  
+
 
   .dashboard-body-graphs {
     display: flex;
@@ -36,7 +36,7 @@
     }
   }
 
-  
+
 
   .victory {
     background-color: @blue-dk;
@@ -48,10 +48,16 @@
 
   .dashboard-show-more {
     text-align: center;
-    margin-top: 5px;
+    background-color: @grey-lt;
 
-    &:hover{
-      background: #fff;
+    transition: all .2s ease-in-out;
+
+    h2 {
+      padding: 10px;
+    }
+
+    &:hover {
+      transform: scale(1.02);
     }
   }
 

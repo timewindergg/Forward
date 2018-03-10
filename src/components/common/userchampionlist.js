@@ -68,7 +68,7 @@ class UserChampionList extends Component {
                     }
 
                     return (
-                      <Link to={`/c/${summonerRegion}/${summonerName}/${props.value.replace(/\W/g, '')}`}>
+                      <Link to={`/c/${summonerRegion.toLowerCase()}/${summonerName}/${props.value.replace(/\W/g, '')}`}>
                         <div>
                           <img className="champion-table-image" src={championUrl}/>
                           <p>{props.value}</p>

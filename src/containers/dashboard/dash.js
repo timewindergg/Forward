@@ -41,7 +41,7 @@ function difference(object, base) {
 class DashboardContainer extends Component {
   constructor(props) {
     super(props);
-    
+
     // settimeout here
 
     this.state = {
@@ -114,7 +114,7 @@ class DashboardContainer extends Component {
       this.pullMatchHistory(newSummoner, newRegion, newID);
     }
   }
-  
+
   componentWillUnmount() {
     clearTimeout(this.state.fetchTaskID);
   }
@@ -156,6 +156,7 @@ class DashboardContainer extends Component {
           currentMatch={currentMatch}
           matches={matches}
           staticData={staticData}
+          limit={MH_SIZE}
         />
         <Footer/>
       </div>
