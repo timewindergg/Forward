@@ -11,6 +11,7 @@ import './styles/OverviewCard.css';
 
 import {
   getSpellIconUrl,
+  getTierIconUrl,
   getPerkIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
@@ -50,9 +51,9 @@ class OverviewCard extends Component {
     );
 
     return (
-      <div className={classNames('overview-icon-list')}>
-        {spell0}
-        {spell1}
+      <div className={classNames('overview-icon-list', 'oil-fixed')}>
+          {spell0}
+          {spell1}
       </div>
     );
   }
@@ -77,14 +78,15 @@ class OverviewCard extends Component {
       );
     });
 
+    // const r1 = runes.slice(0, 4);
+    // const r2 = runes.slice(4, runes.length);
+
     return (
       <div className={classNames('overview-icon-list')}>
         {runes}
       </div>
     );
   }
-
-
 
   getRankedDetails = (details, queueName) => {
     if (!details || !details.leagues || !details.leagues[queueName]) {
@@ -178,6 +180,7 @@ class OverviewCard extends Component {
     const kda = (
       <div className='overview-row'>
         <span className='overview-heading'>KDA</span>
+        <br />
         <span className='overview-greentext'>{`${details.stats.kills}/`}</span>
         <span className='overview-redtext'>{`${details.stats.deaths}/`}</span>
         <span className='overview-greentext'>{`${details.stats.assists}`}</span>
@@ -187,8 +190,6 @@ class OverviewCard extends Component {
 
     const cs = (
       <div className='overview-row'>
-        <span className='overview-heading'>CS@10/20/30</span>
-        <br />
         <span className='overview-text'>{roundWithPrecision(details.stats.cs10, 0)}/</span>
         <span className='overview-text'>{roundWithPrecision(details.stats.cs20, 0)}/</span>
         <span className='overview-text'>{roundWithPrecision(details.stats.cs30, 0)}</span>
@@ -197,13 +198,13 @@ class OverviewCard extends Component {
 
     const gold = (
       <div className='overview-row'>
-        <span className='overview-heading'>Gold@10/20/30</span>
-        <br />
         <span className='overview-text'>{roundWithPrecision(details.stats.gold10, 0)}/</span>
         <span className='overview-text'>{roundWithPrecision(details.stats.gold20, 0)}/</span>
         <span className='overview-text'>{roundWithPrecision(details.stats.gold30, 0)}</span>
       </div>
     );
+
+    const leagues = this.renderLeagues(details.leagues);
 
     const summonerSpells = this.renderSummonerSpells();
     const runes = this.renderRunes();
@@ -213,17 +214,53 @@ class OverviewCard extends Component {
         {headerComp}
 
         <div className='overview-body'>
-          <div className='overview-icon-div'>
-            {summonerSpells}
-            {runes}
+          <div className='overview-col'>
+            {winsLoss}
+            {kda}
+            {cs}
+            {gold}
+            <div className='oc-leagues'>
+              {leagues}
+            </div>
           </div>
-          {winsLoss}
-          {kda}
-          {cs}
-          {gold}
+
+          <div className='overview-col'>
+            <div className='overview-icon-div'>
+              {summonerSpells}
+              {runes}
+            </div>
+          </div>
+
+
         </div>
       </div>
     );
+  }
+
+  renderLeagues = (leagues) => {
+    // TODO: SORT THIS
+
+    const mapping = {
+      'RANKED_FLEX_SR': 'Flex 5s',
+      'RANKED_SOLO_5x5': 'Solo',
+      'RANKED_FLEX_TT': 'Flex 3s'
+    }
+
+    const leagueComps = Object.keys(leagues).map(leagueName => {
+      const tier = leagues[leagueName].tier;
+      const tierIcon = getTierIconUrl(tier);
+
+      return (
+        <div className='oc-league'>
+          <img src={tierIcon} className='tier-img' />
+          <span className='overview-text'>{mapping[leagueName]}</span>
+        </div>
+      )
+    });
+
+    // console.log(leagues);
+    return leagueComps;
+    // RANKED_SOLO_5x5 RANKED_FLEX_SR 
   }
 }
 
