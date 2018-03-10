@@ -9,7 +9,7 @@ class Footer extends Component{
         <div className="credits">
           <div className="artCredits">
             Art by&nbsp;
-            <a href="https://pwang347.github.io">Paul Wang</a>
+            <a href="https://pwang347.github.io" target="_blank">Paul Wang</a>
           </div>
         </div>
         <div className="disclaimer">
@@ -18,7 +18,7 @@ class Footer extends Component{
           </span>
         </div>
         <div className="social">
-          <a href="https://discord.gg/pT78Nz6">
+          <a href="https://discord.gg/pT78Nz6" target="_blank">
             <i class="fab fa-discord"></i>
           </a>
         </div>

@@ -15,7 +15,11 @@ class LaneStats extends Component {
       return (
         <div className="lanestat" key={lane}>
           <img src={getRoleIconUrl(lane)}/>
-          <span>{`${winRate}% WR / ${percentagePlayed}% played`}</span>
+          <div className="stat">
+            <span className="win-rate">{`${winRate}% WR `}</span>
+            <span>/</span>
+            <span className="percentage-played">{` ${percentagePlayed}% played`}</span>
+          </div>
         </div>
       );
     });
