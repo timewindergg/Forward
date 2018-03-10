@@ -175,19 +175,14 @@ class CurrentMatchCompare extends Component {
           />
         </div>
         <div className='compare-row'>
-          <CompareCardMiddle
-            dataRed={compareDataRed}
-            dataBlue={compareDataBlue}
-          />
-        </div>
-        <div className={classNames('compare-row')}>
-          <span className={classNames('compare-heading', 'cr-center')}>{`Recommended Items`}</span>
-        </div>
-        <div className='compare-row'>
           <CompareCardBottom
             isRed={true}
             compareData={compareDataRed}
             staticData={staticData}
+          />
+          <CompareCardMiddle
+            dataRed={compareDataRed}
+            dataBlue={compareDataBlue}
           />
           <CompareCardBottom
             isRed={false}
