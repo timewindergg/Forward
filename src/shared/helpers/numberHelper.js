@@ -13,6 +13,8 @@ export const numberFormatter = (num) => {
 
 // shameless copied from Mozilla docs
 export const roundWithPrecision = (number, precision) => {
+  if (!isNumeric(number)) {return number;}
+
   const factor = Math.pow(10, precision);
   return Math.round(number * factor) / factor;
 }
@@ -29,4 +31,9 @@ export const calculateGradient = (color1, color2, ratio) => {
 
   var gradient = hex(r) + hex(g) + hex(b);
   return gradient;
+}
+
+
+export const isNumeric = (n) => {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }

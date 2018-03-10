@@ -119,9 +119,9 @@ class Dashboard extends Component {
               <LaneStats championStats={summoner.championStats}/>
               <UserChampionList championStats={summoner.championStats}
                 summonerName={summoner.name}
-                summonerRegion={summoner.region}
+                summonerRegion={this.props.region}
                 staticData={staticData}/>
-              <RecentlyPlayedWith matches={matches} region={summoner.region}/>
+              <RecentlyPlayedWith matches={matches} region={this.props.region}/>
             </div>
           </div>
         </div>

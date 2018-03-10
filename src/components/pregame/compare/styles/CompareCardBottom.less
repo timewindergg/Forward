@@ -1,3 +1,5 @@
+@import '../../../common/styles/colors.less';
+
 .rc-compare-card-bottom {
 	display: flex;
 	flex-direction: column;
@@ -9,29 +11,49 @@
 	box-sizing: border-box;
 	padding: 10px;
 
-	.compare-heading {
-		font-size: 20px;
-		font-weight: 600;
-	}
-
 	.compare-items {
 		text-align: left;
+		width: 100%;
 	}
 	.compare-items:not(:first-child) {
-		margin-top: 20px;
+		margin-top: 10px;
 	}
 	.compare-items-right {
 		text-align: right  ~'!important';
 	}
 
+	.item-container {
+		display: flex;
+		flex-direction: column;
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+
 	.compare-item {
-		margin-left: 5px;
-		margin-right: 5px;
+		height: 34px;
+		width: 34px;
+	}
+
+	.compare-item-empty {
+		height: 46px;
+		width: 34px;
+	}
+
+	.compare-item-cnt {
+		height: 12px;
+		// background-color: #444;
+		// color: #fafafa;
+		text-align: center;
+		font-weight: 600;
 	}
 
 	.ccb-row {
 		display: flex;
 		flex-direction: row;
+	}
+
+	.ccb-row-right {
+		flex-direction: row-reverse ~'!important';
 	}
 }
 

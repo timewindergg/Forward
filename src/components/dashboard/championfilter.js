@@ -49,7 +49,7 @@ class ChampionFilter extends Component {
 
     const escapedValue = escapeRegexCharacters(value.trim());
 
-    if (escapedValue === '' || escapedValue.length < 2) {
+    if (escapedValue === '') {
       return [];
     }
 
