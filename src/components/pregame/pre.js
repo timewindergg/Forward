@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import CurrentMatchOverview from './overview/CurrentMatchOverview';
 import CurrentMatchCompare from './compare/CurrentMatchCompare';
+
+import CompareCardMiddle from './compare/CompareCardMiddle';
 import PregameHeader from './PregameHeader';
 
 import LoadingScreen from '../common/loadingscreen';
@@ -40,6 +42,32 @@ class Pregame extends Component {
       selectedBlue,
       loadingState
     } = this.props;
+
+    const dataRed = {
+      stats: {
+        cs10: 10000,
+        cs20: 11000,
+        cs30: 9000,
+        totalCs: 30000
+      }
+    };
+
+    const dataBlue = {
+      stats: {
+        cs10: 0,
+        cs20: 5000,
+        cs30: 14000,
+        totalCs: 19500
+      }
+    };
+
+    return (
+      <CompareCardMiddle
+        dataRed={dataRed}
+        dataBlue={dataBlue}
+      />
+    )
+
 
     if (loadingState === LoadingState.FAILED) {
       return(<NotFound />);

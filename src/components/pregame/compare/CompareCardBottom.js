@@ -127,6 +127,7 @@ class CompareCardBottom extends Component {
 
     return (
       <div className={cardClass}>
+        <span className={classNames('compare-heading')}>{`Recommended Items`}</span>
         {bootItems}
         {coreItems}
         {situationalItems}
