@@ -19,7 +19,7 @@ class SkillCell extends Component{
 }
 
 class SkillTable extends Component {
-  renderRow(skillId, skillImage){
+  renderRow(skillId, skillChar, skillImage){
     let skills = this.props.skillOrder;
     let buffer = [];
 
@@ -30,7 +30,7 @@ class SkillTable extends Component {
     );
 
     for (var i = 0; i < 18; i++){
-      if (i < skills.length && skills[i] === skillId){
+      if (i < skills.length && (skills[i] === skillId || skills[i] === skillChar)){
         buffer.push(
           <div key={i} className="skillCell skillUp"></div>
         );
@@ -54,10 +54,10 @@ class SkillTable extends Component {
     return (
       <div className="skillContainer">
         <div className="skillTable">
-          {this.renderRow(1, this.props.skillData.q.img)}
-          {this.renderRow(2, this.props.skillData.w.img)}
-          {this.renderRow(3, this.props.skillData.e.img)}
-          {this.renderRow(4, this.props.skillData.r.img)}
+          {this.renderRow(1, 'Q', this.props.skillData.q.img)}
+          {this.renderRow(2, 'W', this.props.skillData.w.img)}
+          {this.renderRow(3, 'E', this.props.skillData.e.img)}
+          {this.renderRow(4, 'R', this.props.skillData.r.img)}
         </div>
       </div>
     );

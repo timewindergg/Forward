@@ -195,19 +195,26 @@ class CurrentMatchCompare extends Component {
             staticData={staticData}
           />
         </div>
+        
         <div className='compare-row'>
-          <SkillTable
-            isRed={true}
-            skillOrder={currentMatch.skill_orders[compareDataRed.champion_id]}
-            skillData={staticData.championSkills[compareDataRed.champion_id]}
-            version={staticData.version}
-          />
-          <SkillTable
-            isRed={false}
-            skillOrder={currentMatch.skill_orders[compareDataBlue.champion_id]}
-            skillData={staticData.championSkills[compareDataBlue.champion_id]}
-            version={staticData.version}
-          />
+          <div className='skillProgression'>
+            <h3>Recommended skill order</h3>
+            <SkillTable
+              isRed={true}
+              skillOrder={currentMatch.skill_orders[compareDataRed.champion_id]}
+              skillData={staticData.championSkills[compareDataRed.champion_id]}
+              version={staticData.version}
+            />
+          </div>
+          <div className='skillProgression'>
+            <h3 style={{'text-align': 'right'}}>Recommended skill order</h3>
+            <SkillTable
+              isRed={false}
+              skillOrder={currentMatch.skill_orders[compareDataBlue.champion_id]}
+              skillData={staticData.championSkills[compareDataBlue.champion_id]}
+              version={staticData.version}
+            />
+          </div>
         </div>
       </div>
     );

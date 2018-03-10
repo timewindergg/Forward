@@ -52,7 +52,7 @@ class CompareCardBottom extends Component {
   }
 
   // staticData[string(item.id)]
-  renderItems = (itemType, isRed) => {
+  renderItems = (heading, itemType, isRed) => {
     const {compareData, staticData} = this.props;
     const isDetailsLoaded = !!compareData.build;
 
@@ -91,7 +91,7 @@ class CompareCardBottom extends Component {
       <div className={classNames('compare-items', {
         'compare-items-right': !isRed
       })}>
-        <span className='compare-sub-heading'>{`${itemType}`}</span>
+        <h3>{heading}</h3>
         <div className={classNames('ccb-row', 'ccb-icon-list', {'ccb-row-right': !isRed})}>
           {items}
         </div>
@@ -121,9 +121,9 @@ class CompareCardBottom extends Component {
     }
 
     // console.log(compareData,)
-    const bootItems = this.renderItems('boots', isRed);
-    const coreItems = this.renderItems('core', isRed);
-    const situationalItems = this.renderItems('situational', isRed);
+    const bootItems = this.renderItems('Boots', 'boots', isRed);
+    const coreItems = this.renderItems('Core', 'core', isRed);
+    const situationalItems = this.renderItems('Situational', 'situational', isRed);
 
     return (
       <div className={cardClass}>
