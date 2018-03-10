@@ -87,7 +87,7 @@ class OverviewCard extends Component {
 
 
   getRankedDetails = (details, queueName) => {
-    if (!details.leagues || !details.leagues[queueName]) {
+    if (!details || !details.leagues || !details.leagues[queueName]) {
       return {
         tier: '',
         division: '',
@@ -130,16 +130,39 @@ class OverviewCard extends Component {
       }
     );
 
+    // TODO: think of a different product flow for selecting champions to compare head to head
+    const {tier, division, points, promos} = this.getRankedDetails(details, queueName);
+
+    const headerComp = (
+      <OverviewCardHeader
+        name={summoner.name}
+        champion={staticData.champions[summoner.champion_id]}
+        staticData={staticData}
+
+        detailsLoaded={Object.keys(details).length > 0}
+
+        tier={tier}
+        division={division}
+        promos={promos}
+        LP={points}
+        isRed={isRed}
+        isSelected={isSelected}
+      />
+    );
+
     if (!details || Object.keys(details).length === 0) {
       return (
         <div className={cardClass}>
-          <div className='oc-loader'>
-            <ClipLoader
-              size={80}
-              color={isRed ? '#ff6666' : '#4488ff'} 
-              loading={true} 
-            />
-            <h4>{`Loading:`}</h4>
+          {headerComp}
+          <div className='overview-body'>
+            <div className='oc-loader'>
+              <ClipLoader
+                size={80}
+                color={isRed ? '#ff6666' : '#4488ff'} 
+                loading={true} 
+              />
+              <h4>{`Loading:`}</h4>
+            </div>
           </div>
         </div>
       );
@@ -185,23 +208,9 @@ class OverviewCard extends Component {
     const summonerSpells = this.renderSummonerSpells();
     const runes = this.renderRunes();
 
-    // TODO: think of a different product flow for selecting champions to compare head to head
-    const {tier, division, points, promos} = this.getRankedDetails(details, queueName);
-
     return (
       <div className={cardClass} onClick={this.selectSummoner}>
-        <OverviewCardHeader
-          name={summoner.name}
-          champion={staticData.champions[summoner.champion_id]}
-          staticData={staticData}
-
-          tier={tier}
-          division={division}
-          promos={promos}
-          LP={points}
-          isRed={isRed}
-          isSelected={isSelected}
-        />
+        {headerComp}
 
         <div className='overview-body'>
           <div className='overview-icon-div'>

@@ -22,6 +22,7 @@ class OverviewCardHeader extends Component {
     promos: PropTypes.array.isRequired,
     staticData: PropTypes.object.isRequired,
 
+    detailsLoaded: PropTypes.bool.isRequired,
     isRed: PropTypes.bool.isRequired,
     isSelected: PropTypes.bool.isRequired
   }
@@ -41,7 +42,7 @@ lp and rank in same line, take away champion name text
 badge icon ne
 */
   render() {
-    const {name, champion, tier, division, LP, promos, isRed, isSelected, staticData} = this.props;
+    const {name, champion, detailsLoaded, tier, division, LP, promos, isRed, isSelected, staticData} = this.props;
     const imageUrl = getChampionIcon(champion, staticData.version);
 
     const colorClass = isRed ? 'hred' : 'hblue';
@@ -54,7 +55,7 @@ badge icon ne
       }
     );
 
-    const tierText = `${tier} ${division} (${LP} LP)`;
+    const tierText = detailsLoaded ? `${tier} ${division} ${LP} LP` : '';
     const tierIcon = getTierIconUrl(tier);
 
     const nameClass = classNames({
@@ -64,8 +65,8 @@ badge icon ne
     });
 
     const tierClass = classNames({
-      'h-text': tierText.length < 15,
-      'h-s-text': tierText.length >= 15
+      // 'h-text': tierText.length < 15,
+      'h-ss-text': tierText.length >= 0
     })
 
     const promoList = promos.map((promo) => {
@@ -84,11 +85,15 @@ badge icon ne
       <div className={cardClass}>
         <div className='champion-img-container'>
           <img src={imageUrl} className='champion-img' />
-          <img src={tierIcon} className='tier-img' />
         </div>
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>
-          <span className={tierClass}>{tierText}</span>
+          <div className='och-row3'>
+            <span className={tierClass}>{tierText}</span>
+            {detailsLoaded &&
+              <img src={tierIcon} className='tier-img' />
+            }
+          </div>
           {promos.length > 0 &&
             <div className='promos'>
               {`Promos: `}{promoList}
