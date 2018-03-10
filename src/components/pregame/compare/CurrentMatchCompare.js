@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { ClipLoader } from 'react-spinners';
 import _ from 'lodash';
@@ -190,6 +191,9 @@ class CurrentMatchCompare extends Component {
             dataRed={compareDataRed}
             dataBlue={compareDataBlue}
           />
+        </div>
+        <div className={classNames('compare-row')}>
+          <span className={classNames('compare-heading', 'cr-center')}>{`Recommended Items`}</span>
         </div>
         <div className='compare-row'>
           <CompareCardBottom

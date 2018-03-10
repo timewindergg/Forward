@@ -18,8 +18,9 @@ import { roundWithPrecision } from '../../../shared/helpers/numberHelper.js';
 
 import runeMappings from '../../../shared/runeMappings.js';
 
-
-
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 class OverviewCard extends Component {
   constructor(props) {
@@ -87,18 +88,29 @@ class OverviewCard extends Component {
     );
   }
 
+
+
   getRankedDetails = (details, queueName) => {
     if (!details.leagues || !details.leagues[queueName]) {
       return {
         tier: '',
         division: '',
         points: 0,
-        promos: []
+        promos: [],
       };
     }
 
     const rankedDetails = details.leagues[queueName];
-    const promos = rankedDetails.promos ? rankedDetails.promos : [];
+    let promos = [];
+
+    if (!!rankedDetails.promos) {
+      promos = rankedDetails.promos.forEach(p => {return p ? 'W' : 'L';});
+
+      const np = isNumeric(rankedDetails.not_played) ? rankedDetails.not_played : 0;
+      for (let i = 0; i < np; i++) {
+        promos = promos.concat('');
+      }
+    }
 
     return {
       tier: rankedDetails.tier,

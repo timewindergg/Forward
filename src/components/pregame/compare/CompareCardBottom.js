@@ -7,6 +7,9 @@ import './styles/CompareCardBottom.css';
 import Tooltip from '../../common/tooltip/Tooltip';
 import TOOLTIP_TYPES from '../../../constants/TooltipTypes';
 
+import {roundWithPrecision} from '../../../shared/helpers/numberHelper';
+import {getPercentClass} from '../../../shared/helpers/cssHelper';
+
 import {
   getItemIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
@@ -22,31 +25,74 @@ class CompareCardBottom extends Component {
     staticData: PropTypes.object.isRequired
   }
 
+  sortItems = (items, isRed) => {
+    let total = 0;
+
+    let sItems = Object.keys(items).map(item => {
+      total += items[item];
+      return {key: item, value: items[item]}
+    });
+
+    if (isRed) {
+      sItems.sort((a, b) => {
+        if (a.value < b.value){ return 1; }
+        else if (a.value > b.value) { return -1; }
+        return 0;
+      });
+    } else {
+      // ascending order because CSS HACK!
+      sItems.sort((a, b) => {
+        if (a.value < b.value){ return -1; }
+        else if (a.value > b.value) { return 1; }
+        return 0;
+      });
+    }
+
+    return [sItems, total];
+  }
+
   // staticData[string(item.id)]
   renderItems = (itemType, isRed) => {
     const {compareData, staticData} = this.props;
     const isDetailsLoaded = !!compareData.build;
 
-    const items = isDetailsLoaded ? Object.keys(compareData.build[itemType]).map((item) => {
-      const itemData = staticData.items[item.toString()];
-      return (
-        <Tooltip
-          containerClassName={'overview-rune'}
-          type={TOOLTIP_TYPES.ITEM}
-          id={item}
-          data={itemData}
-        >
-          <img className='compare-item' src={getItemIconUrl(item, staticData.version)} key={item} alt=''/>
-        </Tooltip>
-      );
-    }) : <img className='compare-item' src='' alt=''/>;
+    let items = (<img className='compare-item-empty' src='' alt=''/>);
+
+    if (isDetailsLoaded && Object.keys(compareData.build[itemType].length > 0)) {
+      const si = this.sortItems(compareData.build[itemType], isRed);
+      const sortedItems = si[0];
+      const total = si[1];
+      items = sortedItems.map((item) => {
+        const ik = item.key;
+        const iCnt = item.value;
+
+        const itemData = staticData.items[ik.toString()];
+        const pcnt = roundWithPrecision(100*iCnt/total, 1);
+        return (
+          <Tooltip
+            containerClassName={'overview-rune'}
+            type={TOOLTIP_TYPES.ITEM}
+            id={ik}
+            data={itemData}
+          >
+            <div className='item-container'>
+              <img className='compare-item' src={getItemIconUrl(ik, staticData.version)} key={ik} alt=''/>
+              <span className={classNames('compare-item-cnt', getPercentClass(pcnt))}>
+                {`${pcnt}%`}
+              </span>
+            </div>
+          </Tooltip>
+        );
+      });
+    }
+
 
     return (
       <div className={classNames('compare-items', {
         'compare-items-right': !isRed
       })}>
-        <span className='compare-heading'>{`${itemType} items`}</span>
-        <div className={classNames('ccb-row', 'ccb-icon-list')}>
+        <span className='compare-sub-heading'>{`${itemType}`}</span>
+        <div className={classNames('ccb-row', 'ccb-icon-list', {'ccb-row-right': !isRed})}>
           {items}
         </div>
       </div>
