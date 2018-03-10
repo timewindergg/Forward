@@ -28,6 +28,7 @@ class CurrentMatchCompare extends Component {
 
   getWinsData = (currentMatch, compareData, otherChamp) => {
     const placeholder = {
+      wr: '--',
       wins: 0,
       losses: 0,
       totalGames: 0
@@ -47,6 +48,7 @@ class CurrentMatchCompare extends Component {
     }
 
     return {
+      wr: ourWinData[otherChamp],
       wins: ourWinData[otherChamp].wins__sum,
       losses: ourWinData[otherChamp].losses__sum,
       totalGames: ourWinData[otherChamp].total_games__sum
@@ -165,6 +167,7 @@ class CurrentMatchCompare extends Component {
             otherChamp={otherChampRed}
             rankedDetails={rankedDetailsRed}
 
+            cWinRate={winsDataRed.wr}
             winsSelf={winsDataRed.wins}
             totalGames={winsDataRed.totalGames}
 
@@ -178,6 +181,7 @@ class CurrentMatchCompare extends Component {
             otherChamp={otherChampBlue}
             rankedDetails={rankedDetailsBlue}
 
+            cWinRate={winsDataBlue.wr}
             winsSelf={winsDataBlue.wins}
             totalGames={winsDataBlue.totalGames}
 

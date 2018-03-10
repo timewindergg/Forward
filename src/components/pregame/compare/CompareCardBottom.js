@@ -76,7 +76,7 @@ class CompareCardBottom extends Component {
             data={itemData}
           >
             <div className='item-container'>
-              <img className='compare-item' src={getItemIconUrl(ik, staticData.version)} key={ik} alt=''/>
+              <img className={classNames('compare-item', 'icon')} src={getItemIconUrl(ik, staticData.version)} key={ik} alt=''/>
               <span className={classNames('compare-item-cnt', getPercentClass(pcnt))}>
                 {`${pcnt}%`}
               </span>

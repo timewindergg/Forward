@@ -7,14 +7,12 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import './styles/CompareCardHeader.css';
 
-
-
 import {
   getTierIconUrl,
   getChampionIconUrlByImage,
 } from '../../../shared/helpers/staticImageHelper.js';
 
-import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
+import {roundWithPrecision, isNumeric} from '../../../shared/helpers/numberHelper.js';
 import {IMG_VER} from '../../../constants/Settings';
 
 class CompareCard extends Component {
@@ -23,6 +21,7 @@ class CompareCard extends Component {
     compareData: PropTypes.object.isRequired,
     otherChamp: PropTypes.number.isRequired,
 
+    cWinRate: PropTypes.any.isRequired,
     winsSelf: PropTypes.number.isRequired,
     totalGames: PropTypes.number.isRequired,
 
@@ -37,6 +36,8 @@ class CompareCard extends Component {
 
   static defaultProps = {
     otherChamp: -1,
+
+    cWinRate: '--',
     winsSelf: 0,
     totalGames: 0,
     teamWinRate: 0,
@@ -53,10 +54,11 @@ class CompareCard extends Component {
   renderChampionWinRate = (winsSelf, totalGames, otherChamp, championData) => {
     const otherChampName = otherChamp === -1 ? '' : championData[otherChamp].name;
 
-    let winRate = '--';
-    if (totalGames > 0) {
-      winRate = roundWithPrecision(100*winsSelf/totalGames, 1);
-    }
+
+    let winRate = isNumeric(this.props.cWinRate) ? roundWithPrecision(100 * this.props.cWinRate, 1) : this.props.cWinRate;
+    // if (totalGames > 0) {
+    //   winRate = roundWithPrecision(100*winsSelf/totalGames, 1);
+    // }
 
     return (
       <div className={classNames({

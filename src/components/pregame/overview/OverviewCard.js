@@ -14,13 +14,9 @@ import {
   getPerkIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
-import { roundWithPrecision } from '../../../shared/helpers/numberHelper.js';
+import { roundWithPrecision, isNumeric } from '../../../shared/helpers/numberHelper.js';
 
 import runeMappings from '../../../shared/runeMappings.js';
-
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
 
 class OverviewCard extends Component {
   constructor(props) {
