@@ -48,6 +48,11 @@ class RecentlyPlayedWith extends Component {
                   Header: "Wins",
                   accessor: "wins",
                   width: 50,
+                  Cell: props => {
+                    return (
+                      <span className="wins">{props.value}</span>
+                    );
+                  }
                 }
               ]
             },
@@ -57,6 +62,11 @@ class RecentlyPlayedWith extends Component {
                   Header: "Losses",
                   accessor: "losses",
                   width: 50,
+                  Cell: props => {
+                    return (
+                      <span className="losses">{props.value}</span>
+                    );
+                  }
                 }
               ]
             },
@@ -68,9 +78,9 @@ class RecentlyPlayedWith extends Component {
                   width: 40,
                   Cell: props => {
                     return (
-                      <div>
+                      <span className="win-rate">
                         {props.value}%
-                      </div>
+                      </span>
                     );
                   }
                 }
