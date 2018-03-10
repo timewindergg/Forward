@@ -61,13 +61,15 @@ class Pregame extends Component {
       }
     };
 
-    return (
-      <CompareCardMiddle
-        dataRed={dataRed}
-        dataBlue={dataBlue}
-      />
-    )
-
+    /*
+    Graph
+      data (value, key, maybe a displayName)
+      isCentered
+      colors: {pos, posHover, neg, negHover}
+      height
+      width
+      graphID
+    */
 
     if (loadingState === LoadingState.FAILED) {
       return(<NotFound />);

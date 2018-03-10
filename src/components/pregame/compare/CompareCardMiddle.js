@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import {HorizontalBar} from 'react-chartjs-2';
+
 
 import './styles/CompareCardMiddle.css';
 
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
 
 import * as d3 from 'd3';
+
+import HorizontalBarGraph from '../../common/graph/HorizontalBarGraph';
 
 class CompareCardMiddle extends Component {
   static propTypes = {
@@ -109,134 +111,51 @@ class CompareCardMiddle extends Component {
     });
   }
 
-  componentDidMount() {
+  // TODO: shouldComponentUpdate when we actually update
+
+  render() {
     const {dataRed, dataBlue} = this.props;
 
     const csData = this.fetchCsData(dataRed, dataBlue);
-    // const goldData = this.fetchGoldData(dataRed, dataBlue);
-
-    if (!!this.refs.CS) {
-      console.log('D3MAGIC', csData);
-
-      const width = 500;
-      const height = 250;
-
-      let maxCS = 0;
-      csData.forEach(cs => {
-        maxCS = Math.max(maxCS, Math.abs(cs.value));
-      });
-        // .padding(0.1);
-        // .rangeRoundBands([0, height], 0.1);
-
-      // let xAxis = d3.axisBottom(x);
-
-      // let yAxis = d3.axisLeft(y)
-      //   .tickSize(0)
-      //   .tickPadding(6);
-
-      let csGraph = d3.select('#cmc-cs')
-        .append('svg')
-          .attr('width', width)
-          .attr('height', height)
-        .append('g');
-
-      console.log('D3MAGIC', csGraph);
-
-      // var x = d3.scaleLinear().range([-maxCS, maxCS]);
-      var x = d3.scaleLinear()
-        .domain([-maxCS, maxCS])
-        .range([0, width]);
-      var y = d3.scaleBand().range([height, 0]);
-
-      console.log('D3MAGIC', x, y);
-
-      // TODO: class attr after enter append rect
-      csGraph.selectAll('.bar')
-        .data(csData)
-        .enter().append('rect')
-        .attr("class", function(d) { return "bar bar--" + (d.value < 0 ? "negative" : "positive"); })
-        .attr('x', d => x(Math.min(0, d.value)))
-        .attr('y', d => {
-          // return y(d.idx * 50);
-          return d.idx * y.bandwidth() / 4;
-          // return y(d.key);
-        })
-        .attr('width', d => {
-          console.log('D3MAGIC', Math.abs(x(d.value) - x(0)), y.bandwidth());
-          return Math.abs(x(d.value) - x(0))
-        })
-        .attr('height', y.bandwidth() / 4)
-
-      csGraph.append("g")
-        .data(csData)
-        .attr("class", "x axis")
-        // .attr("transform", d => {
-        //   console.log('D3MAGIC TRANSFORM', d);
-        //   return "translate(0," + d.idx * 50 + ")";
-        // })
-        .call(d3.axisBottom(x));
-
-      csGraph.append("g")
-        .attr("class", "y axis")
-        // .attr("transform", "translate(" + x(0) + ",0)")
-        .call(d3.axisLeft(y));
-    }
-  }
-
-  render() {
-
-    // if (!!this.refs.CsGraph) {
-    //   this.manipulateCsGraph();
-    // }
-
-/*
-<div className='compare-graph' id='cmc-gold'>
-          <h2>Gold Differentials</h2>
-    </div>
-*/
-    console.log('D3MAGIC', this.refs);
-    
+    const goldData = this.fetchGoldData(dataRed, dataBlue);
 
     return (
-      <div className='rc-compare-card-middle' ref='asdf'>
-        <h2 ref='BLAG'>Cs Differentials</h2>
-        <div className='compare-graph' id='cmc-cs' ref='CS'>
+      <div className='rc-compare-card-middle'>
+        <div className='compare-graph'>
+          <HorizontalBarGraph
+            graphID='ccm-cs'
+            label='CS Advantage'
+            isCentered={true}
 
+            height={120}
+            width={500}
+
+            data={csData}
+            fillInfo={{
+              pos: '#ff9793',
+              neg: '#8CAFFF'
+            }}
+          />    
         </div>
-        
+        <div className='compare-graph'>
+          <HorizontalBarGraph
+            graphID='ccm-gold'
+            label='Gold Advantage'
+            isCentered={true}
+
+            height={90}
+            width={500}
+
+            data={goldData}
+            fillInfo={{
+              pos: '#ff9793',
+              neg: '#8CAFFF'
+            }}
+          />    
+        </div>
       </div>
     );
   }
 }
 
 export default CompareCardMiddle;
-
-
-
-
-
-
-
-
-
-
-
-/*
-return (
-      <div className='rc-compare-card-middle'>
-        <div className='compare-graph'>
-          <h2>Cs Differentials</h2>
-          <div className='graph-wrapper'>
-
-          </div>
-        </div>
-        <div className='compare-graph'>
-          <h2>Gold Differentials</h2>
-          <div className='graph-wrapper'>
-            
-          </div>
-        </div>
-      </div>
-    );
-
-*/
