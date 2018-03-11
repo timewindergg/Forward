@@ -101,7 +101,7 @@ class HorizontalBarGraph extends Component {
           .attr('x', d => width/2)
           .attr('y', d => y(this.getLabel(d)))
           .attr('width', d => 0)
-          .transition().duration(300).ease(d3.easeLinear)
+          .transition().duration(500).ease(d3.easeCubicOut)
           .attr('x', d => x(Math.min(0, d.value)))
           .attr('width', d => Math.abs(x(d.value) - x(0)))
           .attr('height', y.bandwidth())

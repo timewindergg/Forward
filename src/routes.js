@@ -16,32 +16,34 @@ import {
   CHAMPION_PARAM
 } from './constants/RouteConstants';
 
+import withTracker from './gatracker';
+
 import configureStore from './stores/configureStore';
 const store = configureStore();
 
 const Routes = () => (
   <Provider store={store}>
     <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={HomeContainer} />
-          <Route
-            path={`/p/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}`}
-            component={DashboardContainer}
-          />
-          <Route
-            path={`/m/:${REGION_PARAM}(\\w+)/:${MATCH_PARAM}(\\d+)`}
-            component={PostgameContainer}
-          />
-          <Route
-            path={`/l/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}`}
-            component={PregameContainer}
-          />
-          <Route
-            path={`/c/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}/:${CHAMPION_PARAM}(\\w+)`}
-            component={ChampionStatsContainer}
-          />
-          <Route path="*" component={NotFoundContainer} />
-        </Switch>
+      <Switch>
+        <Route exact path="/" component={withTracker(HomeContainer)} />
+        <Route
+          path={`/p/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}`}
+          component={withTracker(DashboardContainer)}
+        />
+        <Route
+          path={`/m/:${REGION_PARAM}(\\w+)/:${MATCH_PARAM}(\\d+)`}
+          component={withTracker(PostgameContainer)}
+        />
+        <Route
+          path={`/l/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}`}
+          component={withTracker(PregameContainer)}
+        />
+        <Route
+          path={`/c/:${REGION_PARAM}(\\w+)/:${SUMMONER_PARAM}/:${CHAMPION_PARAM}(\\w+)`}
+          component={withTracker(ChampionStatsContainer)}
+        />
+        <Route path="*" component={NotFoundContainer} />
+      </Switch>
     </BrowserRouter>
   </Provider>
 );
