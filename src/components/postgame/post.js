@@ -289,6 +289,10 @@ class Postgame extends Component {
     }
   }
 
+  componentDidMount() {
+    document.addEventListener('keydown', this.advanceTimeline, false); 
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined
       && Object.keys(this.props.staticData).length > 0){
@@ -307,6 +311,20 @@ class Postgame extends Component {
         blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(this.props.matchDetails, nextProps.staticData);
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.advanceTimeline, false);
+  }
+
+  advanceTimeline = (event) => {
+    const keyName = event.key;
+    if (keyName === 'ArrowLeft' || keyName === 'a' || keyName === 'A') {
+      console.log('shift left');
+    }
+    if (keyName === 'ArrowRight' || keyName === 'd' || keyName === 'D') {
+      console.log('shift right');
     }
   }
 
