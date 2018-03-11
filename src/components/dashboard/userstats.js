@@ -12,12 +12,22 @@ class UserStats extends Component {
 
     return (
       <div className="userstats">
-        <span className="kda">{`${roundWithPrecision(userStats[0], 2)} KDA`}</span>
-        <span className="kp">{`${roundWithPrecision(userStats[1], 2)}% KP`}</span>
-        <span className="obj-dmg">{`${userStats[2]} Damage dealt to objectives`}</span>
-        <span className="gold">{`${userStats[3]} Gold`}</span>
-        <span className="vision-score">{`${userStats[4]} Vision Score`}</span>
-        <span className="cs">{`${userStats[5]} CS`}</span>
+        <div className="statValues">
+          <span className="kda">{`${roundWithPrecision(userStats[0], 2)}`}</span>
+          <span className="kp">{`${roundWithPrecision(userStats[1], 0)}`}</span>
+          <span className="cs">{`${roundWithPrecision(userStats[5], 0)}`}</span>
+          <span className="gold">{`${roundWithPrecision(userStats[3], 0)}`}</span>
+          <span className="obj-dmg">{`${roundWithPrecision(userStats[2], 0)}`}</span>
+          <span className="vision-score">{`${roundWithPrecision(userStats[4], 0)}`}</span>
+        </div>
+        <div className="statLabels">
+          <span className="kda">{` KDA`}</span>
+          <span className="kp">{` % KP`}</span>
+          <span className="cs">{` CS`}</span>
+          <span className="gold">{` Gold`}</span>
+          <span className="obj-dmg">{` Obj Dmg`}</span>
+          <span className="vision-score">{` Vision Score`}</span>
+        </div>
       </div>
     );
   }

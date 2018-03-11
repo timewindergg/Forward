@@ -15,7 +15,7 @@ class MatchLawn extends Component {
     // Calculate the beginning of 4 months ago.
     const d = new Date();
     d.setDate(1); // sets it to the beginning of the month.
-    d.setMonth(d.getMonth() - 5);
+    d.setMonth(d.getMonth() - 4);
 
     const customTooltipDataAttrs = (value) => ({
       'data-tip': !value.date ? 'no data' : `${value.date}: ${value.wins + value.losses} Records: ${value.wins}w-${value.losses}l`
@@ -29,6 +29,8 @@ class MatchLawn extends Component {
           endDate={new Date()}
           startDate={beginningDate}
           values={lawn}
+          showWeekdayLabels={true}
+          weekdayLabels={['S','M','T','W','Th','F','S']}
           tooltipDataAttrs={customTooltipDataAttrs}
           classForValue={(value) => {
             if (!value) {

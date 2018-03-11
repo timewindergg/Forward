@@ -13,20 +13,28 @@ class SummonerHeader extends Component {
     const profileIconUrl = getProfileIconUrl(summonerInfo.icon, version);
     return (
         <div className="summoner-header">
-          <div className="profile-icon">
-            <img src={profileIconUrl}/>
-          </div>
-          <div className="summoner-profile">
-            <span className="summoner-name">{summonerInfo.name}</span>
-            <span className="summoner-level">{`Lv ${summonerInfo.level}`}</span>
-            <Link to={`/l/${summonerInfo.region.toLowerCase()}/${summonerInfo.name}`}>
-              <button>Live Game</button>
-            </Link>
+          <div className="profile">
+            <div className="profile-icon">
+              <img src={profileIconUrl}/>
+            </div>
+            <div className="summoner-profile">
+              <span className="summoner-name">{summonerInfo.name}</span>
+              <span className="summoner-level">{`Lv ${summonerInfo.level}`}</span>
+              <div className="summoner-wr">
+                <span className="summoner-wins">{summonerInfo.wins}W </span>
+                <span className="summoner-losses">{summonerInfo.losses}L</span>
+              </div>
+              <Link to={`/l/${summonerInfo.region.toLowerCase()}/${summonerInfo.name}`}>
+                <div className="live-btn">Live</div>
+              </Link>
+            </div>
           </div>
           {this.renderRankedTiers(summonerInfo)}
+          {/*
           <div className="top-champion-masteries">
             {this.renderTopUserChampionMasteries(summonerInfo.championMasteries, version, staticData.champions)}
           </div>
+          */}
         </div>
     );
   }

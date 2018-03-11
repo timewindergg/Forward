@@ -2,79 +2,130 @@
 
   .summoner-header {
     display: flex;
+    justify-content: space-between;
 
+    .profile{
+      display: flex;
       .profile-icon {
         img {
-          width: 85px;
-          height: 85px;
+          width: 100px;
+          height: 100px;
+          border-radius: 5px;
         }
-      }
-
-      .divider {
-        content: "";
-        right: 0;
-        height: 61%;
-        border-right: 2px solid @grey-md;
-        -webkit-transform: skewX(-20deg);
-        transform: skewX(-20deg);
-        margin-top: 10px;
       }
 
       .summoner-profile {
         display: flex;
         flex-direction: column;
         margin-left: 10px;
-      }
 
-      .summoner-ranks {
-        display: flex;
+        .summoner-name{
+          font-weight: 700;
+          font-size: 22px;
+        }
 
-        .ranked-info {
-          display: flex;
-          margin-left: 20px;
-          text-align: center;
+        .summoner-level{
+          font-weight: 600;
+          font-size: 14px;
+        }
 
-          .ranked-tier {
-            img {
-              height: 60px;
-            }
+        .summoner-wr{
+          font-weight: 600;
+          font-size: 14px;
+
+          .summoner-wins{
+            color: @green;
           }
-
-          .ranked-stats {
-            margin-left: 10px;
-            span {
-              display: block;
-            }
+          .summoner-losses{
+            color: @red-dk;
           }
         }
-      }
 
-      .top-champion-masteries {
-        margin-left: 100px;
+        a{
+          text-decoration: none;
+        }
+        .live-btn{
+          margin-top: 5px;
+          width: 60px;
+          height: 25px;
+          text-align: center;
+          line-height: 24px;
+
+          border-radius: 2px;
+          border: 1px solid @blue-dk;
+          background: @blue-dk;
+          color:#fff;
+          text-decoration: none;
+
+          &:hover{
+            background: @blue-md;
+          }
+
+          &:active{
+            background: @blue-lt;
+            color: @blue-dk;
+          }
+        }
+
+        .live-circle{
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+
+          background: @red-dk;
+        }
+      }
+    }
+
+    .summoner-ranks {
+      display: flex;
+
+      .ranked-info {
         display: flex;
-      }
-
-      .champion-mastery-wrapper {
-        margin-left: 25px;
+        margin-left: 20px;
         text-align: center;
 
-        .mastery-icon {
-          margin-top: -15px;
-        }
-
-        .champion-mastery-icon {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          margin-left: auto;
-          margin-right: auto;
-          display: block;
-        }
-
-        .mastery-icon {
+        .ranked-tier {
           img {
-            height: 35px;
+            height: 60px;
+          }
+        }
+
+        .ranked-stats {
+          margin-left: 10px;
+          span {
+            display: block;
           }
         }
       }
+    }
+
+    .top-champion-masteries {
+      margin-left: 100px;
+      display: flex;
+    }
+
+    .champion-mastery-wrapper {
+      margin-left: 25px;
+      text-align: center;
+
+      .mastery-icon {
+        margin-top: -15px;
+      }
+
+      .champion-mastery-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+
+      .mastery-icon {
+        img {
+          height: 35px;
+        }
+      }
+    }
   }

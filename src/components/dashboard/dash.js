@@ -94,13 +94,18 @@ class Dashboard extends Component {
         <div className="content">
           <SummonerHeader summonerInfo={summoner}
             staticData={staticData}/>
+          <div className="statsHeader">
+            <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
+            <div className="dashboard-radar">
+              <MatchStatsRadar matches={matches}/>
+              <UserStats matches={matches}/>
+            </div>
+            <LaneStats championStats={summoner.championStats}/>
+          </div>
+          <div className="separator">
+          </div>
           <div className="dashboard-body">
             <div className="dashboard-body-left-container">
-              <div className="dashboard-body-graphs">
-                <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
-                <MatchStatsRadar matches={matches}/>
-                <UserStats matches={matches}/>
-              </div>
               <div className="matchlist-container">
                 <MatchFilter
                   matches={matches}
@@ -112,7 +117,6 @@ class Dashboard extends Component {
                   version={staticData.version}/>
                 <Matches
                   loadingState={loadingState}
-
                   matches={matches}
                   version={staticData.version}
                   limit={matchesToDisplay}
@@ -127,7 +131,7 @@ class Dashboard extends Component {
               {loadMore}
             </div>
             <div className="dashboard-body-right-container">
-              <LaneStats championStats={summoner.championStats}/>
+              
               <UserChampionList championStats={summoner.championStats}
                 summonerName={summoner.name}
                 summonerRegion={this.props.region}
