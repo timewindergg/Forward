@@ -93,7 +93,6 @@ class HorizontalBarGraph extends Component {
       })).padding(0.1);
 
       // TODO: class attr after enter append rect
-      //           // .attr('class', (d) =>{ return "bar bar--" + (d.value < 0 ? "negative" : "positive"); })
       let graphInternal = graph.selectAll('.bar')
         .data(data)
         .enter().append('g');
