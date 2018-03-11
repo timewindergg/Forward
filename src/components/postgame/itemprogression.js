@@ -32,13 +32,18 @@ class Item extends Component {
     let id = this.props.id;
     let showTS = this.props.showTS;
     let type = 'icon item';
-    if (this.props.id < 0){
+    const isSold = this.props.id < 0;
+
+    if (isSold){
       type += ' sold';
     }
 
     return(
       <div className='itemContainer'>
-        <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)}></img>
+        <div className='item-inner'>
+          <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)}></img>
+          {isSold && <i className='fas fa-times sell-dash' />}
+        </div>
         <span>
           <Moment
             className={classNames('itemTs', 'clear', {'ts-hidden': !showTS})}
