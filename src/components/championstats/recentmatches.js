@@ -15,6 +15,9 @@ import QueueIdMappings from '../../shared/queueIdMappings.js';
 import { getKDA, getKillParticipation, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper';
 
+import Tooltip from '../common/tooltip/Tooltip';
+import TOOLTIP_TYPES from '../../constants/TooltipTypes';
+
 class RecentMatch extends Component{
 
   getStats(m){
@@ -31,6 +34,7 @@ class RecentMatch extends Component{
   render(){
     let m = this.props.match;
     let version = this.props.version;
+    let itemData = this.props.itemData;
     let runeData = this.props.runeData;
     let championData = this.props.championData;
 
@@ -56,7 +60,14 @@ class RecentMatch extends Component{
               <img className="summonerIcon icon" src={getSpellIconUrl(m.spell1, version)}/>
             </div>
             <div className="runes">
-              <img className="runeIcon icon" src={getPerkIconUrl(keystone, version)}/>
+              <Tooltip
+                type={TOOLTIP_TYPES.RUNE}
+                data={runeData[keystone.toString()]}
+                img={getPerkIconUrl(keystone, version)}
+                version={version}
+              >
+                <img className="runeIcon icon" src={getPerkIconUrl(keystone, version)}/>
+              </Tooltip>
               <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, version)}/>
             </div>
           </div>
@@ -73,7 +84,7 @@ class RecentMatch extends Component{
               <span>{`${roundWithPrecision(getKDA(m.kills, m.deaths, m.assists), 2)} KDA`}</span>
             </div>
           </div>
-          {this.renderItems([m.item0, m.item1, m.item2, m.item3, m.item4, m.item5, m.item6], version)}
+          {this.renderItems([m.item0, m.item1, m.item2, m.item3, m.item4, m.item5, m.item6], version, itemData)}
         </div>
       </div>
     );
@@ -128,7 +139,7 @@ class RecentMatch extends Component{
     );
   }
 
-  renderItems(items, version) {
+  renderItems(items, version, itemData) {
     const itemSet = items.map((item) => {
       if (item === 0){
         return (
@@ -136,7 +147,15 @@ class RecentMatch extends Component{
         );
       }
       return (
+        <Tooltip
+          containerClassName={classNames({'itemIcon': true, 'icon': true})}
+          type={TOOLTIP_TYPES.ITEM}
+          data={itemData[item.toString()]}
+          img={getItemIconUrl(item, version)}
+          version={version}
+        >
           <img className="itemIcon icon icon" src={getItemIconUrl(item, version)} alt=""/>
+        </Tooltip>
       );
     });
 
@@ -163,7 +182,7 @@ class RecentMatches extends Component {
   renderMatches(championStats, version, staticData) {
     return championStats.recentMatches.map((m) => {
       return (
-        <RecentMatch match={m} version={version} key={m.match_id} runeData={staticData.runes} championData={staticData.champions}/>
+        <RecentMatch match={m} version={version} key={m.match_id} runeData={staticData.runes} championData={staticData.champions} itemData={staticData.items}/>
       );
     })
   }

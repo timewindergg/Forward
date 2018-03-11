@@ -14,6 +14,10 @@ import {
   getItemIconUrl
 } from '../../../shared/helpers/staticImageHelper.js';
 
+import {
+  sortItems
+} from '../../../shared/helpers/itemHelper';
+
 class CompareCardBottom extends Component {
   constructor(props) {
     super(props);
@@ -25,32 +29,6 @@ class CompareCardBottom extends Component {
     staticData: PropTypes.object.isRequired
   }
 
-  sortItems = (items, isRed) => {
-    let total = 0;
-
-    let sItems = Object.keys(items).map(item => {
-      total += items[item];
-      return {key: item, value: items[item]}
-    });
-
-    if (isRed) {
-      sItems.sort((a, b) => {
-        if (a.value < b.value){ return 1; }
-        else if (a.value > b.value) { return -1; }
-        return 0;
-      });
-    } else {
-      // ascending order because CSS HACK!
-      sItems.sort((a, b) => {
-        if (a.value < b.value){ return -1; }
-        else if (a.value > b.value) { return 1; }
-        return 0;
-      });
-    }
-
-    return [sItems, total];
-  }
-
   // staticData[string(item.id)]
   renderItems = (heading, itemType, isRed) => {
     const {compareData, staticData} = this.props;
@@ -59,7 +37,7 @@ class CompareCardBottom extends Component {
     let items = (<img className='compare-item-empty' src='' alt=''/>);
 
     if (isDetailsLoaded && Object.keys(compareData.build[itemType].length > 0)) {
-      const si = this.sortItems(compareData.build[itemType], isRed);
+      const si = sortItems(compareData.build[itemType], isRed);
       const sortedItems = si[0];
       const total = si[1];
       items = sortedItems.map((item) => {
