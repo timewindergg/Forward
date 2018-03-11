@@ -1,8 +1,31 @@
+@import '../../common/styles/colors';
+
 .mapContainer{
     height: 275px;
     width: 275px;
     position: relative;
     margin: 10px;
+
+    .death{
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        border: 2px solid;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .blue{
+        border-color: @blue-dk;
+        background: @blue-lt;
+    }
+
+    .red{
+        border-color: @red-dk;
+        background: @red-lt;
+    }
 }
 
 .minimap {
@@ -28,4 +51,5 @@
     border: 2px solid;
     overflow: hidden;
     transition: all .3s ease-in-out;
+    z-index: 2;
 }

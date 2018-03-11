@@ -42,7 +42,10 @@ class SkillTable extends Component {
     for (var i = 0; i < 18; i++){
       if (i < skills.length && (skills[i] === skillId || skills[i] === skillChar)){
         buffer.push(
-          <div key={i} className="skillCell skillUp"></div>
+          <div key={i} className="skillCell skillUp">
+            <div className="skillId">{skillChar}</div>
+            <div className="skillLevel">{i+1}</div>
+          </div>
         );
       }
       else {
@@ -60,7 +63,6 @@ class SkillTable extends Component {
   }
 
   render(){
-    // TODO: what about the "p" skill?
     return (
       <div className="skillContainer">
         <div className="skillTable">

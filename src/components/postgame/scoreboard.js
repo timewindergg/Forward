@@ -42,6 +42,19 @@ class ScoreboardPlayer extends Component {
       }
     }
 
+    const itemSet = items.map((item) => {
+      if (item){
+        return (
+          <img className={classNames({'itemIcon': true, 'icon': true})} src={getItemIconUrl(item, patchVersion)}/>
+        );
+      }
+      else {
+        return (
+          <div className='itemIcon filler icon'></div>
+        );
+      }
+    });
+
     return (
       <div className="summonerInfo">
         <div className="runeSummIcons">
@@ -72,12 +85,7 @@ class ScoreboardPlayer extends Component {
           </div>
         </div>
         <div className="itemSet">
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[0] === 0})} src={getItemIconUrl(items[0], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})} src={getItemIconUrl(items[1], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[2] === 0})} src={getItemIconUrl(items[2], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[3] === 0})} src={getItemIconUrl(items[3], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[4] === 0})} src={getItemIconUrl(items[4], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[5] === 0})} src={getItemIconUrl(items[5], patchVersion)}/>
+          {itemSet}
           <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)}/>
         </div>
       </div>
