@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import './styles/RuneTooltip.css';
+import './styles/ItemTooltip.css';
 
 // tooltip content
 class ItemTooltip extends Component{
   static defaultProps = {
     data: {
-      name: "",
+      name: '',
       totalGold: 0,
       sellGold: 0,
-      description: "",
-      plaintext: ""
+      description: '',
+      plaintext: '',
+      img: ''
     }
   }
 
@@ -22,15 +23,15 @@ class ItemTooltip extends Component{
 
   render() {
     const {data} = this.props;
-    const {name, totalGold, sellGold, description, plaintext} = data;
+    const {img, name, totalGold, sellGold, description, plaintext} = data;
 
     return(
       <div className='rc-item-tooltip'>
-        <div className='item-name'>
-          {name}
-        </div>
-        <div className='item-plaintext'>
-          <span className='plaintext'>{plaintext}</span>
+        <div className='item-header'>
+          <img className='icon item-img' src={img} alt={img} />
+          <div className='item-name'>
+            {name}
+          </div>
         </div>
         <div
           className='item-desc'
@@ -55,3 +56,10 @@ export default ItemTooltip;
 // "sellGold":88,
 // "description":"<stats><mana>+25% Base Mana Regen </mana></stats>",
 // "plaintext":"Slightly increases Mana Regen",
+
+
+/*
+        <div className='item-plaintext'>
+          <span className='plaintext'>{plaintext}</span>
+        </div>
+*/

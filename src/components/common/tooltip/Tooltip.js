@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ReactTooltip from 'react-tooltip';
+import uuidv4 from 'uuid/v4';
 
 import TOOLTIP_TYPES from '../../../constants/TooltipTypes';
 
 import RuneTooltip from './RuneTooltip';
 import ItemTooltip from './ItemTooltip';
+import ChampionSkillTooltip from './ChampionSkillTooltip';
 
 import './styles/tooltip.css';
 
@@ -18,7 +20,6 @@ class Tooltip extends Component{
     data: {},
     type: TOOLTIP_TYPES.CUSTOM,
     content: (<div></div>),
-    id: ''
   }
 
   static propTypes = {
@@ -26,12 +27,14 @@ class Tooltip extends Component{
     ttClassName: PropTypes.any,
     data: PropTypes.object,      // staticData for specific object
     type: PropTypes.string,      // object type
-    id: PropTypes.any,           // object id
     content: PropTypes.element,  // custom content (optional)
+
+    version: PropTypes.any.isRequired
   }
 
   render() {
-    const {containerClassName, type, id, content, data} = this.props;
+    const id = uuidv4();
+    const {containerClassName, type, content, data, version} = this.props;
     const tooltipID = `${type}-${id}`;
 
     let childComponent = content;
@@ -47,10 +50,13 @@ class Tooltip extends Component{
           <ItemTooltip data={data}/>
         );    
         break;
+      case TOOLTIP_TYPES.CHAMPIONSKILL:
+        childComponent = (
+          <ChampionSkillTooltip data={data} version={version}/>
+        );    
+        break;
 
-      // TOOLTIP_TYPES.CUSTOM
-      // TOOLTIP_TYPES.SPELL
-      // TOOLTIP_TYPES.CHAMPIONSKILL
+      // TOOLTIP_TYPES.CHAMPIONSKILL - DONT NEED
       // default:
     }
 

@@ -63,17 +63,19 @@ class CompareCardBottom extends Component {
       const sortedItems = si[0];
       const total = si[1];
       items = sortedItems.map((item) => {
-        const ik = item.key;
         const iCnt = item.value;
+        const ik = item.key;
 
         const itemData = staticData.items[ik.toString()];
         const pcnt = roundWithPrecision(100*iCnt/total, 1);
         return (
           <Tooltip
-            containerClassName={'overview-rune'}
+            containerClassName={'item-container'}
             type={TOOLTIP_TYPES.ITEM}
-            id={ik}
-            data={itemData}
+            data={
+              Object.assign({}, itemData, {img: getItemIconUrl(ik, staticData.version)})
+            }
+            version={staticData.version}
           >
             <div className='item-container'>
               <img className={classNames('compare-item', 'icon')} src={getItemIconUrl(ik, staticData.version)} key={ik} alt=''/>

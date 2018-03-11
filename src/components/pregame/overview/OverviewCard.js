@@ -70,8 +70,10 @@ class OverviewCard extends Component {
         <Tooltip
           containerClassName={'overview-rune'}
           type={TOOLTIP_TYPES.RUNE}
-          id={rune}
-          data={runeData}
+          data={
+            Object.assign({}, runeData, {img: getPerkIconUrl(rune, staticData.version)})
+          }
+          version={staticData.version}
         >
           <img className={runeClass} src={getPerkIconUrl(rune, staticData.version)} key={rune} alt=''/>
         </Tooltip>

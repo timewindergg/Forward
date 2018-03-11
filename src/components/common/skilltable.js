@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import uuidv4 from 'uuid/v4';
 
 import {getChampionSpellIconUrl} from '../../shared/helpers/staticImageHelper.js';
+import TOOLTIP_TYPES from '../../constants/TooltipTypes';
+import Tooltip from './tooltip/Tooltip';
 
 import './styles/skillprogression.css';
 
@@ -25,7 +28,14 @@ class SkillTable extends Component {
 
     buffer.push(
       <div key={skillImage}>
-        <img className="icon skillImage" src={getChampionSpellIconUrl(skillImage, this.props.version)} alt={skillImage}></img>
+        <Tooltip
+          containerClassName={'icon skillImage'}
+          type={TOOLTIP_TYPES.CHAMPIONSKILL}  
+          data={this.props.skillData[skillChar.toLowerCase()]}
+          version={this.props.version}
+        >
+          <img className='icon skillImage' src={getChampionSpellIconUrl(skillImage, this.props.version)} alt={skillImage}></img>
+        </Tooltip>
       </div>
     );
 

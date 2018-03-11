@@ -11,7 +11,8 @@ class RuneTooltip extends Component{
       name: '',
       path: '',
       shortDescription: '',
-      isKeystone: false
+      isKeystone: false,
+      img: ''
     }
   }
 
@@ -21,12 +22,15 @@ class RuneTooltip extends Component{
 
   render() {
     const {data} = this.props;
-    const {name, path, shortDescription, isKeystone} = data;
+    const {name, path, shortDescription, isKeystone, img} = data;
 
     return(
       <div className='rc-rune-tooltip'>
-        <div className='rune-name'>
-          {name}
+        <div className='rune-header'>
+          <img className='rune-img' src={img} alt={img}/>
+          <div className='rune-name'>
+            {name}
+          </div>
         </div>
         <div
           className='rune-desc'
@@ -39,7 +43,6 @@ class RuneTooltip extends Component{
 }
 
 export default RuneTooltip;
-
 
 // function createMarkup() {
 //   return {__html: 'First &middot; Second'};
