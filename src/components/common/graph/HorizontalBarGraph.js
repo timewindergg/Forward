@@ -98,8 +98,11 @@ class HorizontalBarGraph extends Component {
         .enter().append('g');
       
       graphInternal.append('rect')
-          .attr('x', d => x(Math.min(0, d.value)))
+          .attr('x', d => width/2)
           .attr('y', d => y(this.getLabel(d)))
+          .attr('width', d => 0)
+          .transition().duration(300).ease(d3.easeLinear)
+          .attr('x', d => x(Math.min(0, d.value)))
           .attr('width', d => Math.abs(x(d.value) - x(0)))
           .attr('height', y.bandwidth())
           .attr('fill', (d) => {
