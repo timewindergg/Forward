@@ -13,11 +13,15 @@ class ChampionProfile extends Component {
         return (
           <div className={classNames({'role-button': true, 'selected': this.props.role === role})} onClick={() => {onRoleSelection(role)}} key={role}>
             <img className="roleIcon" src={getRoleIconUrl(role)} />
-            <div className="winloss">
-              {championStats[role].wins} - {championStats[role].losses}
-            </div>
-            <div className="totalgames">
-              {championStats[role].total_games} games
+            <div className="roleStat">
+              <div className="winloss">
+                <span className="wins">{`${championStats[role].wins}W`}</span>
+                <span> - </span>
+                <span className="losses">{`${championStats[role].losses}L`}</span>
+              </div>
+              <div className="totalgames">
+                {championStats[role].total_games} games
+              </div>
             </div>
           </div>
         );

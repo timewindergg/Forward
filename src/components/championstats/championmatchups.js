@@ -50,7 +50,11 @@ class ChampionMatchups extends Component {
           <div className="progressBar">
             <Line percent={winrate} strokeWidth="4" strokeColor={"#"+color} />
           </div>
-          <span className="winloss">{stats.wins} - {stats.losses}</span>
+          <div className="winloss">
+            <span className="wins">{stats.wins}</span>
+            <span> - </span>
+            <span className="losses">{stats.losses}</span>
+          </div>
         </div>
       )
     });
