@@ -276,6 +276,19 @@ class Postgame extends Component {
     }
   }
 
+  componentWillMount() {
+    const {staticData, matchDetails} = this.props;
+
+    if (Object.keys(staticData).length > 0 && !!matchDetails && !!matchDetails.timeline) {
+      this.setState({
+        currentFrame: matchDetails.timeline.frames.length - 1,
+        redSelection: 1,
+        blueSelection: matchDetails.match.participants.length / 2 + 1,
+      });
+      this.aggregateData(matchDetails, staticData);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined
       && Object.keys(this.props.staticData).length > 0){
