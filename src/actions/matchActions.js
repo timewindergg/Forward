@@ -4,6 +4,7 @@ export const LOAD_CURRENT_MATCH_FAILED = 'LOAD_CURRENT_MATCH_FAILED';
 export const LOAD_CURRENT_MATCH_DETAILS_SUCCESS = 'LOAD_CURRENT_MATCH_DETAILS_SUCCESS';
 export const LOAD_CURRENT_MATCH_DETAILS_FAILED = 'LOAD_CURRENT_MATCH_DETAILS_FAILED';
 
+export const LOAD_MATCH_TIMELINE_START = 'LOAD_MATCH_TIMELINE_START';
 export const LOAD_MATCH_TIMELINE_SUCCESS = 'LOAD_MATCH_TIMELINE_SUCCESS';
 export const LOAD_MATCH_TIMELINE_FAILED = 'LOAD_MATCH_TIMELINE_FAILED';
 
@@ -38,6 +39,13 @@ export const loadCurrentMatchDetailsFailed = (summonerID, error) => ({
     error
   }
 });
+
+export const loadMatchTimelineStart = () => ({
+  type: LOAD_MATCH_TIMELINE_START,
+  payload: {
+  }
+});
+
 
 export const loadMatchTimelineSuccess = (matchTimeline) => ({
   type: LOAD_MATCH_TIMELINE_SUCCESS,

@@ -58,7 +58,7 @@ class Perks extends Component {
 
     //find keystone
     for (var i = 0; i < perks.length; i++){
-      if (perkData[perks[i]].isKeystone){
+      if (!!perkData[perks[i]] && perkData[perks[i]].isKeystone){
         keystone = perks[i];
         break;
       }

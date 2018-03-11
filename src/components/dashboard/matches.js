@@ -369,7 +369,7 @@ const getPlayerRunes = (team, summonerId, runeData) => {
     if (player.summonerId === summonerId) {
       // Loop through user runes and find the keystone.
       for (let key in player.runes) {
-        if (runeData[key].isKeystone === true) {
+        if (!!runeData[key] && runeData[key].isKeystone === true) {
           runes.push(parseInt(key));
         }
       }

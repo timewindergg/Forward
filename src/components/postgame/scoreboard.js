@@ -40,7 +40,7 @@ class ScoreboardPlayer extends Component {
     let keystone = 0;
 
     for (let key in p.runes) {
-      if (runeData[key].isKeystone === true) {
+      if (!!runeData[key] && runeData[key].isKeystone === true) {
         keystone = key;
       }
     }

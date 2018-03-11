@@ -26,7 +26,7 @@ class PostgameContainer extends Component {
 
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
-    if (Object.keys(timeline).length === 0 ) {
+    if (Object.keys(timeline).length === 0 || timeline.match.id !== matchId) {
       getMatchTimeline(matchId, region);
     }
 

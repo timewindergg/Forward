@@ -3,6 +3,7 @@ import {
   LOAD_CURRENT_MATCH_FAILED,
   LOAD_CURRENT_MATCH_DETAILS_SUCCESS,
   LOAD_CURRENT_MATCH_DETAILS_FAILED,
+  LOAD_MATCH_TIMELINE_START,
   LOAD_MATCH_TIMELINE_SUCCESS,
   LOAD_MATCH_TIMELINE_FAILED
 } from '../actions/matchActions';
@@ -83,6 +84,8 @@ const match = (state = initialState, action) => {
       return clearCurrentMatch(state, action.payload);
     case LOAD_CURRENT_MATCH_DETAILS_SUCCESS:
       return loadCurrentMatchDetails(state, action.payload);
+    case LOAD_MATCH_TIMELINE_START:
+      return clearMatchTimeline(state, {});
     case LOAD_MATCH_TIMELINE_SUCCESS:
       return loadMatchTimeline(state, action.payload);
     case LOAD_MATCH_TIMELINE_FAILED:

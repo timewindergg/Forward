@@ -5,6 +5,7 @@ import {
   loadCurrentMatchFailed, 
   loadCurrentMatchDetailsSuccess,
   loadCurrentMatchDetailsFailed,
+  loadMatchTimelineStart,
   loadMatchTimelineSuccess,
   loadMatchTimelineFailed
 } from '../actions/matchActions';
@@ -106,6 +107,7 @@ export const getMatchTimeline = (matchId, region, onSuccess) => {
   };
 
   return (dispatch) => {
+    dispatch(loadMatchTimelineStart());
     return axios.get(uri, {params}).then((response) => {
       console.log('loaded match timeline', response.data);
       dispatch(loadMatchTimelineSuccess(response.data));
