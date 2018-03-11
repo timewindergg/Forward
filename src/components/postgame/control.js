@@ -56,7 +56,7 @@ class EventRow extends Component{
       let offset = (index - 1) / (this.props.events.length - 1) * 100;
       let style = {
         'left': offset + '%',
-        'width': 1300 / (this.props.events.length - 1)
+        'width': 1100 / (this.props.events.length - 1) - 4
       }
 
       return (

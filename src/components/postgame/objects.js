@@ -35,5 +35,6 @@ export class Team {
     this.heralds = 0;
     this.inhibitors = 0;
     this.wards = 0;
+    this.deaths = [];
   }
 }

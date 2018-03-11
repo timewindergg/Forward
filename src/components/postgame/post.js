@@ -276,7 +276,7 @@ class Postgame extends Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined
       && Object.keys(this.props.staticData).length > 0){
       this.setState({

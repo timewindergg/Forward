@@ -1,3 +1,5 @@
+@import '../../common/styles/colors';
+
 .eventContainer{
     position:absolute;
     height: 28px;
@@ -6,7 +8,7 @@
 .eventTimeline {
     margin: auto;
     margin-top: 25px;
-    width: 1300px;
+    width: 1100px;
 }
 
 .eventRow{
@@ -37,5 +39,43 @@
 
 .gameSlider {
     margin: 15px auto;
-    width: 1300px;
+    width: 1100px;
+
+    .rc-slider-track{
+        background: @blue-dk;
+        height: 8px;
+    }
+
+    .rc-slider-rail{
+        height: 8px;
+    }
+
+    .rc-slider-step{
+        height: 8px;
+    }
+
+    .rc-slider-dot{
+        bottom: 0;
+        border-color: #fff;
+        background: #fff;
+        height: 10px;
+        width: 2px;
+        border-radius: 0;
+    }
+
+    .rc-slider-handle{
+        width: 30px;
+        height: 30px;
+        //border-color: @grey;
+        border-width: 0;
+        background-image: url("http://c-8oqtgrjgwu46x24x78kipgvvgx2eykmkcx2epqeqqmkgx2epgv.g00.wikia.com/g00/3_c-8ngciwgqhngigpfu.ykmkc.eqo_/c-8OQTGRJGWU46x24jvvrux3ax2fx2fx78kipgvvg.ykmkc.pqeqqmkg.pgvx2fngciwgqhngigpfux2fkocigux2f8x2f88x2fHcv_Rqtq_Keqp.rpix2ftgx78kukqpx2fncvguvx3fedx3d42372437352252_$/$/$/$/$/$/$/$?i10c.ua=1");
+        background-size: 30px 30px;
+        margin-left: -15px;
+        margin-top: -10px;
+
+        &:hover{
+            box-shadow: 0 0 5px #57c5f7;
+        }
+
+    }
 }
