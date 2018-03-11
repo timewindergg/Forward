@@ -1,38 +1,39 @@
 @import '../../styles/colors.less';
 
 .rc-item-tooltip {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  width: 300px ~'!important';
+  display: flex ~'!important';
+  flex-direction: column ~'!important';
+  align-items: flex-start ~'!important';
+  text-align: left ~'!important';
 
   margin-left: -15px;
   margin-right: -15px;
 
-  .item-header {
+  .tt-item-header {
     display: flex;
     flex-direction: row;
     align-items: center;
 
-    .item-img {
-      width: 30px;
-      height: 30px;
+    .tt-item-img {
+      width: 30px ~'!important';
+      height: 30px ~'!important';
     }
 
-    .item-name {
+    .tt-item-name {
       margin-left: 10px;
     }
   }
 
-  .item-desc {
+  .tt-item-desc {
     margin-top: 10px;
+    // height: 200px;
   }
 
-  .item-totalgold {
+  .tt-item-totalgold {
     margin-top: 10px;
 
-    .item-gold {
+    .tt-item-gold {
       color: @gold;
     }
   }

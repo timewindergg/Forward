@@ -18,6 +18,7 @@ class Tooltip extends Component{
     containerClassName: '',
     ttClassName: '',
     data: {},
+    img: '',
     type: TOOLTIP_TYPES.CUSTOM,
     content: (<div></div>),
   }
@@ -26,6 +27,7 @@ class Tooltip extends Component{
     containerClassName: PropTypes.any,
     ttClassName: PropTypes.any,
     data: PropTypes.object,      // staticData for specific object
+    img: PropTypes.string,
     type: PropTypes.string,      // object type
     content: PropTypes.element,  // custom content (optional)
 
@@ -34,7 +36,7 @@ class Tooltip extends Component{
 
   render() {
     const id = uuidv4();
-    const {containerClassName, type, content, data, version} = this.props;
+    const {containerClassName, type, content, data, img, version} = this.props;
     const tooltipID = `${type}-${id}`;
 
     let childComponent = content;
@@ -42,12 +44,12 @@ class Tooltip extends Component{
     switch (type) {
       case TOOLTIP_TYPES.RUNE:
         childComponent = (
-          <RuneTooltip data={data}/>
+          <RuneTooltip data={Object.assign({}, data, {img})}/>
         );    
         break;
       case TOOLTIP_TYPES.ITEM:
         childComponent = (
-          <ItemTooltip data={data}/>
+          <ItemTooltip data={Object.assign({}, data, {img})}/>
         );    
         break;
       case TOOLTIP_TYPES.CHAMPIONSKILL:

@@ -47,9 +47,8 @@ class Item extends Component {
           <Tooltip
             containerClassName={'icon item'}
             type={TOOLTIP_TYPES.ITEM}
-            data={
-              Object.assign({}, itemData, {img: getItemIconUrl(Math.abs(id), this.props.version)})
-            }
+            data={itemData}
+            img={getItemIconUrl(Math.abs(id), this.props.version)}
             version={this.props.version}
           >
             <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)}></img>

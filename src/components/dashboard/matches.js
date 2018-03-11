@@ -17,6 +17,9 @@ import { getChampionIconUrlByImage,
 import { getKDA, getKillParticipation, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper';
 
+import Tooltip from '../common/tooltip/Tooltip';
+import TOOLTIP_TYPES from '../../constants/TooltipTypes';
+
 import Moment from 'react-moment';
 
 class Matches extends Component {
@@ -29,15 +32,7 @@ class Matches extends Component {
       return (<div/>);
     }
 
-    const { matches, loadingState, version, limit, dateFilter, championFilter, queueFilter, championData, runeData} = this.props;
-
-    // let innerComp = (
-    //   <div></div>
-    // );
-
-    // console.log(loadingState, matches.length);
-    // if (loadingState === LoadingState.LOADING && matches.length === 0) {
-
+    const { matches, loadingState, version, limit, dateFilter, championFilter, queueFilter, championData, runeData, itemData} = this.props;
       let innerComp = (
         <div className='oc-loader'>
           <ClipLoader
@@ -49,7 +44,7 @@ class Matches extends Component {
         </div>
       );
     if (loadingState === LoadingState.FINISHED) {
-      innerComp = this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData);
+      innerComp = this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData, itemData);
     }
 
     return (
@@ -59,7 +54,7 @@ class Matches extends Component {
     );
   }
 
-  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData) {
+  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData, itemData) {
     const matchItems = matches.filter((match) => {
       let passesDateFilter = true;
       let passesChampionFilter = true;
@@ -87,7 +82,7 @@ class Matches extends Component {
         <div className={"item"} key={m.match_id}>
           <div className={classNames({"result-indicator": true, 'victory': m.team === m.winner, 'defeat': m.team !== m.winner})}></div>
           {this.renderMatchHeader(m)}
-          {this.renderMatchBody(m, version, runeData, championData)}
+          {this.renderMatchBody(m, version, runeData, championData, itemData)}
         </div>
       )
     });
@@ -142,7 +137,7 @@ class Matches extends Component {
     );
   }
 
-  renderItems(items, trinket, version){
+  renderItems(items, trinket, version, itemData) {
     const core = items.map((item) => {
       if (item === 0){
         return (
@@ -151,7 +146,14 @@ class Matches extends Component {
       }
       return (
         <div className="champion-item">
-          <img className="icon" src={getItemIconUrl(item, version)} alt=""/>
+          <Tooltip
+            type={TOOLTIP_TYPES.ITEM}
+            data={itemData[item.toString()]}
+            img={getItemIconUrl(item, version)}
+            version={version}
+          >
+            <img className="icon" src={getItemIconUrl(item, version)} alt=""/>
+          </Tooltip>
         </div>
       );
     });
@@ -162,13 +164,20 @@ class Matches extends Component {
           {core}
         </div>
         <div className="champion-item trinket">
-          <img className="icon" src={getItemIconUrl(trinket, version)} alt=""/>
+          <Tooltip
+            type={TOOLTIP_TYPES.ITEM}
+            data={itemData[trinket.toString()]}
+            img={getItemIconUrl(trinket, version)}
+            version={version}
+          >
+           <img className="icon" src={getItemIconUrl(trinket, version)} alt=""/>
+          </Tooltip>
         </div>
       </div>
     );
   }
 
-  renderMatchBody(match, version, runeData, championData) {
+  renderMatchBody(match, version, runeData, championData, itemData) {
     // Set user primary and secondary runes.
     const runes = getPlayerRunes(match.team === 100 ? match.blue_team: match.red_team, match.user_id, runeData);
     const team = match.team === 100 ? match.blue_team : match.red_team;
@@ -201,14 +210,21 @@ class Matches extends Component {
           </div>
           <div className="perks">
             <div className="perk">
-              <img src={getPerkIconUrl(runes[0], version)} alt=""/>
+              <Tooltip
+                type={TOOLTIP_TYPES.RUNE}
+                data={runeData[runes[0].toString()]}
+                img={getPerkIconUrl(runes[0], version)}
+                version={version}
+              >
+                <img src={getPerkIconUrl(runes[0], version)} alt=""/>
+              </Tooltip>
             </div>
             <div className="perk">
               <img src={getPerkStyleIconUrl(runes[1], version)} alt=""/>
             </div>
           </div>
         </div>
-        {this.renderItems([match.item0, match.item1, match.item2, match.item3, match.item4, match.item5], match.item6, version)}
+        {this.renderItems([match.item0, match.item1, match.item2, match.item3, match.item4, match.item5], match.item6, version, itemData)}
         <div className="match-stats">
           <div className="match-stats-kda">
             <span>{`${match.kills}/${match.deaths}/${match.assists}`}</span>

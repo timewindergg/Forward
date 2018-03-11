@@ -72,9 +72,8 @@ class CompareCardBottom extends Component {
           <Tooltip
             containerClassName={'item-container'}
             type={TOOLTIP_TYPES.ITEM}
-            data={
-              Object.assign({}, itemData, {img: getItemIconUrl(ik, staticData.version)})
-            }
+            data={itemData}
+            img={getItemIconUrl(ik, staticData.version)}
             version={staticData.version}
           >
             <div className='item-container'>

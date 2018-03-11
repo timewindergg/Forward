@@ -26,14 +26,14 @@ class RuneTooltip extends Component{
 
     return(
       <div className='rc-rune-tooltip'>
-        <div className='rune-header'>
-          <img className='rune-img' src={img} alt={img}/>
-          <div className='rune-name'>
+        <div className='tt-rune-header'>
+          <img className='tt-rune-img' src={img} alt={img}/>
+          <div className='tt-rune-name'>
             {name}
           </div>
         </div>
         <div
-          className='rune-desc'
+          className='tt-rune-desc'
           dangerouslySetInnerHTML={{__html: shortDescription}}
         >
         </div>

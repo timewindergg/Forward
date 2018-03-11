@@ -120,7 +120,9 @@ class Dashboard extends Component {
                   championFilter={championFilter}
                   queueFilter={queueFilter}
                   championData={staticData.champions}
-                  runeData={staticData.runes}/>
+                  runeData={staticData.runes}
+                  itemData={staticData.items}
+                />
               </div>
               {loadMore}
             </div>

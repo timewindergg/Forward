@@ -51,10 +51,8 @@ class ScoreboardPlayer extends Component {
           <Tooltip
             containerClassName={classNames({'itemIcon': true, 'icon': true})}
             type={TOOLTIP_TYPES.ITEM}
-            data={Object.assign({},
-              this.props.staticData.items[item.toString()],
-              {img: getItemIconUrl(item, patchVersion)}
-            )}
+            data={this.props.staticData.items[item.toString()]}
+            img={getItemIconUrl(item, patchVersion)}
             version={patchVersion}
           >
             <img className={classNames({'itemIcon': true, 'icon': true})} src={getItemIconUrl(item, patchVersion)}/>
@@ -76,7 +74,14 @@ class ScoreboardPlayer extends Component {
             <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellFId, patchVersion)}/>
           </div>
           <div className="runes">
-            <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)}/>
+            <Tooltip
+              type={TOOLTIP_TYPES.RUNE}
+              data={this.props.staticData.runes[keystone.toString()]}
+              img={getPerkIconUrl(keystone, patchVersion)}
+              version={patchVersion}
+            >
+              <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)}/>
+            </Tooltip>
             <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, patchVersion)}/>
           </div>
         </div>
@@ -103,10 +108,8 @@ class ScoreboardPlayer extends Component {
           <Tooltip
             containerClassName={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})}
             type={TOOLTIP_TYPES.ITEM}
-            data={Object.assign({},
-              this.props.staticData.items[trinket.toString()],
-              {img: getItemIconUrl(trinket, patchVersion)}
-            )}
+            data={this.props.staticData.items[trinket.toString()]}
+            img={getItemIconUrl(trinket, patchVersion)}
             version={patchVersion}
           >
             <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)}/>

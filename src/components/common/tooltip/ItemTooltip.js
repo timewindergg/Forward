@@ -27,22 +27,22 @@ class ItemTooltip extends Component{
 
     return(
       <div className='rc-item-tooltip'>
-        <div className='item-header'>
-          <img className='icon item-img' src={img} alt={img} />
-          <div className='item-name'>
+        <div className='tt-item-header'>
+          <img className='icon tt-item-img' src={img} alt={img} />
+          <div className='tt-item-name'>
             {name}
           </div>
         </div>
         <div
-          className='item-desc'
+          className='tt-item-desc'
           dangerouslySetInnerHTML={{__html: description}}
         >
         </div>
-        <div className='item-totalgold'>
-          {`Total Gold: `}<span className='item-gold'>{totalGold}</span>
+        <div className='tt-item-totalgold'>
+          {`Total Gold: `}<span className='tt-item-gold'>{totalGold}</span>
         </div>
-        <div className='item-totalgold'>
-          {`Sell: `}<span className='item-gold'>{sellGold}</span>
+        <div className='tt-item-totalgold'>
+          {`Sell: `}<span className='tt-item-gold'>{sellGold}</span>
         </div>
       </div>
     );
