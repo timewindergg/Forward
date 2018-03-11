@@ -52,8 +52,8 @@ class OverviewCard extends Component {
 
     return (
       <div className={classNames('overview-icon-list', 'oil-fixed')}>
-          {spell0}
-          {spell1}
+        {spell0}
+        {spell1}
       </div>
     );
   }
@@ -79,9 +79,6 @@ class OverviewCard extends Component {
         </Tooltip>
       );
     });
-
-    // const r1 = runes.slice(0, 4);
-    // const r2 = runes.slice(4, runes.length);
 
     return (
       <div className={classNames('overview-icon-list')}>

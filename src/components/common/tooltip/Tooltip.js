@@ -65,7 +65,7 @@ class Tooltip extends Component{
         <a data-tip data-for={tooltipID}>
           {this.props.children}
         </a>
-        <ReactTooltip id={tooltipID} className={this.props.ttClassName}>
+        <ReactTooltip id={tooltipID} className={classNames(this.props.ttClassName, 'tt-text')}>
           {childComponent}
         </ReactTooltip>
       </div>

@@ -4,7 +4,44 @@ import classNames from 'classnames';
 import { getChampionIconUrlByImage, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
 
+import Tooltip from '../common/tooltip/Tooltip';
+import TOOLTIP_TYPES from '../../constants/TooltipTypes';
+
 class ScoreboardPlayer extends Component {
+  
+          // <Tooltip
+          //   containerClassName={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})}
+          //   type={TOOLTIP_TYPES.ITEM}
+          //   version={patchVersion}
+          // >
+          //   <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})} src={getItemIconUrl(items[1], patchVersion)}/>
+          // </Tooltip>
+
+  loopItems = (items, patchVersion, trinket) => {
+    let itemComps = [];
+
+    for (let i = 0; i <= 6; i++) {
+      const thing = i === 6 ? trinket : items[i];
+      const itemData = this.props.staticData.items[thing.toString()];
+
+      itemComps.push((
+        <Tooltip
+          containerClassName={classNames({'itemIcon': true, 'icon': true, 'hidden': items[i] === 0})}
+          type={TOOLTIP_TYPES.ITEM}
+          data={Object.assign({},
+            itemData,
+            {img: getItemIconUrl(thing, patchVersion)}
+          )}
+          version={patchVersion}
+        >
+          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[i] === 0})} src={getItemIconUrl(thing, patchVersion)}/>
+        </Tooltip>
+      ));
+    }
+
+    return itemComps;
+  }
+
   render() {
     if (this.props.participant === undefined){
       return (<div/>);
@@ -42,6 +79,21 @@ class ScoreboardPlayer extends Component {
       }
     }
 
+    /*
+              <Tooltip
+              type={TOOLTIP_TYPES.RUNE}
+              data={
+                Object.assign({},
+                  runeData[keystone],
+                  {img: getPerkIconUrl(keystone, patchVersion)}
+                )
+              }
+              version={patchVersion}
+            >
+              <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)}/>
+            </Tooltip> 
+
+    */
     return (
       <div className="summonerInfo">
         <div className="runeSummIcons">
@@ -72,13 +124,7 @@ class ScoreboardPlayer extends Component {
           </div>
         </div>
         <div className="itemSet">
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[0] === 0})} src={getItemIconUrl(items[0], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})} src={getItemIconUrl(items[1], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[2] === 0})} src={getItemIconUrl(items[2], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[3] === 0})} src={getItemIconUrl(items[3], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[4] === 0})} src={getItemIconUrl(items[4], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[5] === 0})} src={getItemIconUrl(items[5], patchVersion)}/>
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)}/>
+          {this.loopItems(items, patchVersion, trinket)}
         </div>
       </div>
     );
@@ -88,7 +134,7 @@ class ScoreboardPlayer extends Component {
 class Teamboard extends Component {
   renderParticipants() {
     return this.props.participants.map((participant) => (
-      <ScoreboardPlayer region={this.props.region} key={participant[0]} participant={participant[1]} version={this.props.version} runeData={this.props.staticData.runes} championData={this.props.staticData.champions}/>
+      <ScoreboardPlayer region={this.props.region} key={participant[0]} participant={participant[1]} version={this.props.version} runeData={this.props.staticData.runes} championData={this.props.staticData.champions} staticData={this.props.staticData}/>
     ));
   }
 

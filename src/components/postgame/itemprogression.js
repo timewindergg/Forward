@@ -5,6 +5,8 @@ import Moment from 'react-moment';
 
 import {getItemIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
+import Tooltip from '../common/tooltip/Tooltip';
+import TOOLTIP_TYPES from '../../constants/TooltipTypes';
 
 
 const groupItems = (items) => {
@@ -33,6 +35,7 @@ class Item extends Component {
     let showTS = this.props.showTS;
     let type = 'icon item';
     const isSold = this.props.id < 0;
+    const itemData = this.props.data;
 
     if (isSold){
       type += ' sold';
@@ -41,8 +44,17 @@ class Item extends Component {
     return(
       <div className='itemContainer'>
         <div className='item-inner'>
-          <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)}></img>
-          {isSold && <i className='fas fa-times sell-dash' />}
+          <Tooltip
+            containerClassName={type}
+            type={TOOLTIP_TYPES.ITEM}
+            data={
+              Object.assign({}, itemData, {img: getItemIconUrl(Math.abs(id), this.props.version)})
+            }
+            version={this.props.version}
+          >
+            <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)}></img>
+            {isSold && <i className='fas fa-times sell-dash' />}
+          </Tooltip>
         </div>
         <span>
           <Moment
@@ -68,7 +80,15 @@ class ItemProgression extends Component {
 
     return groups.map((group, idx) => {
       let itemsInGroup = group.map((item, itemIDX) => (
-        <Item id={item.id} ts={item.ts} version={this.props.version} key={item.ts} showTS={itemIDX === group.length - 1}></Item>
+        <Item
+          id={item.id}
+          ts={item.ts}
+          version={this.props.version}
+          key={item.ts}
+          showTS={itemIDX === group.length - 1}
+
+          data={this.props.itemData[item.id.toString()]}
+        />
       ));
 
       if (idx < groups.length - 1) {
