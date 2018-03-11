@@ -45,7 +45,7 @@ class Item extends Component {
       <div className='itemContainer'>
         <div className='item-inner'>
           <Tooltip
-            containerClassName={type}
+            containerClassName={'icon item'}
             type={TOOLTIP_TYPES.ITEM}
             data={
               Object.assign({}, itemData, {img: getItemIconUrl(Math.abs(id), this.props.version)})
@@ -87,7 +87,7 @@ class ItemProgression extends Component {
           key={item.ts}
           showTS={itemIDX === group.length - 1}
 
-          data={this.props.itemData[item.id.toString()]}
+          data={this.props.itemData[ (Math.abs(item.id)).toString()]}
         />
       ));
 
