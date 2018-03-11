@@ -8,40 +8,6 @@ import Tooltip from '../common/tooltip/Tooltip';
 import TOOLTIP_TYPES from '../../constants/TooltipTypes';
 
 class ScoreboardPlayer extends Component {
-  
-          // <Tooltip
-          //   containerClassName={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})}
-          //   type={TOOLTIP_TYPES.ITEM}
-          //   version={patchVersion}
-          // >
-          //   <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[1] === 0})} src={getItemIconUrl(items[1], patchVersion)}/>
-          // </Tooltip>
-
-  loopItems = (items, patchVersion, trinket) => {
-    let itemComps = [];
-
-    for (let i = 0; i <= 6; i++) {
-      const thing = i === 6 ? trinket : items[i];
-      const itemData = this.props.staticData.items[thing.toString()];
-
-      itemComps.push((
-        <Tooltip
-          containerClassName={classNames({'itemIcon': true, 'icon': true, 'hidden': items[i] === 0})}
-          type={TOOLTIP_TYPES.ITEM}
-          data={Object.assign({},
-            itemData,
-            {img: getItemIconUrl(thing, patchVersion)}
-          )}
-          version={patchVersion}
-        >
-          <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[i] === 0})} src={getItemIconUrl(thing, patchVersion)}/>
-        </Tooltip>
-      ));
-    }
-
-    return itemComps;
-  }
-
   render() {
     if (this.props.participant === undefined){
       return (<div/>);
@@ -79,21 +45,29 @@ class ScoreboardPlayer extends Component {
       }
     }
 
-    /*
-              <Tooltip
-              type={TOOLTIP_TYPES.RUNE}
-              data={
-                Object.assign({},
-                  runeData[keystone],
-                  {img: getPerkIconUrl(keystone, patchVersion)}
-                )
-              }
-              version={patchVersion}
-            >
-              <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)}/>
-            </Tooltip> 
+    const itemSet = items.map((item) => {
+      if (item){
+        return (
+          <Tooltip
+            containerClassName={classNames({'itemIcon': true, 'icon': true})}
+            type={TOOLTIP_TYPES.ITEM}
+            data={Object.assign({},
+              this.props.staticData.items[item.toString()],
+              {img: getItemIconUrl(item, patchVersion)}
+            )}
+            version={patchVersion}
+          >
+            <img className={classNames({'itemIcon': true, 'icon': true})} src={getItemIconUrl(item, patchVersion)}/>
+          </Tooltip>
+        );
+      }
+      else {
+        return (
+          <div className='itemIcon filler icon'></div>
+        );
+      }
+    });
 
-    */
     return (
       <div className="summonerInfo">
         <div className="runeSummIcons">
@@ -124,7 +98,19 @@ class ScoreboardPlayer extends Component {
           </div>
         </div>
         <div className="itemSet">
-          {this.loopItems(items, patchVersion, trinket)}
+          {itemSet}
+
+          <Tooltip
+            containerClassName={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})}
+            type={TOOLTIP_TYPES.ITEM}
+            data={Object.assign({},
+              this.props.staticData.items[trinket.toString()],
+              {img: getItemIconUrl(trinket, patchVersion)}
+            )}
+            version={patchVersion}
+          >
+            <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)}/>
+          </Tooltip>
         </div>
       </div>
     );

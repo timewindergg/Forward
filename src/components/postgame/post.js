@@ -119,11 +119,15 @@ class Postgame extends Component {
               if (evnt.killerId > 0 && evnt.killerId <= matchDetails.match.participants.length / 2){
                 eventLineData['100']['kills'].push(evnt);
                 aggregateData.teams['100'].kills++;
+                aggregateData.teams['200'].deaths.push([evnt.position.x, evnt.position.y]);
               }
               else if (evnt.killerId > matchDetails.match.participants.length / 2){
                 eventLineData['200']['kills'].push(evnt);
                 aggregateData.teams['200'].kills++;
+                aggregateData.teams['100'].deaths.push([evnt.position.x, evnt.position.y]);
               }
+
+
 
               if (evnt.killerId > 0){
                 aggregateData.players[evnt.killerId].kills++;
@@ -289,10 +293,6 @@ class Postgame extends Component {
     }
   }
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.advanceTimeline, false); 
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.matchDetails.timeline === undefined && nextProps.matchDetails.timeline !== undefined
       && Object.keys(this.props.staticData).length > 0){
@@ -311,20 +311,6 @@ class Postgame extends Component {
         blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(this.props.matchDetails, nextProps.staticData);
-    }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.advanceTimeline, false);
-  }
-
-  advanceTimeline = (event) => {
-    const keyName = event.key;
-    if (keyName === 'ArrowLeft' || keyName === 'a' || keyName === 'A') {
-      console.log('shift left');
-    }
-    if (keyName === 'ArrowRight' || keyName === 'd' || keyName === 'D') {
-      console.log('shift right');
     }
   }
 
@@ -357,6 +343,7 @@ class Postgame extends Component {
             <Minimap mapId={matchDetails.match.mapId}
                      version={staticData.version}
                      playerFrameData={frameData[currentFrame].players}
+                     deathFrameData={frameData[currentFrame].teams}
                      championData={staticData.champions}/>
           </div>
           <ChampionSelector onChampionSelect={this.onChampionSelect}
