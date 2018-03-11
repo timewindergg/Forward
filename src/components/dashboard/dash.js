@@ -42,8 +42,13 @@ class Dashboard extends Component {
 
   static propTypes = {
     summoner: PropTypes.object.isRequired,
+    loadingState: PropTypes.any.isRequired,
     matches: PropTypes.array.isRequired,
-    currentMatch: PropTypes.object.isRequired
+    currentMatch: PropTypes.object.isRequired,
+
+    staticData: PropTypes.object.isRequired,
+    limit: PropTypes.number.isRequired,
+    region: PropTypes.string.isRequired,
   }
 
   onDateSelect = (date) => {
@@ -67,7 +72,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {summoner, matches, currentMatch, staticData, limit} = this.props;
+    const {summoner, loadingState, matches, currentMatch, staticData, limit} = this.props;
     const {matchesToDisplay, dateFilter, championFilter, queueFilter} = this.state;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
 
@@ -80,7 +85,7 @@ class Dashboard extends Component {
         </div>
     }
 
-    if (!hasDataLoaded([summoner, matches, staticData])){
+    if (!hasDataLoaded([summoner, staticData])){
       return(<LoadingScreen/>);
     }
 
@@ -97,14 +102,18 @@ class Dashboard extends Component {
                 <UserStats matches={matches}/>
               </div>
               <div className="matchlist-container">
-                <MatchFilter matches={matches}
+                <MatchFilter
+                  matches={matches}
                   onQueueSelect={this.onQueueSelect}
                   onChampionSelect={this.onChampionSelect}
                   onDateSelect={this.onDateSelect}
                   championData={staticData.champions}
                   dateFilter={this.state.dateFilter}
                   version={staticData.version}/>
-                <Matches matches={matches}
+                <Matches
+                  loadingState={loadingState}
+
+                  matches={matches}
                   version={staticData.version}
                   limit={matchesToDisplay}
                   dateFilter={dateFilter}

@@ -59,6 +59,11 @@ export const generateUserStats = (matches) => {
     stats[5] += matches[i].cs;
   }
 
+  if (matches.length === 0) {
+    // avoid NaNs or something
+    return stats;
+  }
+
   for (let i = 0; i < stats.length; i++) {
     stats[i] = stats[i]/matches.length;
   }

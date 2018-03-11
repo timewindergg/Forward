@@ -31,7 +31,6 @@ const receiveMatchHistoryResults = (state, action) => {
     return state;
   }
 
-
   return Object.assign({}, state, {
     action,
     loadingState: LoadingState.FINISHED,

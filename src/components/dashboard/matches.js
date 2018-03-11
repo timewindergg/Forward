@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { ClipLoader } from 'react-spinners';
+
+import LoadingState from '../../shared/LoadingState';
 
 // Import required mappings.
 import QueueIdMappings from '../../shared/queueIdMappings.js';
@@ -26,14 +29,34 @@ class Matches extends Component {
       return (<div/>);
     }
 
-    const { matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData} = this.props;
+    const { matches, loadingState, version, limit, dateFilter, championFilter, queueFilter, championData, runeData} = this.props;
+
+    // let innerComp = (
+    //   <div></div>
+    // );
+
+    // console.log(loadingState, matches.length);
+    // if (loadingState === LoadingState.LOADING && matches.length === 0) {
+
+      let innerComp = (
+        <div className='oc-loader'>
+          <ClipLoader
+            size={50}
+            color={'#ff6666'} 
+            loading={true} 
+          />
+          <h4>{`Loading...`}</h4>
+        </div>
+      );
+    if (loadingState === LoadingState.FINISHED) {
+      innerComp = this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData);
+    }
 
     return (
       <div className="dashboard-matches">
-        {this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData)}
+        {innerComp}
       </div>
-    )
-
+    );
   }
 
   renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData) {

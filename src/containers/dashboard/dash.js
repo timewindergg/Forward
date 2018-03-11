@@ -17,13 +17,15 @@ import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
+
+
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 
 const MH_OFFSET = 0;
 const MH_SIZE = 100;
 
 const MAX_ATTEMPTS = 2; // retries
-const MATCH_PULL_INTERVAL = 5000; // retry every 3 seconds?
+const MATCH_PULL_INTERVAL = 5000; // retry every 5 seconds?
 
 // really, this is just a function that compares 2 objects deeply for differences
 // helps us a bit in telling us what ACTUALLY CHANGED
@@ -58,6 +60,7 @@ class DashboardContainer extends Component {
     matches: PropTypes.array.isRequired,
     currentMatch: PropTypes.object.isRequired,
     staticData: PropTypes.object.isRequired,
+    loadingState: PropTypes.any.isRequired,
 
     getSummonerInfo: PropTypes.func.isRequired,
     getCurrentMatch: PropTypes.func.isRequired,
@@ -147,13 +150,14 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    const {match, summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
+    const {match, loadingState, summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
     return (
       <div>
         <Header/>
         <Dashboard
           summoner={summoner}
           currentMatch={currentMatch}
+          loadingState={loadingState}
           matches={matches}
           staticData={staticData}
           limit={MH_SIZE}
@@ -169,6 +173,7 @@ class DashboardContainer extends Component {
 const mapStateToProps = (state) => ({
   cache: state.context.IDCache,
   summoner: state.context.summoner,
+  loadingState: state.matchHistory.loadingState,
   matches: state.matchHistory.matches,
   currentMatch: state.match.currentMatch,
   staticData: state.context.staticData,
