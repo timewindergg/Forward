@@ -89,7 +89,6 @@ class PregameHeader extends Component {
 
       const imageUrl = getChampionIconUrlByImage(championData[ban].img.split('.')[0], version);
 
-      // <i class="fas fa-ban"></i>
       return (
         <div className='ban-container'>
           <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})}></i>

@@ -73,12 +73,12 @@ badge icon ne
     })
 
     const promoList = promos.map((promo) => {
-      let p = (<i class="far fa-window-minimize promo-i promo-up"></i>);
+      let p = (<i className="far fa-window-minimize promo-i promo-up"></i>);
 
       if (promo === 'W') {
-        p = (<i class="fas fa-check promo-i promo-win"></i>);
+        p = (<i className="fas fa-check promo-i promo-win"></i>);
       } else if (promo === 'L') {
-        p = (<i class="fas fa-times promo-i promo-lose"></i>);
+        p = (<i className="fas fa-times promo-i promo-lose"></i>);
       }
 
       return p;
