@@ -33,7 +33,7 @@ class Matches extends Component {
       return (<div/>);
     }
 
-    const { matches, loadingState, version, limit, dateFilter, championFilter, queueFilter, championData, runeData, itemData} = this.props;
+    const { matches, loadingState, version, limit, filters, championData, runeData, itemData} = this.props;
       let innerComp = (
         <div className='oc-loader'>
           <ClipLoader
@@ -45,7 +45,7 @@ class Matches extends Component {
         </div>
       );
     if (loadingState === LoadingState.FINISHED) {
-      innerComp = this.renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData, itemData);
+      innerComp = this.renderMatchList(matches, version, limit, filters, championData, runeData, itemData);
     }
 
     return (
@@ -55,15 +55,15 @@ class Matches extends Component {
     );
   }
 
-  renderMatchList(matches, version, limit, dateFilter, championFilter, queueFilter, championData, runeData, itemData) {
+  renderMatchList(matches, version, limit, filters, championData, runeData, itemData) {
     const matchItems = matches.filter((match) => {
       let passesDateFilter = true;
       let passesChampionFilter = true;
       let passesQueueFilter = true;
 
-      if (dateFilter !== undefined && dateFilter.length !== 0) {
+      if (filters.dateFilter.length !== 0) {
         // The date format is 2018-01-18.
-          const d1 = new Date(dateFilter);
+          const d1 = new Date(filters.dateFilter);
           const d1Utc = new Date(d1.getUTCFullYear(), d1.getUTCMonth(), d1.getUTCDate(),  d1.getUTCHours(), d1.getUTCMinutes(), d1.getUTCSeconds());
           const d2 = new Date(match.timestamp*1000);
           const d2Utc = new Date(d2.getUTCFullYear(), d2.getUTCMonth(), d2.getUTCDate(),  d2.getUTCHours(), d2.getUTCMinutes(), d2.getUTCSeconds());
@@ -71,12 +71,13 @@ class Matches extends Component {
           passesDateFilter = d1Utc.toDateString() === d2Utc.toDateString();
       }
 
-      if (championFilter.length !== 0) {
-        return championData[match.champ_id].name.toLowerCase() === championFilter.toLowerCase();
+      if (filters.championFilter.length !== 0) {
+        return championData[match.champ_id].name.toLowerCase() === filters.championFilter.toLowerCase();
       }
 
-      if (queueFilter.length !== 0) {
-        passesQueueFilter = QueueIdMappings[match.queue_id].name === queueFilter;
+      if (Object.keys(filters.queueFilters).length !== 0) {
+        const queueType = QueueIdMappings[match.queue_id].name;
+        return queueType in filters.queueFilters;
       }
 
       return passesDateFilter && passesChampionFilter && passesQueueFilter;

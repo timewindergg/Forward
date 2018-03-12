@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import REGION from '../../shared/constants';
+import { REGION } from '../../shared/constants';
 import Search from '../../components/common/search.js';
 import splash from'./splash.png';
 
@@ -20,7 +20,7 @@ class Home extends Component {
     summoner: '',
     server: REGION.NA,
     recentSearches: decodeRecentSearches()
-  }  
+  }
   static propTypes = {}
 
   componentDidMount() {

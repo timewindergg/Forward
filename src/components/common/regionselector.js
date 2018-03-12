@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import REGION from '../../shared/constants';
+import { REGION } from '../../shared/constants';
 import Dropdown from 'react-dropdown'
 
 class RegionSelector extends Component{

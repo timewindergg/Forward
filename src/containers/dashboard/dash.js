@@ -17,8 +17,6 @@ import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
-
-
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 
 const MH_OFFSET = 0;

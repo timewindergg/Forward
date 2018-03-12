@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import REGION from '../../shared/constants';
+import { REGION } from '../../shared/constants';
 import RegionSelector from './regionselector.js';
 
 class Search extends Component {
   state = {
     summoner: '',
     server: REGION.NA,
-  }  
+  }
 
   onRegionSelect = (option) => {
     this.setState({

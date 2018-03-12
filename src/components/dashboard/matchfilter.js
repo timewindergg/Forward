@@ -4,56 +4,35 @@ import Dropdown from 'react-dropdown'
 
 import ChampionFilter from './championfilter';
 
+import classNames from 'classnames';
+
 import QueueIdMappings from '../../shared/queueIdMappings';
+
+import { FILTER } from '../../shared/constants.js';
 
 class MatchFilter extends Component{
   constructor(props){
     super(props);
-
-    this.state = {
-      queue: '',
-      champion: '',
-    };
   }
 
-  _onQueueChange = (option) => {
-    this.props.onQueueSelect(option.value);
-    this.setState({
-      queue: option.value,
-    });
+  _onQueueSelected = (queue) => {
+    this.props.onFilterSelect(queue, FILTER.QUEUE)
   }
 
   _onChampionChange = (champion) => {
-    this.props.onChampionSelect(champion);
-    this.setState({
-      champion: champion,
-    });
-  }
-
-  _resetQueueFilter = () => {
-    this.props.onQueueSelect('');
-    this.setState({
-      queue: '',
-    });
-  }
-
-  _resetChampionFilter = () => {
-    this.props.onChampionSelect('');
-    this.setState({
-      champion: ''
-    });
-  }
-
-  _resetDateFilter = () => {
-    this.props.onDateSelect({date: ''});
+    this.props.onFilterSelect(champion, FILTER.CHAMPION);
   }
 
   _handleKeyPress = (value) => {
     this._onChampionChange(value);
   }
 
+  _resetFilters = () => {
+    this.props.onFilterSelect(null, FILTER.RESET);
+  }
+
   render() {
-    const { matches, championData, dateFilter, version } = this.props;
+    const { matches, championData, filters, version } = this.props;
     // Loop through our list of matches and check to see which types there are.
     const queues = [];
 
@@ -70,40 +49,38 @@ class MatchFilter extends Component{
 
     return(
       <div className="dashboard-filter">
-        <div className="queue-selector">
-          <Dropdown className="queue-dropdown" options={queues} onChange={this._onQueueChange} value={this.state.queue} placeholder="All Queues" />
-        </div>
+        {this.renderQueueSelections(queues, filters.queueFilters)}
         <ChampionFilter champions={champions} version={version} onKeyPress={this._handleKeyPress}/>
-        {this.renderUserSelectedFilters(this.props.dateFilter)}
+        {this.renderUserSelectedFilters(filters)}
       </div>
     );
   }
 
-  renderUserSelectedFilters(dateFilter) {
-    let queueSelectedFilter = null;
-    let championSelectedFilter = null;
-    let dateSelectedFilter = null;
+  renderQueueSelections(queues, queueFilters) {
+    const queueSelections = queues.map((queue) => {
+      const queueIsSelected = Object.keys(queueFilters).length === 0 ? true : queue in queueFilters === true;
+      let queueClick = this._onQueueSelected.bind(this, queue);
+      return (
+        <div key={queue} className={classNames({'queue-selection': true, 'selected': queueIsSelected === true})} onClick={queueClick}>{queue}</div>
+      );
+    });
 
-    if (this.state.queue.length !== 0) {
-      queueSelectedFilter = <div><button onClick={(event) => {this._resetQueueFilter()}}><h1>{this.state.queue}</h1> <i className="ion-close-round"></i></button></div>;
-    }
+    return (
+      <div className="queue-selector">{queueSelections}</div>
+    );
+  }
 
-    if (this.state.champion.length !== 0) {
-      championSelectedFilter = <div><button onClick={(event) => {this._resetChampionFilter()}}><h1>{this.state.champion}</h1> <i className="ion-close-round"></i></button></div>;
-    }
-
-    if (dateFilter !== undefined && dateFilter.length !== 0) {
-      dateSelectedFilter = <div><button onClick={(event) => {this._resetDateFilter()}}><h1>{dateFilter}</h1> <i className="ion-close-round"></i></button></div>;
+  renderUserSelectedFilters(filters) {
+    let resetFilter;
+    if (filters.dateFilter.length !== 0 || filters.championFilter.length !== 0 || Object.keys(filters.queueFilters).length !== 0) {
+      resetFilter = <div className="reset-filter" onClick={(event) => {this._resetFilters()}}>Clear Filter</div>
     }
 
     return (
-      <div className="dashboard-selected-filters">
-        {queueSelectedFilter}
-        {championSelectedFilter}
-        {dateSelectedFilter}
+      <div className="reset-filter-container">
+        {resetFilter}
       </div>
     );
-
   }
 }
 

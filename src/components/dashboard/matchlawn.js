@@ -4,6 +4,8 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 
 import ReactTooltip from 'react-tooltip';
 
+import { FILTER } from '../../shared/constants.js';
+
 class MatchLawn extends Component {
   render() {
     if (this.props.lawn === undefined) {
@@ -25,7 +27,11 @@ class MatchLawn extends Component {
     return (
       <div className="dashboard-match-heat-map">
         <CalendarHeatmap
-          onClick={(value) => {onDateSelect(value)}}
+          onClick={(value) => {
+            if (value.date) {
+              this.props.onFilterSelect(value.date, FILTER.DATE);
+            }
+          }}
           endDate={new Date()}
           startDate={beginningDate}
           values={lawn}

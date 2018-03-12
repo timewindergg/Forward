@@ -17,6 +17,7 @@ import '../common/styles/userchampionlist.css';
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 import LoadingState from '../../shared/LoadingState';
+import { FILTER } from '../../shared/constants.js';
 
 import Matches from './matches';
 import MatchStatsRadar from './radar';
@@ -35,9 +36,11 @@ class Dashboard extends Component {
 
     this.state = {
       matchesToDisplay: 10,
-      dateFilter: '',
-      championFilter: '',
-      queueFilter: ''
+      filters: {
+        dateFilter: '',
+        championFilter: '',
+        queueFilters: {}
+      }
     }
   }
 
@@ -52,23 +55,34 @@ class Dashboard extends Component {
     region: PropTypes.string.isRequired,
   }
 
-  onDateSelect = (date) => {
-    if (date){
-      this.setState({
-        dateFilter: date.date
-      });
+  onFilterSelect = (value, filterType) => {
+    // Create new object.
+    let newFilters = JSON.parse(JSON.stringify(this.state.filters));
+
+    switch(filterType) {
+      case FILTER.CHAMPION:
+        newFilters.championFilter = value;
+        break;
+      case FILTER.DATE:
+        newFilters.dateFilter = value;
+        break;
+      case FILTER.RESET:
+        newFilters = {
+          dateFilter: '',
+          championFilter: '',
+          queueFilters: {}
+        }
+        break;
+      default:
+        if (newFilters.queueFilters[value] === undefined) {
+          newFilters.queueFilters[value] = 1;
+        } else {
+          delete newFilters.queueFilters[value];
+        }
     }
-  }
 
-  onQueueSelect = (queue) => {
     this.setState({
-      queueFilter: queue,
-    });
-  }
-
-  onChampionSelect = (champion) => {
-    this.setState({
-      championFilter: champion
+      filters: newFilters
     });
   }
 
@@ -98,7 +112,7 @@ class Dashboard extends Component {
               staticData={staticData}/>
             <div className="separator"></div>
             <div className="statsHeader">
-              <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
+              <MatchLawn lawn={summoner.lawn} onFilterSelect={this.onFilterSelect}/>
               <div className="dashboard-radar">
                 <MatchStatsRadar matches={matches}/>
                 <UserStats matches={matches}/>
@@ -113,20 +127,16 @@ class Dashboard extends Component {
               <div className="matchlist-container">
                 <MatchFilter
                   matches={matches}
-                  onQueueSelect={this.onQueueSelect}
-                  onChampionSelect={this.onChampionSelect}
-                  onDateSelect={this.onDateSelect}
                   championData={staticData.champions}
-                  dateFilter={this.state.dateFilter}
-                  version={staticData.version}/>
+                  filters={this.state.filters}
+                  version={staticData.version}
+                  onFilterSelect={this.onFilterSelect}/>
                 <Matches
                   loadingState={loadingState}
                   matches={matches}
                   version={staticData.version}
                   limit={matchesToDisplay}
-                  dateFilter={dateFilter}
-                  championFilter={championFilter}
-                  queueFilter={queueFilter}
+                  filters={this.state.filters}
                   championData={staticData.champions}
                   runeData={staticData.runes}
                   itemData={staticData.items}
@@ -136,7 +146,7 @@ class Dashboard extends Component {
               {loadMore}
             </div>
             <div className="dashboard-body-right-container">
-              
+
               <UserChampionList championStats={summoner.championStats}
                 summonerName={summoner.name}
                 summonerRegion={this.props.region}
