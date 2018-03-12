@@ -44,6 +44,7 @@ class CompareCardBottom extends Component {
         const pcnt = roundWithPrecision(100*iCnt/total, 1);
         return (
           <Tooltip
+            key={`tt-${ik}`}
             containerClassName={'item-container'}
             type={TOOLTIP_TYPES.ITEM}
             data={itemData}

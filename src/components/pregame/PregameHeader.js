@@ -75,8 +75,8 @@ class PregameHeader extends Component {
     const banIcons = bans.map((ban) => {
       if (!championData[ban]) {
         return (
-          <div className='ban-container'>
-          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})}></i>
+          <div className='ban-container' key={`cre-${ban}`}>
+          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})} key={`i-${ban}`}></i>
           <img
             key={ban}
             src=''
@@ -90,8 +90,8 @@ class PregameHeader extends Component {
       const imageUrl = getChampionIconUrlByImage(championData[ban].img.split('.')[0], version);
 
       return (
-        <div className='ban-container'>
-          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})}></i>
+        <div className='ban-container' key={`c-${ban}`}>
+          <i className={classNames('fas', 'fa-ban', {'red-ban': isRed, 'blue-ban': !isRed})} key={`i-${ban}`}></i>
           <img
             key={ban}
             src={imageUrl}
