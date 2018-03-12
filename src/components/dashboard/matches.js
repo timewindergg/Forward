@@ -16,6 +16,7 @@ import { getChampionIconUrlByImage,
 
 import { getKDA, getKillParticipation, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper';
+import { getKDAColor } from '../../shared/helpers/cssHelper';
 
 import Tooltip from '../common/tooltip/Tooltip';
 import TOOLTIP_TYPES from '../../constants/TooltipTypes';
@@ -37,8 +38,8 @@ class Matches extends Component {
         <div className='oc-loader'>
           <ClipLoader
             size={50}
-            color={'#ff6666'} 
-            loading={true} 
+            color={'#ff6666'}
+            loading={true}
           />
           <h4>{`Loading...`}</h4>
         </div>
@@ -63,9 +64,11 @@ class Matches extends Component {
       if (dateFilter !== undefined && dateFilter.length !== 0) {
         // The date format is 2018-01-18.
           const d1 = new Date(dateFilter);
+          const d1Utc = new Date(d1.getUTCFullYear(), d1.getUTCMonth(), d1.getUTCDate(),  d1.getUTCHours(), d1.getUTCMinutes(), d1.getUTCSeconds());
           const d2 = new Date(match.timestamp*1000);
+          const d2Utc = new Date(d2.getUTCFullYear(), d2.getUTCMonth(), d2.getUTCDate(),  d2.getUTCHours(), d2.getUTCMinutes(), d2.getUTCSeconds());
 
-          passesDateFilter = d1.toDateString() === d2.toDateString();
+          passesDateFilter = d1Utc.toDateString() === d2Utc.toDateString();
       }
 
       if (championFilter.length !== 0) {
@@ -188,6 +191,9 @@ class Matches extends Component {
     // Get the list of participants and their champions.
     const participants = getParticipants(match.blue_team, match.red_team, version, championData);
 
+    const kdaStat = roundWithPrecision(getKDA(match.kills, match.deaths, match.assists), 1);
+
+
     return (
       <div className="item-body">
         <div className="champion-info">
@@ -228,7 +234,7 @@ class Matches extends Component {
         <div className="match-stats">
           <div className="match-stats-kda">
             <span>{`${match.kills}/${match.deaths}/${match.assists}`}</span>
-            <span>{`${roundWithPrecision(getKDA(match.kills, match.deaths, match.assists), 2)} KDA`}</span>
+            <span className={getKDAColor(kdaStat)}>{`${kdaStat} KDA`}</span>
           </div>
           <div className="match-stats-detailed">
             <div className="match-stat kp">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {generateUserStats} from '../../shared/helpers/leagueUtilities';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
+import { getKDAColor } from '../../shared/helpers/cssHelper';
 
 class UserStats extends Component {
 
@@ -10,10 +11,12 @@ class UserStats extends Component {
     const userStats = generateUserStats(matches);
     // will be [kda, kp, damage to objective, gold, vision, cs]
 
+    const kdaStat = roundWithPrecision(userStats[0], 2);
+
     return (
       <div className="userstats">
         <div className="statValues">
-          <span className="kda">{`${roundWithPrecision(userStats[0], 2)}`}</span>
+          <span className={getKDAColor(kdaStat)}>{kdaStat}</span>
           <span className="kp">{`${roundWithPrecision(userStats[1], 0)}`}</span>
           <span className="cs">{`${roundWithPrecision(userStats[5], 0)}`}</span>
           <span className="gold">{`${roundWithPrecision(userStats[3], 0)}`}</span>

@@ -1,6 +1,6 @@
 export const getPercentClass = (percent) => {
   let pc = 'perc-0-20';
-  
+
   if (percent >= 80) {
     pc = 'perc-80-100';
   } else if (percent >= 60) {
@@ -12,4 +12,23 @@ export const getPercentClass = (percent) => {
   }
 
   return pc;
+}
+
+export const getKDAColor = (kdaStat) => {
+  let kdaColor = '';
+
+  if (kdaStat < 3){
+
+  }
+  else if (kdaStat < 4){
+    kdaColor = 'green-txt';
+  }
+  else if (kdaStat < 5){
+    kdaColor = 'blue-dk-txt';
+  }
+  else {
+    kdaColor = 'gold-dk-txt';
+  }
+
+  return kdaColor;
 }

@@ -45,7 +45,7 @@ class MatchFilter extends Component{
   }
 
   _resetDateFilter = () => {
-    this.props.onDateSelect('');
+    this.props.onDateSelect({date: ''});
   }
 
   _handleKeyPress = (value) => {

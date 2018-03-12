@@ -10,8 +10,8 @@ class LaneStats extends Component {
     const laneData = getLaneStats(championStats);
 
     const lanes = laneOrder.map((lane) => {
-      const winRate = laneData[lane] !== undefined ? roundWithPrecision(laneData[lane].wins * 100 /laneData[lane].totalGames, 2) : '-.-';
-      const percentagePlayed = laneData[lane] !== undefined ? roundWithPrecision(laneData[lane].totalGames * 100 /laneData.totalGames, 2) : '-.-';
+      const winRate = laneData[lane] !== undefined ? roundWithPrecision(laneData[lane].wins * 100 /laneData[lane].totalGames, 0) : '-.-';
+      const percentagePlayed = laneData[lane] !== undefined ? roundWithPrecision(laneData[lane].totalGames * 100 /laneData.totalGames, 0) : '-.-';
       return (
         <div className="lanestat" key={lane}>
           <img src={getRoleIconUrl(lane)}/>

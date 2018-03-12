@@ -7,6 +7,7 @@ import "react-table/react-table.css";
 
 import { getChampionIconUrlByImage } from '../../shared/helpers/staticImageHelper.js';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
+import { getKDAColor } from '../../shared/helpers/cssHelper.js';
 
 
 const capitalize = (s) => {
@@ -14,14 +15,48 @@ const capitalize = (s) => {
 }
 
 const createChampionListData = (championLists, championData, version) => {
-  championLists.sort((a, b) => {
+  const filtered = {};
+  const championIndex = {};
+
+  championLists.forEach((champion) => {
+    const filteredIndex = championIndex[champion.champ_id];
+    if (!(champion.champ_id in filtered)) {
+      filtered[champion.champ_id] = {
+        'champ_id': champion.champ_id,
+        'total_games': 0,
+        'total_cs': 0,
+        'wins': 0,
+        'losses': 0,
+        'gold': 0,
+        'kills': 0,
+        'deaths': 0,
+        'assists': 0
+      };
+    }
+
+    filtered[champion.champ_id].total_games += champion.total_games;
+    filtered[champion.champ_id].total_cs += champion.total_cs;
+    filtered[champion.champ_id].wins += champion.wins;
+    filtered[champion.champ_id].losses += champion.losses;
+    filtered[champion.champ_id].gold += champion.gold;
+    filtered[champion.champ_id].kills += champion.kills;
+    filtered[champion.champ_id].deaths += champion.deaths;
+    filtered[champion.champ_id].assists += champion.assists;
+  });
+
+  const championArray = Object.keys(filtered).map((key) => {
+    return filtered[key];
+  });
+
+  championArray.sort((a, b) => {
     if (a.total_games < b.total_games)
      return 1;
     if (a.total_games > b.total_games)
       return -1;
     return 0;
   });
-  return championLists.map((c) => {
+
+  return championArray.map((c) => {
     return {
       id: c.champ_id,
       name: championData[c.champ_id].name,
@@ -29,8 +64,7 @@ const createChampionListData = (championLists, championData, version) => {
       kda: roundWithPrecision(c.deaths === 0 ? (c.kills + c.assists) : (c.kills + c.assists) / c.deaths, 2),
       cs: roundWithPrecision(c.total_cs / c.total_games, 0),
       winrate: Math.round(c.wins / c.total_games * 100),
-      gold: Math.round(c.gold / c.total_games),
-      lane: capitalize(c.lane.split('_')[0].toLowerCase()),
+      gold: Math.round(c.gold / c.total_games)
     }
   });
 }
@@ -82,15 +116,6 @@ class UserChampionList extends Component {
             {
               columns: [
                 {
-                  Header: "Lane",
-                  accessor: "lane",
-                  width: 48,
-                }
-              ]
-            },
-            {
-              columns: [
-                {
                   Header: "Games",
                   accessor: "games",
                   width: 48,
@@ -105,7 +130,7 @@ class UserChampionList extends Component {
                   width: 45,
                   Cell: props => {
                     return (
-                      <span className="kda">{props.value}</span>
+                      <span className={getKDAColor(props.value)}>{props.value}</span>
                     );
                   }
                 }
