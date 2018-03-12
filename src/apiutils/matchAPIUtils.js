@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
   loadCurrentMatchSuccess,
-  loadCurrentMatchFailed, 
+  loadCurrentMatchFailed,
   loadCurrentMatchDetailsSuccess,
   loadCurrentMatchDetailsFailed,
   loadMatchTimelineStart,
@@ -99,7 +99,7 @@ export const getCurrentMatchDetails = (summonerID, summonerName, region, champio
 
 export const getMatchTimeline = (matchId, region, onSuccess) => {
   const uri = '/api/get_match_timeline/';
-  console.log('attempting to get match timeline');
+  // console.log('attempting to get match timeline');
   const params = {
     match_id: matchId,
     region: region

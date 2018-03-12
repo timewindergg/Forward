@@ -30,7 +30,7 @@ class ScoreboardPlayer extends Component {
     });
 
     if (items.length > 6){
-      console.log("too many items on scoreboard")
+      // console.log("too many items on scoreboard")
     }
 
     for (var i = items.length; i < 6; i++){

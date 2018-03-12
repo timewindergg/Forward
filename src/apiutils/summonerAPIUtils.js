@@ -29,7 +29,7 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
     dispatch(setSummonerContext(summonerName, region));
     // console.log('getting summoner info');
     return axios.get(getURI, {params}).then((response) => {
-      console.log('loaded summoner', response.data);
+      // console.log('loaded summoner', response.data);
       // now add this to recent searches!
       addRecentSearch(response.data.name, region, response.data.icon);
 
@@ -46,7 +46,7 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
         onSuccess(response.data);
       }
     }).catch((error) => {
-      console.log('whoops', error);
+      // console.log('whoops', error);
       dispatch(loadSummonerFailed(error));
     });
   }

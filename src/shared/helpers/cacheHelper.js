@@ -59,7 +59,7 @@ export const loadCache = () => {
     console.error("unable to retrieve recent matches");
   }
 
-  console.log("CACHE LOADED", cache);
+  // console.log("CACHE LOADED", cache);
   return cache;
 }
 

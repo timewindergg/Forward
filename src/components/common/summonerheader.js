@@ -153,7 +153,7 @@ class SummonerHeader extends Component {
 }
 
 const convertQueue = (queue) => {
-  console.log(queue)
+  // console.log(queue)
   if (queue === 'RANKED_SOLO_5x5') {
     return 'Solo/Duo';
   }

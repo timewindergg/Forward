@@ -258,7 +258,7 @@ class Postgame extends Component {
     this.setState({
       frameData: frameData,
       eventLineFrameData: eventLineFrameData,
-    }, () => {console.log(this.state.frameData); console.log(this.state.eventLineFrameData)});
+    }, () => {});
   }
 
   onSliderChange = (value) => {

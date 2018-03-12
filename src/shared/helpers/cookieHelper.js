@@ -53,7 +53,7 @@ export const decodeRecentSearches = () => {
     });
 
     recentSearches = rsCopy;
-    console.log("retrieved recent searches", recentSearches);
+    // console.log("retrieved recent searches", recentSearches);
 
   } catch (error) {
     console.error("unable to retrieve recent matches");

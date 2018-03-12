@@ -6,7 +6,7 @@ import {
 } from '../actions/contextActions';
 
 export const getStaticData = (region, onSuccess) => {
-  console.log('attempting to get static data', region);
+ // console.log('attempting to get static data', region);
 
   const uri = `/api/get_static_data/${region}/`;
 

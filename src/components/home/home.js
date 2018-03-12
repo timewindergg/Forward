@@ -26,7 +26,7 @@ class Home extends Component {
   static propTypes = {}
 
   componentDidMount() {
-    console.log("retrieved recent searches: ", this.state.recentSearches);
+    // console.log("retrieved recent searches: ", this.state.recentSearches);
   }
 
   render() {
