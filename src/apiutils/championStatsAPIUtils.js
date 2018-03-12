@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {
+  loadChampionStatsStart,
   loadChampionStatsSuccess,
   loadChampionStatsFailed
 } from '../actions/summonerActions';
@@ -18,6 +19,8 @@ export const getUserChampionStats = (summonerName, region, id, championName) => 
   }
 
   return (dispatch) => {
+    dispatch(loadChampionStatsStart());
+
     return axios.get(uri, {params}).then((response) => {
       dispatch(loadChampionStatsSuccess(
         response.data

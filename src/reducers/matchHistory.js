@@ -5,6 +5,7 @@ import {SET_SUMMONER_CONTEXT} from '../actions/contextActions';
 
 const initialState = {
   loadingState: LoadingState.IDLE,
+  mhError: 200,
   matches: [],
   summoner: '',
   region: ''
@@ -38,12 +39,24 @@ const receiveMatchHistoryResults = (state, action) => {
   });
 };
 
+const matchHistoryError = (state, action) => {
+  // reject if coming from a bad context
+  const {error} = action;
+  return Object.assign({}, state, {
+    loadingState: LoadingState.FAILED,
+    mhError: error.response.status,
+    matches: []
+  });
+};
+
 const matchHistory = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_MATCH_HISTORY_START':
       return startMatchHistory(state);
     case 'FETCH_MATCH_HISTORY_SUCCESS':
       return receiveMatchHistoryResults(state, action);
+    case 'FETCH_MATCH_HISTORY_ERROR':
+      return matchHistoryError(state, action);
     case SET_SUMMONER_CONTEXT:
       return setContext(state, action.payload);
 

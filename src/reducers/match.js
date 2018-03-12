@@ -9,10 +9,15 @@ import {
 } from '../actions/matchActions';
 import _ from 'lodash';
 
+import LoadingState from '../shared/LoadingState';
+
 const initialState = {  
   currentMatch: {},
   currentMatchDetails: {},
-  timeline: {}
+  timeline: {},
+
+  tlLoadingState: LoadingState.IDLE,
+  tlError: 200
 };
 
 const loadCurrentMatch = (state, payload) => {
@@ -39,19 +44,6 @@ const loadCurrentMatchDetails = (state, payload) => {
   return newState;
 };
 
-// const loadCurrentMatchDetailsBatch = (state, payload) => {
-//   const {matchDetails} = payload;
-//   const newState = _.cloneDeep(state);
-
-//   // clear the currentMatchDetails and clobber with new details
-//   _.set(newState, ['currentMatchDetails'], {});
-//   Object.keys(matchDetails).forEach((championID) => {
-//     _.set(newState, ['currentMatchDetails', championID], matchDetails[championID]);
-//   });
-
-//   return newState;
-// };
-
 const clearCurrentMatchDetails = (state, payload) => {
   const {id} = payload;
 
@@ -61,15 +53,26 @@ const clearCurrentMatchDetails = (state, payload) => {
   return newState;
 };
 
+const startMatchTimeline = (state, payload) => {
+  return Object.assign({}, state, {
+    timeline: {},
+    tlLoadingState: LoadingState.LOADING
+  });
+};
+
 const loadMatchTimeline = (state, payload) => {
   return Object.assign({}, state, {
-    timeline: payload.matchTimeline
+    timeline: payload.matchTimeline,
+    tlLoadingState: LoadingState.FINISHED,
+    tlError: 200
   });
 };
 
 const clearMatchTimeline = (state, payload) => {
   return Object.assign({}, state, {
-    timeline: {}
+    timeline: {},
+    tlLoadingState: LoadingState.FAILED,
+    tlError: payload.error.response.status
   });
 };
 
@@ -85,7 +88,7 @@ const match = (state = initialState, action) => {
     case LOAD_CURRENT_MATCH_DETAILS_SUCCESS:
       return loadCurrentMatchDetails(state, action.payload);
     case LOAD_MATCH_TIMELINE_START:
-      return clearMatchTimeline(state, {});
+      return startMatchTimeline(state, {});
     case LOAD_MATCH_TIMELINE_SUCCESS:
       return loadMatchTimeline(state, action.payload);
     case LOAD_MATCH_TIMELINE_FAILED:

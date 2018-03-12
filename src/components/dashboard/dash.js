@@ -30,6 +30,8 @@ import SummonerHeader from '../common/summonerheader';
 import LoadingScreen from '../common/loadingscreen';
 import UserChampionList from '../common/userchampionlist';
 
+import NotFound from '../common/notfound';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +89,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {summoner, loadingState, matches, currentMatch, staticData, limit} = this.props;
+    const {summoner, loadingState, matches, currentMatch, staticData, limit, summonerError} = this.props;
     const {matchesToDisplay, dateFilter, championFilter, queueFilter} = this.state;
     const isSummonerInMatch = Object.keys(currentMatch).length > 0;
 

@@ -36,7 +36,6 @@ export const getCurrentMatch = (summonerName, region, id, onSuccess) => {
 
   return (dispatch) => {
     return axios.get(uri, {params}).then((response) => {
-      // console.log('loaded current match', response.data);
       dispatch(loadCurrentMatchSuccess(response.data));
 
       const nSummonerName = normalizeName(summonerName);
@@ -109,7 +108,7 @@ export const getMatchTimeline = (matchId, region, onSuccess) => {
   return (dispatch) => {
     dispatch(loadMatchTimelineStart());
     return axios.get(uri, {params}).then((response) => {
-      console.log('loaded match timeline', response.data);
+      // console.log('loaded match timeline', response.data);
       dispatch(loadMatchTimelineSuccess(response.data));
     }).catch((error) => {
       console.log('match timeline err', error);

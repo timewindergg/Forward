@@ -16,6 +16,9 @@ import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 // so why does this only work on a single player
 // import {getUserChampionStats} from '../../apiutils/championStatsAPIUtils';
 
+import LoadingState from '../../shared/LoadingState';
+import NotFound from '../../components/common/notfound';
+
 import Pregame from '../../components/pregame/pre';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
@@ -86,21 +89,33 @@ class PregameContainer extends Component {
   }
 
   render() {
-    const {summoner, currentMatch, currentMatchDetails, selectedRed, selectedBlue, staticData} = this.props;
+    const {summoner, summonerLoadingState, summonerError, currentMatch, currentMatchDetails, selectedRed, selectedBlue, staticData} = this.props;
+
+    let pregame = (
+      <Pregame
+        summoner={summoner}
+        currentMatch={currentMatch}
+        currentMatchDetails={currentMatchDetails}
+        selectedRed={selectedRed}
+        selectedBlue={selectedBlue}
+        loadingState={this.props.loadingState}
+
+        staticData={staticData}
+      />
+    );
+
+    if (summonerLoadingState === LoadingState.FAILED) {
+      if (summonerError === 404) {
+        pregame = (
+          <NotFound />
+        );
+      }
+    }
 
     return (
       <div>
         <Header/>
-        <Pregame
-          summoner={summoner}
-          currentMatch={currentMatch}
-          currentMatchDetails={currentMatchDetails}
-          selectedRed={selectedRed}
-          selectedBlue={selectedBlue}
-          loadingState={this.props.loadingState}
-
-          staticData={staticData}
-        />
+          {pregame}
         <Footer/>
       </div>
     );
@@ -110,6 +125,8 @@ class PregameContainer extends Component {
 const mapStateToProps = (state) => ({
   cache: state.context.IDCache,
   summoner: state.context.summoner,
+  summonerLoadingState: state.context.summonerLoadingState,
+  summonerError: state.context.summonerError,
   currentMatch: state.match.currentMatch,
   currentMatchDetails: state.match.currentMatchDetails,
   selectedRed: state.pregame.selectedRed,

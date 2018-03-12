@@ -11,12 +11,14 @@ import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
 import Dashboard from '../../components/dashboard/dash';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
+import NotFound from '../../components/common/notfound';
 
 // Import api utilities.
 import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
 
 import {getStaticData} from '../../apiutils/contextAPIUtils';
 
+import LoadingState from '../../shared/LoadingState';
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 
 const MH_OFFSET = 0;
@@ -67,7 +69,7 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-    console.log('SO MANY RERENDERS LOAD');
+    // console.log('SO MANY RERENDERS LOAD');
 
     const {match, cache, summoner, getSummonerInfo, getCurrentMatch, staticData, getStaticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
@@ -148,19 +150,32 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    const {match, loadingState, summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
+    const {match, summonerLoadingState, summonerError, loadingState, summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
+
+    let dashboard = (
+      <Dashboard
+        summoner={summoner}
+        currentMatch={currentMatch}
+        loadingState={loadingState}
+        matches={matches}
+        staticData={staticData}
+        limit={MH_SIZE}
+        region={match.params[REGION_PARAM]}
+      />
+    );
+
+    if (summonerLoadingState === LoadingState.FAILED) {
+      if (summonerError === 404) {
+        dashboard = (
+          <NotFound />
+        );
+      }
+    }
+
     return (
       <div>
         <Header/>
-        <Dashboard
-          summoner={summoner}
-          currentMatch={currentMatch}
-          loadingState={loadingState}
-          matches={matches}
-          staticData={staticData}
-          limit={MH_SIZE}
-          region={match.params[REGION_PARAM]}
-        />
+          {dashboard}
         <Footer/>
       </div>
     );
@@ -171,6 +186,8 @@ class DashboardContainer extends Component {
 const mapStateToProps = (state) => ({
   cache: state.context.IDCache,
   summoner: state.context.summoner,
+  summonerLoadingState: state.context.summonerLoadingState,
+  summonerError: state.context.summonerError,
   loadingState: state.matchHistory.loadingState,
   matches: state.matchHistory.matches,
   currentMatch: state.match.currentMatch,

@@ -13,3 +13,10 @@ export const fetchMatchHistorySuccess = (name, region, result) => {
     result: result
   };
 };
+
+export const fetchMatchHistoryError = (error) => {
+  return {
+    type: 'FETCH_MATCH_HISTORY_ERROR',
+    error
+  };
+};

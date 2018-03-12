@@ -3,9 +3,13 @@ import {LOAD_STATIC_SUCCESS, CACHE_SUMMONER, SET_SUMMONER_CONTEXT} from '../acti
 
 import {normalizeName} from '../shared/helpers/stringHelper';
 import {loadCache, saveCache} from '../shared/helpers/cacheHelper';
+import LoadingState from '../shared/LoadingState';
 
 // TODO: maybe move this to a different reducer
 const initialState = {
+  summonerLoadingState: LoadingState.IDLE,
+  // no error for now
+  summonerError: 200,
   summoner: {},
   staticData: {},
 
@@ -26,6 +30,7 @@ const loadStatic = (state, payload) => {
 const searchSummoner = (state, payload) => {
   return Object.assign({}, state, {
     summoner: payload.summoner,
+    summonerLoadingState: LoadingState.FINISHED
   });
 };
 
@@ -43,12 +48,15 @@ const resetSummoner = (state, payload) => {
   // context switch
   return Object.assign({}, state, {
     summoner: {},
+    summonerLoadingState: LoadingState.LOADING
   });
 }
 
 const clearSummoner = (state, payload) => {
   return Object.assign({}, state, {
     summoner: {},
+    summonerLoadingState: LoadingState.FAILED,
+    summonerError: payload.error.response.status
   });
 }
 

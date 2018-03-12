@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { fetchMatchHistorySuccess } from '../actions/matchHistoryActions';
+import { startFetchMatchHistory ,fetchMatchHistorySuccess, fetchMatchHistoryError} from '../actions/matchHistoryActions';
 
 export const getSummonerMatchHistory = (summoner_name, region, id, offset, size) => {
   const uri = `/api/get_match_history/`;
@@ -26,6 +26,8 @@ export const getSummonerMatchHistory = (summoner_name, region, id, offset, size)
         });
 
         dispatch(fetchMatchHistorySuccess(summoner_name, region, result));
+      }).error((error) => {
+        dispatch(fetchMatchHistoryError(error));
       });
   }
 };

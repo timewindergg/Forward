@@ -12,6 +12,9 @@ import {getStaticData} from '../../apiutils/contextAPIUtils';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
 
+import LoadingState from '../../shared/LoadingState';
+import NotFound from '../../components/common/notfound';
+
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 
 class ChampionStatsContainer extends Component {
@@ -71,14 +74,35 @@ class ChampionStatsContainer extends Component {
   }
 
   render() {
-    const {summoner, userChampionStats, staticData} = this.props;
+    const {
+      summoner,
+      summonerLoadingState,
+      summonerError,
+      userChampionStats,
+      csLoadingState,
+      csError,
+      staticData
+    } = this.props;
+
+    let championStats = (
+    <ChampionStats
+      summoner={summoner}
+      userChampionStats={userChampionStats}
+      staticData={staticData}/>
+    );
+
+    if (summonerLoadingState === LoadingState.FAILED || csLoadingState === LoadingState.FAILED) {
+      if (summonerError === 404 || csError === 404) {
+        championStats = (
+          <NotFound />
+        );
+      }
+    }
+
     return (
       <div>
         <Header />
-        <ChampionStats
-          summoner={summoner}
-          userChampionStats={userChampionStats}
-          staticData={staticData}/>
+          {championStats}
         <Footer />
       </div>
     );
@@ -89,7 +113,11 @@ class ChampionStatsContainer extends Component {
 const mapStateToProps = (state) => ({
   cache: state.context.IDCache,
   summoner: state.context.summoner,
+  summonerLoadingState: state.context.summonerLoadingState,
+  summonerError: state.context.summonerError,
   userChampionStats: state.championStats.championStats,
+  csLoadingState: state.championStats.csLoadingState,
+  csError: state.championStats.csError,
   staticData: state.context.staticData,
 });
 

@@ -10,6 +10,9 @@ import Postgame from '../../components/postgame/post';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
 
+import LoadingState from '../../shared/LoadingState';
+import NotFound from '../../components/common/notfound';
+
 class PostgameContainer extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired, // for react router
@@ -51,16 +54,29 @@ class PostgameContainer extends Component {
   }
 
   render() {
-    const {timeline, staticData} = this.props;
-
-    return (
-      <div>
-        <Header/>
-        <Postgame
+    const {timeline, staticData, tlLoadingState, tlError} = this.props;
+    let postgame = (
+      <Postgame
           matchDetails={timeline}
           staticData={staticData}
           region={this.props.match.params.region}
         />
+    );
+
+    // super hacky
+    if ((!!timeline.match && !timeline.match.participants) || (!!timeline.timeline && !timeline.timeline.frames)) {
+      postgame = (<NotFound />);
+    }
+    if (tlLoadingState === LoadingState.FAILED) {
+      if (tlError === 404) {
+        postgame = (<NotFound />);
+      }
+    }
+
+    return (
+      <div>
+        <Header/>
+          {postgame}    
         <Footer/>
       </div>
     );
@@ -71,6 +87,8 @@ class PostgameContainer extends Component {
 const mapStateToProps = (state) => ({
   timeline: state.match.timeline,
   staticData: state.context.staticData,
+  tlLoadingState: state.match.tlLoadingState,
+  tlError: state.match.tlError
 });
 
 // we will probably need this later
