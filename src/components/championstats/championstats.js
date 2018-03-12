@@ -18,6 +18,7 @@ import './styles/summoners.css';
 import './styles/perks.css';
 import './styles/items.css';
 import './styles/bargraphs.css';
+import './styles/championroles.css'
 import '../common/styles/summonerheader.css';
 import '../common/styles/championfilter.css';
 
@@ -29,6 +30,7 @@ import Perks from './perks';
 import Items from './items';
 import ChampionMatchups from './championmatchups';
 import ChampionProfile from './championprofile';
+import ChampionRoles from './championroles';
 import SummonerHeader from '../common/summonerheader';
 
 import LoadingScreen from '../common/loadingscreen';
@@ -122,22 +124,33 @@ class ChampionStats extends Component {
         <div className='content'>
           <div className="champion-stats-container">
             <div className="left-container">
-              <ChampionProfile
-                role={role}
-                championStats={championStats}
-                championId={championId}
-                onRoleSelection={this.onRoleSelection}
-                championData={staticData.champions}
-                totalGames={totalGames}
-                version={version}/>
-              <div className="champion-filter-container">
-                <ChampionFilter champions={champions} version={version} onKeyPress={this._handleKeyPress}/>
+              <div className="a-container">
+                <div className="left-left-container">
+                  <ChampionProfile
+                    championId={championId}
+                    championStats={championStats}
+                    championData={staticData.champions}
+                    totalGames={totalGames}
+                    version={version}/>
+                  <div className="champion-filter-container">
+                    <ChampionFilter champions={champions} version={version} onKeyPress={this._handleKeyPress}/>
+                  </div>
+                </div>
+                <div className='left-right-container'>
+                  <div className="role-container">
+                    <h3>Select role:</h3>
+                    <ChampionRoles championStats={championStats}
+                                    onRoleSelection={this.onRoleSelection} 
+                                    role={role}
+                                    championStats={championStats}/>
+                  </div>
+                </div>
               </div>
-              <RecentMatches championId={championId} championStats={championStats} version={version} staticData={staticData}/>
+              
               <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
               <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
               <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
-              
+              {/*<ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>*/}
             </div>
             <div className="right-container">
               <div className='radarContainer'>
@@ -160,7 +173,7 @@ class ChampionStats extends Component {
                 </div>
               </div>
               <ChampionStatsBarGraphs championStats={championStatsByLane}/>
-              <ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>
+              <RecentMatches championId={championId} championStats={championStats} version={version} staticData={staticData}/>
             </div>
           </div>
         </div>

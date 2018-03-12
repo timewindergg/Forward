@@ -41,7 +41,7 @@ class Home extends Component {
           <h1>Timewinder.gg</h1>
           <h3>Master yourself. Master the enemy.</h3>
           <Search />
-          <RecentSearches recentSearches={this.state.recentSearches}/>
+          {/*<RecentSearches recentSearches={this.state.recentSearches}/>*/}
         </div>
       </div>
     );

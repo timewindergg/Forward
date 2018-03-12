@@ -1,0 +1,63 @@
+@import '../../common/styles/colors';
+
+.role-container{
+    h3 {
+        margin-top: 0;
+        margin-bottom: 3px;
+    }
+
+    .championRoles{
+        display:flex;
+        border-radius: 3px;
+        flex-direction: column;
+        font-weight: 700;
+
+        .selected{
+            background: @grey-lt;
+        }
+    }
+
+    .role-button{
+        border: 1px solid @grey;
+        margin-top: 2px;
+        border-radius: 3px;
+        background: #fff;
+        text-align: center;
+        width: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover{
+            background: @grey-lt;
+            cursor: pointer;
+        }
+
+        .roleIcon{
+            flex-grow: 0;
+            width: 40px;
+            height: 40px;
+        }
+
+        .roleStat{
+            flex-grow: 1;
+            padding: 3px;
+            .winloss{
+                font-size: 14px;
+
+                .wins {
+                    color: @green;
+                }
+
+                .losses {
+                    color: @red-dk;
+                }
+            }
+        }
+
+        .totalgames{
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+}

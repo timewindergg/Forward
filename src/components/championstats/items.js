@@ -13,21 +13,20 @@ class Items extends Component {
   render() {
     const { items, staticData, version } = this.props;
 
-
     return (
       <div className="champion-stats-champion-items">
         <h3>Purchased items</h3>
         <div className="cc-items boots">
-          <h3>Boots</h3>
+          <h4>Boots</h4>
           {this.renderItems(items.boots, staticData, version)}
         </div>
 
         <div className="cc-items core">
-          <h3>Core Items</h3>
+          <h4>Core Items</h4>
           {this.renderItems(items.core, staticData, version)}
         </div>
         <div className="cc-items situational">
-          <h3>Situational Items</h3>
+          <h4>Situational Items</h4>
           {this.renderItems(items.situational, staticData, version)}
         </div>
       </div>

@@ -1,58 +1,33 @@
 @import '../../common/styles/colors';
 
 .profileContainer{
-    display: flex;
-
-    .role-container{
-        .champion-roles{
-            display:flex;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            flex-direction: column;
-            font-weight: 700;
-
-            .selected{
-                background: @grey-lt;
-            }
-        }
-
-        .role-button{
-            background: #fff;
-            text-align: center;
-            display: flex;
-
-            &:hover{
-                background: @grey-lt;
-                cursor: pointer;
-            }
-
-            .roleIcon{
-                width: 40px;
-                height: 40px;
-            }
-
-            .winloss{
-                font-size: 14px;
-
-                .wins {
-                    color: @green;
-                }
-
-                .losses {
-                    color: @red-dk;
-                }
-            }
-
-            .totalgames{
-                font-size: 14px;
-            }
-        }
-    }
+    width: 350px;
 
     .championIcon{
         width: 100px;
         height: 100px;
         border-radius: 5px;
+    }
+
+    .champion-stats-champion-profile{
+        display:flex;
+
+        .statOverview{
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+
+            .winloss{
+                font-size: 20px;
+            }
+            .winratio{
+                
+            }
+            .totalGames{
+
+            }
+        }
     }
 
     .champion-stats-champion-icon {
@@ -73,25 +48,9 @@
         }
     }
 
-    .statOverview{
-        width: 150px;
-        font-size: 14px;
-        font-weight: 600;
-
-        .winloss{
-
-        }
-        .winratio{
-
-        }
-        .totalGames{
-
-        }
-    }
+    
 
     .champion-stats-champion-summoners{
       display: flex;
     }
-
-
 }

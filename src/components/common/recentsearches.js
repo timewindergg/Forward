@@ -8,15 +8,18 @@ class RecentSearches extends Component {
     const searches = Object.keys(recentSearches).map((search) => {
       return (
         <Link to={`/p/${recentSearches[search].region}/${recentSearches[search].name}`}>
-          <div className="recent-search">
+          <span className="recent-search">
             {recentSearches[search].name}
-          </div>
+          </span>
         </Link>
       );
     });
 
     return (
       <div className="searches">
+        <div>
+          Recently Searched
+        </div>
         {searches}
       </div>
     );
