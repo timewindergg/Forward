@@ -18,6 +18,7 @@ import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 
 import LoadingState from '../../shared/LoadingState';
 import NotFound from '../../components/common/notfound';
+import ServerError from '../../components/common/ServerError';
 
 import Pregame from '../../components/pregame/pre';
 import Header from '../../components/common/header';
@@ -108,6 +109,10 @@ class PregameContainer extends Component {
       if (summonerError === 404) {
         pregame = (
           <NotFound />
+        );
+      } else {
+        pregame = (
+          <ServerError />
         );
       }
     }

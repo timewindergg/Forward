@@ -12,6 +12,7 @@ import Dashboard from '../../components/dashboard/dash';
 import Header from '../../components/common/header';
 import Footer from '../../components/common/footer';
 import NotFound from '../../components/common/notfound';
+import ServerError from '../../components/common/ServerError';
 
 // Import api utilities.
 import { getSummonerMatchHistory } from '../../apiutils/matchHistoryAPIUtils';
@@ -169,6 +170,8 @@ class DashboardContainer extends Component {
         dashboard = (
           <NotFound />
         );
+      } else {
+        dashboard = (<ServerError />);
       }
     }
 

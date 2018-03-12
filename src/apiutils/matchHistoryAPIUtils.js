@@ -26,7 +26,7 @@ export const getSummonerMatchHistory = (summoner_name, region, id, offset, size)
         });
 
         dispatch(fetchMatchHistorySuccess(summoner_name, region, result));
-      }).error((error) => {
+      }).catch((error) => {
         dispatch(fetchMatchHistoryError(error));
       });
   }
