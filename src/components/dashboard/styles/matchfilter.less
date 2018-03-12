@@ -8,6 +8,31 @@
       display: flex;
     }
 
+    .queue-selection{
+      width: 50px;
+      height: 40px;
+      background: @red-md;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 4px;
+
+      &:hover{
+        background: @red-dk;
+      }
+      &:active{
+        background: @red-lt;
+      }
+
+      &.selected{
+        background: @red-dk;
+      }
+    }
+
     .champion-selector {
       position: relative;
       margin-left: 20px;

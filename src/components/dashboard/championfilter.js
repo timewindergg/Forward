@@ -77,7 +77,7 @@ class ChampionFilter extends Component {
     const { championsData, imageVersion} = this.props;
 
     const inputProps = {
-      placeholder: "search for champions",
+      placeholder: "Search for champions",
       value: value,
       onChange: this.onChange,
       onKeyPress: this.handleKeyPress,
