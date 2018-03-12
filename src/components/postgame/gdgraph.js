@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
 
-import { Line } from 'react-chartjs-2';
+// import { Line } from 'react-chartjs-2';
+import LineGraph from '../common/graph/LineGraph';
 
-class GoldDiffGraph extends Component{
+
+class GoldDiffGraph extends Component {
+  getData = (frameData) => {
+    // let data = [];
+
+    return frameData.map((frame, index) => {
+      let diff = frame.teams['100'].gold - frame.teams['200'].gold;
+      
+      return ({
+        key: index,
+        value: diff
+      });
+    });
+  }
+/*
   renderLineGraph(){
     let labels = [];
+    let data = [];
+
     let blueData = [];
     let redData = [];
 
@@ -83,12 +100,23 @@ class GoldDiffGraph extends Component{
       </div>
     );
   }
+*/
+  
+
+
+  //         {this.renderLineGraph()}
 
   render(){
+    const data = this.getData(this.props.frameData);
     return(
       <div className="gdContainer">
-        <h3>Team Gold Difference</h3>
-        {this.renderLineGraph()}
+        <LineGraph
+          graphID='PG-TGD'
+          label='Team Gold Difference'
+          data={data}
+          height={250}
+          width={380}
+        />
       </div>
     );
   }
