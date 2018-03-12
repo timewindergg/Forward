@@ -191,7 +191,7 @@ class CurrentMatchCompare extends Component {
           />
         </div>
         
-        <div className='compare-row'>
+        <div className='compare-row' style={{'borderRadius': '5px'}}>
           <div className='skillProgression'>
             <h3 style={{'text-align': 'right'}}>Recommended skill order</h3>
             <SkillTable
