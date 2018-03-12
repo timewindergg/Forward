@@ -8,11 +8,11 @@ import './styles/lawn.css';
 import './styles/matchlist.css';
 import './styles/matchfilter.css';
 import './styles/recentlyplayedlist.css';
-import './styles/championfilter.css';
 import './styles/userstats.css';
 import './styles/lanestats.css';
 import '../common/styles/summonerheader.css';
 import '../common/styles/userchampionlist.css';
+import '../common/styles/championfilter.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';

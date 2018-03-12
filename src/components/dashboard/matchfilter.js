@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Dropdown from 'react-dropdown'
 
-import ChampionFilter from './championfilter';
+import ChampionFilter from '../common/championfilter';
 
 import classNames from 'classnames';
 

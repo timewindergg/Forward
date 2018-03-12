@@ -84,7 +84,7 @@ class ChampionFilter extends Component {
     };
 
     return (
-      <div className="dashboard-champion-filter">
+      <div className="champion-filter">
         <Autosuggest
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
