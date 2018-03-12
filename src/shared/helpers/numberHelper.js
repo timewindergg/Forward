@@ -37,3 +37,17 @@ export const calculateGradient = (color1, color2, ratio) => {
 export const isNumeric = (n) => {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+export const getNearestThousand = (val, roundUp) => {
+  if ((val % 1000 === 0) || (val % 1000 === -0)) {
+    return val;
+  }
+
+  let base = parseInt(val / 1000);
+
+  if (roundUp) {
+    return 1000 * (val < 0 ? base : base + 1);
+  }
+
+  return 1000 * (val < 0 ? base - 1 : base);
+}
