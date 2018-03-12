@@ -18,7 +18,9 @@ class SummonerHeader extends Component {
               <img src={profileIconUrl}/>
             </div>
             <div className="summoner-profile">
-              <span className="summoner-name">{summonerInfo.name}</span>
+              <Link to={`/p/${summonerInfo.region.toLowerCase()}/${summonerInfo.name}`}>
+                <span className="summoner-name">{summonerInfo.name}</span>
+              </Link>
               <span className="summoner-level">{`Lv ${summonerInfo.level}`}</span>
               <div className="summoner-wr">
                 <span className="summoner-wins">{summonerInfo.wins}W </span>

@@ -59,9 +59,9 @@ const normalizeRadarStats = (championStats) => {
    // The different areas will be Gold, Kill, Death, Assists, CS
    return [championStats.gold/championStats.total_games/10000,
            championStats.kills/championStats.total_games/6,
-           championStats.deaths/championStats.total_games/5,
+           championStats.deaths/championStats.total_games/6,
            championStats.assists/championStats.total_games/6,
-           championStats.total_cs/championStats.total_games/200]
+           championStats.total_cs/championStats.total_games/180]
 }
 
 export default ChampionStatsRadarGraph;

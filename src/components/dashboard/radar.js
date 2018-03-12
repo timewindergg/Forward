@@ -30,7 +30,7 @@ class MatchStatsRadar extends Component {
                   roundWithPrecision(userStats[2]/8000, 1), 
                   roundWithPrecision(userStats[3]/10000, 1), 
                   roundWithPrecision(userStats[4]/10, 1), 
-                  roundWithPrecision(userStats[5]/200, 1)],
+                  roundWithPrecision(userStats[5]/180, 1)],
           "fill":true,
           "backgroundColor":"rgba(255, 99, 132, 0.2)",
           "borderColor":"rgb(255, 99, 132)",

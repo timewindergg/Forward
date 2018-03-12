@@ -159,9 +159,9 @@ class ChampionStats extends Component {
                   <div className="statValues">
                     <span className="cs">{`${roundWithPrecision(championStatsByLane.total_cs / championStatsByLane.total_games, 0)}`}</span>
                     <span className="gold">{`${roundWithPrecision(championStatsByLane.gold / championStatsByLane.total_games, 0)}`}</span>
-                    <span className="k">{`${roundWithPrecision(championStatsByLane.kills / championStatsByLane.total_games, 0)}`}</span>
-                    <span className="d">{`${roundWithPrecision(championStatsByLane.deaths / championStatsByLane.total_games, 0)}`}</span>
-                    <span className="a">{`${roundWithPrecision(championStatsByLane.assists / championStatsByLane.total_games, 0)}`}</span>
+                    <span className="k">{`${roundWithPrecision(championStatsByLane.kills / championStatsByLane.total_games, 1)}`}</span>
+                    <span className="d">{`${roundWithPrecision(championStatsByLane.deaths / championStatsByLane.total_games, 1)}`}</span>
+                    <span className="a">{`${roundWithPrecision(championStatsByLane.assists / championStatsByLane.total_games, 1)}`}</span>
                   </div>
                   <div className="statLabels">
                     <span className="cs">{` CS`}</span>
