@@ -16,6 +16,7 @@ import '../common/styles/userchampionlist.css';
 
 import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
+import LoadingState from '../../shared/LoadingState';
 
 import Matches from './matches';
 import MatchStatsRadar from './radar';
@@ -78,7 +79,7 @@ class Dashboard extends Component {
 
     let loadMore;
 
-    if (matchesToDisplay < limit) {
+    if (matchesToDisplay < limit && loadingState === LoadingState.FINISHED) {
       loadMore =
         <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
           <h2>Load 10 more matches</h2>
@@ -129,6 +130,7 @@ class Dashboard extends Component {
                   championData={staticData.champions}
                   runeData={staticData.runes}
                   itemData={staticData.items}
+                  region={this.props.region}
                 />
               </div>
               {loadMore}

@@ -273,9 +273,11 @@ class Matches extends Component {
           <div className="champion-image">
             <img src={p.championUrl} alt=""/>
           </div>
-          <div className="name">
-            {p.summonerName}
-          </div>
+          <Link to={`/p/${this.props.region}/${p.summonerName}`}>
+            <div className="name">
+              {p.summonerName}
+            </div>
+          </Link>
         </div>
       );
     });
