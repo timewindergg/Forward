@@ -25,7 +25,8 @@ class Header extends Component {
       <div className='rc-header'>
         <div className='header-inner'>
           <div className='header-group'>
-            <a href="/" style={{'textDecoration': 'none'}}>
+            <a className='logo' href="/" style={{'textDecoration': 'none'}}>
+              <img className="header-icon" src="/api/static/icon.png"/>
               <span className='header-appname'>Timewinder.gg</span>
             </a>
           </div>

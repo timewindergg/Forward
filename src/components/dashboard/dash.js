@@ -91,19 +91,22 @@ class Dashboard extends Component {
 
     return (
       <div className='Dashboard'>
-        <div className="content">
-          <SummonerHeader summonerInfo={summoner}
-            staticData={staticData}/>
-          <div className="statsHeader">
-            <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
-            <div className="dashboard-radar">
-              <MatchStatsRadar matches={matches}/>
-              <UserStats matches={matches}/>
+        <div className="dash-header-container">
+          <div className="dash-header">
+            <SummonerHeader summonerInfo={summoner}
+              staticData={staticData}/>
+            <div className="separator"></div>
+            <div className="statsHeader">
+              <MatchLawn lawn={summoner.lawn} onDateSelect={this.onDateSelect}/>
+              <div className="dashboard-radar">
+                <MatchStatsRadar matches={matches}/>
+                <UserStats matches={matches}/>
+              </div>
+              <LaneStats championStats={summoner.championStats}/>
             </div>
-            <LaneStats championStats={summoner.championStats}/>
           </div>
-          <div className="separator">
-          </div>
+        </div>
+        <div className="content">
           <div className="dashboard-body">
             <div className="dashboard-body-left-container">
               <div className="matchlist-container">
