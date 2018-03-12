@@ -67,6 +67,7 @@ class OverviewCard extends Component {
           data={runeData}
           img={getPerkIconUrl(rune, staticData.version)}
           version={staticData.version}
+          key={`tt-${rune}`}
         >
           <img className={runeClass} src={getPerkIconUrl(rune, staticData.version)} key={rune} alt=''/>
         </Tooltip>
@@ -264,7 +265,7 @@ class OverviewCard extends Component {
       const tierIcon = getTierIconUrl(tier);
 
       return (
-        <div className='oc-league'>
+        <div className='oc-league' key={leagueName}>
           <img src={tierIcon} className='tier-img' alt=""/>
           <span className='overview-text tier-text'>{mapping[leagueName]}</span>
         </div>

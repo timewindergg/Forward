@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {
+  loadCurrentMatchStart,
   loadCurrentMatchSuccess,
   loadCurrentMatchFailed,
   loadCurrentMatchDetailsSuccess,
@@ -35,6 +36,8 @@ export const getCurrentMatch = (summonerName, region, id, onSuccess) => {
   }
 
   return (dispatch) => {
+    console.log('CLEARING CURRENT MATCH');
+    dispatch(loadCurrentMatchStart());
     return axios.get(uri, {params}).then((response) => {
       dispatch(loadCurrentMatchSuccess(response.data));
 

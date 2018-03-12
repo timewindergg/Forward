@@ -193,7 +193,7 @@ class CurrentMatchCompare extends Component {
         
         <div className='compare-row' style={{'borderRadius': '5px'}}>
           <div className='skillProgression'>
-            <h3 style={{'text-align': 'right'}}>Recommended skill order</h3>
+            <h3 style={{'textAlign': 'right'}}>Recommended skill order</h3>
             <SkillTable
               isRed={true}
               skillOrder={currentMatch.skill_orders[compareDataBlue.champion_id]}

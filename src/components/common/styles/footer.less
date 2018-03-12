@@ -5,17 +5,26 @@
 
     background: @grey-lt;
     border-top: 1px solid #aaa;
-    height: 50px;
+    height: 70px;
 
     display:flex;
     align-items: center;
 
     .credits{
-        width: 150px;
-        padding-left: 20px;
+        display: flex;
+        padding-left: 15px;
+        font-size: 10px;
 
-        .artCredits{
-            
+        .credit-by {
+            text-align: right;
+            width: 90px;
+        }
+
+        .creditors {
+            width: 80px;
+            a {
+                text-decoration: none;
+            }
         }
     }
 
@@ -25,7 +34,7 @@
         width: 800px;
         text-align: center;
         margin: 0 auto;
-        
+
     }
 
     .social{
