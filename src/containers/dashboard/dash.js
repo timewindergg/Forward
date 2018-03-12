@@ -24,7 +24,7 @@ import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 import { normalizeName } from '../../shared/helpers/stringHelper.js';
 
 const MH_OFFSET = 0;
-const MH_SIZE = 100;
+const MH_SIZE = 50;
 
 const MAX_ATTEMPTS = 1; // retries
 const MATCH_PULL_INTERVAL = 3000; // retry every 5 seconds?
