@@ -92,9 +92,11 @@ class ChampionStats extends Component {
 
     return (
       <div className='ChampionStats'>
-        <div className='content'>
+        <div className='cs-header-container'>
           <SummonerHeader summonerInfo={summoner}
-            staticData={staticData}/>
+              staticData={staticData}/>
+        </div>
+        <div className='content'>
           <div className="champion-stats-container">
             <div className="left-container">
               <ChampionProfile

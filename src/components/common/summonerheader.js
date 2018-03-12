@@ -43,7 +43,9 @@ class SummonerHeader extends Component {
     let solo5v5 = <div className="ranked-info">
         <div className="ranked-tier">
           <img src={getTierIconUrl('Unranked')}/>
-          <span className='league-label'>Solo/Duo</span>
+          <div>
+            <span className='league-label'>Solo/Duo</span>
+          </div>
         </div>
         <div className="ranked-stats">
           <span> Unranked </span>
