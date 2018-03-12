@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import { REGION } from '../../shared/constants';
 import Search from '../../components/common/search.js';
+import RecentSearches from '../../components/common/recentsearches.js';
 import splash from'./splash.png';
 
 import {
@@ -14,6 +15,7 @@ import {
 
 import './styles/home.css';
 import '../../components/common/styles/search.css';
+import '../../components/common/styles/recentsearches.css';
 
 class Home extends Component {
   state = {
@@ -39,6 +41,7 @@ class Home extends Component {
           <h1>Timewinder.gg</h1>
           <h3>Master yourself. Master the enemy.</h3>
           <Search />
+          <RecentSearches recentSearches={this.state.recentSearches}/>
         </div>
       </div>
     );

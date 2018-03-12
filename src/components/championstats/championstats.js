@@ -62,11 +62,22 @@ class ChampionStats extends Component {
     }
 
     let championStats = userChampionStats;
-    const champions = summoner.championStats.map((champion) => {
+
+    const rawChampions = summoner.championStats.map((champion) => {
       return {
         'name': staticData.champions[champion.champ_id].name,
         'img': staticData.champions[champion.champ_id].img
       }
+    });
+
+    // remove duplicates
+    const championHash = {};
+    rawChampions.forEach((champion) => {
+      championHash[champion.name] = champion;
+    });
+
+    const champions = Object.keys(championHash).map((champion) => {
+      return championHash[champion];
     });
 
     const championId = championStats.championId;
