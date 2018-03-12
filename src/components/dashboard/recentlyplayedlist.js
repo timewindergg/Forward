@@ -2,12 +2,30 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 class RecentlyPlayedWith extends Component {
   render() {
     const { matches, region } = this.props;
 
+    if (matches.length === 0) {
+      return (
+        <div className="dashboard-recently-played-with">
+          <h3>Recently Played With</h3>
+          <div className='oc-loader'>
+            <ClipLoader
+              size={50}
+              color={'#ff6666'} 
+              loading={true} 
+            />
+            <h4>{`Loading...`}</h4>
+          </div>
+        </div>
+      );
+    }
+
     const players = getTopPlayed(matches, 5);
+
 
     return (
       <div className="dashboard-recently-played-with">

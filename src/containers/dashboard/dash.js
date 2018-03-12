@@ -24,8 +24,8 @@ import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 const MH_OFFSET = 0;
 const MH_SIZE = 100;
 
-const MAX_ATTEMPTS = 2; // retries
-const MATCH_PULL_INTERVAL = 5000; // retry every 5 seconds?
+const MAX_ATTEMPTS = 1; // retries
+const MATCH_PULL_INTERVAL = 3000; // retry every 5 seconds?
 
 // really, this is just a function that compares 2 objects deeply for differences
 // helps us a bit in telling us what ACTUALLY CHANGED
