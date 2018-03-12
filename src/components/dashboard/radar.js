@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {generateUserStats} from '../../shared/helpers/leagueUtilities';
+import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
 
 import { Radar } from 'react-chartjs-2';
 
@@ -23,7 +24,24 @@ class MatchStatsRadar extends Component {
       
       datasets: [
         {
-          data: [userStats[0]/4, userStats[1]/60, userStats[2]/7000, userStats[3]/20000, userStats[4]/8, userStats[5]/70]
+          'label': "",
+          "data": [roundWithPrecision(userStats[0]/2, 1), 
+                  roundWithPrecision(userStats[1]/50, 1), 
+                  roundWithPrecision(userStats[2]/8000, 1), 
+                  roundWithPrecision(userStats[3]/10000, 1), 
+                  roundWithPrecision(userStats[4]/10, 1), 
+                  roundWithPrecision(userStats[5]/200, 1)],
+          "fill":true,
+          "backgroundColor":"rgba(255, 99, 132, 0.2)",
+          "borderColor":"rgb(255, 99, 132)",
+          "pointBackgroundColor":"rgb(255, 99, 132)",
+          "pointBorderColor":"#fff",
+          "pointHoverBackgroundColor":"#fff",
+          "pointHoverBorderColor":"rgb(255, 99, 132)"
+        },
+        {
+          'label': "Avg",
+          "data": [1, 1, 1, 1, 1, 1]
         }
       ]
     };
@@ -38,11 +56,14 @@ class MatchStatsRadar extends Component {
               display: false
             },
             tooltips: {
-              enabled: false
+              enabled: true
             },
             scale: {
               ticks: {
-                display: false
+                display: false,
+                beginAtZero: true,
+                min: 0,
+                max: 3,
               },
             }
           }}

@@ -79,7 +79,7 @@ class Dashboard extends Component {
 
     let loadMore;
 
-    if (matchesToDisplay < limit && loadingState === LoadingState.FINISHED) {
+    if (matchesToDisplay < limit && matches.length > 0) {
       loadMore =
         <div className="dashboard-show-more" onClick={(event) => this.setState(prevState => {return {matchesToDisplay: prevState.matchesToDisplay += 10}})}>
           <h2>Load 10 more matches</h2>
