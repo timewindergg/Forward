@@ -21,7 +21,7 @@ class EffectiveGoldDiffGraph extends Component{
           graphID='PG-TEGD'
           label='Team Effective Gold Difference'
           data={data}
-          height={245}
+          height={235}
           width={352}
           fillInfo={{
             pos: '#E8F1F3',
