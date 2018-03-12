@@ -18,7 +18,7 @@ import './styles/perks.css';
 import './styles/items.css';
 import './styles/bargraphs.css';
 import '../common/styles/summonerheader.css';
-import '../common/styles/userchampionlist.css';
+import '../common/styles/championfilter.css';
 
 import ChampionStatsBarGraphs from './bargraph';
 import ChampionStatsRadarGraph from './radargraph';
@@ -31,7 +31,7 @@ import ChampionProfile from './championprofile';
 import SummonerHeader from '../common/summonerheader';
 
 import LoadingScreen from '../common/loadingscreen';
-import UserChampionList from '../common/userchampionlist';
+import ChampionFilter from '../common/championfilter';
 
 class ChampionStats extends Component {
   state = {
@@ -49,6 +49,11 @@ class ChampionStats extends Component {
     });
   }
 
+  _handleKeyPress = (value) => {
+    const lastIndex = window.location.href.lastIndexOf('/');
+    window.location.href = window.location.href.substring(0, lastIndex+1) + value;
+  }
+
   render() {
     const {summoner, userChampionStats, staticData} = this.props;
 
@@ -57,6 +62,12 @@ class ChampionStats extends Component {
     }
 
     let championStats = userChampionStats;
+    const champions = summoner.championStats.map((champion) => {
+      return {
+        'name': staticData.champions[champion.champ_id].name,
+        'img': staticData.champions[champion.champ_id].img
+      }
+    });
 
     const championId = championStats.championId;
     const version = staticData.version;
@@ -116,10 +127,9 @@ class ChampionStats extends Component {
               <ChampionStatsRadarGraph championStats={championStatsByLane}/>
               <ChampionStatsBarGraphs championStats={championStatsByLane}/>
               <ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>
-              <UserChampionList championStats={summoner.championStats}
-                summonerName={summoner.name}
-                summonerRegion={summoner.region}
-                staticData={staticData}/>
+              <div className="champion-filter-container">
+                <ChampionFilter champions={champions} version={version} onKeyPress={this._handleKeyPress}/>
+              </div>
             </div>
           </div>
         </div>
