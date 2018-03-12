@@ -54,31 +54,43 @@ class RecentMatch extends Component{
         <div className={classNames({"result-indicator": true, 'victory': m.team === m.winner, 'defeat': m.team !== m.winner})}></div>
         {this.renderMatchHeader(m)}
         <div className="champion-stats-match-setting-info summonerInfo">
-          <div className="runeSummIcons">
-            <div className="summonerSpells">
-              <img className="summonerIcon icon" src={getSpellIconUrl(m.spell0, version)}/>
-              <img className="summonerIcon icon" src={getSpellIconUrl(m.spell1, version)}/>
-            </div>
-            <div className="runes">
-              <Tooltip
-                type={TOOLTIP_TYPES.RUNE}
-                data={runeData[keystone.toString()]}
-                img={getPerkIconUrl(keystone, version)}
-                version={version}
-              >
-                <img className="runeIcon icon" src={getPerkIconUrl(keystone, version)}/>
-              </Tooltip>
-              <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, version)}/>
-            </div>
-          </div>
           <div className="iconContainer">
             <img className="championIcon big" src={getChampionIconUrlByImage(championData[m.champ_id].img.split('.')[0], version)} />
-            <div className="level">
-              {m.level}
+            <div className="champion-name">
+              <span>{championData[m.champ_id].name}</span>
+            </div>
+            <div className="champion-level">
+              <span>{`Lvl ${m.level}`}</span>
+            </div>
+          </div>
+          <div className="runeSummIcons">
+            <div className="summonerSpells">
+              <div className='summoner'>
+                <img className="summonerIcon icon" src={getSpellIconUrl(m.spell0, version)}/>
+              </div>
+              <div className='summoner'>
+                <img className="summonerIcon icon" src={getSpellIconUrl(m.spell1, version)}/>
+              </div>
+            </div>
+            <div className="runes">
+              <div className='perk'>
+                <Tooltip
+                  type={TOOLTIP_TYPES.RUNE}
+                  data={runeData[keystone.toString()]}
+                  img={getPerkIconUrl(keystone, version)}
+                  version={version}
+                >
+                  <img className="runeIcon icon" src={getPerkIconUrl(keystone, version)}/>
+                </Tooltip>
+              </div>
+              <div className='perk'>
+                <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, version)}/>
+              </div>
             </div>
           </div>
           <div className="stats">
             <span className="stat cs">{`${m.cs} CS`}</span>
+            
             <div className="stat score">
               <span>{`${m.kills}/${m.deaths}/${m.assists}`}</span>
               <span>{`${roundWithPrecision(getKDA(m.kills, m.deaths, m.assists), 2)} KDA`}</span>
@@ -143,19 +155,21 @@ class RecentMatch extends Component{
     const itemSet = items.map((item) => {
       if (item === 0){
         return (
-          <div className="itemIcon icon filler"></div>
+          <div className="item icon filler"></div>
         );
       }
       return (
-        <Tooltip
-          containerClassName={classNames({'itemIcon': true, 'icon': true})}
-          type={TOOLTIP_TYPES.ITEM}
-          data={itemData[item.toString()]}
-          img={getItemIconUrl(item, version)}
-          version={version}
-        >
-          <img className="itemIcon icon icon" src={getItemIconUrl(item, version)} alt=""/>
-        </Tooltip>
+        <div className='item'>
+          <Tooltip
+            containerClassName={classNames({'itemIcon': true, 'icon': true})}
+            type={TOOLTIP_TYPES.ITEM}
+            data={itemData[item.toString()]}
+            img={getItemIconUrl(item, version)}
+            version={version}
+          >
+            <img className="icon" src={getItemIconUrl(item, version)} alt=""/>
+          </Tooltip>
+        </div>
       );
     });
 

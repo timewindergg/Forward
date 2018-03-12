@@ -8,6 +8,7 @@ import { getMasteryIconUrl,
   getPerkIconUrl,
   getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
+import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
 
 import './styles/championstats.css';
 import './styles/recentmatches.css';
@@ -129,18 +130,37 @@ class ChampionStats extends Component {
                 championData={staticData.champions}
                 totalGames={totalGames}
                 version={version}/>
-              <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
-              <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
-              <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
-              <RecentMatches championId={championId} championStats={championStats} version={version} staticData={staticData}/>
-            </div>
-            <div className="right-container">
-              <ChampionStatsRadarGraph championStats={championStatsByLane}/>
-              <ChampionStatsBarGraphs championStats={championStatsByLane}/>
-              <ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>
               <div className="champion-filter-container">
                 <ChampionFilter champions={champions} version={version} onKeyPress={this._handleKeyPress}/>
               </div>
+              <RecentMatches championId={championId} championStats={championStats} version={version} staticData={staticData}/>
+              <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
+              <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
+              <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
+              
+            </div>
+            <div className="right-container">
+              <div className='radarContainer'>
+                <ChampionStatsRadarGraph championStats={championStatsByLane}/>
+                <div className='radarStats'>
+                  <div className="statValues">
+                    <span className="cs">{`${roundWithPrecision(championStatsByLane.total_cs / championStatsByLane.total_games, 0)}`}</span>
+                    <span className="gold">{`${roundWithPrecision(championStatsByLane.gold / championStatsByLane.total_games, 0)}`}</span>
+                    <span className="k">{`${roundWithPrecision(championStatsByLane.kills / championStatsByLane.total_games, 0)}`}</span>
+                    <span className="d">{`${roundWithPrecision(championStatsByLane.deaths / championStatsByLane.total_games, 0)}`}</span>
+                    <span className="a">{`${roundWithPrecision(championStatsByLane.assists / championStatsByLane.total_games, 0)}`}</span>
+                  </div>
+                  <div className="statLabels">
+                    <span className="cs">{` CS`}</span>
+                    <span className="gold">{` Gold`}</span>
+                    <span className="k">{` Kills`}</span>
+                    <span className="d">{` Deaths`}</span>
+                    <span className="a">{` Assists`}</span>
+                  </div>
+                </div>
+              </div>
+              <ChampionStatsBarGraphs championStats={championStatsByLane}/>
+              <ChampionMatchups championMatchups={championStats.championMatchups} version={version} staticData={staticData}/>
             </div>
           </div>
         </div>

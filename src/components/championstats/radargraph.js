@@ -11,32 +11,41 @@ class ChampionStatsRadarGraph extends Component {
     const {championStats} = this.props;
 
     const data = {
-      labels: ['Gold', 'Kill', 'Death', 'Assists', 'CS'],
+      labels: ['Gold', 'Kills', 'Deaths', 'Assists', 'CS'],
       datasets: [
         {
-          backgroundColor: 'rgba(179,181,198,0.2)',
-          borderColor: 'rgba(179,181,198,1)',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
+          label: '',
+          "fill":true,
+          "backgroundColor":"rgba(255, 99, 132, 0.2)",
+          "borderColor":"rgb(255, 99, 132)",
+          "pointBackgroundColor":"rgb(255, 99, 132)",
+          "pointBorderColor":"#fff",
+          "pointHoverBackgroundColor":"#fff",
+          "pointHoverBorderColor":"rgb(255, 99, 132)",
           data: normalizeRadarStats(championStats)
         },
+        {
+          label:'avg',
+          data: [1, 1, 1, 1, 1]
+        }
       ]
     };
 
     return (
-      <div className='compare-graph'>
+      <div className='radar-graph'>
         <Radar
           data={data}
           legend={{display: false}}
           options={{
             tooltips: {
-              enabled: false
+              enabled: true
             },
             scale: {
               ticks: {
-                display: false
+                display: false,
+                beginAtZero: true,
+                min: 0,
+                max: 3,
               },
             }
           }}
@@ -48,11 +57,11 @@ class ChampionStatsRadarGraph extends Component {
 
 const normalizeRadarStats = (championStats) => {
    // The different areas will be Gold, Kill, Death, Assists, CS
-   return [championStats.gold/championStats.total_games/20000,
-           championStats.kills/championStats.total_games/20,
-           championStats.deaths/championStats.total_games/20,
-           championStats.assists/championStats.total_games/20,
-           championStats.total_cs/championStats.total_games/400]
+   return [championStats.gold/championStats.total_games/10000,
+           championStats.kills/championStats.total_games/6,
+           championStats.deaths/championStats.total_games/5,
+           championStats.assists/championStats.total_games/6,
+           championStats.total_cs/championStats.total_games/200]
 }
 
 export default ChampionStatsRadarGraph;

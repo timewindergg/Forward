@@ -1,6 +1,12 @@
 @import '../../common/styles/colors';
 
 .ChampionStats {
+  margin-bottom: 15px;
+
+  h4{
+    margin: 5px 0;
+  }
+
   .cs-header-container{
     background: @grey-lt;
     display:flex;
@@ -20,7 +26,57 @@
   .left-container, .right-container {
     width: 50%;
     display: inline-block;
-    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .left-container{
+    padding-right: 20px;
+  }
+  .right-container{
+    padding-left: 20px;
+
+    .radarContainer{
+      display: flex;
+      align-items: center;
+
+      .radar-graph{
+
+      }
+
+      .radarStats{
+        display: flex;
+        font-weight: 600;
+        width: 150px;
+        font-size: 14px;
+
+        .statValues{
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+        .statLabels{
+          display: flex;
+          flex-grow: 1;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+
+  .k{
+    color: @blue-dk;
+  }
+  .d{
+    color: @red-dk;
+  }
+  .a{
+    color: @green;
+  }
+  .gold{
+    color: @gold-dk;
+  }
+  .cs{
+    color: @violet;
   }
 
   .champion-stats-left-container-top {

@@ -7,16 +7,25 @@
     font-weight: 700;
     height: 120px;
     margin-bottom: 5px;
+    
     background: @grey-lt;
     border-radius: 5px;
+    border-top: 1px solid @grey;
+    border-right: 1px solid @grey;
+    border-bottom: 1px solid @grey;
+
+    .item{
+        margin: 1px;
+    }
 
     .icon {
-        margin: 1px;
         height: 23px;
         width: 23px;
     }
 
     .result-indicator {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
         float: left;
         width: 10px;
         height: 100%;
@@ -38,11 +47,7 @@
 
     .item-header {
         height: 25px;
-        border-top: 1px solid @grey;
-        border-right: 1px solid @grey;
         border-bottom: 1px solid @grey;
-        border-radius: 0 3px 3px 0;
-
         display: flex;
         padding: 0 5px;
         justify-content: space-between;
@@ -86,39 +91,29 @@
         padding: 0 5px;
 
         .runeSummIcons {
+            display: block;
             padding-left: 15px;
             line-height: 0;
             width: 10%;
+        }
 
-            .runeIcon {}
-
-            .summonerSpells {
-                .summonerIcon {}
-            }
+        .summonerSpells{
+            display:inline-block;
+            line-height: 0;
+        }
+        .runes{
+            display: inline-block;
+            line-height: 0;
         }
 
         .iconContainer {
             position: relative;
+            text-align: center;
 
             .championIcon {
                 border-radius: 50%;
                 width: 50px;
                 height: 50px;
-            }
-
-            .level {
-                padding-right: 1px;
-                width: 16px;
-                height: 16px;
-                border-radius: 30%;
-                border: 1px solid;
-                background: @blue-dk;
-                color: #fff;
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                font-size: 12px;
-                text-align: center;
             }
         }
 
@@ -129,14 +124,13 @@
             width: 150px;
             margin: 0 10px;
             display: flex;
-
+            align-items: center;
 
             .stat {
-                padding: 0 15px;
                 text-align: center;
             }
             .cs {
-                width: 15%;
+                width: 45%;
             }
             .score {
                 display: flex;

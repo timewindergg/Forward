@@ -324,7 +324,7 @@ class Postgame extends Component {
 
     return (
       <div className="Postgame">
-        <Sticky innerZ='1'>
+        <Sticky innerZ='5'>
           <ControlHeader onSliderChange={this.onSliderChange}
                          match={matchDetails.match}
                          timeline={matchDetails.timeline}
