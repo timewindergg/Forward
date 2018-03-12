@@ -3,12 +3,21 @@ import React, { Component } from 'react';
 import { REGION } from '../../shared/constants';
 import Dropdown from 'react-dropdown'
 
+import {
+  LAST_SEARCHED_KEY,
+  getCookie
+} from '../../shared/helpers/cookieHelper';
+
 class RegionSelector extends Component{
   constructor(props){
     super(props);
 
+    // check last searched cookie
+    // if doesn't exist, do NA
+    const savedRegion = getCookie(LAST_SEARCHED_KEY);
+
     this.state = {
-      region: REGION.NA.toUpperCase(),
+      region: !REGION[savedRegion] ? REGION.NA.toUpperCase() : savedRegion,
     };
   }
 

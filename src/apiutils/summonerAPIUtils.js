@@ -5,6 +5,8 @@ import {loadSummonerSuccess, loadSummonerFailed} from '../actions/summonerAction
 import {cacheSummoner, setSummonerContext} from '../actions/contextActions';
 
 import {
+  LAST_SEARCHED_KEY,
+  setCookie,
   addRecentSearch,
   decodeRecentSearches
   // RECENT_SEARCHES_KEY
@@ -23,6 +25,7 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
   }
 
   return (dispatch) => {
+    setCookie(LAST_SEARCHED_KEY, region.toUpperCase());
     dispatch(setSummonerContext(summonerName, region));
     // console.log('getting summoner info');
     return axios.get(getURI, {params}).then((response) => {
@@ -42,7 +45,6 @@ export const getSummonerInfo = (summonerName, region, id, onSuccess) => {
         // console.log('chaining');
         onSuccess(response.data);
       }
-      // TODO: dispatch action here
     }).catch((error) => {
       console.log('whoops', error);
       dispatch(loadSummonerFailed(error));

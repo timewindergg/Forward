@@ -1,5 +1,7 @@
 import {normalizeName} from './stringHelper';
 
+export const LAST_SEARCHED_KEY = 'LAST_SEARCHED';
+
 export const setCookie = (name, value, days = 7, path = '/') => {
   const expires = new Date(Date.now() + days * 864e5).toUTCString()
   document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path

@@ -5,11 +5,22 @@ import classNames from 'classnames';
 import { REGION } from '../../shared/constants';
 import RegionSelector from './regionselector.js';
 
+import {
+  LAST_SEARCHED_KEY,
+  getCookie
+} from '../../shared/helpers/cookieHelper';
+
 class Search extends Component {
-  state = {
-    summoner: '',
-    server: REGION.NA,
+  constructor(props) {
+    super(props);
+    const savedRegion = getCookie(LAST_SEARCHED_KEY);
+
+    this.state = {
+      summoner: '',
+      server: !REGION[savedRegion] ? REGION.NA.toLowerCase() : REGION[savedRegion].toLowerCase(),
+    };
   }
+
 
   onRegionSelect = (option) => {
     this.setState({
