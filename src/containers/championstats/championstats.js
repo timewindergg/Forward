@@ -14,6 +14,7 @@ import Footer from '../../components/common/footer';
 
 import LoadingState from '../../shared/LoadingState';
 import NotFound from '../../components/common/notfound';
+import ServerError from '../../components/common/ServerError';
 
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
 
@@ -96,6 +97,8 @@ class ChampionStatsContainer extends Component {
         championStats = (
           <NotFound />
         );
+      } else {
+        championStats = (<ServerError />);
       }
     }
 

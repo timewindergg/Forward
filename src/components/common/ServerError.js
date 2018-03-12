@@ -9,12 +9,12 @@ class ServerError extends Component {
     return (
       <div className="notFoundContainer">
         <div className="notfound">
-          <img className="splash" src={getStaticImage("/notfound_image.png")} alt=""></img>
-          <h4>Whoops, our Teemo's currently respawning.</h4>
+          <img className="splash" src={getStaticImage("/servererror_image.png")} alt=""></img>
+          <h4>Sorry, Amumu's puddle fried our servers, please try again later.</h4>
         </div>
       </div>
     );
   }
 }
 
-export default NotFound;
+export default ServerError;

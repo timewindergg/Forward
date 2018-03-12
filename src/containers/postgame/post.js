@@ -12,6 +12,7 @@ import Footer from '../../components/common/footer';
 
 import LoadingState from '../../shared/LoadingState';
 import NotFound from '../../components/common/notfound';
+import ServerError from '../../components/common/ServerError';
 
 class PostgameContainer extends Component {
   static propTypes = {
@@ -70,6 +71,8 @@ class PostgameContainer extends Component {
     if (tlLoadingState === LoadingState.FAILED) {
       if (tlError === 404) {
         postgame = (<NotFound />);
+      } else {
+        postgame = (<ServerError />);
       }
     }
 
