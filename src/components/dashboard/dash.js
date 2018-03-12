@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 
 import './styles/dash.css';
 import './styles/lawn.css';
@@ -14,7 +12,6 @@ import '../common/styles/summonerheader.css';
 import '../common/styles/userchampionlist.css';
 import '../common/styles/championfilter.css';
 
-import { numberFormatter } from '../../shared/helpers/numberHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 import LoadingState from '../../shared/LoadingState';
 import { FILTER } from '../../shared/constants.js';

@@ -11,7 +11,7 @@ class ChampionRoles extends Component{
       if (role in championStats){
         return (
           <div className={classNames({'role-button': true, 'selected': this.props.role === role})} onClick={() => {onRoleSelection(role)}} key={role}>
-            <img className="roleIcon" src={getRoleIconUrl(role)} />
+            <img className="roleIcon" src={getRoleIconUrl(role)} alt=""/>
             <div className="roleStat">
               <div className="winloss">
                 <span className="wins">{`${championStats[role].wins}W `}</span>

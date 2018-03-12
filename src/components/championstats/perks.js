@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 import { getPerkIconUrl } from '../../shared/helpers/staticImageHelper.js';
-import { Colors } from '../../shared/colors.js';
 
 class Perk extends Component {
   render(){
@@ -17,7 +16,7 @@ class Perk extends Component {
             inspiration: this.props.perkData.path === "Inspiration" && !this.props.perkData.isKeystone,
             resolve: this.props.perkData.path === "Resolve" && !this.props.perkData.isKeystone,
             sorcery: this.props.perkData.path === "Sorcery" && !this.props.perkData.isKeystone,
-          })} src={getPerkIconUrl(this.props.perk, this.props.version)}/>
+          })} src={getPerkIconUrl(this.props.perk, this.props.version)} alt=""/>
         </div>
         <div className="description">
           <h4>{this.props.perkData.name}</h4>
@@ -50,7 +49,7 @@ class Perks extends Component {
   }
 
   render() {
-    const {perks, perkData, version} = this.props;
+    const {perks, perkData} = this.props;
 
     let keystone;
     let primaryPerks = [];
@@ -66,7 +65,7 @@ class Perks extends Component {
 
     //categorize perks
     perks.map((r) => {
-      if (r != keystone){
+      if (r !== keystone){
         if (perkData[r].path === perkData[keystone].path){
           primaryPerks.push(r);
         }

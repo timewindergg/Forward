@@ -17,13 +17,7 @@ import {
 
 import { roundWithPrecision, isNumeric } from '../../../shared/helpers/numberHelper.js';
 
-import runeMappings from '../../../shared/runeMappings.js';
-
 class OverviewCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     summoner: PropTypes.object.isRequired,
     details: PropTypes.object.isRequired,
@@ -158,8 +152,8 @@ class OverviewCard extends Component {
             <div className='oc-loader'>
               <ClipLoader
                 size={80}
-                color={isRed ? '#ff6666' : '#4C7FCC'} 
-                loading={true} 
+                color={isRed ? '#ff6666' : '#4C7FCC'}
+                loading={true}
               />
               <h4>{`Loading...`}</h4>
             </div>
@@ -209,7 +203,7 @@ class OverviewCard extends Component {
         <br/>
         <span className='overview-text violet-txt'>{roundWithPrecision(details.stats.cs10, 0)} / </span>
         <span className='overview-text violet-txt'>{roundWithPrecision(details.stats.cs20, 0)} </span>
-        
+
       </div>
     );
 
@@ -219,7 +213,7 @@ class OverviewCard extends Component {
         <br/>
         <span className='overview-text gold-dk-txt'>{roundWithPrecision(details.stats.gold10, 0)} / </span>
         <span className='overview-text gold-dk-txt'>{roundWithPrecision(details.stats.gold20, 0)} </span>
-        
+
       </div>
     );
 
@@ -271,7 +265,7 @@ class OverviewCard extends Component {
 
       return (
         <div className='oc-league'>
-          <img src={tierIcon} className='tier-img' />
+          <img src={tierIcon} className='tier-img' alt=""/>
           <span className='overview-text tier-text'>{mapping[leagueName]}</span>
         </div>
       )
@@ -279,7 +273,7 @@ class OverviewCard extends Component {
 
     // console.log(leagues);
     return leagueComps;
-    // RANKED_SOLO_5x5 RANKED_FLEX_SR 
+    // RANKED_SOLO_5x5 RANKED_FLEX_SR
   }
 }
 

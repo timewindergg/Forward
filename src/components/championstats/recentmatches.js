@@ -12,7 +12,7 @@ import {
 
   // Import required mappings.
 import QueueIdMappings from '../../shared/queueIdMappings.js';
-import { getKDA, getKillParticipation, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
+import { getKDA, strPadLeft, getTeamKDAStat } from '../../shared/helpers/leagueUtilities';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper';
 
 import Tooltip from '../common/tooltip/Tooltip';
@@ -55,7 +55,7 @@ class RecentMatch extends Component{
         {this.renderMatchHeader(m)}
         <div className="champion-stats-match-setting-info summonerInfo">
           <div className="iconContainer">
-            <img className="championIcon big" src={getChampionIconUrlByImage(championData[m.champ_id].img.split('.')[0], version)} />
+            <img className="championIcon big" src={getChampionIconUrlByImage(championData[m.champ_id].img.split('.')[0], version)} alt=""/>
             <div className="champion-name">
               <span>{championData[m.champ_id].name}</span>
             </div>
@@ -66,10 +66,10 @@ class RecentMatch extends Component{
           <div className="runeSummIcons">
             <div className="summonerSpells">
               <div className='summoner'>
-                <img className="summonerIcon icon" src={getSpellIconUrl(m.spell0, version)}/>
+                <img className="summonerIcon icon" src={getSpellIconUrl(m.spell0, version)} alt=""/>
               </div>
               <div className='summoner'>
-                <img className="summonerIcon icon" src={getSpellIconUrl(m.spell1, version)}/>
+                <img className="summonerIcon icon" src={getSpellIconUrl(m.spell1, version)} alt=""/>
               </div>
             </div>
             <div className="runes">
@@ -80,17 +80,17 @@ class RecentMatch extends Component{
                   img={getPerkIconUrl(keystone, version)}
                   version={version}
                 >
-                  <img className="runeIcon icon" src={getPerkIconUrl(keystone, version)}/>
+                  <img className="runeIcon icon" src={getPerkIconUrl(keystone, version)} alt=""/>
                 </Tooltip>
               </div>
               <div className='perk'>
-                <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, version)}/>
+                <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, version)} alt=""/>
               </div>
             </div>
           </div>
           <div className="stats">
             <span className="stat cs">{`${m.cs} CS`}</span>
-            
+
             <div className="stat score">
               <span>{`${m.kills}/${m.deaths}/${m.assists}`}</span>
               <span>{`${roundWithPrecision(getKDA(m.kills, m.deaths, m.assists), 2)} KDA`}</span>

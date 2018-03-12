@@ -37,7 +37,7 @@ class Items extends Component {
     const si = sortItems(items);
     const sortedItems = si[0];
     const total = si[1];
-    
+
     return sortedItems.map((item) => {
       const iCnt = item.value;
       const ik = item.key;
@@ -52,7 +52,7 @@ class Items extends Component {
           version={version}
         >
           <div className="item item-container" key={ik}>
-            <img className="cs-item icon" src={getItemIconUrl(ik, version)}/>
+            <img className="cs-item icon" src={getItemIconUrl(ik, version)} alt=""/>
             <span className={classNames('cs-item-cnt', getPercentClass(pcnt))}>
               {`${pcnt}%`}
             </span>

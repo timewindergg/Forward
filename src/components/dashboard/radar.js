@@ -6,10 +6,6 @@ import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
 import { Radar } from 'react-chartjs-2';
 
 class MatchStatsRadar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (this.props.matches === undefined) {
       return (<div/>);
@@ -21,15 +17,15 @@ class MatchStatsRadar extends Component {
 
     const data = {
       labels: ['KDA', 'KP', 'Obj Dmg', 'Gold', 'Vision', 'CS'],
-      
+
       datasets: [
         {
           'label': "",
-          "data": [roundWithPrecision(userStats[0]/2, 1), 
-                  roundWithPrecision(userStats[1]/50, 1), 
-                  roundWithPrecision(userStats[2]/8000, 1), 
-                  roundWithPrecision(userStats[3]/10000, 1), 
-                  roundWithPrecision(userStats[4]/10, 1), 
+          "data": [roundWithPrecision(userStats[0]/2, 1),
+                  roundWithPrecision(userStats[1]/50, 1),
+                  roundWithPrecision(userStats[2]/8000, 1),
+                  roundWithPrecision(userStats[3]/10000, 1),
+                  roundWithPrecision(userStats[4]/10, 1),
                   roundWithPrecision(userStats[5]/180, 1)],
           "fill":true,
           "backgroundColor":"rgba(255, 99, 132, 0.2)",

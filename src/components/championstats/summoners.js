@@ -10,7 +10,7 @@ class Summoner extends Component {
     return (
       <div className="summoner">
         <div className="summonerImg">
-          <img className="summonerIcon icon" src={getSpellIconUrl(this.props.summoner, this.props.version)}/>
+          <img className="summonerIcon icon" src={getSpellIconUrl(this.props.summoner, this.props.version)} alt=""/>
         </div>
       </div>
     );

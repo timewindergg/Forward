@@ -12,7 +12,7 @@ class MatchLawn extends Component {
       return (<div/>);
     }
 
-    const { lawn, onDateSelect} = this.props;
+    const { lawn } = this.props;
 
     // Calculate the beginning of 4 months ago.
     const d = new Date();
@@ -28,7 +28,7 @@ class MatchLawn extends Component {
       <div className="dashboard-match-heat-map">
         <CalendarHeatmap
           onClick={(value) => {
-            if (value.date) {
+            if (!!value && value.date) {
               this.props.onFilterSelect(value.date, FILTER.DATE);
             }
           }}

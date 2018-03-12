@@ -22,7 +22,7 @@ export const roundWithPrecision = (number, precision) => {
 export const calculateGradient = (color1, color2, ratio) => {
   var hex = function(x) {
       x = x.toString(16);
-      return (x.length == 1) ? '0' + x : x;
+      return (x.length === 1) ? '0' + x : x;
   };
 
   var r = Math.ceil(parseInt(color1.substring(0,2), 16) * ratio + parseInt(color2.substring(0,2), 16) * (1-ratio));

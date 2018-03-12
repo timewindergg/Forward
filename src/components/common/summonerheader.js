@@ -15,7 +15,7 @@ class SummonerHeader extends Component {
         <div className="summoner-header">
           <div className="profile">
             <div className="profile-icon">
-              <img src={profileIconUrl}/>
+              <img src={profileIconUrl} alt=""/>
             </div>
             <div className="summoner-profile">
               <Link to={`/p/${summonerInfo.region.toLowerCase()}/${summonerInfo.name}`}>
@@ -44,7 +44,7 @@ class SummonerHeader extends Component {
   renderRankedTiers(summoner) {
     let solo5v5 = <div className="ranked-info">
         <div className="ranked-tier">
-          <img src={getTierIconUrl('Unranked')}/>
+          <img src={getTierIconUrl('Unranked')} alt=""/>
           <div>
             <span className='league-label'>Solo/Duo</span>
           </div>
@@ -56,7 +56,7 @@ class SummonerHeader extends Component {
 
     let flex5v5 = <div className="ranked-info">
         <div className="ranked-tier">
-          <img src={getTierIconUrl('Unranked')}/>
+          <img src={getTierIconUrl('Unranked')} alt=""/>
           <div>
             <span className='league-label'>Flex 5v5</span>
           </div>
@@ -68,7 +68,7 @@ class SummonerHeader extends Component {
 
     let flex3v3 = <div className="ranked-info">
         <div className="ranked-tier">
-          <img src={getTierIconUrl('Unranked')}/>
+          <img src={getTierIconUrl('Unranked')} alt=""/>
           <div>
             <span className='league-label'>Flex 3v3</span>
           </div>
@@ -87,7 +87,7 @@ class SummonerHeader extends Component {
 
       const rankedInfo = <div className="ranked-info">
           <div className="ranked-tier">
-            <img src={getTierIconUrl(tier)}/>
+            <img src={getTierIconUrl(tier)} alt=""/>
             <div>
               <span className='league-label'>{convertQueue(league.queue)}</span>
             </div>

@@ -15,8 +15,8 @@ class RecentlyPlayedWith extends Component {
           <div className='oc-loader'>
             <ClipLoader
               size={50}
-              color={'#ff6666'} 
-              loading={true} 
+              color={'#ff6666'}
+              loading={true}
             />
             <h4>{`Loading...`}</h4>
           </div>
@@ -140,7 +140,7 @@ const getTopPlayed = (matches, limit) => {
         }
 
         players[summonerName].totalGames += 1;
-        m.won ? players[summonerName].wins += 1 : players[summonerName].losses += 1;
+        won ? players[summonerName].wins += 1 : players[summonerName].losses += 1;
         players[summonerName].winRate = Math.round(players[summonerName].wins * 100/ players[summonerName].totalGames);
       }
     });

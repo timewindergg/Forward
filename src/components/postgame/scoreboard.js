@@ -55,7 +55,7 @@ class ScoreboardPlayer extends Component {
             img={getItemIconUrl(item, patchVersion)}
             version={patchVersion}
           >
-            <img className={classNames({'itemIcon': true, 'icon': true})} src={getItemIconUrl(item, patchVersion)}/>
+            <img className={classNames({'itemIcon': true, 'icon': true})} src={getItemIconUrl(item, patchVersion)} alt=""/>
           </Tooltip>
         );
       }
@@ -70,8 +70,8 @@ class ScoreboardPlayer extends Component {
       <div className="summonerInfo">
         <div className="runeSummIcons">
           <div className="summonerSpells">
-            <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellDId, patchVersion)}/>
-            <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellFId, patchVersion)}/>
+            <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellDId, patchVersion)} alt=""/>
+            <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellFId, patchVersion)} alt=""/>
           </div>
           <div className="runes">
             <Tooltip
@@ -80,13 +80,13 @@ class ScoreboardPlayer extends Component {
               img={getPerkIconUrl(keystone, patchVersion)}
               version={patchVersion}
             >
-              <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)}/>
+              <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)} alt=""/>
             </Tooltip>
-            <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, patchVersion)}/>
+            <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, patchVersion)} alt=""/>
           </div>
         </div>
         <div className="iconContainer">
-          <img className="championIcon big" src={getChampionIconUrlByImage(championData[p.championId].img.split('.')[0], patchVersion)} />
+          <img className="championIcon big" src={getChampionIconUrlByImage(championData[p.championId].img.split('.')[0], patchVersion)} alt=""/>
           <div className="level">
             {p.level}
           </div>
@@ -112,7 +112,7 @@ class ScoreboardPlayer extends Component {
             img={getItemIconUrl(trinket, patchVersion)}
             version={patchVersion}
           >
-            <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)}/>
+            <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)} alt=""/>
           </Tooltip>
         </div>
       </div>

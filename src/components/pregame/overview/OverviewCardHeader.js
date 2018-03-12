@@ -5,12 +5,8 @@ import classNames from 'classnames';
 import './styles/OverviewCardHeader.css';
 
 import {
-  getTierIconUrl,
   getChampionIcon
 } from '../../../shared/helpers/staticImageHelper.js';
-
-
-import {IMG_VER} from '../../../constants/Settings';
 
 class OverviewCardHeader extends Component {
   static propTypes = {
@@ -59,7 +55,6 @@ badge icon ne
     if (detailsLoaded && tier === ''){
       tierText = 'UNRANKED';
     }
-    const tierIcon = getTierIconUrl(tier);
 
     const nameClass = classNames({
       'h-primary-text': true,

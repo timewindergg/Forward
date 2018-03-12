@@ -37,7 +37,6 @@ export const getTeamKDAStat = (team) => {
 
 // will be [kda, kp, damage to objective, gold, vision, cs]
 export const generateUserStats = (matches) => {
-  let totalMinutes = 0;
   const stats = [0, 0, 0, 0, 0, 0];
 
   for (let i = 0; i < matches.length; i++) {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 
 import { getChampionIconUrlByImage } from '../../shared/helpers/staticImageHelper.js';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
@@ -18,7 +17,7 @@ class ChampionProfile extends Component {
     return(
       <div className="profileContainer">
         <div className="champion-stats-champion-profile">
-          <img className="championIcon" src={getChampionIconUrlByImage(championData[this.props.championId].img.split('.')[0], this.props.version)}/>
+          <img className="championIcon" src={getChampionIconUrlByImage(championData[this.props.championId].img.split('.')[0], this.props.version)} alt=""/>
           <div className="statOverview">
             <div className="winloss">
               {totalWins}W {totalLosses}L

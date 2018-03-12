@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Dropdown from 'react-dropdown'
-
 import ChampionFilter from '../common/championfilter';
 
 import classNames from 'classnames';
@@ -11,10 +9,6 @@ import QueueIdMappings from '../../shared/queueIdMappings';
 import { FILTER } from '../../shared/constants.js';
 
 class MatchFilter extends Component{
-  constructor(props){
-    super(props);
-  }
-
   _onQueueSelected = (queue) => {
     this.props.onFilterSelect(queue, FILTER.QUEUE)
   }

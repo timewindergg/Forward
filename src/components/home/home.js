@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import { REGION } from '../../shared/constants';
 import Search from '../../components/common/search.js';
-import RecentSearches from '../../components/common/recentsearches.js';
 import splash from'./splash.png';
 
 import {

@@ -17,7 +17,7 @@ class LaneStats extends Component {
       const percentagePlayed = laneData[lane] !== undefined ? roundWithPrecision(laneData[lane].totalGames * 100 /laneData.totalGames, 0) : '-.-';
       return (
         <div className="lanestat" key={lane}>
-          <img src={getRoleIconUrl(lane)}/>
+          <img src={getRoleIconUrl(lane)} alt=""/>
           <div className="stat">
             <span className="win-rate">{`${winRate}% WR `}</span>
             <span>/</span>
@@ -42,7 +42,7 @@ const getLaneStats = (championStats) => {
    championStats.forEach((champion) => {
     const lane = champion.lane;
     if (lane !== 'NONE') {
-      if (lanes[lane] == undefined) {
+      if (lanes[lane] === undefined) {
         lanes[lane] = {
           wins: 0,
           losses: 0,

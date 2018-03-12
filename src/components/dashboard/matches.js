@@ -24,10 +24,6 @@ import TOOLTIP_TYPES from '../../constants/TooltipTypes';
 import Moment from 'react-moment';
 
 class Matches extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (this.props.matches === undefined || this.props.version === undefined || this.props.limit === undefined) {
       return (<div/>);
@@ -198,7 +194,7 @@ class Matches extends Component {
     return (
       <div className="item-body">
         <div className="champion-info">
-          <img className="champion-icon" src={getChampionIconUrlByImage(championData[match.champ_id].img.split('.')[0], version)}/>
+          <img className="champion-icon" src={getChampionIconUrlByImage(championData[match.champ_id].img.split('.')[0], version)} alt=""/>
           <div className="champion-name">
             <span>{championData[match.champ_id].name}</span>
           </div>
@@ -300,22 +296,6 @@ const getUserMatchStats = (match) => {
   });
 
   return stats;
-}
-
-const fetchRoleIconName = (lane, role) => {
-  switch (lane) {
-    case 'MID_LANE':
-      return 'Mid';
-    case 'BOT_LANE':
-      return role === 'Role.support' ? 'Support' : 'Bot';
-    case 'TOP_LANE':
-      return 'Top';
-    case 'JUNGLE':
-      return 'Jungler';
-
-    default:
-      return 'Mid';
-  }
 }
 
 // Takes in team data and return a list of the following structure where the first element is the blue team.

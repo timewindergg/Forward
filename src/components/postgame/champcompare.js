@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import ItemProgression from './itemprogression.js';
 import SkillTable from '../common/skilltable.js';
-import RuneStats from './runestats.js';
 
 class ChampionCompare extends Component {
   static propTypes = {
@@ -28,7 +27,7 @@ class ChampionCompare extends Component {
           <div className="cs">
             CS: {player.cs}
           </div>
-          
+
           <div className="level">
             Level {player.level}
           </div>

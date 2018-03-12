@@ -9,17 +9,10 @@ import { getChampionIconUrlByImage } from '../../shared/helpers/staticImageHelpe
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
 import { getKDAColor } from '../../shared/helpers/cssHelper.js';
 
-
-const capitalize = (s) => {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
 const createChampionListData = (championLists, championData, version) => {
   const filtered = {};
-  const championIndex = {};
 
   championLists.forEach((champion) => {
-    const filteredIndex = championIndex[champion.champ_id];
     if (!(champion.champ_id in filtered)) {
       filtered[champion.champ_id] = {
         'champ_id': champion.champ_id,
@@ -104,7 +97,7 @@ class UserChampionList extends Component {
                     return (
                       <Link to={`/c/${summonerRegion.toLowerCase()}/${summonerName}/${props.value.replace(/\W/g, '')}`}>
                         <div>
-                          <img className="champion-table-image" src={championUrl}/>
+                          <img className="champion-table-image" src={championUrl} alt=""/>
                           <span>{props.value}</span>
                         </div>
                       </Link>

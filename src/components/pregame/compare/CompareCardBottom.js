@@ -19,10 +19,6 @@ import {
 } from '../../../shared/helpers/itemHelper';
 
 class CompareCardBottom extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     isRed: PropTypes.bool.isRequired,
     compareData: PropTypes.object.isRequired,
@@ -79,8 +75,6 @@ class CompareCardBottom extends Component {
   }
 
   renderEmptyCard = (cardClass) => {
-    const {isRed, compareData} = this.props;
-
     return (
       <div className={cardClass}>
       </div>

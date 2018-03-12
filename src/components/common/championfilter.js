@@ -65,7 +65,7 @@ class ChampionFilter extends Component {
 
     return (
       <div className="champion-suggestion">
-        <img src={getChampionIconUrlByImage(suggestion.img.split('.')[0], version)}/>
+        <img src={getChampionIconUrlByImage(suggestion.img.split('.')[0], version)} alt=""/>
         <span className="name">{suggestion.name}</span>
       </div>
     );
@@ -73,8 +73,6 @@ class ChampionFilter extends Component {
 
   render() {
     const { value, suggestions} = this.state;
-
-    const { championsData, imageVersion} = this.props;
 
     const inputProps = {
       placeholder: "Search for champions",

@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getMasteryIconUrl,
-  getTierIconUrl,
-  getProfileIconUrl,
-  getItemIconUrl,
-  getPerkIconUrl,
-  getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
 
@@ -28,7 +22,6 @@ import RecentMatches from './recentmatches';
 import Summoners from './summoners';
 import Perks from './perks';
 import Items from './items';
-import ChampionMatchups from './championmatchups';
 import ChampionProfile from './championprofile';
 import ChampionRoles from './championroles';
 import SummonerHeader from '../common/summonerheader';
@@ -140,13 +133,13 @@ class ChampionStats extends Component {
                   <div className="role-container">
                     <h3>Select role:</h3>
                     <ChampionRoles championStats={championStats}
-                                    onRoleSelection={this.onRoleSelection} 
+                                    onRoleSelection={this.onRoleSelection}
                                     role={role}
                                     championStats={championStats}/>
                   </div>
                 </div>
               </div>
-              
+
               <Summoners summoners={getSummonerSetByLane(championStats, role)} version={version}/>
               <Items items={championStats.championItems[role]} staticData={staticData.items} version={version}/>
               <Perks perks={getRuneSetByLane(championStats, role)} perkData={staticData.runes} version={version}/>
@@ -181,16 +174,6 @@ class ChampionStats extends Component {
     );
   }
 }
-
-const mapRoleToLane = (role) => {
-  let lane = role.toLowerCase();
-
-  if (lane !== 'jungle') {
-    lane = lane.split('_')[0];
-  }
-
-  return lane;
-};
 
 const getRuneSetByLane = (championStats, lane) => {
   // Loop through the championRunes and return rune set matches the lane.

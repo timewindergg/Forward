@@ -13,7 +13,6 @@ import {
 } from '../../../shared/helpers/staticImageHelper.js';
 
 import {roundWithPrecision, isNumeric} from '../../../shared/helpers/numberHelper.js';
-import {IMG_VER} from '../../../constants/Settings';
 
 class CompareCard extends Component {
   static propTypes = {
@@ -109,7 +108,6 @@ class CompareCard extends Component {
       isBlue,
       compareData,
       rankedDetails,
-      teamWinRate,
       staticData,
       otherChamp
     } = this.props;
@@ -147,13 +145,13 @@ class CompareCard extends Component {
     return (
       <div className={cardClass}>
         <div className='champion-img-container'>
-          <img src={imageUrl} className='champion-img' />
+          <img src={imageUrl} className='champion-img' alt=""/>
         </div>
         <div className={classNames('c-header-col', {'c-header-col-blue': !isBlue})}>
           <span className={nameClass}>{compareData.name}</span>
           <span className='h-text'>{championName}</span>
           <span className={classNames('h-text', 'cph-tier', {'cph-tier-blue': !isBlue})}>
-            <img src={tierIcon} className='tier-img' />
+            <img src={tierIcon} className='tier-img' alt=""/>
             {tierText}
           </span>
           <span className='h-text'>{`${rankedDetails.points} LP`}</span>
