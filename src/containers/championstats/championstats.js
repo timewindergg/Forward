@@ -17,6 +17,7 @@ import NotFound from '../../components/common/notfound';
 import ServerError from '../../components/common/ServerError';
 
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
+import { normalizeName } from '../../shared/helpers/stringHelper.js';
 
 class ChampionStatsContainer extends Component {
   static propTypes = {
@@ -44,7 +45,8 @@ class ChampionStatsContainer extends Component {
     if (Object.keys(staticData).length === 0) {
       getStaticData(region);
     }
-    if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
+    if (Object.keys(summoner).length === 0 || normalizeName(summoner.name) !== normalizeName(summonerName)) {
+      // console.log('CS REFETCHING SUMMONER', summonerName, summoner.name);
       getSummonerInfo(summonerName, region, id);
     }
     getUserChampionStats(summonerName, region, id, championName);
@@ -62,6 +64,7 @@ class ChampionStatsContainer extends Component {
 
 
     if (curSummoner !== newSummoner) {
+      // console.log('CS REFETCHING SUMMONER');
       this.props.getSummonerInfo(newSummoner, newRegion, newID);
     }
 

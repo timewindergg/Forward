@@ -1,4 +1,5 @@
 import {
+  LOAD_CURRENT_MATCH_START,
   LOAD_CURRENT_MATCH_SUCCESS,
   LOAD_CURRENT_MATCH_FAILED,
   LOAD_CURRENT_MATCH_DETAILS_SUCCESS,
@@ -28,7 +29,8 @@ const loadCurrentMatch = (state, payload) => {
 
 const clearCurrentMatch = (state, payload) => {
   return Object.assign({}, state, {
-    currentMatch: {}
+    currentMatch: {},
+    currentMatchDetails: {}
   });
 };
 
@@ -81,6 +83,8 @@ const clearMatchTimeline = (state, payload) => {
 // to the right handler
 const match = (state = initialState, action) => {
   switch (action.type) {
+    case LOAD_CURRENT_MATCH_START:
+      return clearCurrentMatch(state, action.payload);
     case LOAD_CURRENT_MATCH_SUCCESS:
       return loadCurrentMatch(state, action.payload);
     case LOAD_CURRENT_MATCH_FAILED:

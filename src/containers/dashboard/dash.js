@@ -21,6 +21,7 @@ import {getStaticData} from '../../apiutils/contextAPIUtils';
 
 import LoadingState from '../../shared/LoadingState';
 import {getIDFromCache} from '../../shared/helpers/cacheHelper';
+import { normalizeName } from '../../shared/helpers/stringHelper.js';
 
 const MH_OFFSET = 0;
 const MH_SIZE = 100;
@@ -83,13 +84,11 @@ class DashboardContainer extends Component {
 
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
-    if (Object.keys(summoner).length === 0 || summoner.summonerName !== summonerName) {
+    if (Object.keys(summoner).length === 0 || normalizeName(summoner.name) !== normalizeName(summonerName)) {
+      // console.log('DASH REFETCHING SUMMONER', summoner, summonerName);
       getSummonerInfo(summonerName, region, id);
       // getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE);
-
       this.pullMatchHistory(summonerName, region, id);
-
-      getCurrentMatch(summonerName, region, id);
     }
   }
 
@@ -109,10 +108,9 @@ class DashboardContainer extends Component {
     }
 
     if (newRegion !== curRegion || curSummoner !== newSummoner) {
+      // console.log('DASH REFETCHING SUMMONER');
       this.props.getSummonerInfo(newSummoner, newRegion, newID);
       // this.props.getSummonerMatchHistory(newSummoner, newRegion, newID, MH_OFFSET, MH_SIZE);
-      this.props.getCurrentMatch(newSummoner, newRegion, newID);
-
       // clear current timeout for getSummonerMatchHistory and call the new one
       clearTimeout(this.state.fetchTaskID);
       this.pullMatchHistory(newSummoner, newRegion, newID);
