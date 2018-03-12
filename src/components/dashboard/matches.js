@@ -128,7 +128,7 @@ class Matches extends Component {
           <span>{team.towerKills}</span>
         </div>
         <div className="match-postgame">
-          <Link to={`/m/${match.region}/${match.match_id}`}>
+          <Link to={`/m/${this.props.region}/${match.match_id}`}>
             <span>Analysis</span>
             <i className="fas fa-angle-right"></i>
           </Link>

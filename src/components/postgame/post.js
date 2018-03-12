@@ -336,7 +336,10 @@ class Postgame extends Component {
                       matchParticipants={matchDetails.match.participants}
                       version={staticData.version}
                       region={region}
-                      staticData={staticData}/>
+                      staticData={staticData}
+                      match={matchDetails.match}
+                      isBlueWinner={matchDetails.match.teams[0].isWinner}
+                      queue={matchDetails.match.queueId}/>
           <div className="graphsmap">
             <GoldDiffGraph frameData={frameData}/>
             <EffectiveGoldDiffGraph frameData={frameData}/>

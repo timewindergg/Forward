@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import Moment from 'react-moment';
 
 import { getChampionIconUrlByImage, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
+import QueueIdMappings from '../../shared/queueIdMappings.js';
 
 import Tooltip from '../common/tooltip/Tooltip';
 import TOOLTIP_TYPES from '../../constants/TooltipTypes';
@@ -68,6 +70,8 @@ class ScoreboardPlayer extends Component {
 
     return (
       <div className="summonerInfo">
+        <div className={classNames({'teamIndicator blueTeamP': this.props.team === "100"})}>
+        </div>
         <div className="runeSummIcons">
           <div className="summonerSpells">
             <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellDId, patchVersion)} alt=""/>
@@ -115,6 +119,8 @@ class ScoreboardPlayer extends Component {
             <img className={classNames({'itemIcon': true, 'icon': true, 'hidden': items[6] === 0})} src={getItemIconUrl(trinket, patchVersion)} alt=""/>
           </Tooltip>
         </div>
+        <div className={classNames({'teamIndicator redTeamP': this.props.team === "200"})}>
+        </div>
       </div>
     );
   }
@@ -123,13 +129,21 @@ class ScoreboardPlayer extends Component {
 class Teamboard extends Component {
   renderParticipants() {
     return this.props.participants.map((participant) => (
-      <ScoreboardPlayer region={this.props.region} key={participant[0]} participant={participant[1]} version={this.props.version} runeData={this.props.staticData.runes} championData={this.props.staticData.champions} staticData={this.props.staticData}/>
+      <ScoreboardPlayer 
+        team={this.props.team}
+        region={this.props.region}
+        key={participant[0]} 
+        participant={participant[1]} 
+        version={this.props.version} 
+        runeData={this.props.staticData.runes} 
+        championData={this.props.staticData.champions} 
+        staticData={this.props.staticData}/>
     ));
   }
 
   render() {
     return (
-      <div className="team">
+      <div className={classNames({'team': true, 'blueTeam': this.props.team === "100", 'redTeam': this.props.team === "200"})}>
         { this.renderParticipants() }
       </div>
     );
@@ -138,20 +152,55 @@ class Teamboard extends Component {
 
 class ScoreboardHeader extends Component{
   render(){
+    let blueResult = 'Victory';
+    let redResult = 'Defeat';
+    if (!this.props.isBlueWinner){
+      blueResult = 'Defeat';
+      redResult = 'Victory';
+    }
+
     return (
       <div className="scoreboardHeader">
-        <div className="teamStats">
-          <span className="stat"><span className="icon-dragon"/> {this.props.blueData.dragons}</span>
-          <span className="stat"><span className="icon-baron"/> {this.props.blueData.barons}</span>
-          <span className="stat"><span className="icon-rift-herald"/> {this.props.blueData.heralds}</span>
+        <div className="meta">
+          
+          <div className="queue">
+            <span className="queueName">{QueueIdMappings[this.props.queue].name}</span>
+          </div>
+          
         </div>
-        <div className="score">
-          <span>{this.props.blueData.kills} - {this.props.redData.kills}</span>
+        <div className="overview">
+          <span className="blueResult">{blueResult}</span>
+          <div className="teamStats">
+            <span className="stat"><span className="icon-dragon"/> {this.props.blueData.dragons}</span>
+            <span className="stat"><span className="icon-baron"/> {this.props.blueData.barons}</span>
+            <span className="stat"><span className="icon-rift-herald"/> {this.props.blueData.heralds}</span>
+          </div>
+          <div className="score">
+            <span className='blueTeamTxt'>{this.props.blueData.kills} </span>
+             - 
+            <span className='redTeamTxt'> {this.props.redData.kills}</span>
+          </div>
+          <div className="teamStats">
+            <span className="stat"><span className="icon-dragon"/> {this.props.redData.dragons}</span>
+            <span className="stat"><span className="icon-baron"/> {this.props.redData.barons}</span>
+            <span className="stat"><span className="icon-rift-herald"/> {this.props.redData.heralds}</span>
+          </div>
+          <span className="redResult">{redResult}</span>
         </div>
-        <div className="teamStats">
-          <span className="stat"><span className="icon-dragon"/> {this.props.redData.dragons}</span>
-          <span className="stat"><span className="icon-baron"/> {this.props.redData.barons}</span>
-          <span className="stat"><span className="icon-rift-herald"/> {this.props.redData.heralds}</span>
+        <div className="legend">
+          <div className="blueLegend">
+            <img className='legendIcon minion' src='/api/static/scoreboard/minion_icon.png' alt=""/>
+            <img className='legendIcon kill' src='/api/static/scoreboard/kill_icon.png' alt=""/>
+            <img className='legendIcon gold' src='/api/static/scoreboard/gold_icon.png' alt=""/>
+            <img className='legendIcon ward' src='/api/static/scoreboard/ward_icon.png' alt=""/>
+          </div>
+          <Moment className="duration" format="mm:ss">{this.props.match.duration*1000}</Moment>
+          <div className="redLegend">
+            <img className='legendIcon minion' src='/api/static/scoreboard/minion_icon.png' alt=""/>
+            <img className='legendIcon kill' src='/api/static/scoreboard/kill_icon.png' alt=""/>
+            <img className='legendIcon gold' src='/api/static/scoreboard/gold_icon.png' alt=""/>
+            <img className='legendIcon ward' src='/api/static/scoreboard/ward_icon.png' alt=""/>
+          </div>
         </div>
       </div>
     );
@@ -195,10 +244,12 @@ class Scoreboard extends Component {
 
     return (
       <div className="scoreboardContainer recentGames row">
-        <ScoreboardHeader blueData={this.props.teamFrameData['100']} redData={this.props.teamFrameData['200']}/>
+        <ScoreboardHeader match={this.props.match} queue={this.props.queue} isBlueWinner={this.props.isBlueWinner} blueData={this.props.teamFrameData['100']} redData={this.props.teamFrameData['200']}/>
         <IconHeader />
-        <Teamboard team="100" participants={blueTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
-        <Teamboard team="200" participants={redTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
+        <div className="teamsContainer">
+          <Teamboard team="100" participants={blueTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
+          <Teamboard team="200" participants={redTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
+        </div>
       </div>
     );
   }
