@@ -3,18 +3,44 @@
 .champion-stats-champion-summoners{
     display:flex;
 
-    .summonerSet{
+    .set-wrapper {
+        display: flex;
+        flex-direction: column;
         background: @grey-md;
         border-radius: 5px;
-        display: flex;
+        padding-top: 10px;
+        padding-bottom: 10px;
 
-        .summoner{
-            padding: 10px;
+        .summonerSet{
+            display: flex;
+            flex-direction: row;
 
-            .summonerIcon{
-                width: 50px;
-                height: 50px;
+
+            .summoner{
+                padding-left: 10px;
+                padding-right: 10px;
+                .summonerIcon{
+                    width: 50px;
+                    height: 50px;
+                }
             }
+
+            .summoner:not(:first-child) {
+                padding-left: 0px ~'!important';
+            }
+
+            
         }
+        .ss-pcnt {
+            margin-left: 10px;
+            // height: 12px;
+            // background-color: #444;
+            text-align: left;
+            font-weight: 600;
+        }
+    }
+
+    .set-wrapper:not(:first-child) {
+        margin-left: 10px ~'!important';
     }
 }

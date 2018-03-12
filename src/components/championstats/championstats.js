@@ -192,13 +192,9 @@ const getRuneSetByLane = (championStats, lane) => {
 
 const getSummonerSetByLane = (championStats, lane) => {
   // Loop through the championRunes and return rune set matches the lane.
-  for (let i = 0; i < championStats.championSummoners.length; i++) {
-    if (championStats.championSummoners[i].lane === lane) {
-      return JSON.parse(championStats.championSummoners[i].summoner_set);
-    }
-  }
-
-  return [];
+  return championStats.championSummoners.filter((summoner) => {
+    return summoner.lane === lane;
+  });
 }
 
 export default ChampionStats;
