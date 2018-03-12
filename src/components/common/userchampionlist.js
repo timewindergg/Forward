@@ -61,7 +61,7 @@ const createChampionListData = (championLists, championData, version) => {
       id: c.champ_id,
       name: championData[c.champ_id].name,
       games: c.total_games,
-      kda: roundWithPrecision(c.deaths === 0 ? (c.kills + c.assists) : (c.kills + c.assists) / c.deaths, 2),
+      kda: {'kills': c.kills, 'deaths': c.deaths, 'assists': c.assists, 'games': c.total_games},
       cs: roundWithPrecision(c.total_cs / c.total_games, 0),
       winrate: Math.round(c.wins / c.total_games * 100),
       gold: Math.round(c.gold / c.total_games)
@@ -127,10 +127,19 @@ class UserChampionList extends Component {
                 {
                   Header: "KDA",
                   accessor: "kda",
-                  width: 45,
+                  width: 80,
                   Cell: props => {
+                    let v = props.value;
+                    let kda = roundWithPrecision(v.deaths === 0 ? (v.kills + v.assists) : (v.kills + v.assists) / v.deaths, 2);
+                    let k = roundWithPrecision(v.kills/v.games, 1);
+                    let d = roundWithPrecision(v.deaths/v.games, 1);
+                    let a = roundWithPrecision(v.assists/v.games, 1);
                     return (
-                      <span className={getKDAColor(props.value)}>{props.value}</span>
+                      <div>
+                        <span className={getKDAColor(kda)}>{kda}</span>
+                        <br/>
+                        <span>{k}/{d}/{a}</span>
+                      </div>
                     );
                   }
                 }
@@ -141,7 +150,7 @@ class UserChampionList extends Component {
                 {
                   Header: "CS",
                   accessor: "cs",
-                  width: 35,
+                  width: 40,
                   Cell: props => {
                     return (
                       <span className="cs">{props.value}</span>
@@ -155,7 +164,7 @@ class UserChampionList extends Component {
                 {
                   Header: "Gold",
                   accessor: "gold",
-                  width: 55,
+                  width: 60,
                   Cell: props => {
                     return (
                       <span className="gold">{props.value}</span>
@@ -169,7 +178,7 @@ class UserChampionList extends Component {
                 {
                   Header: "WR",
                   accessor: "winrate",
-                  width: 40,
+                  width: 60,
                   Cell: props => {
                     return (
                       <span className="win-rate">

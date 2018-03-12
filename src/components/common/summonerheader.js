@@ -43,9 +43,7 @@ class SummonerHeader extends Component {
     let solo5v5 = <div className="ranked-info">
         <div className="ranked-tier">
           <img src={getTierIconUrl('Unranked')}/>
-          <div>
-            <span>Solo/Duo</span>
-          </div>
+          <span className='league-label'>Solo/Duo</span>
         </div>
         <div className="ranked-stats">
           <span> Unranked </span>
@@ -56,7 +54,7 @@ class SummonerHeader extends Component {
         <div className="ranked-tier">
           <img src={getTierIconUrl('Unranked')}/>
           <div>
-            <span>Flex 5v5</span>
+            <span className='league-label'>Flex 5v5</span>
           </div>
         </div>
         <div className="ranked-stats">
@@ -68,7 +66,7 @@ class SummonerHeader extends Component {
         <div className="ranked-tier">
           <img src={getTierIconUrl('Unranked')}/>
           <div>
-            <span>Flex 3v3</span>
+            <span className='league-label'>Flex 3v3</span>
           </div>
         </div>
         <div className="ranked-stats">
@@ -87,33 +85,34 @@ class SummonerHeader extends Component {
           <div className="ranked-tier">
             <img src={getTierIconUrl(tier)}/>
             <div>
-              <span>{convertQueue(league.queue)}</span>
+              <span className='league-label'>{convertQueue(league.queue)}</span>
             </div>
           </div>
           <div className="ranked-stats">
-            <span> {`${tier} ${division}`} </span>
-            <span>{`${points} lp`}</span>
+            <span className="tier"> {`${tier} ${division}`} </span>
+            <span className="lp">{`${points} lp`}</span>
           </div>
         </div>
 
       switch (league.queue) {
-        case 'RANKED_FLEX_5x5':
+        case 'RANKED_FLEX_SR':
           flex5v5 = rankedInfo;
           break;
-        case 'RANKED_FLEX_3x3':
+        case 'RANKED_FLEX_TT':
           flex3v3 = rankedInfo;
           break;
-        default:
+        case 'RANKED_SOLO_5x5':
           solo5v5 = rankedInfo;
+          break;
+        default:
+          break;
       }
     });
 
     return (
       <div className="summoner-ranks">
         {solo5v5}
-        <div className="divider"></div>
         {flex5v5}
-        <div className="divider"></div>
         {flex3v3}
       </div>
     );
@@ -150,15 +149,16 @@ class SummonerHeader extends Component {
 }
 
 const convertQueue = (queue) => {
+  console.log(queue)
   if (queue === 'RANKED_SOLO_5x5') {
     return 'Solo/Duo';
   }
 
-  if (queue === 'RANKED_FLEX_5x5') {
+  if (queue === 'RANKED_FLEX_SR') {
     return 'Flex 5v5';
   }
 
-  if (queue === 'RANKED_FLEX_3x3') {
+  if (queue === 'RANKED_FLEX_TT') {
     return 'Flex 3v3';
   }
 }
