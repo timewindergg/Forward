@@ -109,7 +109,23 @@ class HorizontalBarGraph extends Component {
         .data(data)
         .enter().append('g');
 
-      graphInternal.append('rect')
+
+      let showAnimation = options.showAnimation === undefined ? defaultOptions.showAnimation : options.showAnimation;
+      if (showAnimation) {
+        graphInternal.append('rect')
+          .attr('x', d => width/2)
+          .attr('y', d => y(this.getLabel(d)))
+          .attr('width', d => 0)
+          .transition().duration(500).ease(d3.easeCubicOut)
+          .attr('x', d => x(Math.min(0, d.value)))
+          .attr('width', d => Math.abs(x(d.value) - x(0)))
+          .attr('height', y.bandwidth())
+          .attr('fill', (d) => {
+            return d.value < 0 ? negColor : posColor;
+          });
+        
+      } else {
+        graphInternal.append('rect')
           .attr('x', d => width/2)
           .attr('y', d => y(this.getLabel(d)))
           .attr('width', d => 0)
@@ -118,11 +134,7 @@ class HorizontalBarGraph extends Component {
           .attr('height', y.bandwidth())
           .attr('fill', (d) => {
             return d.value < 0 ? negColor : posColor;
-          })
-
-      let showAnimation = options.showAnimation === undefined ? defaultOptions.showAnimation : options.showAnimation;
-      if (showAnimation) {
-        graphInternal.transition().duration(500).ease(d3.easeCubicOut);
+          });
       }
 
       // graphInternal.append('text')

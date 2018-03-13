@@ -19,6 +19,7 @@ class OverviewCardHeader extends Component {
     staticData: PropTypes.object.isRequired,
 
     detailsLoaded: PropTypes.bool.isRequired,
+    isRanked: PropTypes.bool.isRequired,
     isRed: PropTypes.bool.isRequired,
     isSelected: PropTypes.bool.isRequired
   }
@@ -38,7 +39,7 @@ lp and rank in same line, take away champion name text
 badge icon ne
 */
   render() {
-    const {name, champion, detailsLoaded, tier, division, LP, promos, isRed, isSelected, staticData} = this.props;
+    const {name, champion, detailsLoaded, tier, isRanked, division, LP, promos, isRed, isSelected, staticData} = this.props;
     const imageUrl = getChampionIcon(champion, staticData.version);
 
     const colorClass = isRed ? 'hred' : 'hblue';
@@ -54,6 +55,10 @@ badge icon ne
     let tierText = detailsLoaded ? `${tier} ${division} ${LP} LP` : '';
     if (detailsLoaded && tier === ''){
       tierText = 'UNRANKED';
+    }
+
+    if (!isRanked) {
+      tierText = '';
     }
 
     const nameClass = classNames({

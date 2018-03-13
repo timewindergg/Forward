@@ -82,12 +82,15 @@ class OverviewCard extends Component {
   }
 
   getRankedDetails = (details, queueName) => {
+    const isRanked = queueName === 'RANKED_FLEX_SR' || queueName === 'RANKED_SOLO_5x5' || queueName === 'RANKED_FLEX_TT';
+
     if (!details || !details.leagues || !details.leagues[queueName]) {
       return {
         tier: '',
         division: '',
         points: 0,
         promos: [],
+        isRanked
       };
     }
 
@@ -107,7 +110,8 @@ class OverviewCard extends Component {
       tier: rankedDetails.tier,
       division: rankedDetails.division,
       points: rankedDetails.points,
-      promos: promos
+      promos: promos,
+      isRanked
     };
   }
 
@@ -126,7 +130,7 @@ class OverviewCard extends Component {
     );
 
     // TODO: think of a different product flow for selecting champions to compare head to head
-    const {tier, division, points, promos} = this.getRankedDetails(details, queueName);
+    const {tier, division, points, promos, isRanked} = this.getRankedDetails(details, queueName);
 
     const headerComp = (
       <OverviewCardHeader
@@ -140,6 +144,7 @@ class OverviewCard extends Component {
         division={division}
         promos={promos}
         LP={points}
+        isRanked={isRanked}
         isRed={isRed}
         isSelected={isSelected}
       />
