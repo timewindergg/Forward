@@ -20,21 +20,21 @@ class Event extends Component{
       let event = this.props.events[0];
       if (event.type === "BUILDING_KILL"){
         if (event.buildingType === "INHIBITOR_BUILDING"){
-          return (<div className={classNames({'event': true, 'icon-inhibitor': true, 'blue-dk-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
+          return (<div className={classNames({'event': true, 'icon-inhibitor': true, 'blue-md-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
         }
         else if (event.buildingType === "TOWER_BUILDING"){
-          return (<div className={classNames({'event': true, 'icon-tower': true, 'blue-dk-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
+          return (<div className={classNames({'event': true, 'icon-tower': true, 'blue-md-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
         }
       }
       else if (event.type === "ELITE_MONSTER_KILL"){
         if (event.monsterType === "BARON_NASHOR" || event.monsterType === "VILEMAW"){
-          return (<div className={classNames({'event': true, 'icon-baron': true, 'blue-dk-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
+          return (<div className={classNames({'event': true, 'icon-baron': true, 'blue-md-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
         }
         else if (event.monsterType === "DRAGON") {
-          return (<div className={classNames({'event': true, 'icon-dragon': true, 'blue-dk-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
+          return (<div className={classNames({'event': true, 'icon-dragon': true, 'blue-md-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
         }
         else if (event.monsterType === "RIFTHERALD"){
-          return (<div className={classNames({'event': true, 'icon-rift-herald': true, 'blue-dk-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
+          return (<div className={classNames({'event': true, 'icon-rift-herald': true, 'blue-md-txt': blueTeam, 'red-dk-txt': redTeam})}></div>);
         }
       }
     }
@@ -45,7 +45,7 @@ class Event extends Component{
         'borderRadius': circleSize[len] / 2,
       };
 
-      return (<div style={killStyle} className={classNames({'event': true, 'blue-dk-bg': blueTeam, 'red-dk-bg': redTeam})}></div>);
+      return (<div style={killStyle} className={classNames({'event': true, 'blue-md-bg': blueTeam, 'red-dk-bg': redTeam})}></div>);
     }
   }
 }

@@ -30,7 +30,7 @@ class LineGraph extends Component {
     graphClass: PropTypes.any,
     valueLabelClass: PropTypes.any,
 
-    data: PropTypes.object.isRequired,
+    data: PropTypes.array.isRequired,
     fillInfo: PropTypes.object,
     strokeInfo: PropTypes.object
   }
