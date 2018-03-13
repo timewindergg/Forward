@@ -26,7 +26,7 @@ class GoldDiffGraph extends Component {
           label='Team Gold Difference'
           data={data}
           height={235}
-          width={352}
+          width={340}
           fillInfo={{
             pos: '#E8F1F3',
             neg: '#ffe6e6'

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import Moment from 'react-moment';
+import uuidv4 from 'uuid/v4';
 
 import { getChampionIconUrlByImage, getItemIconUrl, getPerkIconUrl, getSpellIconUrl, getPerkStyleIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import TRINKETS from '../../shared/trinketConstants.js';
@@ -51,6 +52,7 @@ class ScoreboardPlayer extends Component {
       if (item){
         return (
           <Tooltip
+            key={uuidv4()}
             containerClassName={classNames({'itemIcon': true, 'icon': true})}
             type={TOOLTIP_TYPES.ITEM}
             data={this.props.staticData.items[item.toString()]}
@@ -63,7 +65,7 @@ class ScoreboardPlayer extends Component {
       }
       else {
         return (
-          <div className='itemIcon filler icon'></div>
+          <div key={uuidv4()} className='itemIcon filler icon'></div>
         );
       }
     });
@@ -162,11 +164,9 @@ class ScoreboardHeader extends Component{
     return (
       <div className="scoreboardHeader">
         <div className="meta">
-          
           <div className="queue">
             <span className="queueName">{QueueIdMappings[this.props.queue].name}</span>
           </div>
-          
         </div>
         <div className="overview">
           <span className="blueResult">{blueResult}</span>

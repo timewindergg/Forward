@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuidv4 from 'uuid/v4';
+import classNames from 'classnames';
 
 import { getChampionIconUrlByImage, getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 import MapBounds from '../../shared/mapConstants.js';
@@ -53,8 +54,11 @@ class Minimap extends Component {
 
   renderParticipants(championData) {
     let currentMapBounds = MapBounds[this.props.mapId];
+    let len = Object.keys(this.props.playerFrameData).length;
 
-    const pt = Object.values(this.props.playerFrameData).map((player) => {
+    const pt = Object.keys(this.props.playerFrameData).map((key, index) => {
+      let player = this.props.playerFrameData[key];
+
       let imgX = player.x / (currentMapBounds.max.x - currentMapBounds.min.x) * 100;
       let imgY = player.y / (currentMapBounds.max.y - currentMapBounds.min.y) * 100;
       let style = {

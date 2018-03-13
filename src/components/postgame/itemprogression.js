@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Moment from 'react-moment';
+import uuidv4 from 'uuid/v4';
 
 import {getItemIconUrl} from '../../shared/helpers/staticImageHelper.js';
 
@@ -80,6 +81,7 @@ class ItemProgression extends Component {
     return groups.map((group, idx) => {
       let itemsInGroup = group.map((item, itemIDX) => (
         <Item
+          key={uuidv4()}
           id={item.id}
           ts={item.ts}
           version={this.props.version}
@@ -92,12 +94,12 @@ class ItemProgression extends Component {
 
       if (idx < groups.length - 1) {
         itemsInGroup = itemsInGroup.concat(
-          <i className='fas fa-angle-right item-group-separator'></i>
+          <i key={uuidv4()} className='fas fa-angle-right item-group-separator'></i>
         );
       }
 
       return (
-        <div className='item-group'>
+        <div key={uuidv4()} className='item-group'>
           {itemsInGroup}
         </div>
       );
