@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ItemProgression from './itemprogression.js';
 import SkillTable from '../common/skilltable.js';
+import HorizontalBarGraph from '../common/graph/HorizontalBarGraph';
 
 class ChampionCompare extends Component {
   static propTypes = {
@@ -14,7 +15,7 @@ class ChampionCompare extends Component {
   }
 
 
-  renderSelection(teamId, playerId){
+  renderSelectionTop(teamId, playerId){
     let player = this.props.frameData.players[playerId];
 
     // TODO: work on this part (make it look pretty)
@@ -27,7 +28,73 @@ class ChampionCompare extends Component {
           <div className="cs">
             CS: {player.cs}
           </div>
+        </div>
+      </div>
+    );
+  }
 
+  renderGraph = (blueSelection, redSelection) => {
+    let bp = this.props.frameData.players[blueSelection];
+    let rp = this.props.frameData.players[redSelection];
+
+    const goldData = [{
+      key: 'totalGold',
+      value: bp.totalGold - rp.totalGold,
+      label: `${bp.totalGold - rp.totalGold} (Total Gold)`
+    }, {
+      key: 'effectiveGold',
+      value: bp.effectiveGold - rp.effectiveGold,
+      label: `${bp.effectiveGold - rp.effectiveGold} (Effective Gold)`
+    }];
+
+    const csData = [{
+      key: 'CS',
+      value: bp.cs - rp.cs,
+      label: `${bp.cs - rp.cs} (CS)`
+    }];
+
+    return (
+      <div className='graphs'>
+      <HorizontalBarGraph
+        graphID='ccm-gold'
+        label='Gold Advantage'
+        isCentered={true}
+
+        height={40}
+        width={500}
+
+        data={goldData}
+        fillInfo={{
+          pos: '#ff9793',
+          neg: '#8CAFFF'
+        }}
+      />
+      <HorizontalBarGraph
+        graphID='ccm-cs'
+        label='CS Advantage'
+        isCentered={true}
+
+        height={20}
+        width={500}
+
+        data={csData}
+        fillInfo={{
+          pos: '#ff9793',
+          neg: '#8CAFFF'
+        }}
+      />
+      </div>
+    );
+
+  }
+
+  renderSelectionBottom(teamId, playerId){
+    let player = this.props.frameData.players[playerId];
+
+    // TODO: work on this part (make it look pretty)
+    return(
+      <div className="selectionDetails">
+        <div className="stats">
           <div className="level">
             Level {player.level}
           </div>
@@ -47,10 +114,18 @@ class ChampionCompare extends Component {
   }
 
   render(){
+    const {blueSelection, redSelection} = this.props;
     return(
-      <div className="compareContainer">
-        {this.renderSelection(100, this.props.blueSelection)}
-        {this.renderSelection(200, this.props.redSelection)}
+      <div className='rc-champ-compare'>
+        <div className="compareContainer">
+          {this.renderSelectionTop(100, blueSelection)}
+          {this.renderSelectionTop(200, redSelection)}
+        </div>
+        {this.renderGraph(blueSelection, redSelection)}
+        <div className="compareContainer">
+          {this.renderSelectionBottom(100, blueSelection)}
+          {this.renderSelectionBottom(200, redSelection)}
+        </div>
       </div>
     );
   }
