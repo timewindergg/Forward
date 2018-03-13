@@ -57,6 +57,8 @@ class Minimap extends Component {
     let len = Object.keys(this.props.playerFrameData).length;
 
     const pt = Object.keys(this.props.playerFrameData).map((key, index) => {
+      let mp = this.props.matchParticipants[key - 1];
+
       let player = this.props.playerFrameData[key];
 
       let imgX = player.x / (currentMapBounds.max.x - currentMapBounds.min.x) * 100;
@@ -66,8 +68,20 @@ class Minimap extends Component {
         bottom: imgY+'%'
       };
       return (
-        <img alt="" key={player.championId} style={style} className={classNames({"minimapPortrait": true, "blue": index < len / 2, "red": index >= len / 2})} src={getChampionIconUrlByImage(championData[player.championId].img.split('.')[0], this.props.version)}>
-        </img>
+        <img
+          alt=""
+          key={mp.championId}
+          style={style}
+          className={classNames({
+            "minimapPortrait": true,
+            "blue": index < len / 2,
+            "red": index >= len / 2
+          })}
+          src={getChampionIconUrlByImage(
+            championData[mp.championId].img.split('.')[0],
+            this.props.version
+          )}
+        />
       );
     });
 

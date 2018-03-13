@@ -341,6 +341,7 @@ class Postgame extends Component {
             <Minimap mapId={matchDetails.match.mapId}
                      version={staticData.version}
                      playerFrameData={frameData[currentFrame].players}
+                     matchParticipants={matchDetails.match.participants}
                      deathFrameData={frameData[currentFrame].teams}
                      championData={staticData.champions}/>
           </div>

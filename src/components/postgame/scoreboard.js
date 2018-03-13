@@ -254,7 +254,7 @@ class Scoreboard extends Component {
       }
     });
 
-    return (<div />);
+    // return (<div />);
 
     return (
       <div className="scoreboardContainer recentGames row">
