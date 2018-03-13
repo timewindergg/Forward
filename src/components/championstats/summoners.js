@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import uuidv4 from 'uuid/v4';
 
 import { getSpellIconUrl } from '../../shared/helpers/staticImageHelper.js';
 import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
@@ -42,6 +43,7 @@ class Summoners extends Component {
 
     const summonerSets = rawSets.map((rs) => (
       <SummonerSet
+        key={uuidv4()} 
         set={rs.summoner_set}
         percent={rs.usagePercent}
         version={version}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import uuidv4 from 'uuid/v4';
 
 import {
   getChampionIconUrlByImage,
@@ -159,7 +160,7 @@ class RecentMatch extends Component{
         );
       }
       return (
-        <div className='item'>
+        <div key={uuidv4()} className='item'>
           <Tooltip
             containerClassName={classNames({'itemIcon': true, 'icon': true})}
             type={TOOLTIP_TYPES.ITEM}

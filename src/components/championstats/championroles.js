@@ -24,6 +24,8 @@ class ChampionRoles extends Component{
           </div>
         );
       }
+
+      return '';
     });
   }
 

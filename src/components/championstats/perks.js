@@ -73,6 +73,8 @@ class Perks extends Component {
           secondaryPerks.push(r);
         }
       }
+
+      return '';
     });
 
     return (

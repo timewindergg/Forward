@@ -66,7 +66,7 @@ class Minimap extends Component {
         bottom: imgY+'%'
       };
       return (
-        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrlByImage(championData[player.championId].img.split('.')[0], this.props.version)} alt="">
+        <img alt="" key={player.championId} style={style} className={classNames({"minimapPortrait": true, "blue": index < len / 2, "red": index >= len / 2})} src={getChampionIconUrlByImage(championData[player.championId].img.split('.')[0], this.props.version)}>
         </img>
       );
     });

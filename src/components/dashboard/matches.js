@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { ClipLoader } from 'react-spinners';
+import uuidv4 from 'uuid/v4';
 
 import LoadingState from '../../shared/LoadingState';
 
@@ -141,11 +142,11 @@ class Matches extends Component {
     const core = items.map((item) => {
       if (item === 0){
         return (
-          <div className="champion-item filler icon"></div>
+          <div key={uuidv4()} className="champion-item filler icon"></div>
         );
       }
       return (
-        <div className="champion-item">
+        <div key={uuidv4()} className="champion-item">
           <Tooltip
             type={TOOLTIP_TYPES.ITEM}
             data={itemData[item.toString()]}

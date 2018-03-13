@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import uuidv4 from 'uuid/v4';
 
 import Tooltip from '../common/tooltip/Tooltip';
 import TOOLTIP_TYPES from '../../constants/TooltipTypes';
@@ -45,6 +46,7 @@ class Items extends Component {
 
       return (
         <Tooltip
+          key={uuidv4()} 
           containerClassName={'item'}
           type={TOOLTIP_TYPES.ITEM}
           data={itemData[ik.toString()]}
