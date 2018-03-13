@@ -1,12 +1,60 @@
-.compareContainer{
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    display: flex;
-    margin-bottom: 15px;
+@import '../../common/styles/colors';
 
-    .selectionDetails{
-        width: 50%;
+.rc-champ-compare{
+    h3 {
+        margin: 0 0 5px 0;
+    }
+
+    .compareContainer{
+        padding: 10px;
+        box-sizing: border-box;
+        background: #fff;
+        display: flex;
+        border-radius: 5px;
+
+        .selectionDetails{
+            width: 50%;
+
+            .stats{
+                font-weight: 600;
+                font-size: 13px;
+                margin: 5px 0;
+
+                .totalGold{
+                    color: @gold-dk;
+                }
+                .effectiveGold{
+                    color: @orange;
+                }
+                .cs{
+                    color: @violet;
+                }
+                
+            }
+
+            .metaStats{
+                margin-bottom: 10px;
+                .level{
+                    font-size: 16px;
+                }
+                .kda{
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .redSelection{
+            text-align: right;
+        }
+
+        .compareStatsContainer{
+            display:flex;
+        }
+    }
+
+    .compare-heading{
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 5px;
     }
 }
-

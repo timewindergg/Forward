@@ -81,7 +81,6 @@ class ItemProgression extends Component {
     return groups.map((group, idx) => {
       let itemsInGroup = group.map((item, itemIDX) => (
         <Item
-          key={uuidv4()}
           id={item.id}
           ts={item.ts}
           version={this.props.version}

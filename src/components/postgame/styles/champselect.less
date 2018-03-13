@@ -1,20 +1,30 @@
+@import '../../common/styles/colors';
+
 .selectorContainer{
     display: flex;
+    border-bottom: 1px solid @grey;
+    background: @grey-lt;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .selectionParticipant{
     display: inline-block;
+    cursor: pointer;
+
+    &:hover{
+        background: @grey-md;
+    }
 
     .championIcon{
         border-radius: 50%;
         width: 50px;
         height: 50px;
         margin: 5px;
-    }
-
-    .selected{
-        border: 3px solid #ff0000;
-    }
+    }   
+}
+.selected{
+    background: @grey-md;
 }
 
 .selectorTeam{

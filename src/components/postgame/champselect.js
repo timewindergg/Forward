@@ -8,15 +8,15 @@ class ChampionSelector extends Component {
     super(props);
 
     this.state = {
-      redSelector: this.props.redSelector,
-      blueSelector: this.props.blueSelector,
+      redSelector: this.props.redSelection,
+      blueSelector: this.props.blueSelection,
     }
   }
 
   renderParticipants(teamId, team, championData){
     return team.map((participant) => {
       return (
-        <div key={participant.id} className="selectionParticipant" onClick={() => {
+        <div key={participant.id} className={classNames({"selectionParticipant":true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})} onClick={() => {
           this.props.onChampionSelect(teamId, participant.id);
           if (teamId === 100){
             this.setState({
@@ -29,7 +29,7 @@ class ChampionSelector extends Component {
             });
           }
         }}>
-          <img className={classNames({"championIcon": true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})}
+          <img className="championIcon"
                src={getChampionIconUrlByImage(championData[participant.championId].img.split('.')[0], this.props.version)} alt=""/>
           <div className='championName'>
             {championData[participant.championId].name}
@@ -56,7 +56,6 @@ class ChampionSelector extends Component {
     return (
       <div className="selectorContainer">
         {this.renderTeam(100, blueTeam, championData)}
-        vs
         {this.renderTeam(200, redTeam, championData)}
       </div>
     );

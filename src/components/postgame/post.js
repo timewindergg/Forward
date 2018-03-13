@@ -279,8 +279,8 @@ class Postgame extends Component {
     if (Object.keys(staticData).length > 0 && !!matchDetails && !!matchDetails.timeline) {
       this.setState({
         currentFrame: matchDetails.timeline.frames.length - 1,
-        redSelection: 1,
-        blueSelection: matchDetails.match.participants.length / 2 + 1,
+        blueSelection: 1,
+        redSelection: matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(matchDetails, staticData);
     }
@@ -291,8 +291,8 @@ class Postgame extends Component {
       && Object.keys(this.props.staticData).length > 0){
       this.setState({
         currentFrame: nextProps.matchDetails.timeline.frames.length - 1,
-        redSelection: 1,
-        blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
+        blueSelection: 1,
+        redSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(nextProps.matchDetails, this.props.staticData);
     }
@@ -300,8 +300,8 @@ class Postgame extends Component {
       && this.props.matchDetails.timeline !== undefined){
       this.setState({
         currentFrame: nextProps.matchDetails.timeline.frames.length - 1,
-        redSelection: 1,
-        blueSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
+        blueSelection: 1,
+        redSelection: nextProps.matchDetails.match.participants.length / 2 + 1,
       });
       this.aggregateData(this.props.matchDetails, nextProps.staticData);
     }
@@ -314,8 +314,6 @@ class Postgame extends Component {
     if (!hasDataLoaded([matchDetails, frameData, eventLineFrameData, staticData])){
       return(<LoadingScreen/>);
     }
-
-    console.log('postgame rerender', frameData[currentFrame].players, Date.now() % 10000);
 
     return (
       <div className="Postgame">
@@ -345,15 +343,20 @@ class Postgame extends Component {
                      deathFrameData={frameData[currentFrame].teams}
                      championData={staticData.champions}/>
           </div>
-          <ChampionSelector onChampionSelect={this.onChampionSelect}
-                            matchParticipants={matchDetails.match.participants}
-                            version={staticData.version}
-                            championData={staticData.champions}/>
-          <ChampionCompare frameData={frameData[currentFrame]}
-                           staticData={staticData}
-                           matchParticipants={matchDetails.match.participants}
-                           redSelection={this.state.redSelection}
-                           blueSelection={this.state.blueSelection}/>
+          <h3>Champion Comparison (Click to select)</h3>
+          <div className="compare">
+            <ChampionSelector onChampionSelect={this.onChampionSelect}
+                              matchParticipants={matchDetails.match.participants}
+                              version={staticData.version}
+                              championData={staticData.champions}
+                              redSelection={this.state.redSelection}
+                              blueSelection={this.state.blueSelection}/>
+            <ChampionCompare frameData={frameData[currentFrame]}
+                             staticData={staticData}
+                             matchParticipants={matchDetails.match.participants}
+                             redSelection={this.state.redSelection}
+                             blueSelection={this.state.blueSelection}/>
+          </div>
           <DataTable matchParticipants={matchDetails.match.participants}/>
         </div>
       </div>

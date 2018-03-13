@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import { roundWithPrecision } from '../../shared/helpers/numberHelper.js';
 
 import ItemProgression from './itemprogression.js';
 import SkillTable from '../common/skilltable.js';
@@ -18,12 +21,25 @@ class ChampionCompare extends Component {
   renderSelectionTop(teamId, playerId){
     let player = this.props.frameData.players[playerId];
 
-    // TODO: work on this part (make it look pretty)
     return(
-      <div className="selectionDetails">
+      <div className={classNames({"selectionDetails": true, 'redSelection': teamId === 200})}>
+        <div className="metaStats">
+          <div className="level">
+            Lv {player.level}
+          </div>
+          <div className="kda">
+            {roundWithPrecision(player.kills + player.assists / player.deaths, 2)} KDA
+          </div>
+          <div className='kda'>
+            {player.kills}/{player.deaths}/{player.assists}
+          </div>
+        </div>
         <div className="stats">
           <div className="totalGold">
-            Gold: {player.totalGold} Effective: {player.effectiveGold}
+            Gold: {player.totalGold} 
+          </div>
+          <div className="effectiveGold">
+            Effective Gold: {player.effectiveGold}
           </div>
           <div className="cs">
             CS: {player.cs}
@@ -94,18 +110,12 @@ class ChampionCompare extends Component {
     // TODO: work on this part (make it look pretty)
     return(
       <div className="selectionDetails">
-        <div className="stats">
-          <div className="level">
-            Level {player.level}
-          </div>
-          <div className="kda">
-            {player.kills}/{player.deaths}/{player.assists}
-          </div>
-        </div>
+        <h3>Skill Progression</h3>
         <SkillTable skillOrder={player.skillOrder}
                     skillData={this.props.staticData.championSkills[this.props.matchParticipants[playerId - 1].championId]}
                     version={this.props.staticData.version}/>
         <div className='clear'/>
+        <h3>Item Progression</h3>
         <ItemProgression itemOrder={player.purchaseOrder}
                          itemData={this.props.staticData.items}
                          version={this.props.staticData.version}/>
@@ -117,11 +127,11 @@ class ChampionCompare extends Component {
     const {blueSelection, redSelection} = this.props;
     return(
       <div className='rc-champ-compare'>
-        <div className="compareContainer">
+        <div className="compareContainer compareStatsContainer">
           {this.renderSelectionTop(100, blueSelection)}
+          {this.renderGraph(blueSelection, redSelection)}
           {this.renderSelectionTop(200, redSelection)}
         </div>
-        {this.renderGraph(blueSelection, redSelection)}
         <div className="compareContainer">
           {this.renderSelectionBottom(100, blueSelection)}
           {this.renderSelectionBottom(200, redSelection)}

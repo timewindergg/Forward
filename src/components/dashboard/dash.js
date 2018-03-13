@@ -83,7 +83,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {summoner, loadingState, matches, currentMatch, staticData, limit} = this.props;
+    const {summoner, loadingState, matches, staticData, limit} = this.props;
     const {matchesToDisplay} = this.state;
 
     let loadMore;
