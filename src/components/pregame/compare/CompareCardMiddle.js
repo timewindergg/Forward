@@ -138,6 +138,9 @@ class CompareCardMiddle extends Component {
               pos: '#ff9793',
               neg: '#8CAFFF'
             }}
+            options={{
+              showAnimation: true
+            }}
           />
         </div>
         <div className='compare-graph'>
@@ -153,6 +156,9 @@ class CompareCardMiddle extends Component {
             fillInfo={{
               pos: '#ff9793',
               neg: '#8CAFFF'
+            }}
+            options={{
+              showAnimation: true
             }}
           />
         </div>

@@ -9,6 +9,10 @@ import * as d3 from 'd3';
 const POS_COLOR = '#4682b4';
 const NEG_COLOR = '#ff8c00';
 
+const defaultOptions = {
+  showAnimation: false
+};
+
 class HorizontalBarGraph extends Component {
   static propTypes = {
     graphID: PropTypes.string.isRequired,
@@ -20,7 +24,8 @@ class HorizontalBarGraph extends Component {
     valueLabelClass: PropTypes.any,
 
     data: PropTypes.array.isRequired,
-    fillInfo: PropTypes.object
+    fillInfo: PropTypes.object,
+    options: PropTypes.object
   }
 
   state = {
@@ -33,7 +38,8 @@ class HorizontalBarGraph extends Component {
     graphClass: '',
     valueLabelClass: '',
 
-    fillInfo: {}
+    fillInfo: {},
+    options: {}
   }
 
   componentDidMount() {
@@ -59,7 +65,8 @@ class HorizontalBarGraph extends Component {
       width,
       graphClass,
       data,
-      fillInfo
+      fillInfo,
+      options
     } = this.props;
 
     const posColor = !!fillInfo.pos ? fillInfo.pos : POS_COLOR;
@@ -106,13 +113,17 @@ class HorizontalBarGraph extends Component {
           .attr('x', d => width/2)
           .attr('y', d => y(this.getLabel(d)))
           .attr('width', d => 0)
-          .transition().duration(500).ease(d3.easeCubicOut)
           .attr('x', d => x(Math.min(0, d.value)))
           .attr('width', d => Math.abs(x(d.value) - x(0)))
           .attr('height', y.bandwidth())
           .attr('fill', (d) => {
             return d.value < 0 ? negColor : posColor;
           })
+
+      let showAnimation = options.showAnimation === undefined ? defaultOptions.showAnimation : options.showAnimation;
+      if (showAnimation) {
+        graphInternal.transition().duration(500).ease(d3.easeCubicOut);
+      }
 
       // graphInternal.append('text')
       //       .attr('class', classNames('value-text', valueLabelClass))
