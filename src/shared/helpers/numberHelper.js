@@ -43,7 +43,7 @@ export const getNearestThousand = (val, roundUp) => {
     return val;
   }
 
-  let base = parseInt(val / 1000);
+  let base = parseInt(val / 1000, 10);
 
   if (roundUp) {
     return 1000 * (val < 0 ? base : base + 1);

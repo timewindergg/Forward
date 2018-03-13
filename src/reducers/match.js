@@ -3,7 +3,6 @@ import {
   LOAD_CURRENT_MATCH_SUCCESS,
   LOAD_CURRENT_MATCH_FAILED,
   LOAD_CURRENT_MATCH_DETAILS_SUCCESS,
-  LOAD_CURRENT_MATCH_DETAILS_FAILED,
   LOAD_MATCH_TIMELINE_START,
   LOAD_MATCH_TIMELINE_SUCCESS,
   LOAD_MATCH_TIMELINE_FAILED
@@ -12,7 +11,7 @@ import _ from 'lodash';
 
 import LoadingState from '../shared/LoadingState';
 
-const initialState = {  
+const initialState = {
   currentMatch: {},
   currentMatchDetails: {},
   timeline: {},
@@ -42,15 +41,6 @@ const loadCurrentMatchDetails = (state, payload) => {
 
   const newState = _.set(
     _.cloneDeep(state), ['currentMatchDetails', id], matchDetailsForSummoner
-  );
-  return newState;
-};
-
-const clearCurrentMatchDetails = (state, payload) => {
-  const {id} = payload;
-
-  const newState = _.set(
-    _.cloneDeep(state), ['currentMatchDetails', id], {}
   );
   return newState;
 };

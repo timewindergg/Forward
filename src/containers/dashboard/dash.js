@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import _ from 'lodash';
-
 import {SUMMONER_PARAM, REGION_PARAM} from '../../constants/RouteConstants';
 import {getSummonerInfo} from '../../apiutils/summonerAPIUtils';
 import {getCurrentMatch} from '../../apiutils/matchAPIUtils';
@@ -31,16 +29,16 @@ const MATCH_PULL_INTERVAL = 3000; // retry every 5 seconds?
 
 // really, this is just a function that compares 2 objects deeply for differences
 // helps us a bit in telling us what ACTUALLY CHANGED
-function difference(object, base) {
-  function changes(object, base) {
-    return _.transform(object, function(result, value, key) {
-      if (!_.isEqual(value, base[key])) {
-        result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
-      }
-    });
-  }
-  return changes(object, base);
-}
+// function difference(object, base) {
+//   function changes(object, base) {
+//     return _.transform(object, function(result, value, key) {
+//       if (!_.isEqual(value, base[key])) {
+//         result[key] = (_.isObject(value) && _.isObject(base[key])) ? changes(value, base[key]) : value;
+//       }
+//     });
+//   }
+//   return changes(object, base);
+// }
 
 class DashboardContainer extends Component {
   constructor(props) {
@@ -73,7 +71,7 @@ class DashboardContainer extends Component {
   componentWillMount() {
     // console.log('SO MANY RERENDERS LOAD');
 
-    const {match, cache, summoner, getSummonerInfo, getCurrentMatch, staticData, getStaticData} = this.props;
+    const {match, cache, summoner, getSummonerInfo, staticData, getStaticData} = this.props;
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     const id = getIDFromCache(cache, summonerName, region);
@@ -149,7 +147,7 @@ class DashboardContainer extends Component {
   }
 
   render() {
-    const {match, summonerLoadingState, summonerError, loadingState, summoner, matches, currentMatch, getSummonerMatchHistory, staticData} = this.props;
+    const {match, summonerLoadingState, summonerError, loadingState, summoner, matches, currentMatch, staticData} = this.props;
 
     let dashboard = (
       <Dashboard

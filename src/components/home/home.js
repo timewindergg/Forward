@@ -26,8 +26,6 @@ class Home extends Component {
   }
 
   render() {
-    const {summoner, server} = this.state;
-
     return (
       <div className="Home">
         <div className="content">

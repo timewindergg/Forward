@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-
-
 
 import './styles/CompareCardMiddle.css';
 
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
-
-import * as d3 from 'd3';
 
 import HorizontalBarGraph from '../../common/graph/HorizontalBarGraph';
 
@@ -143,7 +138,7 @@ class CompareCardMiddle extends Component {
               pos: '#ff9793',
               neg: '#8CAFFF'
             }}
-          />    
+          />
         </div>
         <div className='compare-graph'>
           <HorizontalBarGraph
@@ -159,7 +154,7 @@ class CompareCardMiddle extends Component {
               pos: '#ff9793',
               neg: '#8CAFFF'
             }}
-          />    
+          />
         </div>
       </div>
     );

@@ -29,8 +29,8 @@ class ChampionSelector extends Component {
             });
           }
         }}>
-          <img className={classNames({"championIcon": true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})} 
-               src={getChampionIconUrlByImage(championData[participant.championId].img.split('.')[0], this.props.version)}/>
+          <img className={classNames({"championIcon": true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})}
+               src={getChampionIconUrlByImage(championData[participant.championId].img.split('.')[0], this.props.version)} alt=""/>
           <div className='championName'>
             {championData[participant.championId].name}
           </div>

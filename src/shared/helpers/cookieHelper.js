@@ -37,7 +37,7 @@ export const decodeRecentSearches = () => {
     let rsCopy = {};
     // sort and retain the top n summoners by search count
     // not really stable
-    let newRS = Object.keys(recentSearches).map((rs) => {
+    Object.keys(recentSearches).map((rs) => {
       return {
         key: rs,
         lastSearch: recentSearches[rs].lastSearch ? recentSearches[rs].lastSearch : 0
@@ -70,7 +70,7 @@ export const addRecentSearch = (summoner, region, icon) => {
     name: summoner,
     region,
     icon,
-    lastSearch: parseInt(Date.now() / 1000)
+    lastSearch: parseInt(Date.now() / 1000, 10)
   };
 
 

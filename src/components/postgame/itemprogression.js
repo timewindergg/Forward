@@ -51,7 +51,7 @@ class Item extends Component {
             img={getItemIconUrl(Math.abs(id), this.props.version)}
             version={this.props.version}
           >
-            <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)}></img>
+            <img className={type} src={getItemIconUrl(Math.abs(id), this.props.version)} alt=""></img>
             {isSold && <i className='fas fa-times sell-dash' />}
           </Tooltip>
         </div>

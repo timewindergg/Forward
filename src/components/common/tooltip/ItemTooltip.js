@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import './styles/ItemTooltip.css';
 
@@ -23,7 +22,7 @@ class ItemTooltip extends Component{
 
   render() {
     const {data} = this.props;
-    const {img, name, totalGold, sellGold, description, plaintext} = data;
+    const {img, name, totalGold, sellGold, description} = data;
 
     return(
       <div className='rc-item-tooltip'>

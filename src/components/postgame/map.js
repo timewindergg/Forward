@@ -62,7 +62,7 @@ class Minimap extends Component {
         bottom: imgY+'%'
       };
       return (
-        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrlByImage(championData[player.championId].img.split('.')[0], this.props.version)}>
+        <img key={player.championId} style={style} className="minimapPortrait" src={getChampionIconUrlByImage(championData[player.championId].img.split('.')[0], this.props.version)} alt="">
         </img>
       );
     });
@@ -73,7 +73,7 @@ class Minimap extends Component {
   render() {
     return(
       <div className="mapContainer">
-        <img className="minimap" src={getMapUrl(this.props.mapId, this.props.version)}></img>
+        <img className="minimap" src={getMapUrl(this.props.mapId, this.props.version)} alt=""></img>
         {this.renderParticipants(this.props.championData)}
         {this.renderDeaths()}
       </div>

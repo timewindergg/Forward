@@ -45,18 +45,22 @@ class Tooltip extends Component{
       case TOOLTIP_TYPES.RUNE:
         childComponent = (
           <RuneTooltip data={Object.assign({}, data, {img})}/>
-        );    
+        );
         break;
       case TOOLTIP_TYPES.ITEM:
         childComponent = (
           <ItemTooltip data={Object.assign({}, data, {img})}/>
-        );    
+        );
         break;
       case TOOLTIP_TYPES.CHAMPIONSKILL:
         childComponent = (
           <ChampionSkillTooltip data={data} version={version}/>
-        );    
+        );
         break;
+      default:
+        childComponent = (
+          <div></div>
+        )
 
       // TOOLTIP_TYPES.CHAMPIONSKILL - DONT NEED
       // default:

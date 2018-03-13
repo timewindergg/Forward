@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import { ClipLoader } from 'react-spinners';
-import _ from 'lodash';
 
 import CompareCardHeader from './CompareCardHeader';
 import CompareCardMiddle from './CompareCardMiddle';
@@ -14,8 +12,6 @@ import SkillTable from '../../common/skilltable.js';
 import './styles/CurrentMatchCompare.css';
 
 import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
-
-const UNSELECT_ID = -1;
 
 class CurrentMatchCompare extends Component {
   static propTypes = {
@@ -122,7 +118,7 @@ class CurrentMatchCompare extends Component {
             <ClipLoader
               size={80}
               color='#ff6666'
-              loading={true} 
+              loading={true}
             />
             <h4>{`Loading...`}</h4>
           </div>
@@ -190,7 +186,7 @@ class CurrentMatchCompare extends Component {
             staticData={staticData}
           />
         </div>
-        
+
         <div className='compare-row' style={{'borderRadius': '5px'}}>
           <div className='skillProgression'>
             <h3 style={{'textAlign': 'right'}}>Recommended skill order</h3>

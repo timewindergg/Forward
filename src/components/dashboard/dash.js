@@ -13,7 +13,6 @@ import '../common/styles/userchampionlist.css';
 import '../common/styles/championfilter.css';
 
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
-import LoadingState from '../../shared/LoadingState';
 import { FILTER } from '../../shared/constants.js';
 
 import Matches from './matches';
@@ -26,8 +25,6 @@ import LaneStats from './lanestats';
 import SummonerHeader from '../common/summonerheader';
 import LoadingScreen from '../common/loadingscreen';
 import UserChampionList from '../common/userchampionlist';
-
-import NotFound from '../common/notfound';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -86,9 +83,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {summoner, loadingState, matches, currentMatch, staticData, limit, summonerError} = this.props;
-    const {matchesToDisplay, dateFilter, championFilter, queueFilter} = this.state;
-    const isSummonerInMatch = Object.keys(currentMatch).length > 0;
+    const {summoner, loadingState, matches, currentMatch, staticData, limit} = this.props;
+    const {matchesToDisplay} = this.state;
 
     let loadMore;
 

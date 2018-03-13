@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Radar } from 'react-chartjs-2';
 
 class ChampionStatsRadarGraph extends Component {

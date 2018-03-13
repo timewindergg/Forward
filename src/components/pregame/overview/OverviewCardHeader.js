@@ -82,7 +82,7 @@ badge icon ne
     return (
       <div className={cardClass}>
         <div className='champion-img-container'>
-          <img src={imageUrl} className='champion-img' />
+          <img src={imageUrl} className='champion-img' alt=""/>
         </div>
         <div className='o-header-col'>
           <span className={nameClass}>{name}</span>

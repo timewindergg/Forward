@@ -4,8 +4,6 @@ import classNames from 'classnames';
 
 import './styles/HorizontalBarGraph.css';
 
-import {roundWithPrecision} from '../../../shared/helpers/numberHelper.js';
-
 import * as d3 from 'd3';
 
 const POS_COLOR = '#4682b4';
@@ -52,7 +50,6 @@ class HorizontalBarGraph extends Component {
       height,
       width,
       graphClass,
-      valueLabelClass,
       data,
       fillInfo
     } = this.props;
@@ -89,14 +86,14 @@ class HorizontalBarGraph extends Component {
 
       var y = d3.scaleBand().range([0, height]);
       y.domain(data.map((d) => {
-        return this.getLabel(d); 
+        return this.getLabel(d);
       })).padding(0.1);
 
       // TODO: class attr after enter append rect
       let graphInternal = graph.selectAll('.bar')
         .data(data)
         .enter().append('g');
-      
+
       graphInternal.append('rect')
           .attr('x', d => width/2)
           .attr('y', d => y(this.getLabel(d)))
@@ -134,7 +131,7 @@ class HorizontalBarGraph extends Component {
         .call(
           d3.axisLeft(y)
         );
-    }    
+    }
 
 
     return (

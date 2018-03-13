@@ -1,5 +1,4 @@
 import axios from 'axios';
-import FormData from 'form-data';
 
 import {loadSummonerSuccess, loadSummonerFailed} from '../actions/summonerActions';
 import {cacheSummoner, setSummonerContext} from '../actions/contextActions';
@@ -8,7 +7,6 @@ import {
   LAST_SEARCHED_KEY,
   setCookie,
   addRecentSearch,
-  decodeRecentSearches
   // RECENT_SEARCHES_KEY
 } from '../shared/helpers/cookieHelper';
 

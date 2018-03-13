@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import uuidv4 from 'uuid/v4';
 
-import {roundWithPrecision, getNearestThousand} from '../../../shared/helpers/numberHelper.js';
+import {getNearestThousand} from '../../../shared/helpers/numberHelper.js';
 
 import './styles/LineGraph.css';
 
@@ -113,11 +112,9 @@ class LineGraph extends Component {
     const {
       graphID,
       label,
-      isCentered,
       height,
       width,
       graphClass,
-      valueLabelClass,
       data,
       fillInfo,
       strokeInfo
@@ -154,7 +151,7 @@ class LineGraph extends Component {
       let x = d3.scaleLinear()
         .domain(d3.extent(rawData, d => d.key))
         .range([0, width]);
-      
+
       // console.log('D3MAGIC', d3.extent(rawData, d => d.value));
       let y = d3.scaleLinear()
         .domain([
@@ -168,7 +165,7 @@ class LineGraph extends Component {
         .html(function(d) {
           return `
             ${d.value}
-          `; 
+          `;
         });
 
       graph.call(tip);
@@ -189,13 +186,13 @@ class LineGraph extends Component {
       newData.forEach((d) => {
         // console.log('D3MAGIC NWD',d).
         // const fill = (
-        //   d[0].value > 0 || 
+        //   d[0].value > 0 ||
         //   (d[0].value === 0 && !!d[0].pos)
         // ) ? posFill : negFill;
         const fill = d[0].pos > 0 ? posFill : negFill;
 
         // const stroke = (
-        //   d[0].value > 0 || 
+        //   d[0].value > 0 ||
         //   (d[0].value === 0 && !!d[0].pos)
         // ) ? posStroke : negStroke;
         const stroke = d[0].pos > 0 ? posStroke : negStroke;
@@ -236,7 +233,7 @@ class LineGraph extends Component {
       graph.append("g")
         .attr('class', 'axis')
         .call(d3.axisLeft(y));
-    }    
+    }
 
 
     return (

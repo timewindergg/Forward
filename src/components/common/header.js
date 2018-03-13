@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import './styles/header.css';
 import './styles/search.css';
-
-import REGION from '../../shared/constants';
-
-import {
-  decodeRecentSearches,
-} from '../../shared/helpers/cookieHelper';
 
 import Search from './search.js';
 
@@ -26,7 +17,7 @@ class Header extends Component {
         <div className='header-inner'>
           <div className='header-group'>
             <a className='logo' href="/" style={{'textDecoration': 'none'}}>
-              <img className="header-icon" src="/api/static/icon.png"/>
+              <img className="header-icon" src="/api/static/icon.png" alt=""/>
               <span className='header-appname'>Timewinder.gg</span>
             </a>
           </div>

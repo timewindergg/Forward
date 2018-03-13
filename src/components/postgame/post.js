@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import './styles/post.css';
 import './styles/map.css';
 import './styles/scoreboard.css';
@@ -25,13 +24,7 @@ import DataTable from './datatable.js';
 
 import Sticky from 'react-stickynode';
 
-import { getItemIconUrl,
-         getPerkIconUrl,
-         getSpellIconUrl,
-         getPerkStyleIconUrl,
-         getMapUrl } from '../../shared/helpers/staticImageHelper.js';
 import { hasDataLoaded } from '../../shared/helpers/loaderHelper.js';
-import TRINKETS from '../../shared/trinketConstants.js';
 
 class Postgame extends Component {
   constructor(props){
@@ -68,7 +61,7 @@ class Postgame extends Component {
     var eventLineFrameData = [];
 
     let players = {};
-    for (var i = 1; i <= matchDetails.match.participants.length; i++){
+    for (let i = 1; i <= matchDetails.match.participants.length; i++){
       players[i] = new Player();
     }
 
@@ -80,7 +73,7 @@ class Postgame extends Component {
       players: players,
     };
 
-    for (var i = 0; i < maxFrames; i++){
+    for (let i = 0; i < maxFrames; i++){
       aggregateData.teams['100'].gold = 0;
       aggregateData.teams['200'].gold = 0;
 

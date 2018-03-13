@@ -46,7 +46,6 @@ class PregameContainer extends Component {
       match,
       cache,
       summoner,
-      currentMatch,
       getSummonerInfo,
       getCurrentMatch,
       staticData,
@@ -56,7 +55,7 @@ class PregameContainer extends Component {
     const summonerName = match.params[SUMMONER_PARAM];
     const region = match.params[REGION_PARAM];
     const id = getIDFromCache(cache, summonerName, region);
-    
+
     // on page load, fetch info about the summoner if it does not exist
     // or if it is different somehow than what we have in the reducer
     if (Object.keys(summoner).length === 0 || summoner.name !== summonerName) {

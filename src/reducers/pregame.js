@@ -4,7 +4,6 @@ import {
   LOAD_CURRENT_MATCH_SUCCESS,
   LOAD_CURRENT_MATCH_FAILED,
   // LOAD_CURRENT_MATCH_DETAILS_SUCCESS,
-  LOAD_CURRENT_MATCH_DETAILS_FAILED
 } from '../actions/matchActions';
 import LoadingState from '../shared/LoadingState';
 

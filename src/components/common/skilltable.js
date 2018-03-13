@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuidv4 from 'uuid/v4';
 
 import {getChampionSpellIconUrl} from '../../shared/helpers/staticImageHelper.js';
 import TOOLTIP_TYPES from '../../constants/TooltipTypes';
@@ -7,19 +6,19 @@ import Tooltip from './tooltip/Tooltip';
 
 import './styles/skillprogression.css';
 
-class SkillCell extends Component{
-  render(){
-    var skillType;
-    if (this.props.type === "skillup")
-      skillType = "skillupCell";
-    else
-      skillType = "skillCell";
+// class SkillCell extends Component{
+//   render(){
+//     var skillType;
+//     if (this.props.type === "skillup")
+//       skillType = "skillupCell";
+//     else
+//       skillType = "skillCell";
 
-    return (
-      <div className={skillType}></div>
-    );
-  }
-}
+//     return (
+//       <div className={skillType}></div>
+//     );
+//   }
+// }
 
 class SkillTable extends Component {
   renderRow(skillId, skillChar, skillImage){
@@ -30,7 +29,7 @@ class SkillTable extends Component {
       <div key={skillImage}>
         <Tooltip
           containerClassName={'icon skillImage'}
-          type={TOOLTIP_TYPES.CHAMPIONSKILL}  
+          type={TOOLTIP_TYPES.CHAMPIONSKILL}
           data={this.props.skillData[skillChar.toLowerCase()]}
           version={this.props.version}
         >

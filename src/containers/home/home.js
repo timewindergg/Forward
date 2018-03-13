@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Home from '../../components/home/home';
 import Footer from '../../components/common/footer';

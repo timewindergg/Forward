@@ -89,7 +89,7 @@ class ChampionStats extends Component {
     let totalGames = 0;
 
     let max = 0;
-    Object.entries(championStats.championStats).map((stat) => {
+    Object.entries(championStats.championStats).forEach((stat) => {
       roleFrequencies[stat[0]] = stat[1].total_games;
       totalGames += stat[1].total_games;
       if (roleFrequencies[stat[0]] > max){
@@ -134,8 +134,7 @@ class ChampionStats extends Component {
                     <h3>Select role:</h3>
                     <ChampionRoles championStats={championStats}
                                     onRoleSelection={this.onRoleSelection}
-                                    role={role}
-                                    championStats={championStats}/>
+                                    role={role}/>
                   </div>
                 </div>
               </div>

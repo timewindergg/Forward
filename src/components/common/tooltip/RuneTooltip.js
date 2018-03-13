@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import './styles/RuneTooltip.css';
 
@@ -22,7 +21,7 @@ class RuneTooltip extends Component{
 
   render() {
     const {data} = this.props;
-    const {name, path, shortDescription, isKeystone, img} = data;
+    const {name, shortDescription, img} = data;
 
     return(
       <div className='rc-rune-tooltip'>
