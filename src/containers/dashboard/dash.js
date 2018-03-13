@@ -24,8 +24,8 @@ import { normalizeName } from '../../shared/helpers/stringHelper.js';
 const MH_OFFSET = 0;
 const MH_SIZE = 50;
 
-const MAX_ATTEMPTS = 1; // retries
-const MATCH_PULL_INTERVAL = 3000; // retry every 5 seconds?
+const MAX_ATTEMPTS = 3; // retries
+const MATCH_PULL_INTERVAL = 5000; // retry every 5 seconds?
 
 // really, this is just a function that compares 2 objects deeply for differences
 // helps us a bit in telling us what ACTUALLY CHANGED
@@ -121,11 +121,18 @@ class DashboardContainer extends Component {
 
   pullMatchHistory = (summonerName, region, id) => {
     // make an API request to get the recent matches
-    this.props.getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE);
+    if (this.props.matches.length > 0) {
+      // console.log("TIMEOUT ENDING LOOP", this.state);
+      this.setState({numAttempts: 0});
+      return;
+    }
+
+
+    this.props.getSummonerMatchHistory(summonerName, region, id, MH_OFFSET, MH_SIZE, this.state.numAttempts >= MAX_ATTEMPTS);
     // console.log("TIMEOUT FETCHING NOW!", this.state);
 
     // do not call any more and reset numAttempts
-    if (this.state.numAttempts >= MAX_ATTEMPTS) {
+    if (this.state.numAttempts >= MAX_ATTEMPTS || this.props.matches.length > 0) {
       // console.log("TIMEOUT ENDING LOOP", this.state);
       this.setState({numAttempts: 0});
       return;
@@ -137,8 +144,6 @@ class DashboardContainer extends Component {
       () => this.pullMatchHistory(summonerName, region, id),
       MATCH_PULL_INTERVAL
     );
-
-    // setTimeout(console.log('asdf'), 15);
 
     this.setState({
       numAttempts: this.state.numAttempts + 1,
@@ -197,8 +202,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getSummonerInfo: (summonerName, region, id) => dispatch(getSummonerInfo(summonerName, region, id)),
     getCurrentMatch: (summonerName, region, id) => dispatch(getCurrentMatch(summonerName, region, id)),
-    getSummonerMatchHistory: (summonerName, region, id, offset, size) => {
-      dispatch(getSummonerMatchHistory(summonerName, region, id, offset, size));
+    getSummonerMatchHistory: (summonerName, region, id, offset, size, lastCall) => {
+      dispatch(getSummonerMatchHistory(summonerName, region, id, offset, size, lastCall));
     },
     getStaticData: (region) => {
       dispatch(getStaticData(region))

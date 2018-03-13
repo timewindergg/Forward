@@ -42,7 +42,20 @@ class Matches extends Component {
         </div>
       );
     if (loadingState === LoadingState.FINISHED) {
-      innerComp = this.renderMatchList(matches, version, limit, filters, championData, runeData, itemData);
+      if (matches.length === 0) {
+        innerComp = (
+          <div className='oc-loader'>
+            <ClipLoader
+              size={50}
+              color={'#ff6666'}
+              loading={true}
+            />
+            <h4>{`Aggregating Matches...`}</h4>
+          </div>
+        );
+      } else {
+        innerComp = this.renderMatchList(matches, version, limit, filters, championData, runeData, itemData);
+      }
     }
 
     return (

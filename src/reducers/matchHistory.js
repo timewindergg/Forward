@@ -8,7 +8,8 @@ const initialState = {
   mhError: 200,
   matches: [],
   summoner: '',
-  region: ''
+  region: '',
+  trulyFinished: false,
 }
 
 const setContext = (state, payload) => {
@@ -21,7 +22,8 @@ const setContext = (state, payload) => {
 
 const startMatchHistory = (state) => {
   return Object.assign({}, state, {
-    loadingState: LoadingState.LOADING
+    loadingState: LoadingState.LOADING,
+    trulyFinished: false
   });
 };
 
@@ -35,7 +37,8 @@ const receiveMatchHistoryResults = (state, action) => {
   return Object.assign({}, state, {
     action,
     loadingState: LoadingState.FINISHED,
-    matches: action.result
+    matches: action.result,
+    trulyFinished: action.result.length > 0,
   });
 };
 

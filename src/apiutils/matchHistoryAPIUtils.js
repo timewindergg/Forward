@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {fetchMatchHistorySuccess, fetchMatchHistoryError} from '../actions/matchHistoryActions';
 
-export const getSummonerMatchHistory = (summoner_name, region, id, offset, size) => {
+export const getSummonerMatchHistory = (summoner_name, region, id, offset, size, lastCall) => {
   const uri = `/api/get_match_history/`;
   const params = {
     summoner_name,
@@ -25,7 +25,7 @@ export const getSummonerMatchHistory = (summoner_name, region, id, offset, size)
           match.blue_team = JSON.parse(match.blue_team);
         });
 
-        dispatch(fetchMatchHistorySuccess(summoner_name, region, result));
+        dispatch(fetchMatchHistorySuccess(summoner_name, region, result, lastCall));
       }).catch((error) => {
         dispatch(fetchMatchHistoryError(error));
       });
