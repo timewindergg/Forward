@@ -23,6 +23,10 @@ class HorizontalBarGraph extends Component {
     fillInfo: PropTypes.object
   }
 
+  state = {
+    loaded: false
+  }
+
   static defaultProps = {
     label: '',
     isCentered: false,
@@ -30,6 +34,10 @@ class HorizontalBarGraph extends Component {
     valueLabelClass: '',
 
     fillInfo: {}
+  }
+
+  componentDidMount() {
+    this.setState({loaded: true});
   }
 
   // TODO: shouldComponentUpdate when we actually update
