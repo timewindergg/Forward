@@ -16,7 +16,7 @@ class ChampionSelector extends Component {
   renderParticipants(teamId, team, championData){
     return team.map((participant) => {
       return (
-        <div key={participant.id} className={classNames({"selectionParticipant":true, "selected": this.state.redSelector === participant.id || this.state.blueSelector === participant.id})} onClick={() => {
+        <div key={participant.id} className={classNames({"selectionParticipant":true, "selectedRed": this.state.redSelector === participant.id, "selectedBlue": this.state.blueSelector === participant.id})} onClick={() => {
           this.props.onChampionSelect(teamId, participant.id);
           if (teamId === 100){
             this.setState({

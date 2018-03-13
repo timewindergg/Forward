@@ -11,22 +11,29 @@
 .selectionParticipant{
     display: inline-block;
     cursor: pointer;
+    border-radius: 5px;
 
     &:hover{
-        background: @grey-md;
+        box-shadow: 0 0 10px fade(@grey, 80%);
     }
 
     .championIcon{
         border-radius: 50%;
         width: 50px;
         height: 50px;
-        margin: 5px;
+        margin: 5px 5px 0 5px;
     }   
+    .championName{
+        font-size: 14px;
+        font-weight: 600;
+    }
 }
-.selected{
-    background: @grey-md;
+.selectedBlue{
+    box-shadow: 0 0 10px fade(@blue-md3, 80%);
 }
-
+.selectedRed{
+    box-shadow: 0 0 10px fade(@red-dk, 80%);
+}
 .selectorTeam{
     flex-grow: 1;
     text-align: center;

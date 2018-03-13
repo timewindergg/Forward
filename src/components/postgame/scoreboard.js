@@ -167,11 +167,6 @@ class ScoreboardHeader extends Component{
 
     return (
       <div className="scoreboardHeader">
-        <div className="meta">
-          <div className="queue">
-            <span className="queueName">{QueueIdMappings[this.props.queue].name}</span>
-          </div>
-        </div>
         <div className="overview">
           <span className="blueResult">{blueResult}</span>
           <div className="teamStats">
@@ -257,23 +252,28 @@ class Scoreboard extends Component {
     // return (<div />);
 
     return (
-      <div className="scoreboardContainer recentGames row">
-        <ScoreboardHeader match={this.props.match} queue={this.props.queue} isBlueWinner={this.props.isBlueWinner} blueData={this.props.teamFrameData['100']} redData={this.props.teamFrameData['200']}/>
-        <IconHeader />
-        <div className="teamsContainer">
-          <Teamboard team="100"
-            participants={blueTeam}
-            version={this.props.version}
-            region={this.props.region}
-            staticData={staticData}
-          />
-          <Teamboard
-            team="200"
-            participants={redTeam}
-            version={this.props.version}
-            region={this.props.region}
-            staticData={staticData}
-          />
+      <div>
+        <div className="queue">
+          <span className="queueName">{QueueIdMappings[this.props.queue].name}</span>
+        </div>
+        <div className="scoreboardContainer recentGames row">
+          <ScoreboardHeader match={this.props.match} queue={this.props.queue} isBlueWinner={this.props.isBlueWinner} blueData={this.props.teamFrameData['100']} redData={this.props.teamFrameData['200']}/>
+          <IconHeader />
+          <div className="teamsContainer">
+            <Teamboard team="100"
+              participants={blueTeam}
+              version={this.props.version}
+              region={this.props.region}
+              staticData={staticData}
+            />
+            <Teamboard
+              team="200"
+              participants={redTeam}
+              version={this.props.version}
+              region={this.props.region}
+              staticData={staticData}
+            />
+          </div>
         </div>
       </div>
     );
