@@ -12,11 +12,14 @@ import TOOLTIP_TYPES from '../../constants/TooltipTypes';
 
 class ScoreboardPlayer extends Component {
   render() {
-    if (this.props.participant === undefined){
+    if (this.props.frameData === undefined){
       return (<div/>);
     }
     let patchVersion = this.props.version;
-    let p = this.props.participant;
+    
+    let pData = this.props.participantData;
+    let p = this.props.frameData;
+
     let runeData = this.props.runeData;
     let championData = this.props.championData;
 
@@ -42,7 +45,7 @@ class ScoreboardPlayer extends Component {
 
     let keystone = 0;
 
-    for (let key in p.runes) {
+    for (let key in pData.runes) {
       if (!!runeData[key] && runeData[key].isKeystone === true) {
         keystone = key;
       }
@@ -76,8 +79,8 @@ class ScoreboardPlayer extends Component {
         </div>
         <div className="runeSummIcons">
           <div className="summonerSpells">
-            <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellDId, patchVersion)} alt=""/>
-            <img className="summonerIcon icon" src={getSpellIconUrl(p.summonerSpellFId, patchVersion)} alt=""/>
+            <img className="summonerIcon icon" src={getSpellIconUrl(pData.summonerSpellDId, patchVersion)} alt=""/>
+            <img className="summonerIcon icon" src={getSpellIconUrl(pData.summonerSpellFId, patchVersion)} alt=""/>
           </div>
           <div className="runes">
             <Tooltip
@@ -88,18 +91,18 @@ class ScoreboardPlayer extends Component {
             >
               <img className="runeIcon icon" src={getPerkIconUrl(keystone, patchVersion)} alt=""/>
             </Tooltip>
-            <img className="runeIcon icon" src={getPerkStyleIconUrl(p.stats.perkSubStyle, patchVersion)} alt=""/>
+            <img className="runeIcon icon" src={getPerkStyleIconUrl(pData.stats.perkSubStyle, patchVersion)} alt=""/>
           </div>
         </div>
         <div className="iconContainer">
-          <img className="championIcon big" src={getChampionIconUrlByImage(championData[p.championId].img.split('.')[0], patchVersion)} alt=""/>
+          <img className="championIcon big" src={getChampionIconUrlByImage(championData[pData.championId].img.split('.')[0], patchVersion)} alt=""/>
           <div className="level">
             {p.level}
           </div>
         </div>
         <div>
-          <a className="name" href={`/p/${this.props.region}/${p.summonerName}`}>
-            <span>{p.summonerName}</span>
+          <a className="name" href={`/p/${this.props.region}/${pData.summonerName}`}>
+            <span>{pData.summonerName}</span>
           </a>
           <div className="stats">
             <span className="stat cs">{p.cs}</span>
@@ -134,8 +137,9 @@ class Teamboard extends Component {
       <ScoreboardPlayer 
         team={this.props.team}
         region={this.props.region}
-        key={participant[0]} 
-        participant={participant[1]} 
+        key={participant.key} 
+        frameData={participant.frameData}
+        participantData={participant.participantData}
         version={this.props.version} 
         runeData={this.props.staticData.runes} 
         championData={this.props.staticData.champions} 
@@ -225,30 +229,51 @@ class Scoreboard extends Component {
     const {staticData} = this.props;
 
     Object.entries(this.props.playerFrameData).map((participant) => {
-      let matchParticipant = this.props.matchParticipants[participant[0] - 1];
+      // let matchParticipant = this.props.matchParticipants[participant[0] - 1];
 
-      participant[1].championId = matchParticipant.championId;
-      participant[1].summonerName = matchParticipant.summonerName;
-      participant[1].summonerSpellDId = matchParticipant.summonerSpellDId;
-      participant[1].summonerSpellFId = matchParticipant.summonerSpellFId;
-      participant[1].runes = matchParticipant.runes;
-      participant[1].stats = matchParticipant.stats;
+      // participant[1].championId = matchParticipant.championId;
+      // participant[1].summonerName = matchParticipant.summonerName;
+      // participant[1].summonerSpellDId = matchParticipant.summonerSpellDId;
+      // participant[1].summonerSpellFId = matchParticipant.summonerSpellFId;
+      // participant[1].runes = matchParticipant.runes;
+      // participant[1].stats = matchParticipant.stats;
 
       if (participant[1].side === 100){
-        blueTeam.push(participant);
+        blueTeam.push({
+          key: participant[0],
+          frameData: participant[1],
+          participantData: this.props.matchParticipants[participant[0] - 1]
+        });
       }
       else if (participant[1].side === 200){
-        redTeam.push(participant);
+        redTeam.push({
+          key: participant[0],
+          frameData: participant[1],
+          participantData: this.props.matchParticipants[participant[0] - 1]
+        });
       }
     });
+
+    return (<div />);
 
     return (
       <div className="scoreboardContainer recentGames row">
         <ScoreboardHeader match={this.props.match} queue={this.props.queue} isBlueWinner={this.props.isBlueWinner} blueData={this.props.teamFrameData['100']} redData={this.props.teamFrameData['200']}/>
         <IconHeader />
         <div className="teamsContainer">
-          <Teamboard team="100" participants={blueTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
-          <Teamboard team="200" participants={redTeam} version={this.props.version} region={this.props.region} staticData={staticData}/>
+          <Teamboard team="100"
+            participants={blueTeam}
+            version={this.props.version}
+            region={this.props.region}
+            staticData={staticData}
+          />
+          <Teamboard
+            team="200"
+            participants={redTeam}
+            version={this.props.version}
+            region={this.props.region}
+            staticData={staticData}
+          />
         </div>
       </div>
     );

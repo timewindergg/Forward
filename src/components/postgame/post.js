@@ -315,6 +315,8 @@ class Postgame extends Component {
       return(<LoadingScreen/>);
     }
 
+    console.log('postgame rerender', frameData[currentFrame].players, Date.now() % 10000);
+
     return (
       <div className="Postgame">
         <Sticky innerZ='5'>
@@ -325,14 +327,14 @@ class Postgame extends Component {
         </Sticky>
         <div className="content">
           <Scoreboard playerFrameData={frameData[currentFrame].players}
-                      teamFrameData={frameData[currentFrame].teams}
-                      matchParticipants={matchDetails.match.participants}
-                      version={staticData.version}
-                      region={region}
-                      staticData={staticData}
-                      match={matchDetails.match}
-                      isBlueWinner={matchDetails.match.teams[0].isWinner}
-                      queue={matchDetails.match.queueId}/>
+            teamFrameData={frameData[currentFrame].teams}
+            matchParticipants={matchDetails.match.participants}
+            version={staticData.version}
+            region={region}
+            staticData={staticData}
+            match={matchDetails.match}
+            isBlueWinner={matchDetails.match.teams[0].isWinner}
+            queue={matchDetails.match.queueId}/>
           <div className="graphsmap">
             <GoldDiffGraph frameData={frameData}/>
             <EffectiveGoldDiffGraph frameData={frameData}/>
