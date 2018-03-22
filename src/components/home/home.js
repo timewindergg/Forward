@@ -30,7 +30,9 @@ class Home extends Component {
       <div className="Home">
         <div className="content">
           <div className="splashContainer">
-            <img className="splash" src={splash} alt=""/>
+            <a href="https://mrpedosloth.deviantart.com/" target="_blank" rel="">
+              <img className="splash" src={splash} alt=""/>
+            </a>
           </div>
           <h1>Timewinder.gg</h1>
           <h3>Master yourself. Master the enemy.</h3>
