@@ -8,38 +8,53 @@ import { FILTER } from '../../shared/constants.js';
 
 class MatchLawn extends Component {
   render() {
-    if (this.props.lawn === undefined) {
-      return (<div/>);
-    }
-
     const { lawn } = this.props;
 
-    // Calculate the beginning of 4 months ago.
-    const d = new Date();
-    d.setDate(1); // sets it to the beginning of the month.
-    d.setMonth(d.getMonth() - 4);
+    const startDate = new Date();
+    startDate.setDate(1);
+    startDate.setMonth(startDate.getMonth() - 3);
+
+    let cDate = new Date();
+    cDate.setDate(1);
+    cDate.setMonth(cDate.getMonth() - 4);
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() - 1);
+
+    let dateString;
+    while (cDate <= endDate){
+       dateString = [cDate.getFullYear(), ('0' + (cDate.getMonth() + 1)).slice(-2), ('0' + cDate.getDate()).slice(-2)].join('-');
+      if (lawn.find((e) => {
+        return e.date === dateString;
+      }) === undefined){
+        lawn.push({
+          'date': dateString,
+          'wins': 0,
+          'losses': 0
+        });
+      }
+      cDate.setDate(cDate.getDate() + 1);
+    }
 
     const customTooltipDataAttrs = (value) => ({
-      'data-tip': !value.date ? 'no data' : `${value.date}: ${value.wins + value.losses} Records: ${value.wins}w-${value.losses}l`
+      'data-tip': `${value.date}: ${value.wins}W ${value.losses}L`
     });
 
-    const beginningDate = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDay() + 1;
     return (
       <div className="dashboard-match-heat-map">
         <CalendarHeatmap
           onClick={(value) => {
-            if (!!value && value.date) {
+            if (value.wins > 0 || value.losses > 0) {
               this.props.onFilterSelect(value.date, FILTER.DATE);
             }
           }}
-          endDate={new Date()}
-          startDate={beginningDate}
+          endDate={endDate}
+          startDate={startDate}
           values={lawn}
           showWeekdayLabels={true}
           weekdayLabels={['S','M','T','W','Th','F','S']}
           tooltipDataAttrs={customTooltipDataAttrs}
           classForValue={(value) => {
-            if (!value) {
+            if (value.wins === 0 && value.losses === 0) {
               return 'color-empty';
             }
 

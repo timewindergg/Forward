@@ -8,6 +8,20 @@ input, select, textarea, button, a{
 
 .ReactTable{
     border: 1px solid @grey;
+
+    .-odd{
+        background: @grey-lt !important;
+
+        &:hover{
+            background-color: @grey-lt2 !important;
+        }
+    }
+
+    .-even{
+        &:hover{
+            background-color: @grey-lt2 !important;
+        }
+    }
 }
 
 text{

@@ -128,18 +128,21 @@ class Matches extends Component {
           <span className="duration">{duration}</span>
         </div>
         <div className="team-scores">
-          <span>{`${teamKDA[0]}/${teamKDA[1]}/${teamKDA[2]}`}</span>
+          <span>{`${teamKDA[0]} / ${teamKDA[1]} / ${teamKDA[2]}`}</span>
         </div>
         <div className="team-objectives">
-          <div className="icon-baron">
+          <div className="team-objective">
+            <i className="icon-baron"/>
+            <span>{team.baronKills}</span>
           </div>
-          <span>{team.baronKills}</span>
-          <div className="icon-dragon">
+          <div className="team-objective">
+            <i className="icon-dragon"/>
+            <span>{team.dragonKills}</span>
           </div>
-          <span>{team.dragonKills}</span>
-          <div className="icon-tower">
+          <div className="team-objective">
+            <i className="icon-tower"/>
+            <span>{team.towerKills}</span>
           </div>
-          <span>{team.towerKills}</span>
         </div>
         <div className="match-postgame">
           <Link to={`/m/${this.props.region}/${match.match_id}`}>
@@ -249,7 +252,7 @@ class Matches extends Component {
           </div>
           <div className="match-stats-detailed">
             <div className="match-stat kp">
-              <span>{`${kp}% kp`}</span>
+              <span>{`${roundWithPrecision(kp, 0)}% kp`}</span>
             </div>
             <div className="match-stat csm">
               <span>{`${roundWithPrecision(matchStats[0]/minutes, 0)} cs/m`}</span>

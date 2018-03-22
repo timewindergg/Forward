@@ -28,7 +28,7 @@ class ChampionCompare extends Component {
             Lv {player.level}
           </div>
           <div className="kda">
-            {roundWithPrecision(player.kills + player.assists / player.deaths, 2)} KDA
+            {roundWithPrecision((player.kills + player.assists) / player.deaths, 2)} KDA
           </div>
           <div className='kda'>
             {player.kills}/{player.deaths}/{player.assists}

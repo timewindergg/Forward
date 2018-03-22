@@ -12,7 +12,7 @@ export const getStaticData = (region, onSuccess) => {
 
   return (dispatch) => {
     return axios.get(uri).then((response) => {
-      console.log('loaded static data', response.data);
+      //console.log('loaded static data', response.data);
       dispatch(loadStaticDataSuccess(response.data));
     }).catch((error) => {
       console.log('static data err', error);

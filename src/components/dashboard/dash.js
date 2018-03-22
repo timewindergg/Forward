@@ -141,7 +141,6 @@ class Dashboard extends Component {
               {loadMore}
             </div>
             <div className="dashboard-body-right-container">
-
               <UserChampionList championStats={summoner.championStats}
                 summonerName={summoner.name}
                 summonerRegion={this.props.region}
