@@ -255,13 +255,13 @@ class Matches extends Component {
               <span>{`${roundWithPrecision(kp, 0)}% kp`}</span>
             </div>
             <div className="match-stat csm">
-              <span>{`${roundWithPrecision(matchStats[0]/minutes, 0)} cs/m`}</span>
+              <span>{`${roundWithPrecision(matchStats[0]/minutes, 1)} cs/m`}</span>
             </div>
             <div className="match-stat goldm">
               <span>{`${roundWithPrecision(matchStats[1]/minutes, 0)} gold/m`}</span>
             </div>
-            <div className="match-stat gold">
-              <span>{`${matchStats[2]} dmg`}</span>
+            <div className="match-stat objdmg">
+              <span>{`${roundWithPrecision(matchStats[2]/1000, 1)}k obj dmg`}</span>
             </div>
             <div className="match-stat visionm">
               <span>{`${roundWithPrecision(matchStats[3], 0)} vs`}</span>
