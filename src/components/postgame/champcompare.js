@@ -55,18 +55,18 @@ class ChampionCompare extends Component {
 
     const goldData = [{
       key: 'totalGold',
-      value: bp.totalGold - rp.totalGold,
-      label: `${bp.totalGold - rp.totalGold} (Total Gold)`
+      value: rp.totalGold - bp.totalGold,
+      label: `${Math.abs(rp.totalGold - bp.totalGold)} (Total Gold)`
     }, {
       key: 'effectiveGold',
-      value: bp.effectiveGold - rp.effectiveGold,
-      label: `${bp.effectiveGold - rp.effectiveGold} (Effective Gold)`
+      value: rp.effectiveGold - bp.effectiveGold,
+      label: `${Math.abs(rp.effectiveGold - bp.effectiveGold)} (Effective Gold)`
     }];
 
     const csData = [{
       key: 'CS',
-      value: bp.cs - rp.cs,
-      label: `${bp.cs - rp.cs} (CS)`
+      value: rp.cs - bp.cs,
+      label: `${Math.abs(rp.cs - bp.cs)} (CS)`
     }];
 
     return (

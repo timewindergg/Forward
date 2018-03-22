@@ -57,6 +57,9 @@ class OverviewCard extends Component {
 
     const runes = summoner.runes.map((rune) => {
       const runeData = staticData.runes[rune];
+      if (runeData === undefined){
+        return; 
+      }
       const isKeystone = runeData.isKeyStone;
       const runeClass = classNames({'overview-rune': true, 'overview-keystone-rune': isKeystone});
 

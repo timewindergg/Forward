@@ -105,7 +105,7 @@ class ScoreboardPlayer extends Component {
             <span>{pData.summonerName}</span>
           </a>
           <div className="stats">
-            <span className="stat cs">{p.cs}</span>
+            <span className="stat cs">{p.cs + p.junglecs}</span>
             <span className="stat score">{p.kills}/{p.deaths}/{p.assists}</span>
             <span className="stat gold">{p.currentGold}</span>
             <span className="stat ward">{p.totalWards}</span>
