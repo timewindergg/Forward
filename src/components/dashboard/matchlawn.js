@@ -17,8 +17,9 @@ class MatchLawn extends Component {
     let cDate = new Date();
     cDate.setDate(1);
     cDate.setMonth(cDate.getMonth() - 4);
+    cDate.setHours(0,0,0,0);
     const endDate = new Date();
-    endDate.setDate(endDate.getDate() - 1);
+    endDate.setHours(0,0,0,0);
 
     let dateString;
     while (cDate <= endDate){
@@ -26,6 +27,7 @@ class MatchLawn extends Component {
       if (lawn.find((e) => {
         return e.date === dateString;
       }) === undefined){
+
         lawn.push({
           'date': dateString,
           'wins': 0,
@@ -33,8 +35,9 @@ class MatchLawn extends Component {
         });
       }
       cDate.setDate(cDate.getDate() + 1);
+      cDate.setHours(0,0,0,0);
     }
-
+    
     const customTooltipDataAttrs = (value) => ({
       'data-tip': `${value.date}: ${value.wins}W ${value.losses}L`
     });
@@ -43,7 +46,7 @@ class MatchLawn extends Component {
       <div className="dashboard-match-heat-map">
         <CalendarHeatmap
           onClick={(value) => {
-            if (value.wins > 0 || value.losses > 0) {
+            if (value && (value.wins > 0 || value.losses > 0)) {
               this.props.onFilterSelect(value.date, FILTER.DATE);
             }
           }}
@@ -54,7 +57,7 @@ class MatchLawn extends Component {
           weekdayLabels={['S','M','T','W','Th','F','S']}
           tooltipDataAttrs={customTooltipDataAttrs}
           classForValue={(value) => {
-            if (value.wins === 0 && value.losses === 0) {
+            if (!value || value.wins === 0 && value.losses === 0) {
               return 'color-empty';
             }
 
