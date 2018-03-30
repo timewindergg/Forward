@@ -112,6 +112,9 @@ const QueueIdMappings = {
     },
     1010: {
         name: "ARURF"
+    },
+    1020: {
+        name: "One for All"
     }
 };
 
