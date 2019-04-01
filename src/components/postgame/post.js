@@ -216,7 +216,6 @@ class Postgame extends Component {
         aggregateData.players[key].totalGold = pFrames[key].goldEarned;
         aggregateData.players[key].currentGold = pFrames[key].currentGold;
         aggregateData.players[key].cs = pFrames[key].creepScore;
-        aggregateData.players[key].junglecs = pFrames[key].NeutralMinionsKilled;
         aggregateData.players[key].level = pFrames[key].level;
         aggregateData.players[key].xp = pFrames[key].experience;
         if (pFrames[key].position){
@@ -332,7 +331,7 @@ class Postgame extends Component {
             staticData={staticData}
             match={matchDetails.match}
             isBlueWinner={matchDetails.match.teams[0].isWinner}
-            queue={matchDetails.match.queueId}/>
+            queue={matchDetails.match.queue}/>
           <div className="graphsmap">
             <GoldDiffGraph frameData={frameData}/>
             <EffectiveGoldDiffGraph frameData={frameData}/>

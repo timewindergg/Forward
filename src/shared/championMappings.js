@@ -555,6 +555,18 @@ const ChampionMappings = {
     516: {
         name: "Ornn",
         image: "Ornn"
+    },
+    517: {
+        name: "Sylas",
+        image: "Sylas"
+    },
+    518: {
+        name: "Neeko",
+        image: "Neeko"
+    },
+    555: {
+        name: "Pyke",
+        image: "Pyke"
     }
 };
 

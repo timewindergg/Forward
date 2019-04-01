@@ -11,7 +11,6 @@ export class Player {
     this.currentGold = 0;
     this.effectiveGold = 0;
     this.cs = 0;
-    this.junglecs = 0;
     this.level = 0;
     this.xp = 0;
     this.wardsKilled = 0;
